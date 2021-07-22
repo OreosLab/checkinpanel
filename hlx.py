@@ -63,6 +63,7 @@ def category(key):
         res = category_res[i]
         titles.append(res['title'])
         categoryIDs.append(res['categoryID'])
+        #print(res)
     url = f'http://floor.huluxia.com/user/signin/ANDROID/4.0'
     all_experienceVal = 0
     for i in range(0, len(categoryIDs)):
@@ -89,7 +90,7 @@ def category(key):
 def hlx(user, passwd):
     nick, key, s_key = login(user, passwd)
     check(key)
-    return "用户名：" + nick + '\n' + category(key)
+    return "用户名：" + nick  + category(key)
 
 
 def start():
@@ -99,7 +100,8 @@ def start():
         print('已经在环境中找到用户名和密码，开始执行程序')
         res = hlx(os.environ['hlx_username'], os.environ['hlx_password'])
         result = 'notify ' + scriptName + ' ' + res
-        os.system(result)
+        print(result)
+
     else:
         print('未找到用户名和密码停止执行')
 
