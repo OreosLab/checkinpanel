@@ -1,9 +1,4 @@
-/*
-// 
-20 9 * * * https://raw.githubusercontent.com/yuxian158/check/master/hlx.py, tag=葫芦侠签到, enabled=true
-
-*/
-
+#20 9 * * * https://raw.githubusercontent.com/yuxian158/check/master/hlx.py, tag=葫芦侠签到, enabled=true
 
 import requests
 import os
