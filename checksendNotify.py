@@ -16,10 +16,11 @@ def message2telegram(tg_api_host, tg_proxy, tg_bot_token, tg_user_id, content):
         }
     else:
         proxies = None
-    if requests.post(url=url, data=send_data, proxies=proxies) == 200:
+    try :
+        requests.post(url=url, data=send_data, proxies=proxies)
         print("推送成功")
         return 1
-    else:
+    except:
         print("推送失败")
         return 0
 

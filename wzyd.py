@@ -3,7 +3,7 @@ import json
 import os
 import time
 from urllib import parse
-
+from checksendNotify import send
 import requests
 
 
@@ -41,4 +41,4 @@ if __name__ == "__main__":
     print('王者营地签到开始')
     text = WZYDCheckIn(check_item=os.environ).main()
     localtime = time.asctime( time.localtime(time.time()) )
-
+    send(f'当前时间{localtime}\n结果：{text}')
