@@ -41,5 +41,6 @@ if __name__ == "__main__":
         print('王者营地签到开始')
         text = WZYDCheckIn(check_item=os.environ.get('wzyd')).main()
         localtime = time.asctime(time.localtime(time.time()))
-        send(f'当前时间{localtime}\n结果：{text}')
+        result=f'当前时间{localtime}\n结果：{text}'
+        send('王者营地签到',result)
     else:print('未找到变量请填入')
