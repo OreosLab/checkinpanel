@@ -2,7 +2,7 @@
 
 import requests
 import os
-
+from checksendNotify import send
 r = requests.Session()
 
 
@@ -101,9 +101,8 @@ def start():
     if "hlx_username" in os.environ and "hlx_password" in os.environ:
         print('已经在环境中找到用户名和密码，开始执行程序')
         res = hlx(os.environ['hlx_username'], os.environ['hlx_password'])
-        result = 'notify ' + f' \'{scriptName}\'' + f' \'{res}\''
-        print(result)
-
+        result =  f' \'{scriptName}\'' + f' \'{res}\''
+        send(result)
     else:
         print('未找到用户名和密码停止执行')
 
