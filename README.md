@@ -18,7 +18,7 @@
 
 ### 1拉取仓库
 
-ql repo https://github.com/yuxian158/check.git ''  '^checksendNotify'
+ql repo https://gitee.com/zhangluo0104/check.git ''  '^checksendNotify'
 
 ### 2参数列表
 
