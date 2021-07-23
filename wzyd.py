@@ -24,7 +24,7 @@ class WZYDCheckIn:
         return msg
 
     def main(self):
-        wzyd_data = self.check_item[0]
+        wzyd_data = self.check_item
         data = {k: v[0] for k, v in parse.parse_qs(wzyd_data).items()}
         try:
             user_id = data.get("userId", "")
@@ -37,8 +37,9 @@ class WZYDCheckIn:
 
 
 if __name__ == "__main__":
-  if 'wzry' in os.environ:
-    print('王者营地签到开始')
-    text = WZYDCheckIn(check_item=os.environ).main()
-    localtime = time.asctime( time.localtime(time.time()) )
-    send(f'当前时间{localtime}\n结果：{text}')
+    if 'wzyd' in os.environ:
+        print('王者营地签到开始')
+        text = WZYDCheckIn(check_item=os.environ).main()
+        localtime = time.asctime(time.localtime(time.time()))
+        send(f'当前时间{localtime}\n结果：{text}')
+    else:print('未找到变量请填入')
