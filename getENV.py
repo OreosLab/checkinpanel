@@ -9,8 +9,6 @@ def getENv():
         print('成功 当前环境为青龙面板继续执行')
         if os.path.exists(config_file):
             print('已找到配置文件')
-            with open(config_file, 'r', encoding='utf8') as f:
-                return f
         else:
             print('未找到配置文件\n')
             print('请添加/ql/config/check.json')

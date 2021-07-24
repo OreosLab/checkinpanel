@@ -330,6 +330,8 @@ class BiliBiliCheckIn(object):
 
 
 if __name__ == "__main__":
-    datas = json.loads(getENv().read())
+    getENv()
+    with open("/ql/config/check.json", "r", encoding="utf-8") as f:
+        datas = json.loads(f.read())
     _check_item = datas.get("BILIBILI_COOKIE_LIST", [])[0]
     BiliBiliCheckIn(check_item=_check_item).main()
