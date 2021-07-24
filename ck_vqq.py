@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# 56 23 * * *
 import json
 import os
 import re
@@ -9,6 +10,7 @@ import requests
 from requests import utils
 from getENV import getENv
 from checksendNotify import send
+
 
 class VQQCheckIn:
     def __init__(self, check_item):
@@ -115,11 +117,15 @@ class VQQCheckIn:
         return msg
 
 
-if __name__ == "__main__":
+def start():
     getENv()
     with open("/ql/config/check.json", "r", encoding="utf-8") as f:
         datas = json.loads(f.read())
     _check_item = datas.get("VQQ_COOKIE_LIST", [])[0]
-    res=VQQCheckIn(check_item=_check_item).main()
+    res = VQQCheckIn(check_item=_check_item).main()
     print(res)
-    send('腾讯视频',res)
+    send('腾讯视频', res)
+
+
+if __name__ == "__main__":
+    start()
