@@ -5,7 +5,7 @@ import os
 import requests
 from requests import utils
 from getENV import getENv
-
+from checksendNotify import send
 class BiliBiliCheckIn(object):
     # TODO 待测试，需要大会员账号测试领取福利
     def __init__(self, check_item: dict):
@@ -334,4 +334,7 @@ if __name__ == "__main__":
     with open("/ql/config/check.json", "r", encoding="utf-8") as f:
         datas = json.loads(f.read())
     _check_item = datas.get("BILIBILI_COOKIE_LIST", [])[0]
-    BiliBiliCheckIn(check_item=_check_item).main()
+    res=BiliBiliCheckIn(check_item=_check_item).main()
+    print(res)
+    send('哔哩哔哩',res)
+
