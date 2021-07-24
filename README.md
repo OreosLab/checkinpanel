@@ -18,7 +18,7 @@
 
 ### 1拉取仓库
 
-ql repo https://gitee.com/zhangluo0104/check.git "" "^checksendNotify"
+ql repo https://gitee.com/zhangluo0104/check.git "" "^checksendNotify|^getENV"
 
 ### 2参数列表
 
