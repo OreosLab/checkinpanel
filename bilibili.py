@@ -330,12 +330,7 @@ class BiliBiliCheckIn(object):
 
 
 if __name__ == "__main__":
-    # {
-    #   "bilibili_cookie": "_uuid=xxxxxx; rpdid=xxxxxx; LIVE_BUVID=xxxxxx; PVID=xxxxxx; blackside_state=xxxxxx; CURRENT_FNVAL=xxxxxx; buvid3=xxxxxx; fingerprint3=xxxxxx; fingerprint=xxxxxx; buivd_fp=xxxxxx; buvid_fp_plain=xxxxxx; DedeUserID=xxxxxx; DedeUserID__ckMd5=xxxxxx; SESSDATA=xxxxxx; bili_jct=xxxxxx; bsource=xxxxxx; finger=xxxxxx; fingerprint_s=xxxxxx;",
-    #   "coin_num": 0,
-    #   "coin_type": 1,
-    #   "silver2coin": true
-    # }
+    str =     {       """bilibili_cookie": "CURRENT_FNVAL=80; _uuid=E78B9867-686F-3A27-313E-BFEDFEE09F3000008infoc; buvid3=8EAD6FC6-F814-4B01-AE8F-DFD3075CD609138370infoc; blackside_state=1; LIVE_BUVID=AUTO7415999020731979; rpdid=|(J~Rk|)kukJ0J'ulmmm|k|)R; buvid_fp=8EAD6FC6-F814-4B01-AE8F-DFD3075CD609138370infoc; buvid_fp_plain=8EAD6FC6-F814-4B01-AE8F-DFD3075CD609138370infoc; SESSDATA=e1e3d896%2C1636977456%2C2c051%2A51; bili_jct=ed3d260fa764e41ee7af53437dad8245; DedeUserID=104387005; DedeUserID__ckMd5=777721dee5d2cbba; sid=8nutoc6o; fingerprint3=bd483e5d53116cffede088c3f95b4033; fingerprint=9242077640b48d939b5ba29986fe30d4; fingerprint_s=e67c1fa987ff6289b4d7ec89ba606618; PVID=1; bp_video_offset_104387005=546313440551706948""","coin_num": 0,       "coin_type": 1,       "silver2coin": true     }
     if 'bilibili' in os.environ:
         print('哔哩哔哩签到开始')
         _check_item=json.loads(os.environ.get('bilibili'))

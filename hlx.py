@@ -102,7 +102,7 @@ def start():
         print('已经在环境中找到用户名和密码，开始执行程序')
         res = hlx(os.environ['hlx_username'], os.environ['hlx_password'])
         result =  f' {scriptName} \n {res}'
-        send(result)
+        send("葫芦侠",result)
     else:
         print('未找到用户名和密码停止执行')
 

@@ -338,6 +338,16 @@ class WeCom:
         return respone["errmsg"]
 
 
+def one():
+    url = 'https://v1.hitokoto.cn/'
+    res = requests.get(url).json()
+    # noinspection PyBroadException
+    try:
+        result = res['hitokoto'] + '  ---' + res['from']
+    except:
+        return '出错了请检查'
+    return result
+
 def send(title, content):
     """
     使用 bark, telegram bot, dingding bot, serverJ 发送手机推送
@@ -345,7 +355,7 @@ def send(title, content):
     :param content:
     :return:
     """
-    content += '\n\n\n开源免费By: https://gitee.com/zhangluo0104/check.git'
+    content += f'{one()}\n\n\n开源免费By: https://gitee.com/zhangluo0104/check.git'
     for i in notify_mode:
         if i == 'bark':
             if BARK:
