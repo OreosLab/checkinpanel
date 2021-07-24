@@ -6,6 +6,8 @@ import requests
 from requests import utils
 from getENV import getENv
 from checksendNotify import send
+
+
 class BiliBiliCheckIn(object):
     # TODO 待测试，需要大会员账号测试领取福利
     def __init__(self, check_item: dict):
@@ -112,7 +114,7 @@ class BiliBiliCheckIn(object):
 
     @staticmethod
     def get_followings(
-        session, uid: int, pn: int = 1, ps: int = 50, order: str = "desc", order_type: str = "attention"
+            session, uid: int, pn: int = 1, ps: int = 50, order: str = "desc", order_type: str = "attention"
     ) -> dict:
         """
         获取指定用户关注的up主
@@ -135,7 +137,7 @@ class BiliBiliCheckIn(object):
 
     @staticmethod
     def space_arc_search(
-        session, uid: int, pn: int = 1, ps: int = 100, tid: int = 0, order: str = "pubdate", keyword: str = ""
+            session, uid: int, pn: int = 1, ps: int = 100, tid: int = 0, order: str = "pubdate", keyword: str = ""
     ) -> dict:
         """
         获取指定up主空间视频投稿信息
@@ -334,7 +336,6 @@ if __name__ == "__main__":
     with open("/ql/config/check.json", "r", encoding="utf-8") as f:
         datas = json.loads(f.read())
     _check_item = datas.get("BILIBILI_COOKIE_LIST", [])[0]
-    res=BiliBiliCheckIn(check_item=_check_item).main()
+    res = BiliBiliCheckIn(check_item=_check_item).main()
     print(res)
-    send('哔哩哔哩',res)
-
+    send('哔哩哔哩', res)
