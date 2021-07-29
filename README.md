@@ -37,7 +37,7 @@
 
 ### 1拉取仓库
 
-ql repo https://gitee.com/zhangluo0104/check.git "ck" "^checksendNotify|^getENV"
+ql repo https://github.com/yuxian158/check.git "ck" "^checksendNotify|^getENV"
 
 ### 2配置
 
