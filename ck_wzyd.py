@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# 20 10 * * *
 import json
 import os
-import time
 from urllib import parse
-from checksendNotify import send
+
 import requests
+from getENV import getENv
+from checksendNotify import send
 
 
 class WZYDCheckIn:
@@ -25,7 +25,7 @@ class WZYDCheckIn:
         return msg
 
     def main(self):
-        wzyd_data = self.check_item
+        wzyd_data = self.check_item.get("wzyd_data")
         data = {k: v[0] for k, v in parse.parse_qs(wzyd_data).items()}
         try:
             user_id = data.get("userId", "")
@@ -38,10 +38,10 @@ class WZYDCheckIn:
 
 
 if __name__ == "__main__":
-    if 'wzyd' in os.environ:
-        print('王者营地签到开始')
-        text = WZYDCheckIn(check_item=os.environ.get('wzyd')).main()
-        localtime = time.asctime(time.localtime(time.time()))
-        result=f'当前时间{localtime}\n结果：{text}'
-        send('王者营地签到',result)
-    else:print('未找到变量请填入')
+    getENv()
+    with open("/ql/config/check.json", "r", encoding="utf-8") as f:
+        datas = json.loads(f.read())
+    _check_item = datas.get("WZYD_DATA_LIST", [])[0]
+    res = WZYDCheckIn(check_item=_check_item).main()
+    print(res)
+    send('王者营地', res)

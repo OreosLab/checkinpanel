@@ -2,7 +2,9 @@
 import requests
 import os
 from checksendNotify import send
-
+from getENV import getENv
+from checksendNotify import send
+import json
 r = requests.Session()
 
 
@@ -96,15 +98,13 @@ def hlx(user, passwd):
 
 
 def start():
-    scriptName = '葫芦侠签到'
-    print(scriptName)
-    if "hlx_username" in os.environ and "hlx_password" in os.environ:
-        print('已经在环境中找到用户名和密码，开始执行程序')
-        res = hlx(os.environ['hlx_username'], os.environ['hlx_password'])
-        result = f' {scriptName} \n {res}'
-        send("葫芦侠", result)
-    else:
-        print('未找到用户名和密码停止执行')
+    getENv()
+    with open("/ql/config/check.json", "r", encoding="utf-8") as f:
+        datas = json.loads(f.read())
+    _check_item = datas.get("HLX", [])[0]
+    res = hlx(user=_check_item.get('user'),passwd=_check_item.get('password'))
+    print(res)
+    send('葫芦侠', res)
 
 
 if __name__ == '__main__':
