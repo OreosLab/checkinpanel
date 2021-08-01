@@ -37,12 +37,26 @@
 
 ### 1拉取仓库
 
-ql repo https://github.com/yuxian158/check.git "ck" "^checksendNotify|^getENV"
+**进入容器后运行以下命令**（docker exec -it ql bash）修改ql为你的青龙容器名字
+
+```
+ql repo https://github.com/yuxian158/check.git "ck_" "" "checksendNotify|getENV"
+cp /ql/repo/yuxian158_check/config.json /ql/config/check.json
+```
 
 ### 2配置
 
-可以参见原文档的config.json
+然后不出意外的话你可以在青龙面板的配置文件下找到check.json文件
 
-[这里](https://sitoi.gitee.io/dailycheckin/settings/)
-编辑好后放入青龙目录/ql/config/check.json
-😘记得修改文件名字
+然后根据原文档修改配置[这里](https://sitoi.gitee.io/dailycheckin/settings/)
+
+## 修改说明
+
+### 1**添加了葫芦侠的签到配置**
+
+​	参数说明：`user`：用户名 `password`:密码的md532位小写加密[生成](https://md5jiami.bmcx.com/)
+
+## 其他说明
+
+1.本库直接使用了青龙的通知配置
+
