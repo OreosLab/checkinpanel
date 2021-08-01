@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 import json
-import os
-
 import requests
 import urllib3
 from getENV import getENv
@@ -66,7 +64,8 @@ class AcFunCheckIn:
     @staticmethod
     def danmu(session, cookies):
         url = "https://api-ipv6.acfunchina.com/rest/app/new-danmaku/add"
-        body = "body=sitoi&color=16777215&id=27259341&mode=1&position=5019&size=25&subChannelId=84&subChannelName=%E4%B8%BB%E6%9C%BA%E5%8D%95%E6%9C%BA&type=douga&videoId=22898696"
+        body = "body=sitoi&color=16777215&id=27259341&mode=1&position=5019&size=25&subChannelId=84&subChannelName=%E4" \
+               "%B8%BB%E6%9C%BA%E5%8D%95%E6%9C%BA&type=douga&videoId=22898696 "
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
         }
@@ -145,4 +144,3 @@ if __name__ == "__main__":
     res = AcFunCheckIn(check_item=_check_item).main()
     print(res)
     send('AcFun', res)
-

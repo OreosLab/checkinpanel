@@ -356,7 +356,7 @@ def send(title, content):
     :return:
     """
     text = one()
-    content += '\n\n\n'+text+'\n开源免费By: https://gitee.com/zhangluo0104/check.git'
+    content += '\n\n\n'+text
     for i in notify_mode:
         if i == 'bark':
             if BARK:
