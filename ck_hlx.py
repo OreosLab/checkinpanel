@@ -100,7 +100,7 @@ def start():
     getENv()
     with open("/ql/config/check.json", "r", encoding="utf-8") as f:
         datas = json.loads(f.read())
-    _check_item = datas.get("HLX", [])[0]
+    _check_item = datas.get("HLX", [])
     res = hlx(user=_check_item.get('user'),passwd=_check_item.get('password'))
     print(res)
     send('葫芦侠', res)
