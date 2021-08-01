@@ -1,7 +1,6 @@
 # 20 9 * * *
 import requests
 import os
-from checksendNotify import send
 from getENV import getENv
 from checksendNotify import send
 import json
