@@ -40,6 +40,7 @@
 **进入容器后运行以下命令**（docker exec -it ql bash）修改ql为你的青龙容器名字
 
 ```
+pip3 install requests
 ql repo https://github.com/yuxian158/check.git "ck_" "" "checksendNotify|getENV"
 cp /ql/repo/yuxian158_check/config.json /ql/config/check.json
 ```
