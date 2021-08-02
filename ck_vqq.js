@@ -9,7 +9,7 @@
 
 [task_local]
 #腾讯视频会员签到
-12 0-23/6 * * * ck_vqq.js
+55 23 * * * ck_vqq.js
 
  */
 
