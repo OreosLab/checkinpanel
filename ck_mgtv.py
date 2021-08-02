@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+建议cron: 23 14 * * *
+new Env('芒果TV');
+"""
 import json
 import os
 import time

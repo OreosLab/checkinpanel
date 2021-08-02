@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-# 魅族社区
+"""
+建议cron: 55 15 * * *
+new Env('魅族社区');
+"""
 import json
 import time
 import requests

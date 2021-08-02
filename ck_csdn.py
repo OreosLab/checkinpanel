@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+建议cron: 30 10 * * *
+new Env('CSDN');
+"""
 import json
 import requests
 from getENV import getENv

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-# 20 7 * * *
+"""
+建议cron: 30 8 * * *
+new Env('哔哩哔哩');
+"""
 import json
 import os
 

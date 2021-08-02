@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+建议cron: 00 8 * * *
+new Env('王者营地');
+"""
 import json
 import os
 from urllib import parse

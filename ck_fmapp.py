@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+建议cron: 30 14 * * *
+new Env('米家');
+"""
 import json
 import requests
 from getENV import getENv

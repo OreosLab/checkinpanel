@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-# 22 9 * * *
+"""
+建议cron: 55 23 * * *
+new Env('爱奇艺');
+"""
 import json
 import os
 import re

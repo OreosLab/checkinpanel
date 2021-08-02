@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-# 全民K歌
+"""
+建议cron: 55 14 * * *
+new Env('全民k歌');
+"""
 import json
 import requests
 from getENV import getENv

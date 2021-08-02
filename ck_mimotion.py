@@ -1,4 +1,8 @@
 # -*- coding: utf8 -*-
+"""
+建议cron: 55 13 * * *
+new Env('小米运动');
+"""
 import json
 import os
 import random

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-# 21 9 * * *
+"""
+建议cron: 30 9 * * *
+new Env('天翼网盘');
+"""
 # 修改来自于 https://github.com/MayoBlueSky/My-Actions/blob/master/function/cloud189/checkin.py
 import base64
 import json

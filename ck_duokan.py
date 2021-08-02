@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+建议cron: 30 20 * * *
+new Env('多看阅读');
+"""
 import json
 import time
 import requests
