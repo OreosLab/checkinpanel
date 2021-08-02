@@ -12,6 +12,7 @@ def getENv():
         else:
             print('未找到配置文件\n')
             print('请添加/ql/config/check.json')
+            exit(1)
     else:
         print('失败 请检查环境')
         exit(0)
