@@ -12,7 +12,6 @@
 
 [青龙](https://github.com/whyour/qinglong.git)
 
-代码来自于[Sitoi/dailycheckin](https://github.com/Sitoi/dailycheckin.git)
 ## 特别声明
 
 - 本仓库发布的脚本及其中涉及的任何解锁和解密分析脚本，仅用于测试和学习研究，禁止用于商业用途，不能保证其合法性，准确性，完整性和有效性，请根据情况自行判断。
@@ -55,11 +54,19 @@ cp /ql/repo/yuxian158_check/config.json /ql/config/check.json
 
 ### 1**添加了葫芦侠的签到配置**
 
-​	参数说明：`HLX.user`：用户名 `HLX.password`:密码的md532位小写加密[生成](https://md5jiami.bmcx.com/)
+​	参数说明：`HLX.user`：用户名 `HLX.password`:密码的MD532位小写加密[生成](https://md5jiami.bmcx.com/)
 
 ## 其他说明
 
 1.本库直接使用了青龙的通知配置
 
-2请自行修改执行时间
+2.请自行修改执行时间
+
+## 致谢
+
+[@Wenmoux](https://github.com/Wenmoux/)  
+
+[@MayoBlueSky](https://github.com/MayoBlueSky)
+
+[@Sitoi](https://github.com/Sitoi)
 

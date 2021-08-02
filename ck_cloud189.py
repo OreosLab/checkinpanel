@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # 21 9 * * *
+# 修改来自于 https://github.com/MayoBlueSky/My-Actions/blob/master/function/cloud189/checkin.py
 import base64
 import json
 import os
@@ -57,7 +58,7 @@ class Cloud189CheckIn:
         return result
 
     def login(self, session, username, password):
-        url = "https://cloud.189.cn/udb/udb_login.jsp?pageId=1&redirectURL=/main.action"
+        url = "https://cloud.189.cn/api/portal/loginUrl.action?redirectURL=https://cloud.189.cn/web/redirect.html"
         r = session.get(url=url)
         captchatoken = re.findall(r"captchaToken' value='(.+?)'", r.text)[0]
         lt = re.findall(r'lt = "(.+?)"', r.text)[0]
