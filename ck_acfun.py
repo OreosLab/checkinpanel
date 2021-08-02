@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+建议cron: 31 7 * * *
+new Env('AcFun');
+"""
 import json
 import requests
 import urllib3

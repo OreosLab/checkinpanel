@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
+"""
+建议cron: 32 7 * * *
+new Env('百度搜索资源平台');
+"""
 import json
 from urllib import parse
-
 import requests
 from getENV import getENv
 from checksendNotify import send
