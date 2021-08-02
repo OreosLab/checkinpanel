@@ -1,4 +1,9 @@
-# 20 9 * * *
+"""
+
+建议cron: 30 7 * * *  python3 ck_hlx.py
+new Env('葫芦侠签到');
+
+"""
 import requests
 import os
 from getENV import getENv
