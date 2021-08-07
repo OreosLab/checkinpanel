@@ -30,3 +30,6 @@ def start():
     res = game163(_check_item.get('Authorization'))
     print(res)
     send("网易云游戏", res)
+
+if __name__ == "__main__":
+    start()

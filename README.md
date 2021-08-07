@@ -52,9 +52,19 @@ cp /ql/repo/yuxian158_check/config.json /ql/config/check.json
 
 ## 修改说明
 
-### 1**添加了葫芦侠的签到配置**
+### 1.**添加了葫芦侠的签到配置**
 
 ​	参数说明：`HLX.user`：用户名 `HLX.password`:密码的MD532位小写加密[生成](https://md5jiami.bmcx.com/)
+
+### 2。**添加了网易云游戏的签到配置**
+
+[官网](https://cg.163.com/#/mobile)
+
+参数说明：`163game.Authorization`
+
+登录后抓取签到请求（一般请求的请求头也有这个字段）
+
+[![fMdyEq.png](https://z3.ax1x.com/2021/08/07/fMdyEq.png)](https://imgtu.com/i/fMdyEq)
 
 ## 其他说明
 
