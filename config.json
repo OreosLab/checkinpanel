@@ -257,5 +257,9 @@
     {
       "user": "",
       "password": ""
-    }
+    },
+  "163game":
+  {
+    "Authorization": ""
+  }
 }
