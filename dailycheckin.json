@@ -5,7 +5,7 @@
     "date":"2021-08-22 16:10:00",
     "list":[
         {
-            "name":"拉取仓库",
+            "name":"签到仓库",
             "type":"schedule",
             "time":"0",
             "job":{
@@ -15,7 +15,7 @@
             "running":true
         },
         {
-            "name":"强制更新",
+            "name":"签到更新",
             "type":"schedule",
             "time":"0",
             "job":{
