@@ -35,7 +35,7 @@
             "running":true
         },
         {
-            "name":"拉取 JS",
+            "name":"签到 JS",
             "type":"schedule",
             "time":"0",
             "job":{
