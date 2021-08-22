@@ -1,12 +1,13 @@
 <div align="center"> 
 <h1 align="center">签到盒 elecV2P 版</h1>
-</div>
+
 
 ![GitHub stars](https://img.shields.io/github/stars/Oreomeow/dailycheckinV2P?style=flat-square)
 ![GitHub forks](https://img.shields.io/github/forks/Oreomeow/dailycheckinV2P?style=flat-square)
 ![GitHub issues](https://img.shields.io/github/issues/Oreomeow/dailycheckinV2P?style=flat-square)
 ![GitHub issues](https://img.shields.io/github/languages/code-size/Oreomeow/dailycheckinV2P?style=flat-square)
 
+</div>
 
 # 一个运行在 elecV2P 的签到函数
 
