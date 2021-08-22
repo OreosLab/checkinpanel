@@ -147,7 +147,7 @@ class Cloud189CheckIn:
 
 def start():
     getENv()
-    with open("/ql/config/check.json", "r", encoding="utf-8") as f:
+    with open("./script/Shell/check.json", "r", encoding="utf-8") as f:
         datas = json.loads(f.read())
     _check_item = datas.get("CLOUD189_ACCOUNT_LIST", [])[0]
     res = Cloud189CheckIn(check_item=_check_item).main()

@@ -33,17 +33,7 @@
                 "target":"pip3 install requests rsa"
             },
             "running":true
-        },        
-        {
-            "name":"拷贝文件",
-            "type":"schedule",
-            "time":"10",
-            "job":{
-                "type":"exec",
-                "target":"cp ./script/Shell/dailycheckinV2P/{checkin.json,checkin.js,notify.js,ck_vqq.js} ./script/JSFile"
-            },
-            "running":true
-        },        
+        },       
         {
             "name":"网易云游戏",
             "type":"cron",
@@ -200,7 +190,7 @@
             "time":"55 23 * * *",
             "job":{
                 "type":"runjs",
-                "target":"ck_vqq.js"
+                "target":"ck_vqq.js -cwd ./script/Shell/dailycheckinV2P"
             },
             "running":true
         },

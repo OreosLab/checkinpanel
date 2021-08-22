@@ -43,7 +43,7 @@ class WZYDCheckIn:
 
 if __name__ == "__main__":
     getENv()
-    with open("/ql/config/check.json", "r", encoding="utf-8") as f:
+    with open("./script/Shell/check.json", "r", encoding="utf-8") as f:
         datas = json.loads(f.read())
     _check_item = datas.get("WZYD_DATA_LIST", [])[0]
     res = WZYDCheckIn(check_item=_check_item).main()

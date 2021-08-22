@@ -103,7 +103,7 @@ def hlx(user, passwd):
 
 def start():
     getENv()
-    with open("/ql/config/check.json", "r", encoding="utf-8") as f:
+    with open("./script/Shell/check.json", "r", encoding="utf-8") as f:
         datas = json.loads(f.read())
     _check_item = datas.get("HLX", [])
     res = hlx(user=_check_item.get('user'),passwd=_check_item.get('password'))

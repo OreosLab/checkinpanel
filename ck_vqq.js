@@ -17,7 +17,7 @@ const $ = new Env('腾讯视频会员签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const fs = require('fs');
 
-let rawdata = fs.readFileSync('/ql/config/check.json');
+let rawdata = fs.readFileSync('./script/Shell/check.json');
 let config = JSON.parse(rawdata);
 let VQQ_COOKIE_LIST = config.VQQ_COOKIE_LIST[0]
 const _cookie = VQQ_COOKIE_LIST.vqq_cookie
