@@ -25,7 +25,7 @@
             "running":false
         },
         {
-            "name":"安装依赖",
+            "name":"签到依赖",
             "type":"schedule",
             "time":"10 2",
             "job":{
