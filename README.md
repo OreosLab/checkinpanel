@@ -34,13 +34,29 @@
 
 ## 使用方法
 
-**下次再填**
+1. TASK -> 添加订阅任务 -> 修改名称、更新方式、任务 -> 获取内容 -> 全部添加
+
+名称：签到项目
+
+同名任务更新方式：`替换`
+
+任务：
+
+```
+https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/dailycheckin.json
+```
+
+2. 下载 [check.sample.json](https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/check.sample.json)，根据 [Sitoi](https://github.com/Sitoi/dailycheckin) 的[配置说明](https://sitoi.gitee.io/dailycheckin/settings/)进行抓包并配置
+
+3. 将 `check.sample.json` 重命名为 `check.json` 后放入 `script/Shell` 文件夹
+
+- OVERVIEW -> EFSS 文件管理界面 -> 是否开启 EFSS 功能：开启 -> 目录：`./script/Shell` -> 选择文件：`check.json` -> 开始上传
 
 ## 修改说明
 
 ### 1. **添加了葫芦侠的签到配置**
 
-​	参数说明：`HLX.user`：用户名 `HLX.password`:密码的MD532位小写加密[生成](https://md5jiami.bmcx.com/)
+​	参数说明：`HLX.user`：用户名 `HLX.password`：密码的MD532位小写加密[生成](https://md5jiami.bmcx.com/)
 
 ### 2. **添加了网易云游戏的签到配置**
 
@@ -56,6 +72,10 @@
 
 1. 请自行修改执行时间
 
+2. 运行 `签到更新` 任务可强制同步本仓库
+
+3. [青龙面板平台签到函数](https://github.com/yuxian158/check)
+
 ## 致谢
 
 [@Wenmoux](https://github.com/Wenmoux/)  
@@ -63,3 +83,5 @@
 [@MayoBlueSky](https://github.com/MayoBlueSky)
 
 [@Sitoi](https://github.com/Sitoi)
+
+[@yuxian158](https://github.com/yuxian158)
