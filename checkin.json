@@ -1,0 +1,218 @@
+{
+    "name":"签到项目",
+    "author":"Leon",
+    "desc":"该订阅适用于 elecV2P，与其他软件并不兼容。相关说明参考：https://github.com/elecV2/elecV2P-dei/tree/master/docs/06-task.md",
+    "date":"2021-08-22 16:10:00",
+    "list":[
+        {
+            "name":"拉取仓库",
+            "type":"schedule",
+            "time":"0",
+            "job":{
+                "type":"exec",
+                "target":"git clone https://github.com/Oreomeow/dailycheckinV2P -cwd script/Shell"
+            },
+            "running":true
+        },
+        {
+            "name":"强制更新",
+            "type":"schedule",
+            "time":"0",
+            "job":{
+                "type":"exec",
+                "target":"git pull -f -cwd script/Shell/dailycheckinV2P"
+            },
+            "running":false
+        },
+        {
+            "name":"安装依赖",
+            "type":"schedule",
+            "time":"10 2",
+            "job":{
+                "type":"exec",
+                "target":"pip3 install requests rsa"
+            },
+            "running":true
+        },        
+        {
+            "name":"拷贝文件",
+            "type":"schedule",
+            "time":"10",
+            "job":{
+                "type":"exec",
+                "target":"cp ./script/Shell/dailycheckinV2P/{checkin.json,checkin.js,notify.js,ck_vqq.js} ./script/JSFile"
+            },
+            "running":true
+        },        
+        {
+            "name":"网易云游戏",
+            "type":"cron",
+            "time":"20 8 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_163game.py"
+            },
+            "running":true
+        },
+        {
+            "name":"AcFun",
+            "type":"cron",
+            "time":"31 7 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_acfun.py"
+            },
+            "running":true
+        },
+        {
+            "name":"百度搜索资源平台",
+            "type":"cron",
+            "time":"32 7 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_baidu_url_submit.py"
+            },
+            "running":true
+        },
+        {
+            "name":"哔哩哔哩",
+            "type":"cron",
+            "time":"30 8 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_bilibili.py"
+            },
+            "running":true
+        },        
+        {
+            "name":"天翼网盘",
+            "type":"cron",
+            "time":"30 9 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_cloud189.py"
+            },
+            "running":true
+        },
+        {
+            "name":"CSDN",
+            "type":"cron",
+            "time":"30 10 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_csdn.py"
+            },
+            "running":true
+        },
+        {
+            "name":"多看阅读",
+            "type":"cron",
+            "time":"30 20 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_duokan.py"
+            },
+            "running":true
+        },
+        {
+            "name":"米家",
+            "type":"cron",
+            "time":"30 14 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_fmapp.py"
+            },
+            "running":true
+        },
+        {
+            "name":"葫芦侠签到",
+            "type":"cron",
+            "time":"30 7 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_hlx.py"
+            },
+            "running":true
+        },
+        {
+            "name":"爱奇艺",
+            "type":"cron",
+            "time":"55 23 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_iqiyi.py"
+            },
+            "running":true
+        },
+        {
+            "name":"全民k歌",
+            "type":"cron",
+            "time":"55 14 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_kgqq.py"
+            },
+            "running":true
+        },
+        {
+            "name":"魅族社区",
+            "type":"cron",
+            "time":"55 15 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_meizu.py"
+            },
+            "running":true
+        },        
+        {
+            "name":"芒果TV",
+            "type":"cron",
+            "time":"23 14 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_mgtv.py"
+            },
+            "running":true
+        },
+        {
+            "name":"小米运动",
+            "type":"cron",
+            "time":"25 20 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_mimotion.py"
+            },
+            "running":true
+        },
+        {
+            "name":"什么值得买",
+            "type":"cron",
+            "time":"51 9 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_smzdm.py"
+            },
+            "running":true
+        },
+        {
+            "name":"腾讯视频会员签到",
+            "type":"cron",
+            "time":"55 23 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"ck_vqq.js"
+            },
+            "running":true
+        },
+        {
+            "name":"王者营地",
+            "type":"cron",
+            "time":"0 8 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_wzyd.py"
+            },
+            "running":true
+        }
+    ]
+}
