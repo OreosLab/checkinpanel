@@ -33,14 +33,14 @@
                 "target":"pip3 install requests rsa"
             },
             "running":true
-        },       
+        },     
         {
             "name":"网易云游戏",
             "type":"cron",
             "time":"20 8 * * *",
             "job":{
                 "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_163game.py"
+                "target":"checkin.js -env PYNAME=ck_163game.py -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },
@@ -50,7 +50,7 @@
             "time":"31 7 * * *",
             "job":{
                 "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_acfun.py"
+                "target":"checkin.js -env PYNAME=ck_acfun.py -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },
@@ -60,7 +60,7 @@
             "time":"32 7 * * *",
             "job":{
                 "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_baidu_url_submit.py"
+                "target":"checkin.js -env PYNAME=ck_baidu_url_submit.py -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },
@@ -70,7 +70,7 @@
             "time":"30 8 * * *",
             "job":{
                 "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_bilibili.py"
+                "target":"checkin.js -env PYNAME=ck_bilibili.py -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },        
@@ -80,7 +80,7 @@
             "time":"30 9 * * *",
             "job":{
                 "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_cloud189.py"
+                "target":"checkin.js -env PYNAME=ck_cloud189.py -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },
@@ -90,7 +90,7 @@
             "time":"30 10 * * *",
             "job":{
                 "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_csdn.py"
+                "target":"checkin.js -env PYNAME=ck_csdn.py -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },
@@ -100,7 +100,7 @@
             "time":"30 20 * * *",
             "job":{
                 "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_duokan.py"
+                "target":"checkin.js -env PYNAME=ck_duokan.py -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },
@@ -110,7 +110,7 @@
             "time":"30 14 * * *",
             "job":{
                 "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_fmapp.py"
+                "target":"checkin.js -env PYNAME=ck_fmapp.py -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },
@@ -120,7 +120,7 @@
             "time":"30 7 * * *",
             "job":{
                 "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_hlx.py"
+                "target":"checkin.js -env PYNAME=ck_hlx.py -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },
@@ -130,7 +130,7 @@
             "time":"55 23 * * *",
             "job":{
                 "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_iqiyi.py"
+                "target":"checkin.js -env PYNAME=ck_iqiyi.py -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },
@@ -140,7 +140,7 @@
             "time":"55 14 * * *",
             "job":{
                 "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_kgqq.py"
+                "target":"checkin.js -env PYNAME=ck_kgqq.py -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },
@@ -150,7 +150,7 @@
             "time":"55 15 * * *",
             "job":{
                 "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_meizu.py"
+                "target":"checkin.js -env PYNAME=ck_meizu.py -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },        
@@ -160,7 +160,7 @@
             "time":"23 14 * * *",
             "job":{
                 "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_mgtv.py"
+                "target":"checkin.js -env PYNAME=ck_mgtv.py -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },
@@ -170,7 +170,7 @@
             "time":"25 20 * * *",
             "job":{
                 "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_mimotion.py"
+                "target":"checkin.js -env PYNAME=ck_mimotion.py -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },
@@ -180,7 +180,7 @@
             "time":"51 9 * * *",
             "job":{
                 "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_smzdm.py"
+                "target":"checkin.js -env PYNAME=ck_smzdm.py -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },
@@ -190,7 +190,7 @@
             "time":"55 23 * * *",
             "job":{
                 "type":"runjs",
-                "target":"ck_vqq.js -cwd ./script/Shell/dailycheckinV2P"
+                "target":"ck_vqq.js -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },
@@ -200,7 +200,7 @@
             "time":"0 8 * * *",
             "job":{
                 "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_wzyd.py"
+                "target":"checkin.js -env PYNAME=ck_wzyd.py -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         }
