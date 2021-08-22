@@ -10,7 +10,7 @@
 
 # 一个运行在 elecV2P 的签到函数
 
-[青龙](https://github.com/elecV2/elecV2P.git)
+[elecV2P](https://github.com/elecV2/elecV2P.git)
 
 ## 特别声明
 
@@ -38,11 +38,11 @@
 
 ## 修改说明
 
-### 1.**添加了葫芦侠的签到配置**
+### 1. **添加了葫芦侠的签到配置**
 
 ​	参数说明：`HLX.user`：用户名 `HLX.password`:密码的MD532位小写加密[生成](https://md5jiami.bmcx.com/)
 
-### 2.**添加了网易云游戏的签到配置**
+### 2. **添加了网易云游戏的签到配置**
 
 [官网](https://cg.163.com/#/mobile)
 
@@ -54,7 +54,7 @@
 
 ## 其他说明
 
-1.请自行修改执行时间
+1. 请自行修改执行时间
 
 ## 致谢
 
