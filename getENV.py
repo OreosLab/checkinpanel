@@ -2,8 +2,8 @@ import os
 
 
 def getENv():
-    v2p_new='./script/Lists/task.list'
-    config_file = './script/Shell/check.json'
+    v2p_new='/usr/local/app/script/Lists/task.list'
+    config_file = '/usr/local/app/script/Shell/check.json'
     print('尝试检查环境\n')
     if os.path.exists(v2p_new):
         print('成功 当前环境为 v2p 面板继续执行')

@@ -142,7 +142,7 @@ class AcFunCheckIn:
 
 if __name__ == "__main__":
     getENv()
-    with open("./script/Shell/check.json", "r", encoding="utf-8") as f:
+    with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
         datas = json.loads(f.read())
     _check_item = datas.get("ACFUN_ACCOUNT_LIST", [])[0]
     res = AcFunCheckIn(check_item=_check_item).main()

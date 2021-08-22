@@ -24,7 +24,7 @@ def game163(Authorization):
 
 def start():
     getENv()
-    with open("./script/Shell/check.json", "r", encoding="utf-8") as f:
+    with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
         datas = json.loads(f.read())
     _check_item = datas.get("163game", [])
     res = game163(_check_item.get('Authorization'))
