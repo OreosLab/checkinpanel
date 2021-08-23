@@ -5,7 +5,7 @@
 ![GitHub forks](https://img.shields.io/github/forks/Oreomeow/dailycheckinV2P?color=brightgreen&style=flat-square)
 <a href="https://github.com/Oreomeow/dailycheckinV2P/issues"><img src="https://img.shields.io/github/issues/Oreomeow/freenom-py?color=orange&style=flat-square" alt="GitHub issues"></a>
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Oreomeow/dailycheckinV2P?color=informational&logo=Python&logoColor=informational&style=flat-square)
-<a href="https://t.me/joinchat/h3Y8yTMRhWViOWFl"><img src="https://img.shields.io/badge/Talk-Telegram-blue?logo=Telegram&style=flat-square" alt="Telegram"></a>
+<a href="https://t.me/joinchat/h3Y8yTMRhWViOWFl"><img src="https://img.shields.io/badge/talk-Telegram-blue?logo=Telegram&style=flat-square" alt="Telegram"></a>
 ![GitHub last commit](https://img.shields.io/github/last-commit/Oreomeow/dailycheckinV2P?color=success&logo=GitHub&style=flat-square)
 
 </div>
