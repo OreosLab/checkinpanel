@@ -56,7 +56,7 @@ https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/dailycheckin.j
 
 4. JSMANAGE -> store/cookie 常量储存管理填写通知环境变量
 
-| 变量 | 描述 | 参考 |
+| 变量 / key | 描述 | 参考 / value |
 | --- | --- |  --- |
 | BARK | bark 服务 | BARK 推送[使用](https://github.com/Sitoi/dailycheckin/issues/29)，填写 `BARK_URL` 即可，例如：`https://api.day.app/DxHcxxxxxRxxxxxxcm/`，此参数如果以 `http` 或者 `https` 开头则判定为自建 bark 服务 |
 | SCKEY | Server 酱 | server 酱推送[官方文档](https://sc.ftqq.com/3.version)，填写 `SCKEY` 代码即可
