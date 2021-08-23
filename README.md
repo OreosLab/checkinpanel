@@ -1,5 +1,5 @@
 <div align="center"> 
-<h1 align="center">签到盒 elecV2P 版</h1>
+<h1 align="center">签到盒 𝐞𝐥𝐞𝐜𝐕𝟐𝐏 版</h1>
 
 ![GitHub stars](https://img.shields.io/github/stars/Oreomeow/dailycheckinV2P?color=brightgreen&logo=Riseup&logoColor=brightgreen&style=flat-square)
 ![GitHub forks](https://img.shields.io/github/forks/Oreomeow/dailycheckinV2P?color=brightgreen&style=flat-square)
@@ -10,9 +10,9 @@
 
 </div>
 
-# 一个运行在 elecV2P 的签到函数
+# 一个运行在 𝐞𝐥𝐞𝐜𝐕𝟐𝐏 的签到函数
 
-[elecV2P](https://github.com/elecV2/elecV2P.git)
+[𝐞𝐥𝐞𝐜𝐕𝟐𝐏](https://github.com/elecV2/elecV2P.git)
 
 ## 特别声明
 
@@ -60,8 +60,8 @@ https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/dailycheckin.j
 | --- | --- |  --- |
 | BARK | bark 服务 | BARK 推送[使用](https://github.com/Sitoi/dailycheckin/issues/29)，填写 `BARK_URL` 即可，例如：`https://api.day.app/DxHcxxxxxRxxxxxxcm/`，此参数如果以 `http` 或者 `https` 开头则判定为自建 bark 服务 |
 | SCKEY | Server 酱 | server 酱推送[官方文档](https://sc.ftqq.com/3.version)，填写 `SCKEY` 代码即可
-| TG_BOT_TOKEN | tg 机器人 | 申请 @BotFather 的 Token，如 `10xxx4:AAFcqxxxxgER5uw` |
-| TG_USER_ID | tg 机器人 | @getuseridbot 中获取到的纯数字 ID，如 `1434078534` |
+| TG_BOT_TOKEN | tg 机器人 | 申请 [@BotFather](https://t.me/BotFather) 的 Token，如 `10xxx4:AAFcqxxxxgER5uw` |
+| TG_USER_ID | tg 机器人 | 给 [@getidsbot](https://t.me/getidsbot) 发送 /start 获取到的纯数字 ID，如 `1434078534` |
 | TG_API_HOST | * tg 代理 api | Telegram api 自建的反向代理地址 例子：反向代理地址 `http://aaa.bbb.ccc` 则填写 aaa.bbb.ccc [简略搭建教程](https://shimo.im/docs/JD38CJDQtYy3yTd8/read) |
 | TG_PROXY_IP | * tg 机器人代理 IP 地址 | 代理类型为 http，比如您代理是 `http://127.0.0.1:1080`，则填写 `127.0.0.1`，有密码例子: `username:password@127.0.0.1` |
 | TG_PROXY_PORT | * tg 机器人代理端口 | 代理端口号，代理类型为 http，比如您代理是 `http://127.0.0.1:1080`，则填写 `1080` |
@@ -79,7 +79,7 @@ https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/dailycheckin.j
 
 - 调用模块
 
-> [checksendNotify.py](https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/checksendNotify.py)
+> [𝒄𝒉𝒆𝒄𝒌𝒔𝒆𝒏𝒅𝑵𝒐𝒕𝒊𝒇𝒚.𝒑𝒚](https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/checksendNotify.py)
 
 ## 修改说明
 
@@ -105,15 +105,23 @@ https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/dailycheckin.j
 
 3. [青龙面板平台签到函数](https://github.com/yuxian158/check)
 
+## 计划说明
+| 状态 | \*语言 | 名称 |
+| --- | --- | --- |
+- [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | 网易云游戏 | AcFun | 百度搜索资源平台 | 哔哩哔哩 | 天翼云盘 | CSDN | 多看阅读 | 米家 | 葫芦侠签到 | 爱奇艺 | 全民k歌 | 魅族社区 | 芒果TV | 小米运动 | 什么值得买 | 王者营地
+- [x] 𝑱𝒂𝒗𝒂𝑺𝒄𝒓𝒊𝒑𝒕 | 腾讯视频会员签到
+- [ ] 网易云音乐
+- [ ] 𝑺𝒉𝒆𝒍𝒍 | SSPannel
+
 ## 致谢
 
-[@Wenmoux](https://github.com/Wenmoux/)  
+[@𝐰𝐞𝐧𝐦𝐨𝐮𝐱](https://github.com/Wenmoux/)  
 
-[@MayoBlueSky](https://github.com/MayoBlueSky)
+[@𝐌𝐚𝐲𝐨𝐁𝐥𝐮𝐞𝐒𝐤𝐲](https://github.com/MayoBlueSky)
 
-[@Sitoi](https://github.com/Sitoi)
+[@𝐒𝐢𝐭𝐨𝐢](https://github.com/Sitoi)
 
-[@yuxian158](https://github.com/yuxian158)
+[@𝐲𝐮𝐱𝐢𝐚𝐧𝟏𝟓𝟖](https://github.com/yuxian158)
 
 ## 历史 Star 数
 
