@@ -114,3 +114,7 @@ https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/dailycheckin.j
 [@Sitoi](https://github.com/Sitoi)
 
 [@yuxian158](https://github.com/yuxian158)
+
+## 历史 Star 数
+
+[![Stargazers over time](https://starchart.cc/Oreomeow/dailycheckinV2P.svg)](https://starchart.cc/Oreomeow/dailycheckinV2P)
