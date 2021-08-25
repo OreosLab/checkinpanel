@@ -110,8 +110,8 @@ https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/dailycheckin.j
 | --- | --- | --- |
 - [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | 网易云游戏 | AcFun | 百度搜索资源平台 | 哔哩哔哩 | 天翼云盘 | CSDN | 多看阅读 | 米家 | 葫芦侠签到 | 爱奇艺 | 全民k歌 | 魅族社区 | 芒果TV | 小米运动 | 什么值得买 | 王者营地
 - [x] 𝑱𝒂𝒗𝒂𝑺𝒄𝒓𝒊𝒑𝒕 | 腾讯视频会员签到
+- [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | 机场签到
 - [ ] 网易云音乐
-- [ ] 𝑺𝒉𝒆𝒍𝒍 | SSPannel
 
 ## 致谢
 

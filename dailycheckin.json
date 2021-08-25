@@ -65,6 +65,16 @@
             "running":true
         },
         {
+            "name":"机场签到",
+            "type":"cron",
+            "time":"20 10 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_airport.py"
+            },
+            "running":true
+        },
+        {
             "name":"百度搜索资源平台",
             "type":"cron",
             "time":"32 7 * * *",
