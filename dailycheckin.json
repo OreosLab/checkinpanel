@@ -20,7 +20,7 @@
             "time":"0",
             "job":{
                 "type":"exec",
-                "target":"git pull -f -cwd script/Shell/dailycheckinV2P"
+                "target":"git checkout . && git pull -cwd script/Shell/dailycheckinV2P"
             },
             "running":false
         },
