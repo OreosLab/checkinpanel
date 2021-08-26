@@ -99,7 +99,7 @@ https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/dailycheckin.j
 
 ### 3. **添加了两种机场签到**
 
-Shell 版本的 将 `env.example` 配置好后改名为 `.env` 后放入 `script/Shell/dailycheckinV2P` 文件夹
+Shell 版本将 `env.example` 配置好后改名为 `.env` 后放入 `script/Shell/dailycheckinV2P` 文件夹
 
 ## 其他说明
 
