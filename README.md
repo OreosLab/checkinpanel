@@ -97,6 +97,10 @@ https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/dailycheckin.j
 
 [![fMdyEq.png](https://z3.ax1x.com/2021/08/07/fMdyEq.png)](https://imgtu.com/i/fMdyEq)
 
+### 3. **添加了两种机场签到**
+
+Shell 版本的 将 `env.example` 配置好后改名为 `.env` 后放入 `script/Shell/dailycheckinV2P` 文件夹
+
 ## 其他说明
 
 1. 请自行修改执行时间
@@ -111,6 +115,7 @@ https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/dailycheckin.j
 - [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | 网易云游戏 | AcFun | 百度搜索资源平台 | 哔哩哔哩 | 天翼云盘 | CSDN | 多看阅读 | 米家 | 葫芦侠签到 | 爱奇艺 | 全民k歌 | 魅族社区 | 芒果TV | 小米运动 | 什么值得买 | 王者营地
 - [x] 𝑱𝒂𝒗𝒂𝑺𝒄𝒓𝒊𝒑𝒕 | 腾讯视频会员签到
 - [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | 机场签到
+- [x] 𝑺𝒉𝒆𝒍𝒍 | SSPanel 签到 
 - [ ] 网易云音乐
 
 ## 致谢
