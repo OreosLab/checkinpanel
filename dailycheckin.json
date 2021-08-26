@@ -209,7 +209,7 @@
             "type":"cron",
             "time":"26 10 * * *",
             "job":{
-                "type":"exec",
+                "type":"runjs",
                 "target":"checkin.js -env NAME=ck_sspanel.sh"
             },
             "running":true
