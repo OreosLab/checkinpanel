@@ -219,8 +219,8 @@
             "type":"cron",
             "time":"26 10 * * *",
             "job":{
-                "type":"runjs",
-                "target":"checkinsh.js -env SHNAME=ck_sspanel.sh"
+                "type":"exec",
+                "target":"bash ck_sspanel.sh -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },
