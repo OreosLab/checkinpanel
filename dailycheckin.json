@@ -35,7 +35,7 @@
             "running":true
         },
         {
-            "name":"签到 JS",
+            "name":"PY-JS",
             "type":"schedule",
             "time":"0",
             "job":{
@@ -43,7 +43,17 @@
                 "target":"wget https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/checkin.js -O checkin.js -cwd script/JSFile"
             },
             "running":true
-        },   
+        },
+        {
+            "name":"SH-JS",
+            "type":"schedule",
+            "time":"0",
+            "job":{
+                "type":"exec",
+                "target":"wget https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/checkinsh.js -O checkinsh.js -cwd script/JSFile"
+            },
+            "running":true
+        },        
         {
             "name":"网易云游戏",
             "type":"cron",
