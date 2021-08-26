@@ -1,6 +1,6 @@
 #!/bin/bash
 
-<<'COMMENT'
+: << EOF
 cron: 26 10 * * *
 new Env('SSPanel 签到');
 环境变量说明
@@ -16,7 +16,7 @@ CORPID: xxxxxx                                           企业微信 ID，填�
 AGENTID: 100001                                          企业微信应用 ID，填写申请应用的 ID
 CORPSECRET: xxxxxxxxxxxxxxx                              企业微信对应的 SECRET
 DISPLAY_CONTEXT: 1                                       任务执行时是否显示详细信息，1 显示 0 关闭，默认值 1
-COMMENT
+EOF
 
 PATH="/usr/local/bin:/usr/bin:/bin"
 

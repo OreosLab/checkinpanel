@@ -1,7 +1,7 @@
 // @grant nodejs
-let pyname = $env.PYNAME
-console.log(`⏳ 开始执行 ${pyname}`)
-$exec(`python3 https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/${pyname}`, {
+let name = $env.NAME
+console.log(`⏳ 开始执行 ${name}`)
+$exec(`python3 https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/${name}`, {
     cwd: './script/Shell/dailycheckinV2P',
     timeout: 0,
     env: {
