@@ -67,12 +67,12 @@
         {
             "name":"机场签到",
             "type":"cron",
-            "time":"20 10 * * *",
+            "time":"28 11 * * *",
             "job":{
                 "type":"runjs",
                 "target":"checkin.js -env PYNAME=ck_airport.py"
             },
-            "running":true
+            "running":false
         },
         {
             "name":"百度搜索资源平台",
@@ -201,6 +201,16 @@
             "job":{
                 "type":"runjs",
                 "target":"checkin.js -env PYNAME=ck_smzdm.py"
+            },
+            "running":true
+        },
+        {
+            "name":"SSPanel 签到",
+            "type":"cron",
+            "time":"26 10 * * *",
+            "job":{
+                "type":"exec",
+                "target":"bash ck_sspanel.sh -cwd script/Shell/dailycheckinV2P"
             },
             "running":true
         },
