@@ -18,8 +18,8 @@ from checksendNotify import send
 requests.packages.urllib3.disable_warnings()
 
 class SspanelQd(object):
-    def __init__(self,check_item):
-        self.check_item = check_item
+    def __init__(self, airport_account_list):
+        self.airport_account_list = airport_account_list
 
     @staticmethod
     def checkin(url,email,password):
@@ -32,15 +32,12 @@ class SspanelQd(object):
             session.get(url, verify=False)  
         except requests.exceptions.ConnectionError:
             msg = url + '\n\n' + '网络不通'
-            print(msg)
             return msg
         except requests.exceptions.ChunkedEncodingError:
             msg = url + '\n\n' + '分块编码错误'
-            print(msg)
             return msg
         except:
             msg = url + '\n\n' + '未知错误'
-            print(msg)
             return msg
 
         login_url = url + '/auth/login'
@@ -60,8 +57,7 @@ class SspanelQd(object):
 
         response = session.post(url + '/user/checkin', headers=headers, verify=False)
         # print(response.text)
-        msg = (response.json()).get('msg')
-        print(msg)
+        msg = url + '\n\n' + (response.json()).get('msg')
 
         info_url = url + '/user'
         response = session.get(info_url, verify=False)
@@ -72,27 +68,29 @@ class SspanelQd(object):
             level = re.findall(r'\["Class", "(.*?)"],', response.text)[0]
             day = re.findall(r'\["Class_Expire", "(.*)"],', response.text)[0]
             rest = re.findall(r'\["Unused_Traffic", "(.*?)"]', response.text)[0]
-            msg = "- 今日签到信息：" + str(msg) + "\n- 用户等级：" + str(level) + "\n- 到期时间：" + str(day) + "\n- 剩余流量：" + str(rest)
-            print(msg)
+            msg = url + '\n\n' + "- 今日签到信息：" + str(msg) + "\n- 用户等级：" + str(level) + "\n- 到期时间：" + str(day) + "\n- 剩余流量：" + str(rest)
             return msg
         except:
             return msg
         
     def main(self):
-        # 机场地址
-        url = str(self.check_item.get("airport_url"))
-        # 登录信息
-        email = str(self.check_item.get("airport_email"))
-        password = str(self.check_item.get("airport_password"))
-        msg = self.checkin(url,email,password)
-        return msg
+        msg_all = ""
+        for airport_account in self.airport_account_list:
+            # 机场地址
+            url = str(airport_account.get("airport_url"))
+            # 登录信息
+            email = str(airport_account.get("airport_email"))
+            password = str(airport_account.get("airport_password"))
+            msg = self.checkin(url,email,password)
+            msg_all += msg + '\n\n'
+        return msg_all
 
 def start():
     getENv()
     with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
         datas = json.loads(f.read())
-    _check_item = datas.get("AIRPORT_ACCOUNT_LIST", [])[0]
-    res=SspanelQd(check_item=_check_item).main()
+    _airport_account_list = datas.get("AIRPORT_ACCOUNT_LIST", [])
+    res = SspanelQd(airport_account_list=_airport_account_list).main()
     print(res)
     send('机场签到', res)
 
