@@ -31,13 +31,13 @@ class SspanelQd(object):
             # 通过捕获然后等待网络情况的变化，以此来保护程序的不间断运行
             session.get(url, verify=False)  
         except requests.exceptions.ConnectionError:
-            msg = url + '\n\n' + '网络不通'
+            msg = url + '\n' + '网络不通'
             return msg
         except requests.exceptions.ChunkedEncodingError:
-            msg = url + '\n\n' + '分块编码错误'
+            msg = url + '\n' + '分块编码错误'
             return msg
         except:
-            msg = url + '\n\n' + '未知错误'
+            msg = url + '\n' + '未知错误'
             return msg
 
         login_url = url + '/auth/login'
@@ -57,7 +57,7 @@ class SspanelQd(object):
 
         response = session.post(url + '/user/checkin', headers=headers, verify=False)
         # print(response.text)
-        msg = url + '\n\n' + (response.json()).get('msg')
+        msg = url + '\n' + (response.json()).get('msg')
 
         info_url = url + '/user'
         response = session.get(info_url, verify=False)
@@ -68,7 +68,7 @@ class SspanelQd(object):
             level = re.findall(r'\["Class", "(.*?)"],', response.text)[0]
             day = re.findall(r'\["Class_Expire", "(.*)"],', response.text)[0]
             rest = re.findall(r'\["Unused_Traffic", "(.*?)"]', response.text)[0]
-            msg = url + '\n\n' + "- 今日签到信息：" + str(msg) + "\n- 用户等级：" + str(level) + "\n- 到期时间：" + str(day) + "\n- 剩余流量：" + str(rest)
+            msg = url + '\n' + "- 今日签到信息：" + str(msg) + "\n- 用户等级：" + str(level) + "\n- 到期时间：" + str(day) + "\n- 剩余流量：" + str(rest)
             return msg
         except:
             return msg
