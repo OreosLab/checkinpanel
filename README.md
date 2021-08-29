@@ -107,7 +107,7 @@ ql repo https://github.com/Oreomeow/dailycheckin.git "ck_" "" "checksendNotify|g
 ### 4. 拷贝文件
 
 ```
-cp /ql/repo/yuxian158_check/config.json /ql/config/check.json
+cp /ql/repo/Oreomeow_checkinpanel/check.sample.json /ql/config/check.json
 ```
 
 ### 5. 抓包配置
