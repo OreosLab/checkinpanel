@@ -64,9 +64,6 @@ if __name__ == "__main__":
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
             datas = json.loads(f.read())
-    else:
-        print('加载配置文件失败，请检查！')
-        exit(1)
     _csdn_cookie_list = datas.get("CSDN_COOKIE_LIST", [])
     res = CSDNCheckIn(csdn_cookie_list=_csdn_cookie_list).main()
     print(res)

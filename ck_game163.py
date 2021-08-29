@@ -42,9 +42,6 @@ def start():
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
             datas = json.loads(f.read())
-    else:
-        print('加载配置文件失败，请检查！')
-        exit(1)
     _game163_auth_list = datas.get("GAME163_AUTH_LIST", [])
     res = Game163Checkin(game163_auth_list=_game163_auth_list).main()
     print(res)
