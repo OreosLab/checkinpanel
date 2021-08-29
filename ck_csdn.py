@@ -4,7 +4,7 @@ cron: 30 10 * * *
 new Env('CSDN');
 """
 
-import json, requests
+import json, os, requests
 from getENV import getENv
 from checksendNotify import send
 
@@ -42,7 +42,7 @@ class CSDNCheckIn:
         msg_all = ""
         for csdn_cookie in self.csdn_cookie_list:
             csdn_cookie = {
-                item.split("=")[0]: item.split("=")[1] for item in self.csdn_cookie.get("csdn_cookie").split("; ")
+                item.split("=")[0]: item.split("=")[1] for item in csdn_cookie.get("csdn_cookie").split("; ")
             }
             try:
                 user_name = csdn_cookie.get("UserName", "")

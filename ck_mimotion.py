@@ -65,15 +65,15 @@ class MiMotion:
     def main(self):
         msg_all = ""
         for mimotion_account in self.mimotion_account_list:
-            phone = str(self.mimotion_account.get("mimotion_phone"))
-            password = str(self.mimotion_account.get("mimotion_password"))
+            phone = str(mimotion_account.get("mimotion_phone"))
+            password = str(mimotion_account.get("mimotion_password"))
             try:
-                min_step = int(self.mimotion_account.get("mimotion_min_step", 10000))
+                min_step = int(mimotion_account.get("mimotion_min_step", 10000))
             except Exception as e:
                 print("初始化步数失败: 已将最小值设置为 19999", e)
                 min_step = 10000
             try:
-                max_step = int(self.mimotion_account.get("mimotion_max_step", 19999))
+                max_step = int(mimotion_account.get("mimotion_max_step", 19999))
             except Exception as e:
                 print("初始化步数失败: 已将最大值设置为 19999", e)
                 max_step = 19999

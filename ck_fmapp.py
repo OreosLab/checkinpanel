@@ -67,13 +67,13 @@ class FMAPPCheckIn:
     def main(self):
         msg_all = ""
         for fmapp_account in self.fmapp_account_list:
-            fmapp_token = self.fmapp_account.get("fmapp_token")
-            fmapp_cookie = self.fmapp_account.get("fmapp_cookie")
-            fmapp_blackbox = self.fmapp_account.get("fmapp_blackbox")
-            fmapp_device_id = self.fmapp_account.get("fmapp_device_id")
-            fmapp_fmversion = self.fmapp_account.get("fmapp_fmversion", "2.2.3")
-            fmapp_os = self.fmapp_account.get("fmapp_os", "ios")
-            fmapp_useragent = self.fmapp_account.get("fmapp_useragent", "Fa")
+            fmapp_token = fmapp_account.get("fmapp_token")
+            fmapp_cookie = fmapp_account.get("fmapp_cookie")
+            fmapp_blackbox = fmapp_account.get("fmapp_blackbox")
+            fmapp_device_id = fmapp_account.get("fmapp_device_id")
+            fmapp_fmversion = fmapp_account.get("fmapp_fmversion", "2.2.3")
+            fmapp_os = fmapp_account.get("fmapp_os", "ios")
+            fmapp_useragent = fmapp_account.get("fmapp_useragent", "Fa")
             headers = {
                 "Accept": "*/*",
                 "Accept-Language": "zh-Hans;q=1.0",

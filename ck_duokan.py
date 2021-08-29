@@ -342,7 +342,7 @@ class DuoKanCheckIn:
         msg_all = ""
         for duokan_cookie in self.duokan_cookie_list:
             duokan_cookie = {
-                item.split("=")[0]: item.split("=")[1] for item in self.duokan_cookie.get("duokan_cookie").split("; ")
+                item.split("=")[0]: item.split("=")[1] for item in duokan_cookie.get("duokan_cookie").split("; ")
             }
             sign_msg = self.sign(cookies=duokan_cookie)
             free_msg = self.free(cookies=duokan_cookie)

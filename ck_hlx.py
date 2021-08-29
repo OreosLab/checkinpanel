@@ -101,8 +101,8 @@ class HLXCheckin:
     def main(self):
         msg_all = ""
         for hlx_account in self.hlx_account_list: 
-            user = self.hlx_account.get('user')
-            passwd = self.hlx_account.get('password')
+            user = hlx_account.get('user')
+            passwd = hlx_account.get('password')
             nick, key, s_key = self.login(user, passwd)
             self.check(key)
             msg = "用户名：" + nick + self.category(key)

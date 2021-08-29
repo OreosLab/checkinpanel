@@ -43,7 +43,7 @@ class SmzdmCheckIn:
         msg_all = ""
         for smzdm_cookie in self.smzdm_cookie_list:
             smzdm_cookie = {
-                item.split("=")[0]: item.split("=")[1] for item in self.smzdm_cookie.get("smzdm_cookie").split("; ")
+                item.split("=")[0]: item.split("=")[1] for item in smzdm_cookie.get("smzdm_cookie").split("; ")
             }
             session = requests.session()
             requests.utils.add_dict_to_cookiejar(session.cookies, smzdm_cookie)
