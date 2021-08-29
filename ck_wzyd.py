@@ -27,6 +27,7 @@ class WZYDCheckIn:
         return msg
 
     def main(self):
+        msg_all = ""
         for wzyd_data in self.wzyd_data_list:
             wzyd_data = self.wzyd_data.get("wzyd_data")
             data = {k: v[0] for k, v in parse.parse_qs(wzyd_data).items()}

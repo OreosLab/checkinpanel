@@ -48,6 +48,7 @@ class MgtvCheckIn:
         return msg
 
     def main(self):
+        msg_all = ""
         for mgtv_cookie in self.mgtv_params_list:
             mgtv_params = mgtv_cookie.get("mgtv_params")
             params = parse.parse_qs(mgtv_params)

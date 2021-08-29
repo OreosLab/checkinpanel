@@ -124,6 +124,7 @@ class KGQQCheckIn:
         return kg_message
 
     def main(self):
+        msg_all = ""
         for kgqq_cookie in self.kgqq_cookie_list:
             kgqq_cookie = kgqq_cookie.get("kgqq_cookie")
             msg = self.sign(kgqq_cookie=kgqq_cookie)

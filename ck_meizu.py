@@ -79,6 +79,7 @@ class MeizuCheckIn:
         return draw_msg, uid
 
     def main(self):
+        msg_all = ""
         for meizu_info in self.meizu_cookie_list:
             meizu_cookie = meizu_info.get("meizu_cookie")
             try:

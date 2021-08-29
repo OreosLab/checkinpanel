@@ -40,6 +40,7 @@ class SmzdmCheckIn:
         return msg
 
     def main(self):
+        msg_all = ""
         for smzdm_cookie in self.smzdm_cookie_list:
             smzdm_cookie = {
                 item.split("=")[0]: item.split("=")[1] for item in self.smzdm_cookie.get("smzdm_cookie").split("; ")

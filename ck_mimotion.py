@@ -63,6 +63,7 @@ class MiMotion:
         return login_token, userid
 
     def main(self):
+        msg_all = ""
         for mimotion_account in self.mimotion_account_list:
             phone = str(self.mimotion_account.get("mimotion_phone"))
             password = str(self.mimotion_account.get("mimotion_password"))
