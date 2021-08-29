@@ -11,8 +11,8 @@ from checksendNotify import send
 
 
 class MgtvCheckIn:
-    def __init__(self, check_item):
-        self.check_item = check_item
+    def __init__(self, mgtv_params_list):
+        self.mgtv_params_list = mgtv_params_list
 
     @staticmethod
     def sign(params):
@@ -48,12 +48,14 @@ class MgtvCheckIn:
         return msg
 
     def main(self):
-        mgtv_params = self.check_item.get("mgtv_params")
-        params = parse.parse_qs(mgtv_params)
-        params["timestamp"] = [round(time.time())]
-        params = {key: value[0] for key, value in params.items()}
-        msg = self.sign(params=params)
-        return msg
+        for mgtv_cookie in self.mgtv_params_list:
+            mgtv_params = mgtv_cookie.get("mgtv_params")
+            params = parse.parse_qs(mgtv_params)
+            params["timestamp"] = [round(time.time())]
+            params = {key: value[0] for key, value in params.items()}
+            msg = self.sign(params=params)
+            msg_all += msg + '\n\n'
+        return msg_all
 
 
 if __name__ == "__main__":
@@ -64,7 +66,7 @@ if __name__ == "__main__":
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
             datas = json.loads(f.read())
-    _check_item = datas.get("MGTV_PARAMS_LIST", [])[0]
-    res = MgtvCheckIn(check_item=_check_item).main()
+    _mgtv_params_list = datas.get("MGTV_PARAMS_LIST", [])
+    res = MgtvCheckIn(mgtv_params_list=_mgtv_params_list).main()
     print(res)
     send("芒果 TV",res)

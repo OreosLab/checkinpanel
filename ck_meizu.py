@@ -10,8 +10,8 @@ from checksendNotify import send
 
 
 class MeizuCheckIn:
-    def __init__(self, check_item):
-        self.check_item = check_item
+    def __init__(self, meizu_cookie_list):
+        self.meizu_cookie_list = meizu_cookie_list
 
     @staticmethod
     def sign(cookie):
@@ -79,16 +79,18 @@ class MeizuCheckIn:
         return draw_msg, uid
 
     def main(self):
-        meizu_cookie = self.check_item.get("meizu_cookie")
-        try:
-            draw_count = int(self.check_item.get("draw_count", 0))
-        except Exception as e:
-            print("初始化抽奖次数失败: 重置为 0 ", str(e))
-            draw_count = 0
-        sign_msg = self.sign(cookie=meizu_cookie)
-        draw_msg, uid = self.draw(cookie=meizu_cookie, count=draw_count)
-        msg = f"帐号信息: {uid}\n签到信息: {sign_msg}\n{draw_msg}"
-        return msg
+        for meizu_info in self.meizu_cookie_list:
+            meizu_cookie = meizu_info.get("meizu_cookie")
+            try:
+                draw_count = int(meizu_info.get("draw_count", 0))
+            except Exception as e:
+                print("初始化抽奖次数失败: 重置为 0 ", str(e))
+                draw_count = 0
+            sign_msg = self.sign(cookie=meizu_cookie)
+            draw_msg, uid = self.draw(cookie=meizu_cookie, count=draw_count)
+            msg = f"帐号信息: {uid}\n签到信息: {sign_msg}\n{draw_msg}"
+            msg_all += msg + '\n\n'
+        return msg_all
 
 
 if __name__ == "__main__":
@@ -99,7 +101,7 @@ if __name__ == "__main__":
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
             datas = json.loads(f.read())
-    _check_item = datas.get("MEIZU_COOKIE_LIST", [])[0]
-    res = MeizuCheckIn(check_item=_check_item).main()
+    _meizu_cookie_list = datas.get("MEIZU_COOKIE_LIST", [])
+    res = MeizuCheckIn(meizu_cookie_list=_meizu_cookie_list).main()
     print(res)
     send("MEIZU 社区",res)

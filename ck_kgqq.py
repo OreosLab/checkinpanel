@@ -10,8 +10,8 @@ from checksendNotify import send
 
 
 class KGQQCheckIn:
-    def __init__(self, check_item):
-        self.check_item = check_item
+    def __init__(self, kgqq_cookie_list):
+        self.kgqq_cookie_list = kgqq_cookie_list
 
     @staticmethod
     def sign(kgqq_cookie):
@@ -124,9 +124,11 @@ class KGQQCheckIn:
         return kg_message
 
     def main(self):
-        kgqq_cookie = self.check_item.get("kgqq_cookie")
-        msg = self.sign(kgqq_cookie=kgqq_cookie)
-        return msg
+        for kgqq_cookie in self.kgqq_cookie_list:
+            kgqq_cookie = kgqq_cookie.get("kgqq_cookie")
+            msg = self.sign(kgqq_cookie=kgqq_cookie)
+            msg_all += msg + '\n\n'
+        return msg_all
 
 
 if __name__ == "__main__":
@@ -137,7 +139,7 @@ if __name__ == "__main__":
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
             datas = json.loads(f.read())
-    _check_item = datas.get("KGQQ_COOKIE_LIST", [])[0]
-    res = KGQQCheckIn(check_item=_check_item).main()
+    _kgqq_cookie_list = datas.get("KGQQ_COOKIE_LIST", [])
+    res = KGQQCheckIn(kgqq_cookie_list=_kgqq_cookie_list).main()
     print(res)
     send("全民K歌", res)

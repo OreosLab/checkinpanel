@@ -11,8 +11,8 @@ from checksendNotify import send
 
 
 class WZYDCheckIn:
-    def __init__(self, check_item):
-        self.check_item = check_item
+    def __init__(self, wzyd_data_list):
+        self.wzyd_data_list = wzyd_data_list
 
     @staticmethod
     def sign(data):
@@ -27,16 +27,18 @@ class WZYDCheckIn:
         return msg
 
     def main(self):
-        wzyd_data = self.check_item.get("wzyd_data")
-        data = {k: v[0] for k, v in parse.parse_qs(wzyd_data).items()}
-        try:
-            user_id = data.get("userId", "")
-        except Exception as e:
-            print(f"获取用户信息失败: {e}")
-            user_id = "未获取到用户信息"
-        sign_msg = self.sign(data=data)
-        msg = f"帐号信息: {user_id}\n签到信息: {sign_msg}"
-        return msg
+        for wzyd_data in self.wzyd_data_list:
+            wzyd_data = self.wzyd_data.get("wzyd_data")
+            data = {k: v[0] for k, v in parse.parse_qs(wzyd_data).items()}
+            try:
+                user_id = data.get("userId", "")
+            except Exception as e:
+                print(f"获取用户信息失败: {e}")
+                user_id = "未获取到用户信息"
+            sign_msg = self.sign(data=data)
+            msg = f"帐号信息: {user_id}\n签到信息: {sign_msg}"
+            msg_all += msg + '\n\n'
+        return msg_all
 
 
 if __name__ == "__main__":
@@ -47,7 +49,7 @@ if __name__ == "__main__":
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
             datas = json.loads(f.read())
-    _check_item = datas.get("WZYD_DATA_LIST", [])[0]
-    res = WZYDCheckIn(check_item=_check_item).main()
+    _wzyd_data_list = datas.get("WZYD_DATA_LIST", [])
+    res = WZYDCheckIn(wzyd_data_list=_wzyd_data_list).main()
     print(res)
     send('王者营地', res)

@@ -41,16 +41,16 @@ class CSDNCheckIn:
     def main(self):
         msg_all = ""
         for csdn_cookie in self.csdn_cookie_list:
-            csdn_cookie_info = {
+            csdn_cookie = {
                 item.split("=")[0]: item.split("=")[1] for item in self.csdn_cookie.get("csdn_cookie").split("; ")
             }
             try:
-                user_name = csdn_cookie_info.get("UserName", "")
+                user_name = csdn_cookie.get("UserName", "")
             except Exception as e:
                 print(f"获取用户信息失败: {e}")
                 user_name = "未获取到用户信息"
-            sign_msg = self.sign(cookies=csdn_cookie_info)
-            draw_msg = self.draw(cookies=csdn_cookie_info)
+            sign_msg = self.sign(cookies=csdn_cookie)
+            draw_msg = self.draw(cookies=csdn_cookie)
             msg = f"帐号信息: {user_name}\n签到信息: {sign_msg}\n抽奖结果: {draw_msg}"
             msg_all += msg + '\n\n'
         return msg_all

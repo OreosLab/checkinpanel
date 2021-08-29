@@ -10,8 +10,8 @@ from checksendNotify import send
 
 
 class DuoKanCheckIn:
-    def __init__(self, check_item):
-        self.check_item = check_item
+    def __init__(self, duokan_cookie_list):
+        self.duokan_cookie_list = duokan_cookie_list
         self.gift_code_list = [
             "d16ad58199c69518a4afd87b5cf0fe67",
             "828672d6bc39ccd25e1f6ad34e00b86c",
@@ -339,22 +339,24 @@ class DuoKanCheckIn:
         return f"其他任务: 完成 {success_count} 个"
 
     def main(self):
-        duokan_cookie = {
-            item.split("=")[0]: item.split("=")[1] for item in self.check_item.get("duokan_cookie").split("; ")
-        }
-        sign_msg = self.sign(cookies=duokan_cookie)
-        free_msg = self.free(cookies=duokan_cookie)
-        gift_msg = self.gift(cookies=duokan_cookie)
-        add_draw_msg = self.add_draw(cookies=duokan_cookie)
-        draw_msg = self.draw(cookies=duokan_cookie)
-        download_msg = self.download(cookies=duokan_cookie)
-        task_msg = self.task(cookies=duokan_cookie)
-        info_msg = self.info(cookies=duokan_cookie)
-        msg = (
-            f"每日签到: {sign_msg}\n{free_msg}\n{gift_msg}\n"
-            f"{add_draw_msg}\n{draw_msg}\n{download_msg}\n{task_msg}\n{info_msg}"
-        )
-        return msg
+        for duokan_cookie in duokan_cookie_list:
+            duokan_cookie = {
+                item.split("=")[0]: item.split("=")[1] for item in self.duokan_cookie.get("duokan_cookie").split("; ")
+            }
+            sign_msg = self.sign(cookies=duokan_cookie)
+            free_msg = self.free(cookies=duokan_cookie)
+            gift_msg = self.gift(cookies=duokan_cookie)
+            add_draw_msg = self.add_draw(cookies=duokan_cookie)
+            draw_msg = self.draw(cookies=duokan_cookie)
+            download_msg = self.download(cookies=duokan_cookie)
+            task_msg = self.task(cookies=duokan_cookie)
+            info_msg = self.info(cookies=duokan_cookie)
+            msg = (
+                f"每日签到: {sign_msg}\n{free_msg}\n{gift_msg}\n"
+                f"{add_draw_msg}\n{draw_msg}\n{download_msg}\n{task_msg}\n{info_msg}"
+            )
+            msg_all += msg + '\n\n'
+        return msg_all
 
 
 if __name__ == "__main__":
@@ -365,7 +367,7 @@ if __name__ == "__main__":
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
             datas = json.loads(f.read())
-    _check_item = datas.get("DUOKAN_COOKIE_LIST", [])[2]
-    res = DuoKanCheckIn(check_item=_check_item).main()
+    _duokan_cookie_list = datas.get("DUOKAN_COOKIE_LIST", [])
+    res = DuoKanCheckIn(duokan_cookie_list=_duokan_cookie_list).main()
     print(res)
     send("多看阅读",res)
