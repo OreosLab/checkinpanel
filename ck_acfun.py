@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-建议cron: 31 7 * * *
+cron: 31 7 * * *
 new Env('AcFun');
 """
 
