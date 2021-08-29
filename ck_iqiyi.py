@@ -170,7 +170,7 @@ class IQIYICheckIn:
         return {"status": False, "msg": msg, "chance": 0}
 
     def main(self):
-        for iqiyi_cookie in iqiyi_cookie_list:
+        for iqiyi_cookie in self.iqiyi_cookie_list:
             p00001, p00002, p00003 = self.parse_cookie(self.iqiyi_cookie.get("iqiyi_cookie"))
             sign_msg = self.sign(p00001=p00001)
             chance = self.draw(0, p00001=p00001, p00003=p00003)["chance"]

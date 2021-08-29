@@ -65,7 +65,7 @@ class FMAPPCheckIn:
         return msg
 
     def main(self):
-        for fmapp_account in fmapp_account_list:
+        for fmapp_account in self.fmapp_account_list:
             fmapp_token = self.fmapp_account.get("fmapp_token")
             fmapp_cookie = self.fmapp_account.get("fmapp_cookie")
             fmapp_blackbox = self.fmapp_account.get("fmapp_blackbox")

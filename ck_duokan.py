@@ -339,7 +339,7 @@ class DuoKanCheckIn:
         return f"其他任务: 完成 {success_count} 个"
 
     def main(self):
-        for duokan_cookie in duokan_cookie_list:
+        for duokan_cookie in self.duokan_cookie_list:
             duokan_cookie = {
                 item.split("=")[0]: item.split("=")[1] for item in self.duokan_cookie.get("duokan_cookie").split("; ")
             }

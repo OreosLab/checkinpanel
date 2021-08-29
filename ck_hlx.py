@@ -99,7 +99,7 @@ class HLXCheckin:
         return '签到成功 共获得{}点经验'.format(all_experienceVal)
 
     def main(self):
-        for hlx_account in hlx_account_list: 
+        for hlx_account in self.hlx_account_list: 
             user = self.hlx_account.get('user')
             passwd = self.hlx_account.get('password')
             nick, key, s_key = self.login(user, passwd)
