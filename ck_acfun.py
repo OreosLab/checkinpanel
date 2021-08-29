@@ -4,7 +4,7 @@
 new Env('AcFun');
 """
 
-import json, requests, urllib3
+import json, os, requests, urllib3
 from getENV import getENv
 from checksendNotify import send
 
@@ -47,10 +47,11 @@ class AcFunCheckIn:
         return response.json().get("acfun.midground.api_st")
 
     def get_video(self, session):
-        url = "https://api-ipv6.acfunchina.com/rest/app/rank/channel"
+        url = "https://www.acfun.cn/rest/pc-direct/rank/channel"
         data = "channelId=0&rankPeriod=DAY"
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.70"
         }
         response = session.post(url=url, data=data, headers=headers, verify=False)
         self.contentid = response.json().get("rankList")[0].get("contentId")
@@ -58,19 +59,21 @@ class AcFunCheckIn:
 
     @staticmethod
     def sign(session, cookies):
-        headers = {"acPlatform": "IPHONE"}
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.70"
+        }
         response = session.post(
-            url="https://api-ipv6.acfunchina.com/rest/app/user/signIn", headers=headers, cookies=cookies, verify=False
+            url="https://www.acfun.cn/rest/pc-direct/user/signIn", headers=headers, cookies=cookies, verify=False
         )
         return response.json().get("msg")
 
     @staticmethod
     def danmu(session, cookies):
-        url = "https://api-ipv6.acfunchina.com/rest/app/new-danmaku/add"
-        body = "body=sitoi&color=16777215&id=27259341&mode=1&position=5019&size=25&subChannelId=84&subChannelName=%E4" \
-               "%B8%BB%E6%9C%BA%E5%8D%95%E6%9C%BA&type=douga&videoId=22898696 "
+        url = "https://www.acfun.cn/rest/pc-direct/new-danmaku/add"
+        body = "body=sitoi&color=16777215&id=27259341&mode=1&position=5019&size=25&subChannelId=84&subChannelName=%E4%B8%BB%E6%9C%BA%E5%8D%95%E6%9C%BA&type=douga&videoId=22898696"
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.70"
         }
         response = session.post(url=url, headers=headers, cookies=cookies, data=body, verify=False)
         if response.json().get("result") == 0:
@@ -80,10 +83,11 @@ class AcFunCheckIn:
         return msg
 
     def throwbanana(self, session, cookies):
-        url = "https://api-ipv6.acfunchina.com/rest/app/banana/throwBanana"
+        url = "https://www.acfun.cn/rest/pc-direct/banana/throwBanana"
         body = f"count=1&resourceId={self.contentid}&resourceType=2"
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.70"
         }
         response = session.post(url=url, headers=headers, cookies=cookies, data=body, verify=False)
         if response.json().get("result") == 0:
@@ -97,6 +101,7 @@ class AcFunCheckIn:
         unlike_url = "https://api.kuaishouzt.com/rest/zt/interact/delete"
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.70"
         }
         cookies = {"acfun.midground.api_st": token, "kpn": "ACFUN_APP"}
         body = f"interactType=1&objectId={self.contentid}&objectType=2&subBiz=mainApp"
