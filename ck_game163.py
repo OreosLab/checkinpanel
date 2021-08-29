@@ -10,7 +10,7 @@ from checksendNotify import send
 
 
 class Game163Checkin:
-    def __init__(self, GAME163_AUTH_LIST):
+    def __init__(self, game163_auth_list):
         self.game163_auth_list = game163_auth_list
 
     @staticmethod

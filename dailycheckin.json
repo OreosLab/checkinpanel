@@ -140,7 +140,7 @@
             "time":"20 8 * * *",
             "job":{
                 "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_163game.py"
+                "target":"checkin.js -env PYNAME=ck_game163.py"
             },
             "running":true
         },
