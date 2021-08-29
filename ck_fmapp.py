@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-建议cron: 30 14 * * *
+cron: 30 14 * * *
 new Env('米家');
 """
-import json
-import requests
+
+import json, requests
 from getENV import getENv
 from checksendNotify import send
 

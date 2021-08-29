@@ -126,7 +126,7 @@ cp /ql/repo/yuxian158_check/config.json /ql/config/check.json
 
 [官网](https://cg.163.com/#/mobile)
 
-参数说明：`163game.Authorization`
+参数说明：`game163.Authorization`
 
 登录后抓取签到请求（一般请求的请求头也有这个字段）
 

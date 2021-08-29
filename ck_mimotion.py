@@ -1,16 +1,11 @@
 # -*- coding: utf8 -*-
 """
-建议cron: 55 13 * * *
+cron: 55 13 * * *
 new Env('小米运动');
 """
-import json
-import os
-import random
-import re
-import time
+import json, os, random, re, requests, time
 from getENV import getENv
 from checksendNotify import send
-import requests
 
 
 class MiMotion:

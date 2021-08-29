@@ -1,16 +1,22 @@
 #!/bin/bash
 
-# SS_USERS: https://abc.com----abc@abc.com----abc123456;   用户组，格式为 签到站点----用户名----密码，多个站点或用户使用 ; 分隔
-# PUSH_KEY: SCxxxxxxxxxxxxx                                微信推送，填写自己申请 Server 酱(http://sc.ftqq.com/?c=code) 的 SCKEY         
-# PUSH_TURBO_KEY: xxxxxxxxxxxxxxx                          企业微信推送，填写自己申请 Server 酱 Turbo(https://sct.ftqq.com/sendkey) 的 SendKey
-# QMSG_KEY: e6fxxxxxxxxxxxx                                QQ 推送，填写自己申请 Qmsg 酱(https://qmsg.zendee.cn/me.html#/) 的 QMSG_KEY
-# DD_BOT_TOKEN: a1bxxxxxxxxxxxx                            钉钉机器人推送，填写申请自定义机器人接入申请的回调地址中 access_token 的值
-# TG_USER_ID: 11xxxxxx03                                   TGBot 推送，填写 @getuseridbot(https://t.me/getuseridbot) 私聊获取到的纯数字 ID
-# PUSH_PLUS_TOKEN: xxxxxxxxxxxxxxxx                        PUSHPLUS 推送，填写申请的 pushplus(https://pushplus.hxtrip.com/) TOKEN
-# CORPID: xxxxxx                                           企业微信 ID，填写注册的企业微信 ID
-# AGENTID: 100001                                          企业微信应用 ID，填写申请应用的 ID
-# CORPSECRET: xxxxxxxxxxxxxxx                              企业微信对应的 SECRET
-# DISPLAY_CONTEXT: 1                                       任务执行时是否显示详细信息，1 显示 0 关闭，默认值 1
+<<'COMMENT'
+cron: 28 11 * * *
+new Env('SSPanel 签到');
+
+SS_USERS: https://abc.com----abc@abc.com----abc123456;   用户组，格式为 签到站点----用户名----密码，多个站点或用户使用 ; 分隔
+PUSH_KEY: SCxxxxxxxxxxxxx                                微信推送，填写自己申请 Server 酱(http://sc.ftqq.com/?c=code) 的 SCKEY         
+PUSH_TURBO_KEY: xxxxxxxxxxxxxxx                          企业微信推送，填写自己申请 Server 酱 Turbo(https://sct.ftqq.com/sendkey) 的 SendKey
+QMSG_KEY: e6fxxxxxxxxxxxx                                QQ 推送，填写自己申请 Qmsg 酱(https://qmsg.zendee.cn/me.html#/) 的 QMSG_KEY
+DD_BOT_TOKEN: a1bxxxxxxxxxxxx                            钉钉机器人推送，填写申请自定义机器人接入申请的回调地址中 access_token 的值
+TG_USER_ID: 11xxxxxx03                                   TGBot 推送，填写 @getuseridbot(https://t.me/getuseridbot) 私聊获取到的纯数字 ID
+PUSH_PLUS_TOKEN: xxxxxxxxxxxxxxxx                        PUSHPLUS 推送，填写申请的 pushplus(https://pushplus.hxtrip.com/) TOKEN
+CORPID: xxxxxx                                           企业微信 ID，填写注册的企业微信 ID
+AGENTID: 100001                                          企业微信应用 ID，填写申请应用的 ID
+CORPSECRET: xxxxxxxxxxxxxxx                              企业微信对应的 SECRET
+DISPLAY_CONTEXT: 1                                       任务执行时是否显示详细信息，1 显示 0 关闭，默认值 1
+COMMENT
+
 
 PATH="/usr/local/bin:/usr/bin:/bin"
 

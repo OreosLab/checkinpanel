@@ -55,16 +55,6 @@
             "running":true
         },        
         {
-            "name":"网易云游戏",
-            "type":"cron",
-            "time":"20 8 * * *",
-            "job":{
-                "type":"runjs",
-                "target":"checkin.js -env PYNAME=ck_163game.py"
-            },
-            "running":true
-        },
-        {
             "name":"AcFun",
             "type":"cron",
             "time":"31 7 * * *",
@@ -141,6 +131,16 @@
             "job":{
                 "type":"runjs",
                 "target":"checkin.js -env PYNAME=ck_fmapp.py"
+            },
+            "running":true
+        },
+        {
+            "name":"网易云游戏",
+            "type":"cron",
+            "time":"20 8 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_163game.py"
             },
             "running":true
         },

@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-建议cron: 30 9 * * *
+修改来自于 https://github.com/MayoBlueSky/My-Actions/blob/master/function/cloud189/checkin.py
+cron: 30 9 * * *
 new Env('天翼网盘');
 """
-# 修改来自于 https://github.com/MayoBlueSky/My-Actions/blob/master/function/cloud189/checkin.py
-import base64
-import json
-import os
-import re
-import time
 
-import requests
-
-import rsa
+import base64, json, os, re, requests, rsa, time
 from getENV import getENv
 from checksendNotify import send
 
 
 class Cloud189CheckIn:
-    def __init__(self, check_item: dict):
-        self.check_item = check_item
+    def __init__(self, cloud189_account_list):
+        self.cloud189_account_list = cloud189_account_list
         self.b64map = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 
     @staticmethod
@@ -133,16 +126,19 @@ class Cloud189CheckIn:
         return msg
 
     def main(self):
-        cloud189_phone = self.check_item.get("cloud189_phone")
-        cloud189_password = self.check_item.get("cloud189_password")
-        session = requests.Session()
-        flag = self.login(session=session, username=cloud189_phone, password=cloud189_password)
-        if flag is True:
-            sign_msg = self.sign(session=session)
-        else:
-            sign_msg = flag
-        msg = f"帐号信息: {cloud189_phone}\n{sign_msg}"
-        return msg
+        msg_all = ""
+        for cloud189_account in self.cloud189_account_list:
+            cloud189_phone = cloud189_account.get("cloud189_phone")
+            cloud189_password = cloud189_account.get("cloud189_password")
+            session = requests.Session()
+            flag = self.login(session=session, username=cloud189_phone, password=cloud189_password)
+            if flag is True:
+                sign_msg = self.sign(session=session)
+            else:
+                sign_msg = flag
+            msg = f"帐号信息: {cloud189_phone}\n{sign_msg}"
+            msg_all += msg + '\n\n'
+        return msg_all
 
 
 def start():
@@ -156,8 +152,8 @@ def start():
     else:
         print('加载配置文件失败，请检查！')
         exit(1)
-    _check_item = datas.get("CLOUD189_ACCOUNT_LIST", [])[0]
-    res = Cloud189CheckIn(check_item=_check_item).main()
+    _cloud189_account_list = datas.get("CLOUD189_ACCOUNT_LIST", [])
+    res = Cloud189CheckIn(cloud189_account_list=_cloud189_account_list).main()
     print(res)
     send('天翼网盘', res)
 

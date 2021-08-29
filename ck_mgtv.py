@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-建议cron: 23 14 * * *
+cron: 23 14 * * *
 new Env('芒果TV');
 """
-import json
-import os
-import time
+
+import json, os, requests, time
 from urllib import parse
 from getENV import getENv
-from checksendNotify import send
-import requests
+from checksendNotify import send 
 
 
 class MgtvCheckIn:

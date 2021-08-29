@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-建议cron: 55 23 * * *
+cron: 55 23 * * *
 new Env('爱奇艺');
 """
-import json
-import os
-import re
-import time
-from urllib.parse import unquote
 
-import requests
+import json, os, re, requests, time
+from urllib.parse import unquote
 from getENV import getENv
 from checksendNotify import send
 

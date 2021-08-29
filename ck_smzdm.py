@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
-import json
-import os
+"""
+cron: 51 9 * * *
+new Env('什么值得买');
+"""
 
-import requests
+import json, os, requests
 from requests import utils
 from getENV import getENv
 from checksendNotify import send
 
-"""
-建议cron: 51 9 * * *
-new Env('什么值得买');
-"""
 
 class SmzdmCheckIn:
     def __init__(self, check_item):

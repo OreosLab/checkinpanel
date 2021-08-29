@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-建议cron: 55 15 * * *
+cron: 55 15 * * *
 new Env('魅族社区');
 """
-import json
-import time
-import requests
+
+import json, requests, time
 from getENV import getENv
 from checksendNotify import send
 

@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 """
-建议cron: 30 10 * * *
+cron: 30 10 * * *
 new Env('CSDN');
 """
-import json
-import requests
+
+import json, requests
 from getENV import getENv
 from checksendNotify import send
 
 
 class CSDNCheckIn:
-    def __init__(self, check_item):
-        self.check_item = check_item
+    def __init__(self, csdn_cookie_list):
+        self.csdn_cookie_list = csdn_cookie_list
         self.headers = {
             "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_2) AppleWebKit/537.36 (KHTML, like Gecko) "
                           "Chrome/88.0.4324.182 Safari/537.36 Edg/88.0.705.74",
@@ -39,18 +39,21 @@ class CSDNCheckIn:
         return msg
 
     def main(self):
-        csdn_cookie = {
-            item.split("=")[0]: item.split("=")[1] for item in self.check_item.get("csdn_cookie").split("; ")
-        }
-        try:
-            user_name = csdn_cookie.get("UserName", "")
-        except Exception as e:
-            print(f"获取用户信息失败: {e}")
-            user_name = "未获取到用户信息"
-        sign_msg = self.sign(cookies=csdn_cookie)
-        draw_msg = self.draw(cookies=csdn_cookie)
-        msg = f"帐号信息: {user_name}\n签到信息: {sign_msg}\n抽奖结果: {draw_msg}"
-        return msg
+        msg_all = ""
+        for csdn_cookie in self.csdn_cookie_list:
+            csdn_cookie_info = {
+                item.split("=")[0]: item.split("=")[1] for item in self.csdn_cookie.get("csdn_cookie").split("; ")
+            }
+            try:
+                user_name = csdn_cookie_info.get("UserName", "")
+            except Exception as e:
+                print(f"获取用户信息失败: {e}")
+                user_name = "未获取到用户信息"
+            sign_msg = self.sign(cookies=csdn_cookie_info)
+            draw_msg = self.draw(cookies=csdn_cookie_info)
+            msg = f"帐号信息: {user_name}\n签到信息: {sign_msg}\n抽奖结果: {draw_msg}"
+            msg_all += msg + '\n\n'
+        return msg_all
 
 
 if __name__ == "__main__":
@@ -64,7 +67,7 @@ if __name__ == "__main__":
     else:
         print('加载配置文件失败，请检查！')
         exit(1)
-    _check_item = datas.get("CSDN_COOKIE_LIST", [])[0]
-    res = CSDNCheckIn(check_item=_check_item).main()
+    _csdn_cookie_list = datas.get("CSDN_COOKIE_LIST", [])
+    res = CSDNCheckIn(csdn_cookie_list=_csdn_cookie_list).main()
     print(res)
     send("CSDN", res)

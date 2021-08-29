@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-建议cron: 55 14 * * *
+cron: 55 14 * * *
 new Env('全民k歌');
 """
-import json
-import requests
+
+import json, requests
 from getENV import getENv
 from checksendNotify import send
 

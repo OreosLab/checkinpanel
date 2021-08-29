@@ -7,10 +7,8 @@
 cron: 20 10 * * *
 new Env('机场签到');
 """
-import json
-import os
-import re
-import requests
+
+import json, os, re, requests
 from getENV import getENv
 from checksendNotify import send
 
@@ -81,7 +79,10 @@ class SspanelQd(object):
             # 登录信息
             email = str(airport_account.get("airport_email"))
             password = str(airport_account.get("airport_password"))
-            msg = self.checkin(url,email,password)
+            if url and email and password:
+                msg = self.checkin(url=url,email=email,password=password)
+            else:
+                msg = "配置错误"
             msg_all += msg + '\n\n'
         return msg_all
 

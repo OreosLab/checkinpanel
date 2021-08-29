@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-建议cron: 30 20 * * *
+cron: 30 20 * * *
 new Env('多看阅读');
 """
-import json
-import time
-import requests
+
+import json, requests, time 
 from getENV import getENv
 from checksendNotify import send
 

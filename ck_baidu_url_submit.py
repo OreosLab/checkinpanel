@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-建议cron: 32 7 * * *
+cron: 32 7 * * *
 new Env('百度搜索资源平台');
 """
-import json
+
+import json, os, requests
 from urllib import parse
-import requests
 from getENV import getENv
 from checksendNotify import send
 
 
 class BaiduUrlSubmit:
-    def __init__(self, check_item: dict):
-        self.check_item = check_item
+    def __init__(self, baidu_url_submit_list: list):
+        self.baidu_url_submit_list = baidu_url_submit_list
 
     @staticmethod
     def url_submit(data_url: str, submit_url: str, times: int = 100) -> str:
@@ -39,14 +39,17 @@ class BaiduUrlSubmit:
         return msg
 
     def main(self):
-        data_url = self.check_item.get("data_url")
-        submit_url = self.check_item.get("submit_url")
-        times = int(self.check_item.get("times", 100))
-        if data_url and submit_url:
-            msg = self.url_submit(data_url=data_url, submit_url=submit_url, times=times)
-        else:
-            msg = "配置错误"
-        return msg
+        msg_all = ""
+        for baidu_url_submit in self.baidu_url_submit_list:
+            data_url = baidu_url_submit.get("data_url")
+            submit_url = baidu_url_submit.get("submit_url")
+            times = int(baidu_url_submit.get("times", 100))
+            if data_url and submit_url:
+                msg = self.url_submit(data_url=data_url, submit_url=submit_url, times=times)
+            else:
+                msg = "配置错误"
+            msg_all += msg + '\n\n'
+        return msg_all
 
 
 if __name__ == "__main__":
@@ -60,7 +63,7 @@ if __name__ == "__main__":
     else:
         print('加载配置文件失败，请检查！')
         exit(1)
-    _check_item = datas.get("BAIDU_URL_SUBMIT_LIST", [])[0]
-    res = BaiduUrlSubmit(check_item=_check_item).main()
+    _baidu_url_submit_list = datas.get("BAIDU_URL_SUBMIT_LIST", [])
+    res = BaiduUrlSubmit(baidu_url_submit_list=_baidu_url_submit_list).main()
     print(res)
     send("百度搜索资源平台", res)

@@ -3,9 +3,8 @@
 建议cron: 31 7 * * *
 new Env('AcFun');
 """
-import json
-import requests
-import urllib3
+
+import json, requests, urllib3
 from getENV import getENv
 from checksendNotify import send
 
@@ -13,8 +12,8 @@ urllib3.disable_warnings()
 
 
 class AcFunCheckIn:
-    def __init__(self, check_item: dict):
-        self.check_item = check_item
+    def __init__(self, acfun_account_list):
+        self.acfun_account_list = acfun_account_list
         self.contentid = "27259341"
 
     @staticmethod
@@ -122,22 +121,25 @@ class AcFunCheckIn:
         return msg
 
     def main(self):
-        phone = self.check_item.get("acfun_phone")
-        password = self.check_item.get("acfun_password")
-        session = requests.session()
-        self.get_video(session=session)
-        cookies = self.get_cookies(session=session, phone=phone, password=password)
-        token = self.get_token(session=session, cookies=cookies)
-        sign_msg = self.sign(session=session, cookies=cookies)
-        like_msg = self.like(session=session, token=token)
-        share_msg = self.share(session=session, cookies=cookies)
-        danmu_msg = self.danmu(session=session, cookies=cookies)
-        throwbanana_msg = self.throwbanana(session=session, cookies=cookies)
-        msg = (
-            f"帐号信息: {phone}\n签到状态: {sign_msg}\n点赞任务: {like_msg}\n"
-            f"弹幕任务: {danmu_msg}\n香蕉任务: {throwbanana_msg}\n分享任务: {share_msg}"
-        )
-        return msg
+        msg_all = ""
+        for acfun_account in self.acfun_account_list:
+            phone = acfun_account.get("acfun_phone")
+            password = acfun_account.get("acfun_password")
+            session = requests.session()
+            self.get_video(session=session)
+            cookies = self.get_cookies(session=session, phone=phone, password=password)
+            token = self.get_token(session=session, cookies=cookies)
+            sign_msg = self.sign(session=session, cookies=cookies)
+            like_msg = self.like(session=session, token=token)
+            share_msg = self.share(session=session, cookies=cookies)
+            danmu_msg = self.danmu(session=session, cookies=cookies)
+            throwbanana_msg = self.throwbanana(session=session, cookies=cookies)
+            msg = (
+                f"帐号信息: {phone}\n签到状态: {sign_msg}\n点赞任务: {like_msg}\n"
+                f"弹幕任务: {danmu_msg}\n香蕉任务: {throwbanana_msg}\n分享任务: {share_msg}"
+            )
+            msg_all += msg + '\n\n'
+        return msg_all
 
 
 if __name__ == "__main__":
@@ -151,7 +153,7 @@ if __name__ == "__main__":
     else:
         print('加载配置文件失败，请检查！')
         exit(1)
-    _check_item = datas.get("ACFUN_ACCOUNT_LIST", [])[0]
-    res = AcFunCheckIn(check_item=_check_item).main()
+    _acfun_account_list = datas.get("ACFUN_ACCOUNT_LIST", [])
+    res = AcFunCheckIn(acfun_account_list=_acfun_account_list).main()
     print(res)
     send('AcFun', res)

@@ -1,16 +1,15 @@
+# -*- coding: utf-8 -*-
 """
-
-建议cron: 30 7 * * *  python3 ck_hlx.py
+cron: 30 7 * * *
 new Env('葫芦侠签到');
-
 """
-import requests
-import os
+
+import json, os, requests
 from getENV import getENv
 from checksendNotify import send
-import json
-r = requests.Session()
 
+
+r = requests.Session()
 
 def login(user, passwd):
     url = 'http://floor.huluxia.com/account/login/ANDROID/4.0?platform=2&gkey=000000&app_version=4.0.0.6.2' \

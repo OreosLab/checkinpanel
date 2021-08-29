@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-建议cron: 00 8 * * *
+cron: 00 8 * * *
 new Env('王者营地');
 """
-import json
-import os
-from urllib import parse
 
-import requests
+import json, os, requests
+from urllib import parse
 from getENV import getENv
 from checksendNotify import send
 
