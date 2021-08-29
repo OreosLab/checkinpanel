@@ -101,7 +101,7 @@ pip3 install requests rsa
 ### 3. 拉取仓库
 
 ```
-ql repo https://github.com/Oreomeow/checkinpanel.git "ck_" "" "checksendNotify|getENV"
+ql repo https://github.com/Oreomeow/checkinpanel.git "ck_" "" "sendNotify|checksendNotify|getENV"
 ```
 
 ### 4. 拷贝文件
