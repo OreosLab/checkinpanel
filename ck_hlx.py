@@ -103,8 +103,15 @@ def hlx(user, passwd):
 
 def start():
     getENv()
-    with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-        datas = json.loads(f.read())
+    try:
+        with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
+            datas = json.loads(f.read())
+    except:
+        with open("/ql/config/check.json", "r", encoding="utf-8") as f:
+            datas = json.loads(f.read())
+    else:
+        print('加载配置文件失败，请检查！')
+        exit(1)
     _check_item = datas.get("HLX", [])
     res = hlx(user=_check_item.get('user'),passwd=_check_item.get('password'))
     print(res)

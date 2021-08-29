@@ -2,7 +2,7 @@
 let shname = $env.SHNAME
 console.log(`⏳ 开始执行 ${shname}`)
 $exec(`chmod +x ${shname} && ./${shname}`, {
-    cwd: './script/Shell/dailycheckinV2P',
+    cwd: './script/Shell/checkinpanel',
     timeout: 0,
     env: {
         BARK: $store.get('BARK', 'string'),                                       // bark服务,此参数如果以http或者https开头则判定为自建bark服务; secrets可填;

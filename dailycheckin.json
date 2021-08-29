@@ -10,7 +10,7 @@
             "time":"0",
             "job":{
                 "type":"exec",
-                "target":"git clone https://github.com/Oreomeow/dailycheckinV2P -cwd script/Shell"
+                "target":"git clone https://github.com/Oreomeow/checkinpanel -cwd script/Shell"
             },
             "running":true
         },
@@ -20,7 +20,7 @@
             "time":"0",
             "job":{
                 "type":"exec",
-                "target":"git checkout . && git pull -cwd script/Shell/dailycheckinV2P"
+                "target":"git checkout . && git pull -cwd script/Shell/checkinpanel"
             },
             "running":false
         },
@@ -40,7 +40,7 @@
             "time":"0",
             "job":{
                 "type":"exec",
-                "target":"wget https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/checkin.js -O checkin.js -cwd script/JSFile"
+                "target":"wget https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/checkin.js -O checkin.js -cwd script/JSFile"
             },
             "running":true
         },
@@ -50,7 +50,7 @@
             "time":"0",
             "job":{
                 "type":"exec",
-                "target":"wget https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/checkinsh.js -O checkinsh.js -cwd script/JSFile"
+                "target":"wget https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/checkinsh.js -O checkinsh.js -cwd script/JSFile"
             },
             "running":true
         },        
@@ -220,7 +220,7 @@
             "time":"26 10 * * *",
             "job":{
                 "type":"exec",
-                "target":"bash ck_sspanel.sh -cwd script/Shell/dailycheckinV2P"
+                "target":"bash ck_sspanel.sh -cwd script/Shell/checkinpanel"
             },
             "running":true
         },
@@ -230,7 +230,7 @@
             "time":"55 23 * * *",
             "job":{
                 "type":"exec",
-                "target":"node ck_vqq.js -cwd script/Shell/dailycheckinV2P"
+                "target":"node ck_vqq.js -cwd script/Shell/checkinpanel"
             },
             "running":true
         },

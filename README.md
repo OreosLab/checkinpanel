@@ -1,18 +1,20 @@
 <div align="center"> 
-<h1 align="center">签到盒 𝐞𝐥𝐞𝐜𝐕𝟐𝐏 版</h1>
+<h1 align="center">定时面板上的签到盒</h1>
 
-![GitHub stars](https://img.shields.io/github/stars/Oreomeow/dailycheckinV2P?color=brightgreen&logo=Riseup&logoColor=brightgreen&style=flat-square)
-![GitHub forks](https://img.shields.io/github/forks/Oreomeow/dailycheckinV2P?color=brightgreen&style=flat-square)
-<a href="https://github.com/Oreomeow/dailycheckinV2P/issues"><img src="https://img.shields.io/github/issues/Oreomeow/dailycheckinV2P?color=orange&style=flat-square" alt="GitHub issues"></a>
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Oreomeow/dailycheckinV2P?color=informational&logo=Python&logoColor=informational&style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Oreomeow/checkinpanel?color=brightgreen&logo=Riseup&logoColor=brightgreen&style=flat-square)
+![GitHub forks](https://img.shields.io/github/forks/Oreomeow/checkinpanel?color=brightgreen&style=flat-square)
+<a href="https://github.com/Oreomeow/checkinpanel/issues"><img src="https://img.shields.io/github/issues/Oreomeow/checkinpanel?color=orange&style=flat-square" alt="GitHub issues"></a>
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Oreomeow/checkinpanel?color=informational&logo=Python&logoColor=informational&style=flat-square)
 <a href="https://t.me/joinchat/h3Y8yTMRhWViOWFl"><img src="https://img.shields.io/badge/talk-Telegram-blue?logo=Telegram&style=flat-square" alt="Telegram"></a>
-![GitHub last commit](https://img.shields.io/github/last-commit/Oreomeow/dailycheckinV2P?color=success&logo=GitHub&style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/Oreomeow/checkinpanel?color=success&logo=GitHub&style=flat-square)
 
 </div>
 
-# 一个运行在 𝐞𝐥𝐞𝐜𝐕𝟐𝐏 的签到函数
+# 一个运行在 𝐞𝐥𝐞𝐜𝐕𝟐𝐏 或 𝐪𝐢𝐧𝐠𝐥𝐨𝐧𝐠 等定时面板的签到项目
 
 [𝐞𝐥𝐞𝐜𝐕𝟐𝐏](https://github.com/elecV2/elecV2P.git)
+
+[𝐪𝐢𝐧𝐠𝐥𝐨𝐧𝐠](https://github.com/whyour/qinglong.git)
 
 ## 特别声明
 
@@ -34,9 +36,9 @@
 
 > ***您使用或者复制了本仓库且本人制作的任何脚本，则视为 `已接受` 此声明，请仔细阅读***
 
-## 使用方法
+## 𝐞𝐥𝐞𝐜𝐕𝟐𝐏 使用方法
 
-1. TASK -> 添加订阅任务 -> 修改名称、更新方式、任务 -> 获取内容 -> 全部添加
+### 1. TASK -> 添加订阅任务 -> 修改名称、更新方式、任务 -> 获取内容 -> 全部添加
 
 名称：签到项目
 
@@ -45,16 +47,16 @@
 任务：
 
 ```
-https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/dailycheckin.json
+https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 ```
 
-2. 下载 [check.sample.json](https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/check.sample.json)，根据 [Sitoi](https://github.com/Sitoi/dailycheckin) 的[配置说明](https://sitoi.gitee.io/dailycheckin/settings/)进行抓包并配置
+### 2. 下载 [check.sample.json](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/check.sample.json)，根据 [Sitoi](https://github.com/Sitoi/dailycheckin) 的[配置说明](https://sitoi.gitee.io/dailycheckin/settings/)进行抓包并配置
 
-3. 将 `check.sample.json` 重命名为 `check.json` 后放入 `script/Shell` 文件夹
+### 3. 将 `check.sample.json` 重命名为 `check.json` 后放入 `script/Shell` 文件夹
 
 - OVERVIEW -> EFSS 文件管理界面 -> 是否开启 EFSS 功能：开启 -> 目录：`./script/Shell` -> 选择文件：`check.json` -> 开始上传
 
-4. JSMANAGE -> store/cookie 常量储存管理填写通知环境变量
+### 4. JSMANAGE -> store/cookie 常量储存管理填写通知环境变量
 
 | 变量 / key | 描述 | 参考 / value |
 | --- | --- |  --- |
@@ -79,7 +81,40 @@ https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/dailycheckin.j
 
 - 调用模块
 
-> [𝒄𝒉𝒆𝒄𝒌𝒔𝒆𝒏𝒅𝑵𝒐𝒕𝒊𝒇𝒚.𝒑𝒚](https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/checksendNotify.py)
+> [𝒄𝒉𝒆𝒄𝒌𝒔𝒆𝒏𝒅𝑵𝒐𝒕𝒊𝒇𝒚.𝒑𝒚](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/checksendNotify.py)
+
+## 𝐪𝐢𝐧𝐠𝐥𝐨𝐧𝐠 使用方法
+
+### 1. ssh 进入容器
+
+``` sh
+docker exec -it ql bash
+```
+修改 `ql` 为你的青龙容器名称
+
+### 2. 安装依赖
+
+``` sh
+pip3 install requests rsa
+```
+
+### 3. 拉取仓库
+
+```
+ql repo https://github.com/Oreomeow/dailycheckin.git "ck_" "" "checksendNotify|getENV"
+```
+
+### 4. 拷贝文件
+
+```
+cp /ql/repo/yuxian158_check/config.json /ql/config/check.json
+```
+
+### 5. 抓包配置
+
+不出意外的话可以在青龙面板的配置文件下找到 `check.json` 文件
+
+根据 [Sitoi](https://github.com/Sitoi/dailycheckin) 的[配置说明](https://sitoi.gitee.io/dailycheckin/settings/)进行抓包并配置
 
 ## 修改说明
 
@@ -99,15 +134,13 @@ https://raw.githubusercontent.com/Oreomeow/dailycheckinV2P/master/dailycheckin.j
 
 ### 3. **添加了两种机场签到**
 
-Shell 版本将 `env.example` 配置好后改名为 `.env` 后放入 `script/Shell/dailycheckinV2P` 文件夹
+Shell 版本将 `env.example` 配置好后改名为 `.env` 后放入 `script/Shell/checkinpanel` 文件夹
 
 ## 其他说明
 
 1. 请自行修改执行时间
 
 2. 运行 `签到更新` 任务可强制同步本仓库
-
-3. [青龙面板平台签到函数](https://github.com/yuxian158/check)
 
 ## 计划说明
 | 状态 | \*语言 | 名称 |
@@ -128,6 +161,8 @@ Shell 版本将 `env.example` 配置好后改名为 `.env` 后放入 `script/She
 
 [@𝐲𝐮𝐱𝐢𝐚𝐧𝟏𝟓𝟖](https://github.com/yuxian158)
 
+[@𝐢𝐬𝐞𝐜𝐫𝐞𝐭](https://github.com/isecret)
+
 ## 历史 Star 数
 
-[![Stargazers over time](https://starchart.cc/Oreomeow/dailycheckinV2P.svg)](https://starchart.cc/Oreomeow/dailycheckinV2P)
+[![Stargazers over time](https://starchart.cc/Oreomeow/checkinpanel.svg)](https://starchart.cc/Oreomeow/checkinpanel)

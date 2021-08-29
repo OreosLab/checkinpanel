@@ -87,8 +87,15 @@ class SspanelQd(object):
 
 def start():
     getENv()
-    with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-        datas = json.loads(f.read())
+    try:
+        with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
+            datas = json.loads(f.read())
+    except:
+        with open("/ql/config/check.json", "r", encoding="utf-8") as f:
+            datas = json.loads(f.read())
+    else:
+        print('加载配置文件失败，请检查！')
+        exit(1)
     _airport_account_list = datas.get("AIRPORT_ACCOUNT_LIST", [])
     res = SspanelQd(airport_account_list=_airport_account_list).main()
     print(res)
