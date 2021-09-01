@@ -146,7 +146,7 @@ class Music163CheckIn:
 
     def main(self):
         msg_all = ""
-        for music163__account in self.music163_account_list:
+        for music163_account in self.music163_account_list:
             phone = music163_account.get("music163_phone")
             password = music163_account.get("music163_password")
             session = requests.session()

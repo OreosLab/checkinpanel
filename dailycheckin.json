@@ -225,6 +225,16 @@
             "running":true
         },
         {
+            "name":"吾爱破解",
+            "type":"cron",
+            "time":"53 11 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_pojie.py"
+            },
+            "running":true
+        },
+        {
             "name":"什么值得买",
             "type":"cron",
             "time":"51 9 * * *",
@@ -251,6 +261,16 @@
             "job":{
                 "type":"runjs",
                 "target":"checkin.js -env PYNAME=ck_vqq.py"
+            },
+            "running":true
+        },
+        {
+            "name":"联通沃邮箱",
+            "type":"cron",
+            "time":"56 13 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_womail.py"
             },
             "running":true
         },
