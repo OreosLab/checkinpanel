@@ -371,4 +371,4 @@ if __name__ == "__main__":
     _duokan_cookie_list = datas.get("DUOKAN_COOKIE_LIST", [])
     res = DuoKanCheckIn(duokan_cookie_list=_duokan_cookie_list).main()
     print(res)
-    send("多看阅读",res)
+    send("多看阅读", res)

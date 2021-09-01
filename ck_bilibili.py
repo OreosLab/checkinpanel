@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 cron: 30 8 * * *
-new Env('哔哩哔哩');
+new Env('Bilibili');
 """
 
 import json
@@ -349,4 +349,4 @@ if __name__ == "__main__":
     _bilibili_cookie_list = datas.get("BILIBILI_COOKIE_LIST", [])
     res = BiliBiliCheckIn(bilibili_cookie_list=_bilibili_cookie_list).main()
     print(res)
-    send('哔哩哔哩', res)
+    send('Bilibili', res)

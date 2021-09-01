@@ -78,4 +78,4 @@ if __name__ == "__main__":
     _smzdm_cookie_list = datas.get("SMZDM_COOKIE_LIST", [])
     res = SmzdmCheckIn(smzdm_cookie_list=_smzdm_cookie_list).main()
     print(res)
-    send('什么值得买',res)
+    send('什么值得买', res)

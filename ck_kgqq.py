@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 cron: 55 14 * * *
-new Env('全民k歌');
+new Env('全民K歌');
 """
 
 import json, requests

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 cron: 30 7 * * *
-new Env('葫芦侠签到');
+new Env('葫芦侠');
 """
 
 import json, os, requests

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 cron: 30 14 * * *
-new Env('米家');
+new Env('Fa米家');
 """
 
 import json, requests
@@ -108,4 +108,4 @@ if __name__ == "__main__":
     _fmapp_account_list = datas.get("FMAPP_ACCOUNT_LIST", [])
     res = FMAPPCheckIn(fmapp_account_list=_fmapp_account_list).main()
     print(res)
-    send("米家APP", res)
+    send("Fa米家", res)

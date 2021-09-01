@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 cron: 55 15 * * *
-new Env('魅族社区');
+new Env('MEIZU 社区');
 """
 
 import json, requests, time
@@ -105,4 +105,4 @@ if __name__ == "__main__":
     _meizu_cookie_list = datas.get("MEIZU_COOKIE_LIST", [])
     res = MeizuCheckIn(meizu_cookie_list=_meizu_cookie_list).main()
     print(res)
-    send("MEIZU 社区",res)
+    send("MEIZU 社区", res)

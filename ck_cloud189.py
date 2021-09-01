@@ -2,7 +2,7 @@
 """
 修改来自于 https://github.com/MayoBlueSky/My-Actions/blob/master/function/cloud189/checkin.py
 cron: 30 9 * * *
-new Env('天翼网盘');
+new Env('天翼云盘');
 """
 
 import base64, json, os, re, requests, rsa, time
@@ -152,7 +152,7 @@ def start():
     _cloud189_account_list = datas.get("CLOUD189_ACCOUNT_LIST", [])
     res = Cloud189CheckIn(cloud189_account_list=_cloud189_account_list).main()
     print(res)
-    send('天翼网盘', res)
+    send('天翼云盘', res)
 
 
 if __name__ == "__main__":

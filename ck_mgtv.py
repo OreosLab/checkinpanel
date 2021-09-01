@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 cron: 23 14 * * *
-new Env('芒果TV');
+new Env('芒果 TV');
 """
 
 import json, os, requests, time
@@ -70,4 +70,4 @@ if __name__ == "__main__":
     _mgtv_params_list = datas.get("MGTV_PARAMS_LIST", [])
     res = MgtvCheckIn(mgtv_params_list=_mgtv_params_list).main()
     print(res)
-    send("芒果 TV",res)
+    send("芒果 TV", res)

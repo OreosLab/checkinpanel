@@ -72,7 +72,7 @@
                 "type":"runjs",
                 "target":"checkin.js -env PYNAME=ck_airport.py"
             },
-            "running":false
+            "running":true
         },
         {
             "name":"百度搜索资源平台",
@@ -85,7 +85,7 @@
             "running":true
         },
         {
-            "name":"哔哩哔哩",
+            "name":"Bilibili",
             "type":"cron",
             "time":"30 8 * * *",
             "job":{
@@ -95,7 +95,7 @@
             "running":true
         },        
         {
-            "name":"天翼网盘",
+            "name":"天翼云盘",
             "type":"cron",
             "time":"30 9 * * *",
             "job":{
@@ -125,7 +125,7 @@
             "running":true
         },
         {
-            "name":"米家",
+            "name":"Fa米家",
             "type":"cron",
             "time":"30 14 * * *",
             "job":{
@@ -145,7 +145,7 @@
             "running":true
         },
         {
-            "name":"葫芦侠签到",
+            "name":"葫芦侠",
             "type":"cron",
             "time":"30 7 * * *",
             "job":{
@@ -165,7 +165,7 @@
             "running":true
         },
         {
-            "name":"全民k歌",
+            "name":"全民K歌",
             "type":"cron",
             "time":"55 14 * * *",
             "job":{
@@ -175,7 +175,7 @@
             "running":true
         },
         {
-            "name":"魅族社区",
+            "name":"MEIZU 社区",
             "type":"cron",
             "time":"55 15 * * *",
             "job":{
@@ -185,7 +185,7 @@
             "running":true
         },        
         {
-            "name":"芒果TV",
+            "name":"芒果 TV",
             "type":"cron",
             "time":"23 14 * * *",
             "job":{
@@ -201,6 +201,16 @@
             "job":{
                 "type":"runjs",
                 "target":"checkin.js -env PYNAME=ck_mimotion.py"
+            },
+            "running":true
+        },
+        {
+            "name":"网易云音乐",
+            "type":"cron",
+            "time":"27 0 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_music163.py"
             },
             "running":true
         },
@@ -222,15 +232,15 @@
                 "type":"exec",
                 "target":"bash ck_sspanel.sh -cwd script/Shell/checkinpanel"
             },
-            "running":true
+            "running":false
         },
         {
-            "name":"腾讯视频会员签到",
+            "name":"腾讯视频",
             "type":"cron",
-            "time":"55 23 * * *",
+            "time":"55 10 * * *",
             "job":{
-                "type":"exec",
-                "target":"node ck_vqq.js -cwd script/Shell/checkinpanel"
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_vqq.py"
             },
             "running":true
         },
