@@ -215,6 +215,16 @@
             "running":true
         },
         {
+            "name":"一加手机社区官方论坛",
+            "type":"cron",
+            "time":"3 0 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_oneplusbbs.py"
+            },
+            "running":true
+        },
+        {
             "name":"什么值得买",
             "type":"cron",
             "time":"51 9 * * *",
