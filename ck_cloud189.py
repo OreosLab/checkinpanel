@@ -136,7 +136,7 @@ class Cloud189CheckIn:
                 sign_msg = self.sign(session=session)
             else:
                 sign_msg = flag
-            msg = f"帐号信息: {cloud189_phone}\n{sign_msg}"
+            msg = f"帐号信息: *******{cloud189_phone[-4:]}\n{sign_msg}"
             msg_all += msg + '\n\n'
         return msg_all
 
