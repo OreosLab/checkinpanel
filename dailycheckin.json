@@ -30,7 +30,7 @@
             "time":"10 2",
             "job":{
                 "type":"exec",
-                "target":"apk add bash curl git jq python3 py3-pip && pip3 install requests rsa && npm install got"
+                "target":"apk add bash curl gcc git jq libffi-dev musl-dev openssl-dev python3 python3-dev py3-pip && pip3 install cryptography requests rsa && npm install got"
             },
             "running":true
         },
