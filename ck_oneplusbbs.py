@@ -6,6 +6,8 @@ new Env('一加手机社区官方论坛');
 
 import json, os, re, requests, time
 from urllib import parse
+from getENV import getENv
+from checksendNotify import send
 
 
 class OnePlusBBSCheckIn:

@@ -7,6 +7,8 @@ new Env('腾讯视频');
 import json, os, re, requests, time
 from urllib import parse
 from requests import utils
+from getENV import getENv
+from checksendNotify import send
 
 
 class VQQCheckIn:
