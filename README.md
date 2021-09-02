@@ -109,7 +109,7 @@ ql repo https://github.com/Oreomeow/checkinpanel.git "ck_|motto|weather" "checki
 天气预报城市代码
 
 ``` sh
-cp /ql/repo/Oreomeow_checkinpanel/city.json /ql/scripts/check.json
+cp /ql/repo/Oreomeow_checkinpanel/city.json /ql/scripts/city.json
 ```
 
 **单账号**
