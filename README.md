@@ -88,9 +88,9 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 ### 1. ssh 进入容器
 
 ``` sh
-docker exec -it ql bash
+docker exec -it qinglong bash
 ```
-修改 `ql` 为你的青龙容器名称
+修改 `qinglong` 为你的青龙容器名称
 
 ### 2. 安装依赖
 
