@@ -4,7 +4,7 @@ cron: 30 7 * * *
 new Env('天气预报');
 """
 
-import json, os, requests
+import json, os, shutil, requests
 from datetime import datetime
 from getENV import getENv
 from checksendNotify import send
@@ -19,8 +19,13 @@ class Weather:
         获取天气信息。网址：https://www.sojson.com/blog/305.html
         :return:
         """
-        with open(os.path.join(os.path.dirname(__file__), "city.json"), "r", encoding="utf-8") as city_file:
-            city_map = json.loads(city_file.read())
+        try:
+            with open(os.path.join(os.path.dirname(__file__), "city.json"), "r", encoding="utf-8") as city_file:
+                city_map = json.loads(city_file.read())
+        except:
+            shutil.copy('/ql/repo/Oreomeow_checkinpanel/city.json', '/ql/scripts/city.json')
+            with open(os.path.join(os.path.dirname(__file__), "city.json"), "r", encoding="utf-8") as city_file:
+                city_map = json.loads(city_file.read())
         msg_all = ""
         for city_name in self.city_name_list:
             city_code = city_map.get(city_name, "101020100")
