@@ -357,7 +357,7 @@ def send(title, content):
     :return:
     """
     text = one()
-    content += '\n\n' + text
+    content += '\n' + text
     for i in notify_mode:
         if i == 'bark':
             if BARK:

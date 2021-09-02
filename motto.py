@@ -37,6 +37,8 @@ if __name__ == "__main__":
             datas = json.loads(f.read())
     try:
         motto = data.get("MOTTO")
+    except Exception as e:
+        raise e
     if motto:
         try: 
             res = Motto().main()
@@ -44,5 +46,3 @@ if __name__ == "__main__":
             send('每日一句', res)
         except Exception as e:
             print(e)
-    except Exception as e:
-        raise e
