@@ -95,7 +95,7 @@ docker exec -it qinglong bash
 ### 2. 安装依赖
 
 ``` sh
-apk add gcc libffi-dev musl-dev openssl-dev python3-dev && pip3 install cryptography requests rsa
+apk add gcc libffi-dev musl-dev openssl-dev python3-dev && pip3 install cryptography~=3.2.1 requests rsa
 ```
 
 ### 3. 拉取仓库
