@@ -4,7 +4,7 @@ cron: 30 7 * * *
 new Env('每日一句');
 """
 
-import requests
+import json, requests
 from getENV import getENv
 from checksendNotify import send
 
