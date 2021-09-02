@@ -27,20 +27,20 @@
         {
             "name":"签到依赖",
             "type":"schedule",
-            "time":"10 2",
+            "time":"5 3",
             "job":{
                 "type":"exec",
-                "target":"apk add bash curl gcc git jq && pip3 install cryptography requests rsa && npm install got"
+                "target":"apk add bash curl gcc git jq libffi-dev musl-dev openssl-dev python3 python3-dev py3-pip"
             },
             "running":true
         },
         {
             "name":"签到依赖 2",
             "type":"schedule",
-            "time":"5 3",
+            "time":"15 2",
             "job":{
                 "type":"exec",
-                "target":"apk add libffi-dev musl-dev openssl-dev python3 python3-dev py3-pip"
+                "target":"pip3 install cryptography~=3.2.1 requests rsa && npm install got"
             },
             "running":true
         },
