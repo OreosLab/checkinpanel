@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # _*_ coding:utf-8 _*_
 
-import os, re
+import os
+import re
 import sys
 cur_path = os.path.abspath(os.path.dirname(__file__))
 root_path = os.path.split(cur_path)[0]
@@ -344,7 +345,7 @@ def one():
     res = requests.get(url).json()
     # noinspection PyBroadException
     try:
-        result = res['hitokoto'] + '  ---' + res['from']
+        result = res['hitokoto'] + '    ----' + res['from']
     except:
         return '出错了请检查'
     return result
@@ -356,7 +357,20 @@ def send(title, content):
     :param content:
     :return:
     """
-    text = one()
+    try:
+        with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
+            data = json.loads(f.read())
+    except:
+        with open("/ql/config/check.json", "r", encoding="utf-8") as f:
+            data = json.loads(f.read())
+    try:
+        hitokoto = data.get("HITOKOTO")
+    except Exception as e:
+        raise e
+    if hitokoto: 
+        text = one()
+    else:
+        text = ''
     content += '\n' + text
     for i in notify_mode:
         if i == 'bark':
