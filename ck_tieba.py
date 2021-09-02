@@ -97,11 +97,11 @@ if __name__ == "__main__":
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _tieba_cookie_list = datas.get("TIEBA_COOKIE_LIST", [])
+            data = json.loads(f.read())
+    _tieba_cookie_list = data.get("TIEBA_COOKIE_LIST", [])
     res = TiebaCheckIn(tieba_cookie_list=_tieba_cookie_list).main()
     print(res)
     send('百度贴吧', res)

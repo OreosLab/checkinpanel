@@ -104,11 +104,11 @@ def start():
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _mimotion_account_list = datas.get("MIMOTION_ACCOUNT_LIST", [])
+            data = json.loads(f.read())
+    _mimotion_account_list = data.get("MIMOTION_ACCOUNT_LIST", [])
     res=MiMotion(mimotion_account_list=_mimotion_account_list).main()
     print(res)
     send('小米运动', res)

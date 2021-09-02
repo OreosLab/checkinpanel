@@ -82,11 +82,11 @@ if __name__ == "__main__":
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _picacomic_account_list = datas.get("PICACOMIC_ACCOUNT_LIST", [])
+            data = json.loads(f.read())
+    _picacomic_account_list = data.get("PICACOMIC_ACCOUNT_LIST", [])
     res = PicacomicCheckIn(picacomic_account_list=_picacomic_account_list).main()
     print(res)
     send('哔咔漫画', res)

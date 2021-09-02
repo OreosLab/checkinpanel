@@ -63,11 +63,11 @@ if __name__ == "__main__":
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _mgtv_params_list = datas.get("MGTV_PARAMS_LIST", [])
+            data = json.loads(f.read())
+    _mgtv_params_list = data.get("MGTV_PARAMS_LIST", [])
     res = MgtvCheckIn(mgtv_params_list=_mgtv_params_list).main()
     print(res)
     send("芒果 TV", res)

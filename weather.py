@@ -47,11 +47,11 @@ if __name__ == "__main__":
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _city_name_list = datas.get("CITY_NAME_LIST", [])
+            data = json.loads(f.read())
+    _city_name_list = data.get("CITY_NAME_LIST", [])
     res = Weather(city_name_list=_city_name_list).main()
     print(res)
     send('天气预报', res)

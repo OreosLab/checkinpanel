@@ -98,11 +98,11 @@ if __name__ == "__main__":
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _meizu_cookie_list = datas.get("MEIZU_COOKIE_LIST", [])
+            data = json.loads(f.read())
+    _meizu_cookie_list = data.get("MEIZU_COOKIE_LIST", [])
     res = MeizuCheckIn(meizu_cookie_list=_meizu_cookie_list).main()
     print(res)
     send("MEIZU 社区", res)

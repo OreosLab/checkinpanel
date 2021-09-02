@@ -71,11 +71,11 @@ if __name__ == "__main__":
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _smzdm_cookie_list = datas.get("SMZDM_COOKIE_LIST", [])
+            data = json.loads(f.read())
+    _smzdm_cookie_list = data.get("SMZDM_COOKIE_LIST", [])
     res = SmzdmCheckIn(smzdm_cookie_list=_smzdm_cookie_list).main()
     print(res)
     send('什么值得买', res)

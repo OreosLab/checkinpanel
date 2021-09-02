@@ -111,11 +111,11 @@ if __name__ == "__main__":
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _oneplusbbs_cookie_list = datas.get("ONEPLUSBBS_COOKIE_LIST", [])
+            data = json.loads(f.read())
+    _oneplusbbs_cookie_list = data.get("ONEPLUSBBS_COOKIE_LIST", [])
     res = OnePlusBBSCheckIn(oneplusbbs_cookie_list=_oneplusbbs_cookie_list).main()
     print(res)
     send('一加手机社区官方论坛', res)

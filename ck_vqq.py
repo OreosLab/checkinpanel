@@ -123,11 +123,11 @@ if __name__ == "__main__":
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _vqq_cookie_list = datas.get("VQQ_COOKIE_LIST", [])
+            data = json.loads(f.read())
+    _vqq_cookie_list = data.get("VQQ_COOKIE_LIST", [])
     res = VQQCheckIn(vqq_cookie_list=_vqq_cookie_list).main()
     print(res)
     send('腾讯视频', res)

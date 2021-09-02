@@ -56,11 +56,11 @@ if __name__ == "__main__":
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _baidu_url_submit_list = datas.get("BAIDU_URL_SUBMIT_LIST", [])
+            data = json.loads(f.read())
+    _baidu_url_submit_list = data.get("BAIDU_URL_SUBMIT_LIST", [])
     res = BaiduUrlSubmit(baidu_url_submit_list=_baidu_url_submit_list).main()
     print(res)
     send("百度搜索资源平台", res)

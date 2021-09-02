@@ -90,11 +90,11 @@ def start():
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _airport_account_list = datas.get("AIRPORT_ACCOUNT_LIST", [])
+            data = json.loads(f.read())
+    _airport_account_list = data.get("AIRPORT_ACCOUNT_LIST", [])
     res = SspanelQd(airport_account_list=_airport_account_list).main()
     print(res)
     send('机场签到', res)

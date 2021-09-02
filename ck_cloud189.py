@@ -145,11 +145,11 @@ def start():
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _cloud189_account_list = datas.get("CLOUD189_ACCOUNT_LIST", [])
+            data = json.loads(f.read())
+    _cloud189_account_list = data.get("CLOUD189_ACCOUNT_LIST", [])
     res = Cloud189CheckIn(cloud189_account_list=_cloud189_account_list).main()
     print(res)
     send('天翼云盘', res)

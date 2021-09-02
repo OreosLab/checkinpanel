@@ -99,11 +99,11 @@ if __name__ == "__main__":
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _weibo_cookie_list_list = datas.get("WEIBO_COOKIE_LIST", [])
+            data = json.loads(f.read())
+    _weibo_cookie_list_list = data.get("WEIBO_COOKIE_LIST", [])
     res = WeiBoCheckIn(weibo_cookie_list=_weibo_cookie_list_list).main()
     print(res)
     send('微博', res)

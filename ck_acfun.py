@@ -151,11 +151,11 @@ if __name__ == "__main__":
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _acfun_account_list = datas.get("ACFUN_ACCOUNT_LIST", [])
+            data = json.loads(f.read())
+    _acfun_account_list = data.get("ACFUN_ACCOUNT_LIST", [])
     res = AcFunCheckIn(acfun_account_list=_acfun_account_list).main()
     print(res)
     send('AcFun', res)

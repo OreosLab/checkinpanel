@@ -38,11 +38,11 @@ def start():
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _game163_auth_list = datas.get("GAME163_AUTH_LIST", [])
+            data = json.loads(f.read())
+    _game163_auth_list = data.get("GAME163_AUTH_LIST", [])
     res = Game163Checkin(game163_auth_list=_game163_auth_list).main()
     print(res)
     send("网易云游戏", res)

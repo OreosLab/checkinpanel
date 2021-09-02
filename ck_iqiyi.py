@@ -208,11 +208,11 @@ def start():
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _iqiyi_cookie_list = datas.get("IQIYI_COOKIE_LIST", [])
+            data = json.loads(f.read())
+    _iqiyi_cookie_list = data.get("IQIYI_COOKIE_LIST", [])
     res = IQIYICheckIn(iqiyi_cookie_list=_iqiyi_cookie_list).main()
     print(res)
     send('爱奇艺', res)

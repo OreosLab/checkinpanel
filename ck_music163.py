@@ -173,11 +173,11 @@ if __name__ == "__main__":
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _music163_account_list = datas.get("MUSIC163_ACCOUNT_LIST", [])
+            data = json.loads(f.read())
+    _music163_account_list = data.get("MUSIC163_ACCOUNT_LIST", [])
     res = Music163CheckIn(music163_account_list=_music163_account_list).main()
     print(res)
     send('网易云音乐', res)

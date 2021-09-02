@@ -114,11 +114,11 @@ def start():
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _hlx_account_list = datas.get("HLX_ACCOUNT_LIST", [])
+            data = json.loads(f.read())
+    _hlx_account_list = data.get("HLX_ACCOUNT_LIST", [])
     res = HLXCheckin(hlx_account_list=_hlx_account_list).main()
     print(res)
     send('葫芦侠', res)

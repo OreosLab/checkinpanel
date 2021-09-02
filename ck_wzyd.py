@@ -46,11 +46,11 @@ if __name__ == "__main__":
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _wzyd_data_list = datas.get("WZYD_DATA_LIST", [])
+            data = json.loads(f.read())
+    _wzyd_data_list = data.get("WZYD_DATA_LIST", [])
     res = WZYDCheckIn(wzyd_data_list=_wzyd_data_list).main()
     print(res)
     send('王者营地', res)

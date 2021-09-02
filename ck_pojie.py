@@ -58,11 +58,11 @@ if __name__ == "__main__":
     getENv()
     try:
         with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
+            data = json.loads(f.read())
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            datas = json.loads(f.read())
-    _pojie_cookie_list = datas.get("POJIE_COOKIE_LIST", [])
+            data = json.loads(f.read())
+    _pojie_cookie_list = data.get("POJIE_COOKIE_LIST", [])
     res = PojieCheckIn(pojie_cookie_list=_pojie_cookie_list).main()
     print(res)
     send('吾爱破解', res)
