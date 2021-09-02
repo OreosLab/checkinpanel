@@ -97,7 +97,7 @@ class VQQCheckIn:
     def main(self):
         msg_all = ""
         for vqq_cookie in self.vqq_cookie_list:
-            auth_refresh = self.vqq_cookie.get("auth_refresh")
+            auth_refresh = vqq_cookie.get("auth_refresh")
             if not auth_refresh:
                 return "参数错误: 缺少 auth_refresh 参数，请查看配置文档"
             vqq_cookie = {item.split("=")[0]: item.split("=")[1] for item in vqq_cookie.get("vqq_cookie").split("; ")}
