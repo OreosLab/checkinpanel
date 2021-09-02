@@ -21,7 +21,7 @@ class Motto:
             res = json.loads(response.content.decode('utf-8'))
             content = res['content']
             note = res['note']
-            msg = f"{content}\n{note}"
+            msg = f"{content}\n{note}\n"
         else:
             msg = ""
         return msg
