@@ -23,8 +23,7 @@ class Weather:
             with open(os.path.join(os.path.dirname(__file__), "city.json"), "r", encoding="utf-8") as city_file:
                 city_map = json.loads(city_file.read())
         except:
-            shutil.copy('/ql/repo/Oreomeow_checkinpanel/city.json', '/ql/scripts/city.json')
-            with open(os.path.join(os.path.dirname(__file__), "city.json"), "r", encoding="utf-8") as city_file:
+            with open("/ql/repo/Oreomeow_checkinpanel/city.json", "r", encoding="utf-8") as city_file:
                 city_map = json.loads(city_file.read())
         msg_all = ""
         for city_name in self.city_name_list:

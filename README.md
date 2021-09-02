@@ -106,12 +106,6 @@ ql repo https://github.com/Oreomeow/checkinpanel.git "ck_|motto|weather" "checki
 
 ### 4. 拷贝文件
 
-天气预报城市代码
-
-``` sh
-cp /ql/repo/Oreomeow_checkinpanel/city.json /ql/scripts/city.json
-```
-
 **单账号**
 
 ``` sh
