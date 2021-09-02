@@ -106,8 +106,22 @@ ql repo https://github.com/Oreomeow/checkinpanel.git "ck_" "checkin|checkinsh" "
 
 ### 4. 拷贝文件
 
+天气预报城市代码
+
+``` sh
+cp /ql/repo/Oreomeow_checkinpanel/city.json /ql/scripts/check.json
 ```
+
+**单账号**
+
+``` sh
 cp /ql/repo/Oreomeow_checkinpanel/check.sample.json /ql/config/check.json
+```
+
+*多账号（和单账号二选一即可）*
+
+``` sh
+cp /ql/repo/Oreomeow_checkinpanel/check.multiple.json /ql/config/check.json
 ```
 
 ### 5. 抓包配置
@@ -144,17 +158,20 @@ Shell 版本将 `env.example` 配置好后改名为 `.env` 后放入 `script/She
 
 ## 计划说明
 
-| 状态 | \*语言 | 账号 | 名称 |
+| 状态 | \*语言 | \*备注 | 名称 |
 | --- | --- | --- | --- |
-- [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | 多账号 | AcFun | 百度搜索资源平台 | Bilibili | 天翼云盘 | CSDN | 网易云游戏 | 多看阅读 | Fa米家 | 葫芦侠 | 爱奇艺 | 全民K歌 | MEIZU 社区 | 芒果 TV | 小米运动 | 网易云音乐 | 一加手机社区官方论坛 | 吾爱破解 | 什么值得买 | 腾讯视频 | 联通沃邮箱 | 王者营地
+- [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | 多城市 | 天气预报
+- [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | 每日一句
+- [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | 多账号 | AcFun | 百度搜索资源平台 | Bilibili | 天翼云盘 | CSDN | 多看阅读 | Fa米家 | 网易云游戏 | 葫芦侠 | 爱奇艺 | 全民K歌 | MEIZU 社区 | 芒果 TV | 小米运动 | 网易云音乐 | 一加手机社区官方论坛 | 哔咔漫画 | 吾爱破解 | 什么值得买 | 百度贴吧 | V2EX | 腾讯视频 | 微博 | 联通沃邮箱 | 哔咔网单 | 王者营地 | 有道云笔记 | 智友邦
 - [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | 多账号 | 机场签到
-- [x] 𝑺𝒉𝒆𝒍𝒍 | 多账号 | SSPanel 签到 
+- [x] 𝑺𝒉𝒆𝒍𝒍 | 多账号 | SSPanel 签到
+- [ ] 𝑷𝒚𝒕𝒉𝒐𝒏 | 多账号 | Epic 周免 
 
 ### 测试情况
 
 | 状态 | 名称 |
 | --- | --- |
-| ✅ | AcFun \| Bilibili \| 天翼云盘 \| CSDN \| 网易云游戏 \| 多看阅读 \| Fa米家 \| 葫芦侠 \| 爱奇艺 \| 全民K歌 \| MEIZU 社区 \| 芒果 TV \| 小米运动 \| 网易云音乐 \| 一加手机社区官方论坛 \| 吾爱破解 \| 什么值得买 \| 腾讯视频 \| 联通沃邮箱 \| 王者营地 |
+| ✅ | 天气预报 \| 每日一句 \| AcFun \| Bilibili \| 天翼云盘 \| CSDN \| 多看阅读 \| Fa米家 \| 网易云游戏 \| 葫芦侠 \| 爱奇艺 \| 全民K歌 \| MEIZU 社区 \| 芒果 TV \| 小米运动 \| 网易云音乐 \| 一加手机社区官方论坛 \| 哔咔漫画 \| 吾爱破解 \| 什么值得买 \| 百度贴吧 \| V2EX \| 腾讯视频 \| 微博 \| 联通沃邮箱 \| 哔咔网单 \| 王者营地 \| 有道云笔记 \| 智友邦 |
 | ❔ | 百度搜索资源平台 |
 
 ## 致谢

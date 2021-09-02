@@ -2,7 +2,7 @@
     "name":"签到项目",
     "author":"Leon",
     "desc":"该订阅适用于 elecV2P，与其他软件并不兼容。相关说明参考：https://github.com/elecV2/elecV2P-dei/tree/master/docs/06-task.md",
-    "date":"2021-08-22 16:10:00",
+    "date":"2021-09-02 22:00:00",
     "list":[
         {
             "name":"签到仓库",
@@ -53,7 +53,27 @@
                 "target":"wget https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/checkinsh.js -O checkinsh.js -cwd script/JSFile"
             },
             "running":true
-        },        
+        },
+        {
+            "name":"天气预报",
+            "type":"cron",
+            "time":"30 7 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=weather.py"
+            },
+            "running":true
+        },
+        {
+            "name":"每日一句",
+            "type":"cron",
+            "time":"30 7 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=motto.py"
+            },
+            "running":true
+        },
         {
             "name":"AcFun",
             "type":"cron",
@@ -93,7 +113,7 @@
                 "target":"checkin.js -env PYNAME=ck_bilibili.py"
             },
             "running":true
-        },        
+        },
         {
             "name":"天翼云盘",
             "type":"cron",
@@ -183,7 +203,7 @@
                 "target":"checkin.js -env PYNAME=ck_meizu.py"
             },
             "running":true
-        },        
+        },
         {
             "name":"芒果 TV",
             "type":"cron",
@@ -225,6 +245,16 @@
             "running":true
         },
         {
+            "name":"哔咔漫画",
+            "type":"cron",
+            "time":"45 5 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_picacomic.py"
+            },
+            "running":true
+        },
+        {
             "name":"吾爱破解",
             "type":"cron",
             "time":"53 11 * * *",
@@ -255,12 +285,42 @@
             "running":false
         },
         {
+            "name":"百度贴吧",
+            "type":"cron",
+            "time":"12 16 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_tieba.py"
+            },
+            "running":true
+        },
+        {
+            "name":"V2EX",
+            "type":"cron",
+            "time":"10 19 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_v2ex.py"
+            },
+            "running":true
+        },
+        {
             "name":"腾讯视频",
             "type":"cron",
             "time":"55 10 * * *",
             "job":{
                 "type":"runjs",
                 "target":"checkin.js -env PYNAME=ck_vqq.py"
+            },
+            "running":true
+        },
+        {
+            "name":"微博",
+            "type":"cron",
+            "time":"48 7 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_weibo.py"
             },
             "running":true
         },
@@ -275,12 +335,42 @@
             "running":true
         },
         {
+            "name":"咔叽网单",
+            "type":"cron",
+            "time":"12 13 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_www2nzz.py"
+            },
+            "running":true
+        },
+        {
             "name":"王者营地",
             "type":"cron",
             "time":"0 8 * * *",
             "job":{
                 "type":"runjs",
                 "target":"checkin.js -env PYNAME=ck_wzyd.py"
+            },
+            "running":true
+        },
+        {
+            "name":"有道云笔记",
+            "type":"cron",
+            "time":"18 20 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_youdao.py"
+            },
+            "running":true
+        },
+        {
+            "name":"智友邦",
+            "type":"cron",
+            "time":"7 21 * * *",
+            "job":{
+                "type":"runjs",
+                "target":"checkin.js -env PYNAME=ck_zhiyoo.py"
             },
             "running":true
         }

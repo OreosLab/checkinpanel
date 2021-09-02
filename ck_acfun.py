@@ -140,7 +140,7 @@ class AcFunCheckIn:
             danmu_msg = self.danmu(session=session, cookies=cookies)
             throwbanana_msg = self.throwbanana(session=session, cookies=cookies)
             msg = (
-                f"帐号信息: {phone}\n签到状态: {sign_msg}\n点赞任务: {like_msg}\n"
+                f"帐号信息: *******{phone[-4:]}\n签到状态: {sign_msg}\n点赞任务: {like_msg}\n"
                 f"弹幕任务: {danmu_msg}\n香蕉任务: {throwbanana_msg}\n分享任务: {share_msg}"
             )
             msg_all += msg + '\n\n'
