@@ -71,6 +71,6 @@ if __name__ == "__main__":
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
             data = json.loads(f.read())
     _zhiyoo_cookie_list = data.get("ZHIYOO_COOKIE_LIST", [])
-    res = YouDaoCheckIn(zhiyoo_cookie_list=_zhiyoo_cookie_list).main()
+    res = ZhiyooCheckIn(zhiyoo_cookie_list=_zhiyoo_cookie_list).main()
     print(res)
-    send('有道云笔记', res)
+    send('智友邦', res)
