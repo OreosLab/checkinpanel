@@ -60,12 +60,8 @@ class IQIYICheckIn:
         if res["code"] == "A00000":
             try:
                 growth = res["data"]["signInfo"]["data"]["rewardMap"]["growth"]
-                continue_sign_days_sum = res["data"]["signInfo"]["data"]["continueSignDaysSum"]
-                reward_day = (
-                    7 if continue_sign_days_sum % 28 <= 7 else (14 if continue_sign_days_sum % 28 <= 14 else 28)
-                )
-                rouund_day = 28 if continue_sign_days_sum % 28 == 0 else continue_sign_days_sum % 28
-                msg = f"+{growth}成长值\n连续签到: {continue_sign_days_sum}天\n签到周期: {rouund_day}天/{reward_day}天"
+                cumulate_sign_days_sum = res["data"]["signInfo"]["data"]["cumulateSignDaysSum"]
+                msg = f"+{growth}成长值\n当月签到: {cumulate_sign_days_sum}天"
             except Exception as e:
                 print(e)
                 msg = res["data"]["signInfo"].get("msg")
@@ -198,8 +194,9 @@ class IQIYICheckIn:
                 nickname = "未获取到，请检查 Cookie 中 P00002 字段"
                 user_name = "未获取到，请检查 Cookie 中 P00002 字段"
             user_msg = self.user_information(p00001=p00001)
-            msg = f"用户账号: {user_name}\n用户昵称: {nickname}\n{user_msg}\n" \
-                  f"签到奖励: {sign_msg}\n任务奖励: {task_msg}\n抽奖奖励: {draw_msg}"
+            msg = (
+                f"用户账号: {user_name}\n用户昵称: {nickname}\n{user_msg}\n" f"签到奖励: {sign_msg}\n任务奖励: {task_msg}\n抽奖奖励: {draw_msg}"
+            )
             msg_all += msg + '\n\n'
         return msg_all
 

@@ -9,7 +9,7 @@ from getENV import getENv
 from checksendNotify import send
 
 
-class Game163Checkin:
+class Game163CheckIn:
     def __init__(self, game163_auth_list):
         self.game163_auth_list = game163_auth_list
 
@@ -43,7 +43,7 @@ def start():
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
             data = json.loads(f.read())
     _game163_auth_list = data.get("GAME163_AUTH_LIST", [])
-    res = Game163Checkin(game163_auth_list=_game163_auth_list).main()
+    res = Game163CheckIn(game163_auth_list=_game163_auth_list).main()
     print(res)
     send("网易云游戏", res)
 

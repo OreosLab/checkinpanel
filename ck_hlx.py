@@ -11,7 +11,7 @@ from checksendNotify import send
 
 r = requests.Session()
 
-class HLXCheckin:
+class HLXCheckIn:
     def __init__(self, hlx_account_list):
         self.hlx_account_list = hlx_account_list
 
@@ -119,7 +119,7 @@ def start():
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
             data = json.loads(f.read())
     _hlx_account_list = data.get("HLX_ACCOUNT_LIST", [])
-    res = HLXCheckin(hlx_account_list=_hlx_account_list).main()
+    res = HLXCheckIn(hlx_account_list=_hlx_account_list).main()
     print(res)
     send('葫芦侠', res)
 
