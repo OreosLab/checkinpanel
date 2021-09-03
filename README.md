@@ -71,7 +71,7 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 | DD_BOT_SECRET | 钉钉机器人 | 钉钉推送[官方文档](https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq)密钥，机器人安全设置页面，加签一栏下面显示的 `SEC` 开头的字符串, 注:填写了 `DD_BOT_TOKEN` 和 `DD_BOT_SECRET`，钉钉机器人安全设置只需勾选加签即可，其他选项不要勾选 |
 | QQ_SKEY | Cool Push | [Cool Push](https://cp.xuthus.cc/) 推送的 `SKEY` |
 | QQ_MODE | Cool Push 推送方式 | [Cool Push](https://cp.xuthus.cc/) 推送方式：QQ、微信、邮件 |
-| QYWX_APP | 企业微信应用 | 参考 http://note.youdao.com/s/HMiudGkb |
+| QYWX_AM | 企业微信应用 | 参考 http://note.youdao.com/s/HMiudGkb |
 | PUSH_PLUS_TOKEN | pushplus | 用户令牌，可直接加到请求地址后，如：`http://www.pushplus.plus/send/{token}` [官方文档](https://www.pushplus.plus/doc/) |
 | GOBOT_URL | go-cqhttp | 例如：推送到个人QQ：`http://127.0.0.1/send_private_msg` 群：`http://127.0.0.1/send_group_msg` |
 | GOBOT_TOKEN | * go-cqhttp 的 access_token | go-cqhttp 文件设置的访问密钥 |
