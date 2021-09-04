@@ -16,7 +16,7 @@ def getdata():
                     data = json.loads(f.read())
                 return data
             except json.JSONDecodeError:
-                print('请在 https://www.json.cn/json/jsononline.html 中检查 JSON 格式')
+                print('错误！请在 https://www.json.cn/json/jsononline.html 中检查 JSON 格式')
                 exit(1)
         else:
             print('未找到配置文件\n')
@@ -31,7 +31,7 @@ def getdata():
                     data = json.loads(f.read())
                 return data
             except json.JSONDecodeError:
-                print('请在 https://www.json.cn/json/jsononline.html 中检查 JSON 格式')
+                print('错误！请在 https://www.json.cn/json/jsononline.html 中检查 JSON 格式')
                 exit(1)            
         else:
             print('未找到配置文件\n')
