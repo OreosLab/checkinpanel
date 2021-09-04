@@ -5,7 +5,7 @@ new Env('每日一句');
 """
 
 import json, requests
-from getENV import getENv
+from getENV import getdata
 from checksendNotify import send
 
 
@@ -28,13 +28,7 @@ class Motto:
 
 
 if __name__ == "__main__":
-    getENv()
-    try:
-        with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
-    except:
-        with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
+    data = getdata()
     try:
         motto = data.get("MOTTO")
     except Exception as e:

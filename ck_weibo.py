@@ -6,7 +6,7 @@ new Env('微博');
 
 import json, os, requests, urllib3
 from urllib import parse
-from getENV import getENv
+from getENV import getdata
 from checksendNotify import send
 
 urllib3.disable_warnings()
@@ -96,13 +96,7 @@ class WeiBoCheckIn:
 
 
 if __name__ == "__main__":
-    getENv()
-    try:
-        with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
-    except:
-        with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
+    data = getdata()
     _weibo_cookie_list_list = data.get("WEIBO_COOKIE_LIST", [])
     res = WeiBoCheckIn(weibo_cookie_list=_weibo_cookie_list_list).main()
     print(res)

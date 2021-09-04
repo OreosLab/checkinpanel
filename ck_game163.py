@@ -5,7 +5,7 @@ new Env('网易云游戏');
 """
 
 import json, requests
-from getENV import getENv
+from getENV import getdata
 from checksendNotify import send
 
 
@@ -35,13 +35,7 @@ class Game163CheckIn:
         return msg_all
 
 def start():
-    getENv()
-    try:
-        with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
-    except:
-        with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
+    data = getdata()
     _game163_auth_list = data.get("GAME163_AUTH_LIST", [])
     res = Game163CheckIn(game163_auth_list=_game163_auth_list).main()
     print(res)

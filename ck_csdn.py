@@ -5,7 +5,7 @@ new Env('CSDN');
 """
 
 import json, os, requests
-from getENV import getENv
+from getENV import getdata
 from checksendNotify import send
 
 
@@ -57,13 +57,7 @@ class CSDNCheckIn:
 
 
 if __name__ == "__main__":
-    getENv()
-    try:
-        with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
-    except:
-        with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
+    data = getdata()
     _csdn_cookie_list = data.get("CSDN_COOKIE_LIST", [])
     res = CSDNCheckIn(csdn_cookie_list=_csdn_cookie_list).main()
     print(res)

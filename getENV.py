@@ -1,7 +1,7 @@
-import os
+import os, json
 
 
-def getENv():
+def getdata():
     v2p_new='/usr/local/app/script/Lists/task.list'
     ql_new = '/ql/config/env.sh'
     v2p_config_file = '/usr/local/app/script/Shell/check.json'
@@ -11,17 +11,31 @@ def getENv():
         print('成功 当前环境为 v2p 面板继续执行')
         if os.path.exists(v2p_config_file):
             print('已找到配置文件')
+            try:
+                with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
+                    data = json.loads(f.read())
+                return data
+            except json.JSONDecodeError:
+                print('请在 https://www.json.cn/json/jsononline.html 中检查 JSON 格式或删掉不需要的第二个对象')
+                exit(1)
         else:
             print('未找到配置文件\n')
-            print('请添加./script/Shell/check.json')
+            print('请添加 ./script/Shell/check.json')
             exit(1)
     elif os.path.exists(ql_new):
         print('成功 当前环境为青龙面板继续执行')
         if os.path.exists(ql_config_file):
             print('已找到配置文件')
+            try:
+                with open("/ql/config/check.json", "r", encoding="utf-8") as f:
+                    data = json.loads(f.read())
+                return data
+            except json.JSONDecodeError:
+                print('请在 https://www.json.cn/json/jsononline.html 中检查 JSON 格式或删掉不需要的第二个对象')
+                exit(1)            
         else:
             print('未找到配置文件\n')
-            print('请添加/ql/config/check.json')
+            print('请添加 /ql/config/check.json')
             exit(1)
     else:
         print('失败 请检查环境')

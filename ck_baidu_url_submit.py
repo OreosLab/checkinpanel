@@ -6,7 +6,7 @@ new Env('百度搜索资源平台');
 
 import json, os, requests
 from urllib import parse
-from getENV import getENv
+from getENV import getdata
 from checksendNotify import send
 
 
@@ -53,13 +53,7 @@ class BaiduUrlSubmit:
 
 
 if __name__ == "__main__":
-    getENv()
-    try:
-        with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
-    except:
-        with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
+    data = getdata()
     _baidu_url_submit_list = data.get("BAIDU_URL_SUBMIT_LIST", [])
     res = BaiduUrlSubmit(baidu_url_submit_list=_baidu_url_submit_list).main()
     print(res)

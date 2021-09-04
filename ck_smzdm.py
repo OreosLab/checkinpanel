@@ -6,7 +6,7 @@ new Env('什么值得买');
 
 import json, os, requests
 from requests import utils
-from getENV import getENv
+from getENV import getdata
 from checksendNotify import send
 
 
@@ -68,13 +68,7 @@ class SmzdmCheckIn:
 
 
 if __name__ == "__main__":
-    getENv()
-    try:
-        with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
-    except:
-        with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
+    data = getdata()
     _smzdm_cookie_list = data.get("SMZDM_COOKIE_LIST", [])
     res = SmzdmCheckIn(smzdm_cookie_list=_smzdm_cookie_list).main()
     print(res)

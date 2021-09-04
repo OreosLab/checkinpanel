@@ -6,7 +6,7 @@ new Env('智友邦');
 
 import json, os, re, requests, urllib3
 from requests import utils
-from getENV import getENv
+from getENV import getdata
 from checksendNotify import send
 
 urllib3.disable_warnings()
@@ -63,10 +63,8 @@ class ZhiyooCheckIn:
 
 
 if __name__ == "__main__":
-    getENv()
-    try:
-        with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
+    getdata()
+
     except:
         with open("/ql/config/check.json", "r", encoding="utf-8") as f:
             data = json.loads(f.read())

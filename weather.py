@@ -6,7 +6,7 @@ new Env('天气预报');
 
 import json, os, shutil, requests
 from datetime import datetime
-from getENV import getENv
+from getENV import getdata
 from checksendNotify import send
 
 
@@ -48,13 +48,7 @@ class Weather:
 
 
 if __name__ == "__main__":
-    getENv()
-    try:
-        with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
-    except:
-        with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
+    data = getdata()
     _city_name_list = data.get("CITY_NAME_LIST", [])
     res = Weather(city_name_list=_city_name_list).main()
     print(res)

@@ -5,7 +5,7 @@ new Env('小米运动');
 """
 
 import json, os, random, re, requests, time
-from getENV import getENv
+from getENV import getdata
 from checksendNotify import send
 
 
@@ -101,13 +101,7 @@ class MiMotion:
 
 
 def start():
-    getENv()
-    try:
-        with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
-    except:
-        with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
+    data = getdata()
     _mimotion_account_list = data.get("MIMOTION_ACCOUNT_LIST", [])
     res=MiMotion(mimotion_account_list=_mimotion_account_list).main()
     print(res)

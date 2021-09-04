@@ -5,7 +5,7 @@ new Env('全民K歌');
 """
 
 import json, requests
-from getENV import getENv
+from getENV import getdata
 from checksendNotify import send
 
 
@@ -133,13 +133,7 @@ class KGQQCheckIn:
 
 
 if __name__ == "__main__":
-    getENv()
-    try:
-        with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
-    except:
-        with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
+    data = getdata()
     _kgqq_cookie_list = data.get("KGQQ_COOKIE_LIST", [])
     res = KGQQCheckIn(kgqq_cookie_list=_kgqq_cookie_list).main()
     print(res)

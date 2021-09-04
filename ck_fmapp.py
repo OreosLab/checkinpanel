@@ -5,7 +5,7 @@ new Env('Fa米家');
 """
 
 import json, requests
-from getENV import getENv
+from getENV import getdata
 from checksendNotify import send
 
 
@@ -98,13 +98,7 @@ class FMAPPCheckIn:
 
 
 if __name__ == "__main__":
-    getENv()
-    try:
-        with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
-    except:
-        with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
+    data = getdata()
     _fmapp_account_list = data.get("FMAPP_ACCOUNT_LIST", [])
     res = FMAPPCheckIn(fmapp_account_list=_fmapp_account_list).main()
     print(res)

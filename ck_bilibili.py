@@ -8,7 +8,7 @@ import json
 import os
 import requests
 from requests import utils
-from getENV import getENv
+from getENV import getdata
 from checksendNotify import send
 
 
@@ -339,13 +339,7 @@ class BiliBiliCheckIn(object):
 
 
 if __name__ == "__main__":
-    getENv()
-    try:
-        with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
-    except:
-        with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
+    data = getdata()
     _bilibili_cookie_list = data.get("BILIBILI_COOKIE_LIST", [])
     res = BiliBiliCheckIn(bilibili_cookie_list=_bilibili_cookie_list).main()
     print(res)

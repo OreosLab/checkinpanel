@@ -6,7 +6,7 @@ new Env('天翼云盘');
 """
 
 import base64, json, os, re, requests, rsa, time
-from getENV import getENv
+from getENV import getdata
 from checksendNotify import send
 
 
@@ -142,13 +142,7 @@ class Cloud189CheckIn:
 
 
 def start():
-    getENv()
-    try:
-        with open("/usr/local/app/script/Shell/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
-    except:
-        with open("/ql/config/check.json", "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
+    data = getdata()
     _cloud189_account_list = data.get("CLOUD189_ACCOUNT_LIST", [])
     res = Cloud189CheckIn(cloud189_account_list=_cloud189_account_list).main()
     print(res)
