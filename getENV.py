@@ -2,7 +2,7 @@ import os, json
 
 
 def getdata():
-    v2p_new='/usr/local/app/script/Lists/task.list'
+    v2p_new = '/usr/local/app/script/Lists/task.list'
     ql_new = '/ql/config/env.sh'
     v2p_config_file = '/usr/local/app/script/Shell/check.json'
     ql_config_file = '/ql/config/check.json'
