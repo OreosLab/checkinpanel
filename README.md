@@ -56,12 +56,15 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 - OVERVIEW -> EFSS 文件管理界面 -> 是否开启 EFSS 功能：开启 -> 目录：`./script/Shell` -> 选择文件：`check.json` -> 开始上传
 
-### 4. JSMANAGE -> store/cookie 常量储存管理填写通知环境变量
+### 4.配置通知
+
+#### 4.1 JSMANAGE -> store/cookie 常量储存管理填写通知环境变量
 
 | 变量 / key | 描述 | 参考 / value |
 | --- | --- |  --- |
+| HITOKOTO | 一言（一句话） | True（启用）or False（不启用） |
 | BARK | bark 服务 | BARK 推送[使用](https://github.com/Sitoi/dailycheckin/issues/29)，填写 `BARK_URL` 即可，例如：`https://api.day.app/DxHcxxxxxRxxxxxxcm/`，此参数如果以 `http` 或者 `https` 开头则判定为自建 bark 服务 |
-| PUSH_KEY | Server 酱 | server 酱推送[官方文档](https://sc.ftqq.com/3.version)，填写 `SCKEY` 代码即可
+| PUSH_KEY | Server 酱 | server 酱推送[官方文档](https://sc.ftqq.com/3.version)，填写 `SCKEY` 代码即可|
 | TG_BOT_TOKEN | tg 机器人 | 申请 [@BotFather](https://t.me/BotFather) 的 Token，如 `10xxx4:AAFcqxxxxgER5uw` |
 | TG_USER_ID | tg 机器人 | 给 [@getidsbot](https://t.me/getidsbot) 发送 /start 获取到的纯数字 ID，如 `1434078534` |
 | TG_API_HOST | * tg 代理 api | Telegram api 自建的反向代理地址 例子：反向代理地址 `http://aaa.bbb.ccc` 则填写 aaa.bbb.ccc [简略搭建教程](https://shimo.im/docs/JD38CJDQtYy3yTd8/read) |
@@ -79,9 +82,27 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 *\*表示选填*
 
-- 调用模块
+#### 4.2 另一种通知配置方式（当和 4.1 中值重复时，以 4.1 值为准）
 
-> [𝒄𝒉𝒆𝒄𝒌𝒔𝒆𝒏𝒅𝑵𝒐𝒕𝒊𝒇𝒚.𝒑𝒚](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/checksendNotify.py)
+下载项目中的 [推送配置文件](https://github.com/Oreomeow/checkinpanel/blob/master/notify_config.json5) 到**配置文件夹**，按照上述说明修改配置文件中的值，你可以**自由的删除**该文件中某些不需要的值（注意语法）。
+
+使用了配置文件后，你可以将配置文件放在持久化位置，不受脚本更新、重置容器的影响。
+
+如果想自定义配置文件的位置和文件名，请设置通知环境变量 `NOTIFY_CONFIG_PATH`， 例如 `/etc/notify/config.json5`。建议保持`json5` 的后缀，防止编辑器的误解。
+
+关于 json5 的语法参考：
+
+- [官方说明](https://json5.org/)
+- [中文网友博客说明](https://zhuanlan.zhihu.com/p/108119490)
+- [json5语法验证](https://verytoolz.com/json5-validator.html)
+
+#### 4.3 通知说明
+
+本通知调用了项目中的 [𝒄𝒉𝒆𝒄𝒌𝒔𝒆𝒏𝒅𝑵𝒐𝒕𝒊𝒇𝒚.𝒑𝒚](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/checksendNotify.py) 。如果你想在**你自己的项目中**使用这个通知脚本，将它拷贝并调用对应的通知函数即可。
+
+在非容器环境中，通知环境变量使用 系统的环境变量 或者 **你通过 `NOTIFY_CONFIG_PATH` 环境变量指定的配置文件** 进行配置。
+
+特别的，如果你想要创建一个基于 python 的 elecV2P 或者 qinglong 项目，强烈建议你拷贝 [此文件](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/checksendNotify.py)，如此可以大幅度降低用户脚本的配置难度和升级难度。
 
 ## 𝐪𝐢𝐧𝐠𝐥𝐨𝐧𝐠 使用方法
 
@@ -118,7 +139,23 @@ cp /ql/repo/Oreomeow_checkinpanel/check.sample.json /ql/config/check.json
 cp /ql/repo/Oreomeow_checkinpanel/check.multiple.json /ql/config/check.json
 ```
 
-### 5. 抓包配置
+*通知配置文件（可选）*
+
+~~~shell
+cp /ql/repo/Oreomeow_checkinpanel/notify_config.json5 /ql/config/notify_config.json5
+~~~
+
+### 5. 配置通知
+
+参见上文中的[配置通知](#4.配置通知)。
+
+特别的：
+
+- 如果使用环境变量，请在 qinglong 面板中配置。
+- 如果使用配置文件，请修改 `/ql/config/notify_config.json5` 文件。
+- 当然你也可以在 qinglong 面板中配置 `NOTIFY_CONFIG_PATH` 环境变量为配置文件指定其他位置。
+
+### 6. 抓包配置
 
 不出意外的话可以在青龙面板的配置文件下找到 `check.json` 文件
 
