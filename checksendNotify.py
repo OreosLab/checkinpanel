@@ -19,38 +19,35 @@ import urllib.parse
 
 # 通知服务
 push_config = {
-    'HITOKOTO': True,  # 启用一言（随机句子）
+    'HITOKOTO': False,                  # 启用一言（随机句子）
 
-    'BARK': '',  # bark服务,自行搜索; 此参数如果以http或者https开头则判定为自建bark服务
+    'BARK': '',                         # bark服务,自行搜索; 此参数如果以http或者https开头则判定为自建bark服务
 
-    'SCKEY': '',  # Server酱的SCKEY
+    'SCKEY': '',                        # Server酱的SCKEY
 
-    'TG_BOT_TOKEN': '',  # tg机器人的TG_BOT_TOKEN; 1407203283:AAG9rt-6RDaaX0HBLZQq0laNOh898iFYaRQ
-    'TG_USER_ID': '',  # tg机器人的TG_USER_ID; 1434078534
-    'TG_API_HOST': '',  # tg 代理 api
-    'TG_PROXY_IP': '',  # tg 机器人的 TG_PROXY_IP
-    'TG_PROXY_PORT': '',  # tg 机器人的 TG_PROXY_PORT
+    'TG_BOT_TOKEN': '',                 # tg机器人的TG_BOT_TOKEN; 1407203283:AAG9rt-6RDaaX0HBLZQq0laNOh898iFYaRQ
+    'TG_USER_ID': '',                   # tg机器人的TG_USER_ID; 1434078534
+    'TG_API_HOST': '',                  # tg 代理 api
+    'TG_PROXY_IP': '',                  # tg 机器人的 TG_PROXY_IP
+    'TG_PROXY_PORT': '',                # tg 机器人的 TG_PROXY_PORT
 
-    'DD_BOT_ACCESS_TOKEN': '',  # 钉钉机器人的 DD_BOT_ACCESS_TOKEN
-    'DD_BOT_SECRET': '',  # 钉钉机器人的 DD_BOT_SECRET
+    'DD_BOT_ACCESS_TOKEN': '',          # 钉钉机器人的 DD_BOT_ACCESS_TOKEN
+    'DD_BOT_SECRET': '',                # 钉钉机器人的 DD_BOT_SECRET
 
-    'QQ_MODE': '',  # qq 机器人的 QQ_MODE
-    'QQ_SKEY': '',  # qq 机器人的 QQ_SKEY
+    'QQ_MODE': '',                      # qq 机器人的 QQ_MODE
+    'QQ_SKEY': '',                      # qq 机器人的 QQ_SKEY
 
-    'QYWX_AM': '',  # 企业微信
+    'QYWX_APP': '',                      # 企业微信
 
-    'PUSH_PLUS_TOKEN': '',  # 微信推送 Plus+
+    'PUSH_PLUS_TOKEN': '',              # 微信推送 Plus+
 
-    # go-cqhttp
-    # 推送到个人QQ: http://127.0.0.1/send_private_msg
-    # 群：http://127.0.0.1/send_group_msg
-    'GOBOT_URL': '',
-    'GOBOT_TOKEN': '',  # go-cqhttp 的 access_token, 可不填
-    # go-cqhttp的推送群或者用户
-    # GOBOT_URL设置 /send_private_msg 填入 user_id=个人QQ
-    #              /send_group_msg   填入 group_id=QQ群
-    'GOBOT_QQ': '',
-
+    'GOBOT_URL': '',                   # go-cqhttp
+                                       # 推送到个人QQ: http://127.0.0.1/send_private_msg
+                                       # 群：http://127.0.0.1/send_group_msg
+    'GOBOT_TOKEN': '',                 # go-cqhttp 的 access_token, 可不填
+    'GOBOT_QQ': '',                    # go-cqhttp的推送群或者用户
+                                       # GOBOT_URL设置 /send_private_msg 填入 user_id=个人QQ
+                                       #              /send_group_msg   填入 group_id=QQ群
 }
 notify_function = []
 
