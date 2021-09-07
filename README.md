@@ -56,7 +56,7 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 - OVERVIEW -> EFSS 文件管理界面 -> 是否开启 EFSS 功能：开启 -> 目录：`./script/Shell` -> 选择文件：`check.json` -> 开始上传
 
-### 4.配置通知
+### 4. 配置通知
 
 #### 4.1 JSMANAGE -> store/cookie 常量储存管理填写通知环境变量
 
@@ -147,10 +147,11 @@ cp /ql/repo/Oreomeow_checkinpanel/notify_config.json5 /ql/config/notify_config.j
 
 ### 5. 配置通知
 
-参见上文中的[配置通知](#4.配置通知)。
+参见上文中的[配置通知](#https://github.com/Oreomeow/checkinpanel/blob/master/README.md#4配置通知)。
 
 特别的：
 
+- **如果你已经配置了 `config.sh`， 那么你可以不需要做任何改变。**
 - 如果使用环境变量，请在 qinglong 面板中配置。
 - 如果使用配置文件，请修改 `/ql/config/notify_config.json5` 文件。
 - 当然你也可以在 qinglong 面板中配置 `NOTIFY_CONFIG_PATH` 环境变量为配置文件指定其他位置。
