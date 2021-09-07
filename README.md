@@ -38,7 +38,9 @@
 
 ## 𝐞𝐥𝐞𝐜𝐕𝟐𝐏 使用方法
 
-### 1. TASK -> 添加订阅任务 -> 修改名称、更新方式、任务 -> 获取内容 -> 全部添加
+### 1. 添加任务
+
+#### TASK -> 添加订阅任务 -> 修改名称、更新方式、任务 -> 获取内容 -> 全部添加
 
 名称：签到项目
 
@@ -50,9 +52,13 @@
 https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 ```
 
-### 2. 单账号下载 [check.sample.json](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/check.sample.json)，多账号下载 [check.multiple.json](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/check.multiple.json)，根据 [Sitoi](https://github.com/Sitoi/dailycheckin) 的[配置说明](https://sitoi.gitee.io/dailycheckin/settings/)进行抓包并配置
+### 2. 抓包配置
 
-### 3. 将 `check.sample.json` 或 `check.multiple.json` 重命名为 `check.json` 后放入 `script/Shell` 文件夹
+#### 单账号下载 [check.sample.json](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/check.sample.json)，多账号下载 [check.multiple.json](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/check.multiple.json)，根据 [Sitoi](https://github.com/Sitoi/dailycheckin) 的[配置说明](https://sitoi.gitee.io/dailycheckin/settings/)进行抓包并配置
+
+### 3. 上传配置
+
+#### 将 `check.sample.json` 或 `check.multiple.json` 重命名为 `check.json` 后放入 `script/Shell` 文件夹
 
 - OVERVIEW -> EFSS 文件管理界面 -> 是否开启 EFSS 功能：开启 -> 目录：`./script/Shell` -> 选择文件：`check.json` -> 开始上传
 
