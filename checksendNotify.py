@@ -37,7 +37,7 @@ push_config = {
     'QQ_MODE': '',                      # qq 机器人的 QQ_MODE
     'QQ_SKEY': '',                      # qq 机器人的 QQ_SKEY
 
-    'QYWX_APP': '',                     # 企业微信
+    'QYWX_AM': '',                      # 企业微信
 
     'PUSH_PLUS_TOKEN': '',              # 微信推送 Plus+
 
