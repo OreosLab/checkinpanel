@@ -40,7 +40,7 @@
             "time":"15 2",
             "job":{
                 "type":"exec",
-                "target":"pip3 install cryptography~=3.2.1 requests rsa && npm install got"
+                "target":"pip3 install cryptography~=3.2.1 json5 requests rsa && npm install got"
             },
             "running":true
         },

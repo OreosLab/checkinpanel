@@ -23,7 +23,7 @@ push_config = {
 
     'BARK': '',                         # bark 服务，自行搜索；此参数如果以 http 或者 https 开头则判定为自建 bark 服务
 
-    'SCKEY': '',                        # Server酱的 SCKEY
+    'PUSH_KEY': '',                     # Server酱的 PUSH_KEY
 
     'TG_BOT_TOKEN': '',                 # tg 机器人的 TG_BOT_TOKEN；例：1407203283:AAG9rt-6RDaaX0HBLZQq0laNOh898iFYaRQ
     'TG_USER_ID': '',                   # tg 机器人的TG_USER_ID；例：1434078534
@@ -58,7 +58,7 @@ if os.path.exists(CONFIG_PATH):
         if k in push_config:
             push_config[k] = v
 
-#  GitHub action运行环境变量覆盖配置文件的变量
+#  GitHub action 运行环境变量覆盖配置文件的变量
 for k in push_config:
     if v := os.getenv(k):
         push_config[k] = v
@@ -101,8 +101,8 @@ def go_cqhttp(title, content):
 
 def serverJ(title, content):
     print("\n")
-    if not push_config.get('SCKEY'):
-        print("server 酱服务的 SCKEY 未设置!!\n取消推送")
+    if not push_config.get('PUSH_KEY'):
+        print("server 酱服务的 PUSH_KEY 未设置!!\n取消推送")
         return
     print("serverJ 服务启动")
 
@@ -110,7 +110,7 @@ def serverJ(title, content):
         "text": title,
         "desp": content.replace("\n", "\n\n")
     }
-    response = requests.post(f"https://sct.ftqq.com/{push_config.get('SCKEY')}.send", data=data).json()
+    response = requests.post(f"https://sct.ftqq.com/{push_config.get('PUSH_KEY')}.send", data=data).json()
 
     if response['errno'] == 0:
         print('serverJ 推送成功！')
@@ -312,7 +312,7 @@ if push_config.get('BARK'):
     notify_function.append(bark)
 if push_config.get('GOBOT_URL') and push_config.get('GOBOT_QQ'):
     notify_function.append(go_cqhttp)
-if push_config.get('SCKEY'):
+if push_config.get('PUSH_KEY'):
     notify_function.append(serverJ)
 if push_config.get('TG_BOT_TOKEN') and push_config.get('TG_USER_ID'):
     notify_function.append(telegram_bot)
