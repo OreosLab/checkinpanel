@@ -20,7 +20,7 @@ class SspanelQd(object):
         self.airport_account_list = airport_account_list
 
     @staticmethod
-    def checkin(url,email,password):
+    def checkin(url, email, password):
         email = email.split('@')
         email = email[0] + '%40' + email[1]
         session = requests.session()

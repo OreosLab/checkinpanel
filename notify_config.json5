@@ -2,7 +2,7 @@
     // 启用一言（随机句子）
     'HITOKOTO': true,
 
-    // bark 服务,自行搜索;
+    // bark 服务，自行搜索;
     // 此参数如果以 http 或者 https 开头则判定为自建 bark 服务
     'BARK': '',
 
@@ -23,7 +23,7 @@
     'TG_PROXY_PORT': '',
 
     // 钉钉机器人的 DD_BOT_ACCESS_TOKEN
-    'DD_BOT_ACCESS_TOKEN': '',
+    'DD_BOT_TOKEN': '',
     // 钉钉机器人的 DD_BOT_SECRET
     'DD_BOT_SECRET': '',
 
@@ -39,7 +39,7 @@
     
     // go-cqhttp
     // 推送到个人QQ: http://127.0.0.1/send_private_msg
-    //         群: http://127.0.0.1/send_group_msg
+    //          群: http://127.0.0.1/send_group_msg
     'GOBOT_URL': '',
     // go-cqhttp 的 access_token, 可不填
     'GOBOT_TOKEN': '',

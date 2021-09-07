@@ -21,33 +21,33 @@ import urllib.parse
 push_config = {
     'HITOKOTO': False,                  # 启用一言（随机句子）
 
-    'BARK': '',                         # bark服务,自行搜索; 此参数如果以http或者https开头则判定为自建bark服务
+    'BARK': '',                         # bark 服务，自行搜索；此参数如果以 http 或者 https 开头则判定为自建 bark 服务
 
-    'SCKEY': '',                        # Server酱的SCKEY
+    'SCKEY': '',                        # Server酱的 SCKEY
 
-    'TG_BOT_TOKEN': '',                 # tg机器人的TG_BOT_TOKEN; 1407203283:AAG9rt-6RDaaX0HBLZQq0laNOh898iFYaRQ
-    'TG_USER_ID': '',                   # tg机器人的TG_USER_ID; 1434078534
+    'TG_BOT_TOKEN': '',                 # tg 机器人的 TG_BOT_TOKEN；例：1407203283:AAG9rt-6RDaaX0HBLZQq0laNOh898iFYaRQ
+    'TG_USER_ID': '',                   # tg 机器人的TG_USER_ID；例：1434078534
     'TG_API_HOST': '',                  # tg 代理 api
     'TG_PROXY_IP': '',                  # tg 机器人的 TG_PROXY_IP
     'TG_PROXY_PORT': '',                # tg 机器人的 TG_PROXY_PORT
 
-    'DD_BOT_ACCESS_TOKEN': '',          # 钉钉机器人的 DD_BOT_ACCESS_TOKEN
+    'DD_BOT_TOKEN': '',                 # 钉钉机器人的 DD_BOT_TOKEN
     'DD_BOT_SECRET': '',                # 钉钉机器人的 DD_BOT_SECRET
 
     'QQ_MODE': '',                      # qq 机器人的 QQ_MODE
     'QQ_SKEY': '',                      # qq 机器人的 QQ_SKEY
 
-    'QYWX_APP': '',                      # 企业微信
+    'QYWX_APP': '',                     # 企业微信
 
     'PUSH_PLUS_TOKEN': '',              # 微信推送 Plus+
 
-    'GOBOT_URL': '',                   # go-cqhttp
-                                       # 推送到个人QQ: http://127.0.0.1/send_private_msg
-                                       # 群：http://127.0.0.1/send_group_msg
-    'GOBOT_TOKEN': '',                 # go-cqhttp 的 access_token, 可不填
-    'GOBOT_QQ': '',                    # go-cqhttp的推送群或者用户
-                                       # GOBOT_URL设置 /send_private_msg 填入 user_id=个人QQ
-                                       #              /send_group_msg   填入 group_id=QQ群
+    'GOBOT_URL': '',                    # go-cqhttp
+                                        # 推送到个人QQ: http://127.0.0.1/send_private_msg
+                                        # 群：http://127.0.0.1/send_group_msg
+    'GOBOT_TOKEN': '',                  # go-cqhttp 的 access_token, 可不填
+    'GOBOT_QQ': '',                     # go-cqhttp 的推送群或者用户
+                                        # GOBOT_URL 设置 /send_private_msg 填入 user_id=个人QQ
+                                        #               /send_group_msg   填入 group_id=QQ群
 }
 notify_function = []
 
@@ -147,8 +147,8 @@ def telegram_bot(title, content):
 
 def dingding_bot(title, content):
     print("\n")
-    if not push_config.get('DD_BOT_SECRET') or not push_config.get('DD_BOT_ACCESS_TOKEN'):
-        print("钉钉机器人 服务的 DD_BOT_SECRET 或者 DD_BOT_ACCESS_TOKEN 未设置!!\n取消推送")
+    if not push_config.get('DD_BOT_SECRET') or not push_config.get('DD_BOT_TOKEN'):
+        print("钉钉机器人 服务的 DD_BOT_SECRET 或者 DD_BOT_TOKEN 未设置!!\n取消推送")
         return
     print("钉钉机器人 服务启动")
 
@@ -158,7 +158,7 @@ def dingding_bot(title, content):
     string_to_sign_enc = string_to_sign.encode('utf-8')
     hmac_code = hmac.new(secret_enc, string_to_sign_enc, digestmod=hashlib.sha256).digest()
     sign = urllib.parse.quote_plus(base64.b64encode(hmac_code))
-    url = f'https://oapi.dingtalk.com/robot/send?access_token={push_config.get("DD_BOT_ACCESS_TOKEN")}&timestamp={timestamp}&sign={sign}'
+    url = f'https://oapi.dingtalk.com/robot/send?access_token={push_config.get("DD_BOT_TOKEN")}&timestamp={timestamp}&sign={sign}'
     headers = {'Content-Type': 'application/json;charset=utf-8'}
     data = {
         'msgtype': 'text',
@@ -316,7 +316,7 @@ if push_config.get('SCKEY'):
     notify_function.append(serverJ)
 if push_config.get('TG_BOT_TOKEN') and push_config.get('TG_USER_ID'):
     notify_function.append(telegram_bot)
-if push_config.get('DD_BOT_ACCESS_TOKEN') and push_config.get('DD_BOT_SECRET'):
+if push_config.get('DD_BOT_TOKEN') and push_config.get('DD_BOT_SECRET'):
     notify_function.append(dingding_bot)
 if push_config.get('QQ_SKEY') and push_config.get('QQ_MODE'):
     notify_function.append(coolpush_bot)
