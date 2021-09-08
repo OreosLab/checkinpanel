@@ -128,7 +128,7 @@ apk add gcc libffi-dev musl-dev openssl-dev python3-dev && pip3 install cryptogr
 ### 3. 拉取仓库
 
 ```
-ql repo https://github.com/Oreomeow/checkinpanel.git "ck_|motto|weather" "checkin|checkinsh" "checksendNotify|utils"
+ql repo https://github.com/Oreomeow/checkinpanel.git "ck_|motto|weather" "checkin|checkinsh" "checksendNotify|utils" "master"
 ```
 
 ### 4. 拷贝文件
