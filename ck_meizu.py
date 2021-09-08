@@ -5,7 +5,7 @@ new Env('MEIZU 社区');
 """
 
 import json, requests, time
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 

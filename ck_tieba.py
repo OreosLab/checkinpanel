@@ -6,7 +6,7 @@ new Env('百度贴吧');
 
 import hashlib, json, os, re, requests
 from requests import utils
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 

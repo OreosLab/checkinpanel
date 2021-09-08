@@ -6,7 +6,7 @@ new Env('什么值得买');
 
 import json, os, requests
 from requests import utils
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 

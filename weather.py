@@ -6,7 +6,7 @@ new Env('天气预报');
 
 import json, os, shutil, requests
 from datetime import datetime
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 

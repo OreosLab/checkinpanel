@@ -6,7 +6,7 @@ new Env('百度搜索资源平台');
 
 import json, os, requests
 from urllib import parse
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 

@@ -6,7 +6,7 @@ new Env('芒果 TV');
 
 import json, os, requests, time
 from urllib import parse
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send 
 
 

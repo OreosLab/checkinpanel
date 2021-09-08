@@ -6,7 +6,7 @@ new Env('一加手机社区官方论坛');
 
 import json, os, re, requests, time
 from urllib import parse
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 

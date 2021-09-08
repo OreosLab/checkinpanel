@@ -5,7 +5,7 @@ new Env('CSDN');
 """
 
 import json, os, requests
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 

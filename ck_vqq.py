@@ -7,7 +7,7 @@ new Env('腾讯视频');
 import json, os, re, requests, time
 from urllib import parse
 from requests import utils
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 

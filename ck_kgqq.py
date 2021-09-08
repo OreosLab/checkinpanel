@@ -5,7 +5,7 @@ new Env('全民K歌');
 """
 
 import json, requests
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 

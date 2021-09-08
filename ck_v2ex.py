@@ -6,7 +6,7 @@ new Env('V2EX');
 
 import json, os, re, requests, urllib3
 from requests import utils
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 urllib3.disable_warnings()

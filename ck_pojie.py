@@ -5,7 +5,7 @@ new Env('吾爱破解');
 """
 
 import json, os, re, requests
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 

@@ -5,7 +5,7 @@ new Env('哔咔漫画');
 """
 
 import hashlib, hmac, json, os, random, requests, string, time
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 

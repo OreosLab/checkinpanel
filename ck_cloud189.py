@@ -6,7 +6,7 @@ new Env('天翼云盘');
 """
 
 import base64, json, os, re, requests, rsa, time
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 

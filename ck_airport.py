@@ -9,7 +9,7 @@ new Env('机场签到');
 """
 
 import json, os, re, requests
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 

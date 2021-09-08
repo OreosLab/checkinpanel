@@ -5,7 +5,7 @@ new Env('小米运动');
 """
 
 import json, os, random, re, requests, time
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 

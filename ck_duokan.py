@@ -5,7 +5,7 @@ new Env('多看阅读');
 """
 
 import json, requests, time 
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 

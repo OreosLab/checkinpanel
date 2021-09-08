@@ -5,7 +5,7 @@ new Env('网易云游戏');
 """
 
 import json, requests
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 

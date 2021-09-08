@@ -5,7 +5,7 @@ new Env('葫芦侠');
 """
 
 import json, os, requests
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 

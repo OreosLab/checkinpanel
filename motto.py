@@ -5,7 +5,7 @@ new Env('每日一句');
 """
 
 import json, requests
-from getENV import getdata
+from utils import getdata
 from checksendNotify import send
 
 
