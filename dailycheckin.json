@@ -15,14 +15,24 @@
             "running":true
         },
         {
-            "name":"签到更新",
+            "name":"手动更新",
             "type":"schedule",
             "time":"0",
             "job":{
                 "type":"exec",
-                "target":"git checkout . && git pull -cwd script/Shell/checkinpanel"
+                "target":"git checkout master && git fetch --all && git reset --hard origin/master && git pull -cwd script/Shell/checkinpanel"
             },
             "running":false
+        },
+        {
+            "name":"自动更新",
+            "type":"schedule",
+            "time":"0 16 * * *",
+            "job":{
+                "type":"exec",
+                "target":"git checkout master && git fetch --all && git reset --hard origin/master && git pull -cwd script/Shell/checkinpanel"
+            },
+            "running":true
         },
         {
             "name":"签到依赖",

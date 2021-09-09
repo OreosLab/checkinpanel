@@ -192,7 +192,7 @@ Shell 版本将 `env.example` 配置好后改名为 `.env` 后放入 `script/She
 
 1. 请自行修改执行时间
 
-2. 运行 `签到更新` 任务可强制同步本仓库
+2. elecV2P 运行 `手动更新` 任务可强制同步本仓库
 
 3. 大部分脚本移植于 [Sitoi](https://github.com/Sitoi/dailycheckin)，Sitoi 于 2021 年 9 月 3 日 [dailycheckin-0.1.7](https://files.pythonhosted.org/packages/ee/8d/b49624a4d11c51f4e3dfb98f622d0c1ffe5d6315ad39452859ea8703206f/dailycheckin-0.1.7.tar.gz)  版本适配了青龙，[使用教程](https://sitoi.gitee.io/dailycheckin/qinglong/)，与本仓库教程不相同，切勿使用本仓库 [checkinpanel](https://github.com/Oreomeow/checkinpanel) 的同时去问大佬
 

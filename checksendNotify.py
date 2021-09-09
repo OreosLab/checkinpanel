@@ -241,9 +241,9 @@ def wecom_app(title, content):
         response = wx.send_mpnews(title, content, media_id, touser)
 
     if response == 'ok':
-        print('推送成功！')
+        print('企业微信推送成功！')
     else:
-        print('推送失败！错误信息如下：\n', response)
+        print('企业微信推送失败！错误信息如下：\n', response)
 
 
 class WeCom:
