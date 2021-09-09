@@ -26,7 +26,7 @@
         },
         {
             "name":"自动更新",
-            "type":"schedule",
+            "type":"cron",
             "time":"0 16 * * *",
             "job":{
                 "type":"exec",
