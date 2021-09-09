@@ -230,7 +230,7 @@ def wecom_app(title, content):
     agentid = QYWX_AM_AY[3]
     try:
         media_id = QYWX_AM_AY[4]
-    except KeyError:
+    except IndexError:
         media_id = ''
     wx = WeCom(corpid, corpsecret, agentid)
     # 如果没有配置 media_id 默认就以 text 方式发送
@@ -272,7 +272,7 @@ class WeCom:
             },
             "safe": "0"
         }
-        send_msges = (bytes(json.dumps(send_values), 'utf-8'))
+        send_msges = (bytes(json.dumps(send_values, quote_keys=True), 'utf-8'))
         respone = requests.post(send_url, send_msges)
         respone = respone.json()
         return respone["errmsg"]
@@ -296,7 +296,7 @@ class WeCom:
                 ]
             }
         }
-        send_msges = (bytes(json.dumps(send_values), 'utf-8'))
+        send_msges = (bytes(json.dumps(send_values, quote_keys=True), 'utf-8'))
         respone = requests.post(send_url, send_msges)
         respone = respone.json()
         return respone["errmsg"]
