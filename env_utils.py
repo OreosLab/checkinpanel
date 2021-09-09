@@ -59,7 +59,7 @@ def get_file_path(file_name: str) -> str:
     env_i = get_env_int()
     paths = [file_name, file_name, file_name,
              file_name,
-             f'/usr/local/app/script/List/{file_name}',
+             f'/usr/local/app/script/Lists/{file_name}',
              f'/ql/config/{file_name}',
              ]
 
