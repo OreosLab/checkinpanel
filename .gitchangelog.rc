@@ -32,7 +32,7 @@ section_regexps = [
         r'^:(fire|bug|ambulance|wrench|hankey):\s*([^\n]*)$',
      ]),
     ('Docs', [
-        r'^:(memo|speech_balloon|lound_sound|mute):\s*([^\n]*)$',
+        r'^:(memo|speech_balloon|speaker|mute):\s*([^\n]*)$',
      ]),
     ('Code Style', [
         r'^:(art|zap|racehorse|building_construction):\s*([^\n]*)$',

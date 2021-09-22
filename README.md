@@ -16,6 +16,10 @@
 
 [𝐪𝐢𝐧𝐠𝐥𝐨𝐧𝐠](https://github.com/whyour/qinglong.git)
 
+## 注意
+
+不回答任何关于依赖安装失败的问题，包括且不限于 pip 无法找到 json5 依赖等，请仔细阅读项目 readme.
+
 ## 特别声明
 
 * 本仓库发布的脚本及其中涉及的任何解锁和解密分析脚本，仅用于测试和学习研究，禁止用于商业用途，不能保证其合法性，准确性，完整性和有效性，请根据情况自行判断。
@@ -211,7 +215,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 
 ### 1. **添加了葫芦侠的签到配置**
 
-​	参数说明： `HLX.username` ：用户名 `HLX.password` ：密码的 MD5 32 位小写加密[生成](https://md5jiami.bmcx.com/)
+参数说明： `HLX.username` ：用户名 `HLX.password` ：密码的 MD5 32 位小写加密[生成](https://md5jiami.bmcx.com/)
 
 ### 2. **添加了网易云游戏的签到配置**
 
@@ -250,6 +254,8 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 
 4. 2021 年 9 月 13 日起不再更新 `.json` 后缀的配置文件
 
+5. 2021 年 9 月 23 日起重新初始化项目，原本文件移到 [这里](https://github.com/Oreomeow/ck_bak), 上述仓库不在进行更新，期望稳定的用户可以切换到上述仓库。
+
 ## 计划说明
 
 | 状态 | \*语言 | \*备注 | 名称 |
@@ -269,6 +275,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 * [x] 通知输出优化
 * [x] 通知方式增加，如飞书
 * [x] Shell 消息推送、环境检查单列
+* [x] 重新初始化项目并规范日志
 * [ ] cron 随机
 * [ ] elecV2P 任务列表自动更新
 * [ ] 任务多合一执行
