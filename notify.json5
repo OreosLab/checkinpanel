@@ -1,0 +1,52 @@
+{
+    // 启用一言（随机句子）
+    'HITOKOTO': true,
+
+    // bark 服务，自行搜索；
+    // 此参数如果以 http 或者 https 开头则判定为自建 bark 服务
+    'BARK': '',
+
+    // Server 酱的 PUSH_KEY
+    'PUSH_KEY': '',
+
+    // tg 机器人的 TG_BOT_TOKEN
+    // 123456780:AAG9rt-6RDaaX0HBLZQq0laNOh898iFYaRQ
+    'TG_BOT_TOKEN': '',
+    // tg 机器人的 TG_USER_ID
+    // 1434078534
+    'TG_USER_ID': '',
+    // tg 代理 api,
+    'TG_API_HOST': '',
+    // tg 机器人的 TG_PROXY_IP
+    'TG_PROXY_IP': '',
+    // tg 机器人的 TG_PROXY_PORT
+    'TG_PROXY_PORT': '',
+
+    // 钉钉机器人的 DD_BOT_ACCESS_TOKEN
+    'DD_BOT_TOKEN': '',
+    // 钉钉机器人的 DD_BOT_SECRET
+    'DD_BOT_SECRET': '',
+
+    // qq 机器人的 QQ_MODE
+    'QQ_MODE': '',
+    // qq 机器人的 QQ_SKEY
+    'QQ_SKEY': '',
+
+    // 企业微信
+    'QYWX_AM': '',
+    // 微信推送 Plus+
+    'PUSH_PLUS_TOKEN': '',
+    
+    // go-cqhttp
+    // 推送到个人QQ: http://127.0.0.1/send_private_msg
+    //          群: http://127.0.0.1/send_group_msg
+    'GOBOT_URL': '',
+    // go-cqhttp 的 access_token, 可不填
+    'GOBOT_TOKEN': '',
+    // GOBOT_URL设置 /send_private_msg 填入 user_id=个人QQ
+    //          设置 /send_group_msg   填入 group_id=QQ群
+    'GOBOT_QQ': '',
+
+    // 飞书机器人的 FSKEY
+    'FSKEY': '',
+}
