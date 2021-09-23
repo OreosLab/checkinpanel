@@ -20,7 +20,7 @@ def change_db():
     first = True
     with open("/ql/db/crontab.db", "r", encoding="UTF-8") as f:
         for i in f.readlines():
-            if i.find("Oreomeow_checkinpanel_master") != -1:
+            if i.find("Oreomeow_checkinpanel_master") != -1 and i.find("ran_time") == -1:
                 record = json.loads(i)
                 if record.get("isDisabled") == 0:
                     if i.find("motto") != -1 or i.find("leetcode") != -1 or i.find("weather") != -1:
