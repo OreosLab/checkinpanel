@@ -18,7 +18,7 @@
 
 ## 注意
 
-不回答任何关于依赖安装失败的问题，包括且不限于 pip 无法找到 json5 依赖等，请仔细阅读项目 readme.
+不回答任何关于依赖安装失败的问题，包括且不限于 pip 无法找到 json5 依赖等，请仔细阅读项目 README
 
 ## 特别声明
 
@@ -97,7 +97,7 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 #### 4.2 另一种通知配置方式（当和 4.1 中值重复时，以 4.1 值为准）
 
-下载项目中的 [推送配置文件](https://github.com/Oreomeow/checkinpanel/blob/master/notify.json5) 到**配置文件夹**，按照上述说明修改配置文件中的值，你可以**自由地删除**该文件中某些不需要的值（注意语法）。
+下载项目中的[推送配置文件](https://github.com/Oreomeow/checkinpanel/blob/master/notify.json5)到**配置文件夹**，按照上述说明修改配置文件中的值，你可以**自由地删除**该文件中某些不需要的值（注意语法）。
 
 使用了配置文件后，你可以将配置文件放在持久化位置，不受脚本更新、重置容器的影响。
 
@@ -115,7 +115,7 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 在非容器环境中，通知环境变量使用 系统的环境变量 或者 **你通过 `NOTIFY_CONFIG_PATH` 环境变量指定的配置文件** 进行配置。
 
-特别的，如果你想要创建一个基于 python 的 elecV2P 或者 qinglong 项目，强烈建议你拷贝 [此文件](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/notify_mtr.py)，如此可以大幅度降低用户脚本的配置难度和升级难度。
+特别的，如果你想要创建一个基于 python 的 elecV2P 或者 qinglong 项目，强烈建议你拷贝[此文件](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/notify_mtr.py)，如此可以大幅度降低用户脚本的配置难度和升级难度。
 
 ## 𝐪𝐢𝐧𝐠𝐥𝐨𝐧𝐠 使用方法
 
@@ -130,13 +130,13 @@ docker exec -it qinglong bash
 ### 2. 安装依赖
 
 ```sh
-apk add gcc libffi-dev musl-dev openssl-dev python3-dev && pip3 install cryptography~=3.2.1 json5 requests rsa
+apk add gcc libffi-dev musl-dev openssl-dev python3-dev && pip3 install bs4 cryptography~=3.2.1 json5 requests rsa
 ```
 
 **依赖持久化配置**
 
 ```sh
-requirement_name="cryptography~=3.2.1 json5 requests rsa"
+requirement_name="bs4 cryptography~=3.2.1 json5 requests rsa"
 
 install_requirements() {
     for i in $requirement_name; do
@@ -254,7 +254,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 
 4. 2021 年 9 月 13 日起不再更新 `.json` 后缀的配置文件
 
-5. 2021 年 9 月 23 日起重新初始化项目，原本文件移到 [这里](https://github.com/Oreomeow/ck_bak), 上述仓库不在进行更新，期望稳定的用户可以切换到上述仓库。
+5. 2021 年 9 月 23 日起重新初始化项目，原本文件移到[这里](https://github.com/Oreomeow/ck_bak)，上述仓库不在进行更新，期望稳定的用户可以切换到上述仓库。
 
 ## 计划说明
 
@@ -262,7 +262,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 | --- | --- | --- | --- |
 * [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | api | LeetCode 每日一题 | 每日一句 | 天气预报
 * [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | 多账号 | AcFun | 百度搜索资源平台 | Bilibili | 天翼云盘 | CSDN | 多看阅读 | 恩山论坛 | Fa米家 | 网易云游戏 | 葫芦侠 | 爱奇艺 | 全民K歌 | MEIZU 社区 | 芒果 TV | 小米运动 | 网易云音乐 | 一加手机社区官方论坛 | 哔咔漫画 | 吾爱破解 | 什么值得买 | 百度贴吧 | V2EX | 腾讯视频 | 微博 | 联通沃邮箱 | 哔咔网单 | 王者营地 | 有道云笔记 | 智友邦
-* [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | 多账号 | 机场签到 | 欢太商城 | NGA | 掘金 | GLaDOS | HiFiNi | 时光相册 | 联通营业厅 | 无忧行 | FreeNom
+* [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | 多账号 | 机场签到 | 欢太商城 | NGA | 掘金 | GLaDOS | HiFiNi | 时光相册 | 联通营业厅 | 无忧行 | FreeNom | EUserv 
 * [x] 𝑺𝒉𝒆𝒍𝒍 | 多账号 | SSPanel 签到
 
 ### 项目完成情况
@@ -287,6 +287,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 | --- | --- |
 | ✅ | LeetCode 每日一题 \| 每日一句 \| 天气预报 \| AcFun \| 机场签到 \| Bilibili \| 天翼云盘 \| CSDN \| 多看阅读 \| 恩山论坛 \| 时光相册 \| FreeNom \| GLaDOS \| 网易云游戏 \| 欢太商城 \| HiFiNi \| 爱奇艺 \| 掘金 \| 全民K歌 \| MEIZU 社区 \| 小米运动 \| 网易云音乐 \| NGA \| 一加手机社区官方论坛 \| 吾爱破解 \| 什么值得买 \| SSPanel 签到 \| 百度贴吧 \| 腾讯视频 \| 微博 \| 王者营地 \| 有道云笔记 |
 | ❔ | 百度搜索资源平台 \| Fa米家 \| 葫芦侠 \| 无忧行 \| 芒果 TV \| 哔咔漫画 \| 联通营业厅 \| V2EX \| 联通沃邮箱 \| 哔咔网单 \| 智友邦 |
+| ❌ | EUserv
 
 ## 致谢
 

@@ -50,7 +50,7 @@
             "time": "15 2",
             "job": {
                 "type": "exec",
-                "target": "pip3 install cryptography~=3.2.1 json5 requests rsa && npm install got"
+                "target": "pip3 install bs4 cryptography~=3.2.1 json5 requests rsa && npm install got"
             },
             "running": true
         },
@@ -183,6 +183,16 @@
                 "target": "checkin.js -env PYNAME=ck_enshan.py"
             },
             "running": true
+        },
+        {
+            "name": "EUserv",
+            "type": "cron",
+            "time": "0 10 */7 * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkin.js -env PYNAME=ck_euserv.py"
+            },
+            "running": false
         },
         {
             "name": "时光相册",
