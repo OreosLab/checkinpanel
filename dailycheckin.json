@@ -395,6 +395,16 @@
             "running": true
         },
         {
+            "name": "Site",
+            "type": "cron",
+            "time": "11 6 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkin.js -env PYNAME=ck_site.py"
+            },
+            "running": true
+        },
+        {
             "name": "什么值得买",
             "type": "cron",
             "time": "51 9 * * *",

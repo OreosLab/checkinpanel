@@ -351,6 +351,20 @@
 //     },
    ],
 
+// Site
+   Site: [
+     {
+       url: 'https://www.haidan.video',
+       cookie: '',
+       type: 'pt'
+     },
+//     {
+//       url: '',     // 不带 /
+//       cookie: '',
+//       type: 'pt'   // 三种类型，pt discuz hifi
+//     },
+   ],
+
 // 什么值得买
    SMZDM: [
      {
@@ -379,7 +393,7 @@
        app_id: '',
      },
 //     {
-//       mobile: '',  
+//       mobile: '',
 //       password: '',
 //       app_id: '',    // 抓包 APP 中域名为 https://m.client.10010.com/mobileService/login.htm 请求内容的 appId
 //     },
@@ -392,7 +406,7 @@
        proxy: '',
      },
 //     {
-//       cookie: '',  
+//       cookie: '',
 //       proxy: '',   // 使用代理信息，无密码示例：http://127.0.0.1:1080 有密码示例：http://username:password@127.0.0.1:1080
 //     },
    ],
