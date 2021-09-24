@@ -10,10 +10,12 @@ import re
 from json.decoder import JSONDecodeError
 
 import requests
+import urllib3
 
 from notify_mtr import send
 from utils import get_data
 
+urllib3.disable_warnings()
 desp = ""
 _print = print
 
@@ -72,7 +74,7 @@ class Site:
                 except JSONDecodeError:
                     msg = res.text
                 if "连续签到" in msg:
-                    tip = "签到成功"
+                    tip = f"签到成功, {msg}"
                 elif "重复刷新" in msg:
                     tip = "重复签到"
                 else:
@@ -97,8 +99,8 @@ class Site:
             with session.get(attendance_url) as res:
                 r = re.compile(r"今天签到您获得\d+点魔力值")
                 r1 = re.compile(r"退出")
-                if r.search(res.text):
-                    tip = "签到成功"
+                if location := r.search(res.text):
+                    tip = res.text[location[0], location[1]]
                 elif r1.search(res.text):
                     tip = "重复签到"
                 else:
@@ -125,8 +127,8 @@ class Site:
                 r1 = re.compile(r"签到已得[\s]*\d+")
                 if r.search(res.text):
                     tip = "重复签到"
-                elif r1.search(res.text):
-                    tip = "签到成功"
+                elif location := r1.search(res.text).span():
+                    tip = res.text[location[0], location[1]]
                 else:
                     tip = "cookie 已过期或网站类型不对"
                 print(f"{url} {tip}")
@@ -165,8 +167,8 @@ class Site:
                 print(f"{url} {res.text}")
 
     def main(self):
-        s = requests.session()
         for check_item in self.check_items:
+            s = requests.session()
             url = check_item.get("url")
             type = check_item.get("type")
             cookie = self.cookieParse(check_item.get("cookie"))

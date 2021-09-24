@@ -353,6 +353,7 @@
 
 // Site
    Site: [
+       // 已测试支持站点：pterclub，btschool，pthome；
      {
        url: 'https://www.haidan.video',
        cookie: '',
