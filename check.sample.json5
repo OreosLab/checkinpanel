@@ -184,12 +184,12 @@
 // 欢太商城
    HEYTAP: [
       {
-        cookie: 'source_type=XXX;sa_distinct_id=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX;s_channel=XXX_oppostore;s_version=XXXXXX;app_utm={"utm_source_app":"direct","utm_campaign_app":"direct","utm_term_app":"direct","utm_medium_app":"direct"};',
+        cookie: 'source_type=xxx;TOKENSID=TOKEN_xxxx;app_param=xxxx',
         useragent: '',
         if_draw: false,
       },
 //      {
-//        cookie: '',      // 转义后填入
+//        cookie: '',      // 用户环境变量 cookie，建议全部粘贴，且顺序不可乱
 //        useragent: '',
 //        if_draw: false,  // 抽奖总开关，设置为 false 将不参与任何抽奖，应对一些抽奖黑号
 //      },
