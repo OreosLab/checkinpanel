@@ -115,6 +115,18 @@
 //    },
   ],
 
+// EUserv
+   EUSERV: [
+     {
+       username: 'xxxxxxxx@xxx.com',
+       password: 'xxxxxxxx',
+     },
+//     {
+//       username: '',
+//       password: '',
+//     },
+   ],
+
 // 时光相册
    EVERPHOTO: [
      {
