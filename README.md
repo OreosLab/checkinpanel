@@ -244,7 +244,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 
 [![4tWaFg.png](https://z3.ax1x.com/2021/09/22/4tWaFg.png)](https://imgtu.com/i/4tWaFg)
 
-### 6. **Euserv 在未开启登录验证时有效**
+### 6. **EUserv 在未开启登录验证时有效**
 
 ## 其他说明
 
@@ -256,7 +256,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 
 4. 2021 年 9 月 13 日起不再更新 `.json` 后缀的配置文件
 
-5. 2021 年 9 月 23 日起重新初始化项目，原本文件移到[这里](https://github.com/Oreomeow/ck_bak)，上述仓库不在进行更新，期望稳定的用户可以切换到上述仓库。
+5. 2021 年 9 月 23 日起重新初始化项目，原本文件移到[这里](https://github.com/Oreomeow/ck_bak)，上述仓库不再进行更新，期望稳定的用户可以切换到上述仓库。
 
 ## 计划说明
 

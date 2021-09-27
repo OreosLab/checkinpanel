@@ -1,6 +1,15 @@
 # Changelog
 
 
+## 20210926-2-001 (2021-09-26)
+
+### Fix
+
+* :wrench: : add euserv config. [Oreo]
+
+  EUserv 在未开启登录验证时有效
+
+
 ## 20210924-2-111 (2021-09-24)
 
 ### Feature
