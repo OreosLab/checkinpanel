@@ -412,7 +412,7 @@
 //     },
    ],
 
-// V2EX
+// V2EX，注意要抓签到那次的 ck（相当于需要先手动浏览器签到一次），不然可能签到无效。
    V2EX: [
      {
        cookie: '_ga=xxxxxx; __cfduid=xxxxxx; PB3_SESSION=xxxxxx; A2=xxxxxx; V2EXSETTINGS=xxxxxx; V2EX_REFERRER=xxxxxx; V2EX_LANG=xxxxxx; _gid=xxxxxx; V2EX_TAB=xxxxxx;',
