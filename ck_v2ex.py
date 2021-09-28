@@ -33,11 +33,9 @@ class V2ex:
         if url is None:
             return "cookie 可能过期"
         elif url != "/balance":
-            headers = {"Referer": "https://www.v2ex.com/mission/daily"}
             data = {"once": url.split("=")[-1]}
-            _ = session.get(url="https://www.v2ex.com" + url,
+            _ = session.get(url="https://www.v2ex.com" + url.split("?")[0],
                             verify=False,
-                            headers=headers,
                             params=data)
         response = session.get(url="https://www.v2ex.com/balance",
                                verify=False)
@@ -85,7 +83,8 @@ class V2ex:
             requests.utils.add_dict_to_cookiejar(session.cookies, cookie)
             session.headers.update({
                 "user-agent":
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.66",
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36",
+                "referer": "https://www.v2ex.com/mission/daily",
                 "accept":
                     "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
                 "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",

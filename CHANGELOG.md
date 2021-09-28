@@ -1,6 +1,13 @@
 # Changelog
 
 
+## 20210928-2-010 (2021-09-28)
+
+### Fix
+
+* :fire: : rm kjwj. [Oreo]
+
+
 ## 20210926-2-001 (2021-09-26)
 
 ### Fix
@@ -34,6 +41,8 @@
 
   The script is temporarily disabled and will be fixed later.
 
+* :tada: : init. [Oreo]
+
 ### Fix
 
 * :bug: : fix api_ran_time. [night-raise]
@@ -44,8 +53,4 @@
 
 * :speaker: : 增加关于项目历史变动的说明。 [night-raise]
 
-## 20210923-2-100 (2021-09-22)
 
-### Feature
-
-* :tada: : init. [Oreo]
