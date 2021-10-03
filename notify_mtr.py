@@ -55,7 +55,7 @@ push_config = {
     'GOBOT_URL': '',                    # go-cqhttp
                                         # 推送到个人QQ: http://127.0.0.1/send_private_msg
                                         # 群：http://127.0.0.1/send_group_msg
-    'GOBOT_TOKEN': '',                  # go-cqhttp 的 access_token, 可不填
+    'GOBOT_TOKEN': '',                  # go-cqhttp 的 access_token，可不填
     'GOBOT_QQ': '',                     # go-cqhttp 的推送群或者用户
                                         # GOBOT_URL 设置 /send_private_msg 填入 user_id=个人QQ
                                         #               /send_group_msg   填入 group_id=QQ群

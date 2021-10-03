@@ -365,12 +365,12 @@
 
 // Site
    Site: [
-       // 已测试支持站点：pterclub，btschool，pthome；
      {
        url: 'https://www.haidan.video',
        cookie: '',
        type: 'pt'
      },
+// 已测试支持站点：pterclub, btschool, pthome
 //     {
 //       url: '',     // 不带 /
 //       cookie: '',
@@ -412,12 +412,13 @@
 //     },
    ],
 
-// V2EX，注意要抓签到那次的 ck（相当于需要先手动浏览器签到一次），不然可能签到无效。
+// V2EX
    V2EX: [
      {
        cookie: '_ga=xxxxxx; __cfduid=xxxxxx; PB3_SESSION=xxxxxx; A2=xxxxxx; V2EXSETTINGS=xxxxxx; V2EX_REFERRER=xxxxxx; V2EX_LANG=xxxxxx; _gid=xxxxxx; V2EX_TAB=xxxxxx;',
        proxy: '',
      },
+// 注意要抓签到那次的 ck（相当于需要先手动浏览器签到一次），不然可能签到无效。
 //     {
 //       cookie: '',
 //       proxy: '',   // 使用代理信息，无密码示例：http://127.0.0.1:1080 有密码示例：http://username:password@127.0.0.1:1080

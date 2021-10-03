@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-@source: https://github.com/MayoBlueSky/My-Actions/blob/master/function/cloud189/checkin.py
+:source https://github.com/MayoBlueSky/My-Actions/blob/master/function/cloud189/checkin.py
 cron: 30 9 * * *
 new Env('天翼云盘');
 """
