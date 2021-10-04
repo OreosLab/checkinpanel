@@ -354,7 +354,7 @@ def wecom_bot(title: str, content: str) -> None:
         return
     print("企业微信机器人服务启动")
 
-    url = f'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key={QYWX_KEY}'
+    url = f"https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key={push_config.get('QYWX_KEY')}"
     headers = {'Content-Type': 'application/json;charset=utf-8'}
     data = {
          'msgtype': 'text',
