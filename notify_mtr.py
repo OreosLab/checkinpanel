@@ -32,35 +32,37 @@ def print(text, *args, **kw):
 push_config = {
     'HITOKOTO': False,                  # 启用一言（随机句子）
 
-    'BARK': '',                         # bark 服务，自行搜索；此参数如果以 http 或者 https 开头则判定为自建 bark 服务
+    'BARK': '',                         # bark 服务，自行搜索，此参数如果以 http 或者 https 开头则判定为自建 bark 服务
 
-    'PUSH_KEY': '',                     # Server酱的 PUSH_KEY
+    'DD_BOT_SECRET': '',                # 钉钉机器人的 DD_BOT_SECRET
+    'DD_BOT_TOKEN': '',                 # 钉钉机器人的 DD_BOT_TOKEN
 
-    'TG_BOT_TOKEN': '',                 # tg 机器人的 TG_BOT_TOKEN；例：1407203283:AAG9rt-6RDaaX0HBLZQq0laNOh898iFYaRQ
-    'TG_USER_ID': '',                   # tg 机器人的TG_USER_ID；例：1434078534
+    'FSKEY': '',                        # 飞书机器人的 FSKEY，https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxx 的 xxxxxx 部分
+
+    'GOBOT_URL': '',                    # go-cqhttp
+                                        # 推送到个人QQ：http://127.0.0.1/send_private_msg
+                                        # 群：http://127.0.0.1/send_group_msg
+    'GOBOT_QQ': '',                     # go-cqhttp 的推送群或用户
+                                        # GOBOT_URL 设置 /send_private_msg 时填入 user_id=个人QQ
+                                        #               /send_group_msg   时填入 group_id=QQ群
+    'GOBOT_TOKEN': '',                  # go-cqhttp 的 access_token，可不填
+
+    'PUSH_KEY': '',                     # server 酱的 PUSH_KEY，兼容旧版与 Turbo 版
+
+    'PUSH_PLUS_TOKEN': '',              # push+ 微信推送
+
+    'QMSG_KEY': '',                     # qmsg 酱的 QMSG_KEY
+    'QMSG_TYPE': '',                    # qmsg 酱的 QMSG_TYPE
+
+    'QYWX_AM': '',                      # 企业微信应用
+
+    'QYWX_KEY': '',                     # 企业微信机器人
+
+    'TG_BOT_TOKEN': '',                 # tg 机器人的 TG_BOT_TOKEN，例：1407203283:AAG9rt-6RDaaX0HBLZQq0laNOh898iFYaRQ
+    'TG_USER_ID': '',                   # tg 机器人的 TG_USER_ID，例：1434078534
     'TG_API_HOST': '',                  # tg 代理 api
     'TG_PROXY_IP': '',                  # tg 机器人的 TG_PROXY_IP
     'TG_PROXY_PORT': '',                # tg 机器人的 TG_PROXY_PORT
-
-    'DD_BOT_TOKEN': '',                 # 钉钉机器人的 DD_BOT_TOKEN
-    'DD_BOT_SECRET': '',                # 钉钉机器人的 DD_BOT_SECRET
-
-    'QMSG_TYPE': '',                    # qq 机器人的 QMSG_TYPE
-    'QMSG_KEY': '',                     # qq 机器人的 QMSG_KEY
-
-    'QYWX_AM': '',                      # 企业微信
-
-    'PUSH_PLUS_TOKEN': '',              # 微信推送 Plus+
-
-    'GOBOT_URL': '',                    # go-cqhttp
-                                        # 推送到个人QQ: http://127.0.0.1/send_private_msg
-                                        # 群：http://127.0.0.1/send_group_msg
-    'GOBOT_TOKEN': '',                  # go-cqhttp 的 access_token，可不填
-    'GOBOT_QQ': '',                     # go-cqhttp 的推送群或者用户
-                                        # GOBOT_URL 设置 /send_private_msg 填入 user_id=个人QQ
-                                        #               /send_group_msg   填入 group_id=QQ群
-
-    'FSKEY': '',                        # 飞书 的 FSKEY；https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxx 的 xxxxxx 部分
 }
 notify_function = []
 
@@ -92,7 +94,7 @@ def bark(title: str, content: str) -> None:
     使用 bark 推送消息。
     """
     if not push_config.get('BARK'):
-        print('bark 服务的 bark_token 未设置!!\n取消推送')
+        print('bark 服务的 BARK(bark_token) 未设置!!\n取消推送')
         return
     print('bark 服务启动')
 
@@ -108,86 +110,9 @@ def bark(title: str, content: str) -> None:
         print('bark 推送失败！')
 
 
-def go_cqhttp(title: str, content: str) -> None:
-    """
-    使用 go_cqhttp 推送一条消息
-    """
-    if not push_config.get('GOBOT_URL') or not push_config.get('GOBOT_QQ'):
-        print('go-cqhttp 服务的 GOBOT_URL 或 GOBOT_QQ 未设置!!\n取消推送')
-        return
-    print('go-cqhttp 服务启动')
-
-    url = f'{push_config.get("GOBOT_URL")}?access_token={push_config.get("GOBOT_TOKEN")}&{push_config.get("GOBOT_QQ")}&message=标题:{title}\n内容:{content}'
-    response = requests.get(url).json()
-
-    if response['status'] == 'ok':
-        print('go-cqhttp 推送成功！')
-    else:
-        print('go-cqhttp 推送失败！')
-
-
-def serverJ(title: str, content: str) -> None:
-    """
-    通过 ServerJ 发送一条消息。
-    """
-    if not push_config.get('PUSH_KEY'):
-        print('serverJ 服务的 PUSH_KEY 未设置!!\n取消推送')
-        return
-    print('serverJ 服务启动')
-
-    data = {'text': title, 'desp': content.replace('\n', '\n\n')}
-    if push_config.get('PUSH_KEY').index('SCT') != -1:
-        url = f'https://sctapi.ftqq.com/{push_config.get("PUSH_KEY")}.send'
-    else:
-        url = f'https://sc.ftqq.com/${push_config.get("PUSH_KEY")}.send'
-    response = requests.post(url, data=data).json()
-
-    if response.get('errno') == 0 or response.get('code') == 0:
-        print('serverJ 推送成功！')
-    else:
-        print(f'serverJ 推送失败！错误码：{response["message"]}')
-
-
-def telegram_bot(title: str, content: str) -> None:
-    """
-    通过 telegram 发送一条通知。
-    """
-    if not push_config.get('TG_BOT_TOKEN') or not push_config.get('TG_USER_ID'):
-        print("tg 服务的 bot_token 或者 user_id 未设置!!\n取消推送")
-        return
-    print("tg 服务启动")
-
-    if push_config.get('TG_API_HOST'):
-        url = f"https://{push_config.get('TG_API_HOST')}/bot{push_config.get('TG_BOT_TOKEN')}/sendMessage"
-    else:
-        url = f"https://api.telegram.org/bot{push_config.get('TG_BOT_TOKEN')}/sendMessage"
-    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-    payload = {
-        'chat_id': str(push_config.get('TG_USER_ID')),
-        'text': f'{title}\n\n{content}',
-        'disable_web_page_preview': 'true'
-    }
-    proxies = None
-    if push_config.get('TG_PROXY_IP') and push_config.get('TG_PROXY_PORT'):
-        proxyStr = "http://{}:{}".format(
-            push_config.get('TG_PROXY_IP'),
-            push_config.get('TG_PROXY_PORT')
-        )
-        proxies = {"http": proxyStr, "https": proxyStr}
-    response = requests.post(url=url,
-                             headers=headers,
-                             params=payload,
-                             proxies=proxies).json()
-
-    if response['ok']:
-        print('tg 推送成功！')
-    else:
-        print('tg 推送失败！')
-
-
 def dingding_bot(title: str, content: str) -> None:
     """
-    使用 钉钉机器人 发送一条通知。
+    使用 钉钉机器人 推送消息。
     """
     if not push_config.get('DD_BOT_SECRET') or not push_config.get(
             'DD_BOT_TOKEN'):
@@ -220,33 +145,72 @@ def dingding_bot(title: str, content: str) -> None:
         print('钉钉机器人 推送失败！')
 
 
-def qmsg_bot(title: str, content: str) -> None:
+def feishu_bot(title: str, content: str) -> None:
     """
-    使用 qmsg 发送一条消息。
+    使用 飞书机器人 推送消息。
     """
-    if not push_config.get('QMSG_KEY') or not push_config.get('QMSG_TYPE'):
-        print('qmsg 的 QMSG_KEY 或者 QMSG_TYPE 未设置!!\n取消推送')
+    if not push_config.get('FSKEY'):
+        print('飞书 服务的 FSKEY 未设置!!\n取消推送')
         return
-    print('qmsg 启动')
+    print('飞书 服务启动')
 
-    url = f'https://qmsg.zendee.cn/{push_config.get("QMSG_TYPE")}/{push_config.get("QMSG_KEY")}'
-    payload = {
-        'msg': f'{title}\n\n{content.replace("----", "-")}'.encode('utf-8')
-    }
-    response = requests.post(url=url, params=payload).json()
+    url = f'https://open.feishu.cn/open-apis/bot/v2/hook/{push_config.get("FSKEY")}'
+    data = {'msg_type': 'text', 'content': {'text': f'{title}\n\n{content}'}}
+    response = requests.post(url, data=json.dumps(data,
+                                                  quote_keys=True)).json()
 
-    if response['code'] == 0:
-        print('qmsg 推送成功！')
+    if response.get('StatusCode') == 0:
+        print('飞书 推送成功！')
     else:
-        print(f'qmsg 推送失败！{response["reason"]}')
+        print('飞书 推送失败！错误信息如下：\n', response)
+
+
+def go_cqhttp(title: str, content: str) -> None:
+    """
+    使用 go_cqhttp 推送消息。
+    """
+    if not push_config.get('GOBOT_URL') or not push_config.get('GOBOT_QQ'):
+        print('go-cqhttp 服务的 GOBOT_URL 或 GOBOT_QQ 未设置!!\n取消推送')
+        return
+    print('go-cqhttp 服务启动')
+
+    url = f'{push_config.get("GOBOT_URL")}?access_token={push_config.get("GOBOT_TOKEN")}&{push_config.get("GOBOT_QQ")}&message=标题:{title}\n内容:{content}'
+    response = requests.get(url).json()
+
+    if response['status'] == 'ok':
+        print('go-cqhttp 推送成功！')
+    else:
+        print('go-cqhttp 推送失败！')
+
+
+def serverJ(title: str, content: str) -> None:
+    """
+    通过 serverJ 推送消息。
+    """
+    if not push_config.get('PUSH_KEY'):
+        print('serverJ 服务的 PUSH_KEY 未设置!!\n取消推送')
+        return
+    print('serverJ 服务启动')
+
+    data = {'text': title, 'desp': content.replace('\n', '\n\n')}
+    if push_config.get('PUSH_KEY').index('SCT') != -1:
+        url = f'https://sctapi.ftqq.com/{push_config.get("PUSH_KEY")}.send'
+    else:
+        url = f'https://sc.ftqq.com/${push_config.get("PUSH_KEY")}.send'
+    response = requests.post(url, data=data).json()
+
+    if response.get('errno') == 0 or response.get('code') == 0:
+        print('serverJ 推送成功！')
+    else:
+        print(f'serverJ 推送失败！错误码：{response["message"]}')
 
 
 def pushplus_bot(title: str, content: str) -> None:
     """
-    通过 push+ 发送一条推送。
+    通过 push+ 推送消息。
     """
     if not push_config.get('PUSH_PLUS_TOKEN'):
-        print('PUSHPLUS 服务的 token 未设置!!\n取消推送')
+        print('PUSHPLUS 服务的 PUSH_PLUS_TOKEN 未设置!!\n取消推送')
         return
     print('PUSHPLUS 服务启动')
 
@@ -266,17 +230,39 @@ def pushplus_bot(title: str, content: str) -> None:
         print('PUSHPLUS 推送失败！')
 
 
+def qmsg_bot(title: str, content: str) -> None:
+    """
+    使用 qmsg 推送消息。
+    """
+    if not push_config.get('QMSG_KEY') or not push_config.get('QMSG_TYPE'):
+        print('qmsg 的 QMSG_KEY 或者 QMSG_TYPE 未设置!!\n取消推送')
+        return
+    print('qmsg 服务启动')
+
+    url = f'https://qmsg.zendee.cn/{push_config.get("QMSG_TYPE")}/{push_config.get("QMSG_KEY")}'
+    payload = {
+        'msg': f'{title}\n\n{content.replace("----", "-")}'.encode('utf-8')
+    }
+    response = requests.post(url=url, params=payload).json()
+
+    if response['code'] == 0:
+        print('qmsg 推送成功！')
+    else:
+        print(f'qmsg 推送失败！{response["reason"]}')
+
+
 def wecom_app(title: str, content: str) -> None:
     """
-    通过 企业微信 APP 发送推送。
+    通过 企业微信 APP 推送消息。
     """
     if not push_config.get('QYWX_AM'):
-        print('QYWX_AM 未设置！！\n取消推送')
+        print('QYWX_AM 未设置!!\n取消推送')
         return
     QYWX_AM_AY = re.split(',', push_config.get('QYWX_AM'))
     if 4 < len(QYWX_AM_AY) > 5:
-        print('QYWX_AM 设置错误！！\n取消推送')
+        print('QYWX_AM 设置错误!!\n取消推送')
         return
+    print('企业微信 APP 服务启动')
 
     corpid = QYWX_AM_AY[0]
     corpsecret = QYWX_AM_AY[1]
@@ -359,24 +345,67 @@ class WeCom:
         return respone['errmsg']
 
 
-def feishu(title: str, content: str) -> None:
+def wecom_bot(title: str, content: str) -> None:
     """
-    通过 飞书 发送一条推送。
+    通过 企业微信机器人 推送消息。
     """
-    if not push_config.get('FSKEY'):
-        print('飞书 服务的 FSKEY 未设置!!\n取消推送')
+    if not push_config.get('QYWX_KEY'):
+        print("企业微信机器人 服务的 QYWX_KEY 未设置!!\n取消推送")
         return
-    print('飞书 服务启动')
+    print("企业微信机器人服务启动")
 
-    url = f'https://open.feishu.cn/open-apis/bot/v2/hook/{push_config.get("FSKEY")}'
-    data = {'msg_type': 'text', 'content': {'text': f'{title}\n\n{content}'}}
-    response = requests.post(url, data=json.dumps(data,
-                                                  quote_keys=True)).json()
+    url = f'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key={QYWX_KEY}'
+    headers = {'Content-Type': 'application/json;charset=utf-8'}
+    data = {
+         'msgtype': 'text',
+         'text': {'content': f'{title}\n\n{content}'}
+    }
+    response = requests.post(url=url,
+                             data=json.dumps(data, quote_keys=True),
+                             headers=headers,
+                             timeout=15).json()
 
-    if response.get('StatusCode') == 0:
-        print('飞书 推送成功！')
+    if response['errcode'] == 0:
+        print('企业微信机器人推送成功！')
     else:
-        print('飞书 推送失败！错误信息如下：\n', response)
+        print('企业微信机器人推送失败！')
+
+
+def telegram_bot(title: str, content: str) -> None:
+    """
+    使用 telegram 机器人 推送消息。
+    """
+    if not push_config.get('TG_BOT_TOKEN') or not push_config.get('TG_USER_ID'):
+        print("tg 服务的 bot_token 或者 user_id 未设置!!\n取消推送")
+        return
+    print("tg 服务启动")
+
+    if push_config.get('TG_API_HOST'):
+        url = f"https://{push_config.get('TG_API_HOST')}/bot{push_config.get('TG_BOT_TOKEN')}/sendMessage"
+    else:
+        url = f"https://api.telegram.org/bot{push_config.get('TG_BOT_TOKEN')}/sendMessage"
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    payload = {
+        'chat_id': str(push_config.get('TG_USER_ID')),
+        'text': f'{title}\n\n{content}',
+        'disable_web_page_preview': 'true'
+    }
+    proxies = None
+    if push_config.get('TG_PROXY_IP') and push_config.get('TG_PROXY_PORT'):
+        proxyStr = "http://{}:{}".format(
+            push_config.get('TG_PROXY_IP'),
+            push_config.get('TG_PROXY_PORT')
+        )
+        proxies = {"http": proxyStr, "https": proxyStr}
+    response = requests.post(url=url,
+                             headers=headers,
+                             params=payload,
+                             proxies=proxies).json()
+
+    if response['ok']:
+        print('tg 推送成功！')
+    else:
+        print('tg 推送失败！')
 
 
 def one() -> str:
@@ -391,22 +420,24 @@ def one() -> str:
 
 if push_config.get('BARK'):
     notify_function.append(bark)
+if push_config.get('DD_BOT_TOKEN') and push_config.get('DD_BOT_SECRET'):
+    notify_function.append(dingding_bot)
+if push_config.get('FSKEY'):
+    notify_function.append(feishu_bot)
 if push_config.get('GOBOT_URL') and push_config.get('GOBOT_QQ'):
     notify_function.append(go_cqhttp)
 if push_config.get('PUSH_KEY'):
     notify_function.append(serverJ)
-if push_config.get('TG_BOT_TOKEN') and push_config.get('TG_USER_ID'):
-    notify_function.append(telegram_bot)
-if push_config.get('DD_BOT_TOKEN') and push_config.get('DD_BOT_SECRET'):
-    notify_function.append(dingding_bot)
-if push_config.get('QMSG_KEY') and push_config.get('QMSG_TYPE'):
-    notify_function.append(qmsg_bot)
 if push_config.get('PUSH_PLUS_TOKEN'):
     notify_function.append(pushplus_bot)
+if push_config.get('QMSG_KEY') and push_config.get('QMSG_TYPE'):
+    notify_function.append(qmsg_bot)
 if push_config.get('QYWX_AM'):
     notify_function.append(wecom_app)
-if push_config.get('FSKEY'):
-    notify_function.append(feishu)
+if push_config.get('QYWX_KEY'):
+    notify_function.append(wecom_bot)
+if push_config.get('TG_BOT_TOKEN') and push_config.get('TG_USER_ID'):
+    notify_function.append(telegram_bot)
 
 
 def excepthook(args, /):
