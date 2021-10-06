@@ -2,7 +2,7 @@
     "name": "签到项目",
     "author": "Leon",
     "desc": "该订阅适用于 elecV2P，与其他软件并不兼容。相关说明参考：https://github.com/elecV2/elecV2P-dei/tree/master/docs/06-task.md",
-    "date": "2021-09-22 5:10:00",
+    "date": "2021-10-06 2:20:00",
     "list": [
         {
             "name": "签到仓库",
@@ -50,7 +50,27 @@
             "time": "15 2",
             "job": {
                 "type": "exec",
-                "target": "pip3 install bs4 cryptography~=3.2.1 json5 requests rsa && npm install got"
+                "target": "pip3 install bs4 cryptography~=3.2.1 json5 requests rsa"
+            },
+            "running": true
+        },
+        {
+            "name": "签到依赖 3",
+            "type": "schedule",
+            "time": "3 2",
+            "job": {
+                "type": "exec",
+                "target": "npm install -g json5"
+            },
+            "running": true
+        },
+        {
+            "name": "JS-JS",
+            "type": "schedule",
+            "time": "0",
+            "job": {
+                "type": "exec",
+                "target": "wget https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/checkinjs.js -O checkinjs.js -cwd script/JSFile"
             },
             "running": true
         },
@@ -401,6 +421,16 @@
             "job": {
                 "type": "runjs",
                 "target": "checkin.js -env PYNAME=ck_site.py"
+            },
+            "running": true
+        },
+        {
+            "name": "什么值得买任务版",
+            "type": "cron",
+            "time": "29 */8 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkinjs.js -env JSNAME=ck_smzdm.js"
             },
             "running": true
         },
