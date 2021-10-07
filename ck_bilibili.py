@@ -220,7 +220,7 @@ class BiliBili(object):
     def silver2coin(session, bili_jct) -> dict:
         """银瓜子兑换硬币"""
         url = "https://api.live.bilibili.com/pay/v1/Exchange/silver2coin"
-        post_data = {"csrf_token": bili_jct}
+        post_data = {"csrf_token": bili_jct, "csrf": bili_jct}
         ret = session.post(url=url, data=post_data).json()
         return ret
 

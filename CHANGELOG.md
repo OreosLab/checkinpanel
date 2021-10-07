@@ -1,6 +1,13 @@
 # Changelog
 
 
+## 20211006-2-100 (2021-10-06)
+
+### Feature
+
+* :sparkles: : 新增 smzdm 任务版 JS. [Oreo]
+
+
 ## 20211005-2-021 (2021-10-04)
 
 ### Feature
