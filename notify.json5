@@ -4,8 +4,8 @@
     'HITOKOTO': true,
 
     // bark 服务
-    // bark IP 或设备码，例：https://api.day.app/DxHcxxxxxRxxxxxxcm/
-    'BARK': '',
+    // bark IP 或设备码，例：DxHcxxxxxRxxxxxxcm 或 https://api.example.com/DxHcxxxxxRxxxxxxcm/
+    'BARK_PUSH': '',
     // bark 推送是否存档，可不填
     'BARK_ARCHIVE': '',
     // bark 推送分组，可不填
