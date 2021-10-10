@@ -5,6 +5,15 @@
     // bark 服务
     // 自行搜索，此参数如果以 http 或者 https 开头则判定为自建 bark 服务
     'BARK': '',
+    // bark 推送是否存档，可不填
+    'BARK_ARCHIVE': '',
+    // bark 推送分组，可不填
+    'BARK_GROUP': '',
+    // bark 推送声音，可不填
+    'BARK_SOUND': '',
+
+    // 控制台输出
+    CONSOLE: true,
 
     // 钉钉机器人
     'DD_BOT_SECRET': '',
