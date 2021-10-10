@@ -32,7 +32,7 @@ def print(text, *args, **kw):
 push_config = {
     'HITOKOTO': False,                  # 启用一言（随机句子）
 
-    'BARK': '',                         # bark 服务，自行搜索，此参数如果以 http 或者 https 开头则判定为自建 bark 服务
+    'BARK_PUSH': '',                    # bark IP 或设备码，例：https://api.day.app/DxHcxxxxxRxxxxxxcm/
     'BARK_ARCHIVE': '',                 # bark 推送是否存档
     'BARK_GROUP': '',                   # bark 推送分组
     'BARK_SOUND': '',                   # bark 推送声音
@@ -42,7 +42,7 @@ push_config = {
     'DD_BOT_SECRET': '',                # 钉钉机器人的 DD_BOT_SECRET
     'DD_BOT_TOKEN': '',                 # 钉钉机器人的 DD_BOT_TOKEN
 
-    'FSKEY': '',                        # 飞书机器人的 FSKEY，https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxx 的 xxxxxx 部分
+    'FSKEY': '',                        # 飞书机器人的 FSKEY
 
     'GOBOT_URL': '',                    # go-cqhttp
                                         # 推送到个人QQ：http://127.0.0.1/send_private_msg
@@ -50,11 +50,14 @@ push_config = {
     'GOBOT_QQ': '',                     # go-cqhttp 的推送群或用户
                                         # GOBOT_URL 设置 /send_private_msg 时填入 user_id=个人QQ
                                         #               /send_group_msg   时填入 group_id=QQ群
-    'GOBOT_TOKEN': '',                  # go-cqhttp 的 access_token，可不填
+    'GOBOT_TOKEN': '',                  # go-cqhttp 的 access_token
+
+    'IGOT_PUSH_KEY': '',                # iGot 聚合推送的 IGOT_PUSH_KEY
 
     'PUSH_KEY': '',                     # server 酱的 PUSH_KEY，兼容旧版与 Turbo 版
 
-    'PUSH_PLUS_TOKEN': '',              # push+ 微信推送
+    'PUSH_PLUS_TOKEN': '',              # push+ 微信推送的用户令牌
+    'PUSH_PLUS_USER': '',               # push+ 微信推送的群组编码
 
     'QMSG_KEY': '',                     # qmsg 酱的 QMSG_KEY
     'QMSG_TYPE': '',                    # qmsg 酱的 QMSG_TYPE
@@ -66,7 +69,7 @@ push_config = {
     'TG_BOT_TOKEN': '',                 # tg 机器人的 TG_BOT_TOKEN，例：1407203283:AAG9rt-6RDaaX0HBLZQq0laNOh898iFYaRQ
     'TG_USER_ID': '',                   # tg 机器人的 TG_USER_ID，例：1434078534
     'TG_API_HOST': '',                  # tg 代理 api
-    'TG_PROXY_IP': '',                  # tg 机器人的 TG_PROXY_IP
+    'TG_PROXY_HOST': '',                # tg 机器人的 TG_PROXY_HOST
     'TG_PROXY_PORT': '',                # tg 机器人的 TG_PROXY_PORT
 }
 notify_function = []
@@ -96,15 +99,15 @@ def bark(title: str, content: str) -> None:
     """
     使用 bark 推送消息。
     """
-    if not push_config.get('BARK'):
-        print('bark 服务的 BARK(bark_token) 未设置!!\n取消推送')
+    if not push_config.get('BARK_PUSH'):
+        print('bark 服务的 BARK_PUSH 未设置!!\n取消推送')
         return
     print('bark 服务启动')
 
-    if push_config.get('BARK').startswith('http'):
-        url = f'{push_config.get("BARK")}/{urllib.parse.quote_plus(title)}/{urllib.parse.quote_plus(content)}'
+    if push_config.get('BARK_PUSH').startswith('http'):
+        url = f'{push_config.get("BARK_PUSH")}/{urllib.parse.quote_plus(title)}/{urllib.parse.quote_plus(content)}'
     else:
-        url = f'https://api.day.app/{push_config.get("BARK")}/{urllib.parse.quote_plus(title)}/{urllib.parse.quote_plus(content)}'
+        url = f'https://api.day.app/{push_config.get("BARK_PUSH")}/{urllib.parse.quote_plus(title)}/{urllib.parse.quote_plus(content)}'
 
     bark_params = {
         "BARK_ARCHIVE": "isArchive",
@@ -205,6 +208,26 @@ def go_cqhttp(title: str, content: str) -> None:
         print('go-cqhttp 推送失败！')
 
 
+def iGot(title: str, content: str) -> None:
+    """
+    使用 iGot 推送消息。
+    """
+    if not push_config.get('IGOT_PUSH_KEY'):
+        print('iGot 服务的 IGOT_PUSH_KEY 未设置!!\n取消推送')
+        return
+    print('iGot 服务启动')
+
+    url = f'https://push.hellyw.com/{push_config.get("IGOT_PUSH_KEY")}'
+    data = {'title': title, 'content': content}
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    response = requests.post(url, data=data, headers=headers).json()
+
+    if response['ret'] == 0:
+        print('iGot 推送成功！')
+    else:
+        print(f'iGot 推送失败！{response["errMsg"]}')
+
+
 def serverJ(title: str, content: str) -> None:
     """
     通过 serverJ 推送消息。
@@ -240,7 +263,8 @@ def pushplus_bot(title: str, content: str) -> None:
     data = {
         'token': push_config.get('PUSH_PLUS_TOKEN'),
         'title': title,
-        'content': content
+        'content': content,
+        'topic': push_config.get('PUSH_PLUS_USER')
     }
     body = json.dumps(data, quote_keys=True).encode(encoding='utf-8')
     headers = {'Content-Type': 'application/json'}
@@ -413,9 +437,9 @@ def telegram_bot(title: str, content: str) -> None:
         'disable_web_page_preview': 'true'
     }
     proxies = None
-    if push_config.get('TG_PROXY_IP') and push_config.get('TG_PROXY_PORT'):
+    if push_config.get('TG_PROXY_HOST') and push_config.get('TG_PROXY_PORT'):
         proxyStr = "http://{}:{}".format(
-            push_config.get('TG_PROXY_IP'),
+            push_config.get('TG_PROXY_HOST'),
             push_config.get('TG_PROXY_PORT')
         )
         proxies = {"http": proxyStr, "https": proxyStr}
@@ -440,7 +464,7 @@ def one() -> str:
     return res['hitokoto'] + '    ----' + res['from']
 
 
-if push_config.get('BARK'):
+if push_config.get('BARK_PUSH'):
     notify_function.append(bark)
 if push_config.get('CONSOLE'):
     notify_function.append(console)
@@ -450,6 +474,8 @@ if push_config.get('FSKEY'):
     notify_function.append(feishu_bot)
 if push_config.get('GOBOT_URL') and push_config.get('GOBOT_QQ'):
     notify_function.append(go_cqhttp)
+if push_config.get('IGOT_PUSH_KEY'):
+    notify_function.append(iGot)
 if push_config.get('PUSH_KEY'):
     notify_function.append(serverJ)
 if push_config.get('PUSH_PLUS_TOKEN'):

@@ -1,9 +1,10 @@
 {
-    // 启用一言（随机句子）
+    // 一言
+    // true 为开启，false 为关闭，默认关闭
     'HITOKOTO': true,
 
     // bark 服务
-    // 自行搜索，此参数如果以 http 或者 https 开头则判定为自建 bark 服务
+    // bark IP 或设备码，例：https://api.day.app/DxHcxxxxxRxxxxxxcm/
     'BARK': '',
     // bark 推送是否存档，可不填
     'BARK_ARCHIVE': '',
@@ -13,6 +14,7 @@
     'BARK_SOUND': '',
 
     // 控制台输出
+    // true 为开启，false 为关闭，默认关闭
     CONSOLE: true,
 
     // 钉钉机器人
@@ -37,13 +39,18 @@
     'PUSH_KEY': '',
 
     // push+ 微信推送
-    'PUSH_PLUS_TOKEN': '',   
+    'PUSH_PLUS_TOKEN': '',
+    // 群组编码，不填仅推送自己
+    'PUSH_PLUS_USER': '',
 
     // qmsg 酱
     'QMSG_KEY': '',
+    // 推送到群填写 group，默认推送到 QQ
     'QMSG_TYPE': '',
 
     // 企业微信应用
+    // 参考 http://note.youdao.com/s/HMiudGkb
+    // 依次填入 corpid, corpsecret, touser(注：多个成员ID使用|隔开), agentid, media_id(选填，不填默认文本消息类型)
     'QYWX_AM': '',
 
     // 企业微信机器人
@@ -52,8 +59,12 @@
     // tg 机器人
     'TG_BOT_TOKEN': '',
     'TG_USER_ID': '',
-    // tg 代理 api
+    // tg api 自建反向代理地址，默认 api.telegram.org，可不填
     'TG_API_HOST': '',
-    'TG_PROXY_IP': '',
+    // tg 代理配置认证参数，可不填
+    'TG_PROXY_AUTH': '',
+    // 例：127.0.0.1，可不填
+    'TG_PROXY_HOST': '',
+    // 例：1080，可不填
     'TG_PROXY_PORT': '',
 }
