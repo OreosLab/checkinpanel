@@ -33,6 +33,11 @@ push_config = {
     'HITOKOTO': False,                  # 启用一言（随机句子）
 
     'BARK': '',                         # bark 服务，自行搜索，此参数如果以 http 或者 https 开头则判定为自建 bark 服务
+    'BARK_ARCHIVE': '',                 # bark 推送是否存档
+    'BARK_GROUP': '',                   # bark 推送分组
+    'BARK_SOUND': '',                   # bark 推送声音
+
+    'CONSOLE': False,                   # 控制台输出
 
     'DD_BOT_SECRET': '',                # 钉钉机器人的 DD_BOT_SECRET
     'DD_BOT_TOKEN': '',                 # 钉钉机器人的 DD_BOT_TOKEN
@@ -76,9 +81,7 @@ CONFIG_PATH = os.getenv('NOTIFY_CONFIG_PATH') or get_file_path('notify.json5')
 if os.path.exists(CONFIG_PATH):
     print(f'通知配置文件存在：{CONFIG_PATH}。')
     try:
-        for k, v in dict(
-            json.load(open(CONFIG_PATH, mode='r', encoding='utf-8'))
-        ).items():
+        for k, v in dict(json.load(open(CONFIG_PATH, mode='r', encoding='utf-8'))).items():
             if k in push_config:
                 push_config[k] = v
     except ValueError:
@@ -99,15 +102,34 @@ def bark(title: str, content: str) -> None:
     print('bark 服务启动')
 
     if push_config.get('BARK').startswith('http'):
-        url = f'{push_config.get("BARK")}/{title}/{content}'
+        url = f'{push_config.get("BARK")}/{urllib.parse.quote_plus(title)}/{urllib.parse.quote_plus(content)}'
     else:
-        url = f'https://api.day.app/{push_config.get("BARK")}/{title}/{content}'
+        url = f'https://api.day.app/{push_config.get("BARK")}/{urllib.parse.quote_plus(title)}/{urllib.parse.quote_plus(content)}'
+
+    bark_params = {
+        "BARK_ARCHIVE": "isArchive",
+        "BARK_GROUP": "group",
+        "BARK_SOUND": "sound",
+    }
+    params = ''
+    for pair in filter(lambda pairs: pairs[0].startswith("BARK_") and pairs[1], push_config.items()):
+        params += f"{bark_params[pair[0]]}={pair[1]}&"
+    if params:
+        url = url + "?" + params.rstrip("&")
     response = requests.get(url).json()
 
     if response['code'] == 200:
         print('bark 推送成功！')
     else:
         print('bark 推送失败！')
+
+
+def console(title: str, content: str) -> None:
+    """
+    使用 控制台 推送消息。
+    """
+    print(f"{title}\n\n"
+          f"{content}")
 
 
 def dingding_bot(title: str, content: str) -> None:
@@ -357,8 +379,8 @@ def wecom_bot(title: str, content: str) -> None:
     url = f"https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key={push_config.get('QYWX_KEY')}"
     headers = {'Content-Type': 'application/json;charset=utf-8'}
     data = {
-         'msgtype': 'text',
-         'text': {'content': f'{title}\n\n{content}'}
+        'msgtype': 'text',
+        'text': {'content': f'{title}\n\n{content}'}
     }
     response = requests.post(url=url,
                              data=json.dumps(data, quote_keys=True),
@@ -420,6 +442,8 @@ def one() -> str:
 
 if push_config.get('BARK'):
     notify_function.append(bark)
+if push_config.get('CONSOLE'):
+    notify_function.append(console)
 if push_config.get('DD_BOT_TOKEN') and push_config.get('DD_BOT_SECRET'):
     notify_function.append(dingding_bot)
 if push_config.get('FSKEY'):
@@ -455,6 +479,10 @@ threading.excepthook = excepthook
 
 
 def send(title: str, content: str) -> None:
+    if not content:
+        print(f"{title} 推送内容为空！")
+        return
+
     hitokoto = push_config.get('HITOKOTO')
 
     text = one() if hitokoto else ''
