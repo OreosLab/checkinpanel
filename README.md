@@ -253,6 +253,10 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 
 ### 6. **EUserv 在未开启登录验证时有效**
 
+* [True Captcha](https://apitruecaptcha.org/api)
+* 如图注册账号后获取 `userid` 和 `apikey`
+[![5e9nF1.png](https://z3.ax1x.com/2021/10/11/5e9nF1.png)](https://imgtu.com/i/5e9nF1)
+
 ## 其他说明
 
 1. 请自行修改执行时间。
@@ -294,8 +298,8 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 
 | 状态 | 名称 |
 | --- | --- |
-| ✅ | LeetCode 每日一题 \| 每日一句 \| 天气预报 \| AcFun \| 机场签到 \| Bilibili \| 天翼云盘 \| CSDN \| 多看阅读 \| 恩山论坛 \| 时光相册 \| FreeNom \| GLaDOS \| 网易云游戏 \| 欢太商城 \| HiFiNi \| 爱奇艺 \| 掘金 \| 全民K歌 \| MEIZU 社区 \| 小米运动 \| 网易云音乐 \| NGA \| 一加手机社区官方论坛 \| 吾爱破解 \| 什么值得买 \| SSPanel 签到 \| 百度贴吧 \| 腾讯视频 \| 微博 \| 王者营地 \| 有道云笔记 |
-| ❔ | 百度搜索资源平台 \| EUserv \| Fa米家 \| 葫芦侠 \| 无忧行 \| 芒果 TV \| 哔咔漫画 \| SF 轻小说 \| Site \| 联通营业厅 \| V2EX \| 联通沃邮箱 \| 哔咔网单 \| 智友邦 |
+| ✅ | LeetCode 每日一题 \| 每日一句 \| 天气预报 \| AcFun \| 机场签到 \| Bilibili \| 天翼云盘 \| CSDN \| 多看阅读 \| 恩山论坛 \| EUserv \| 时光相册 \| FreeNom \| GLaDOS \| 网易云游戏 \| 欢太商城 \| HiFiNi \| 爱奇艺 \| 掘金 \| 全民K歌 \| MEIZU 社区 \| 小米运动 \| 网易云音乐 \| NGA \| 一加手机社区官方论坛 \| 吾爱破解 \| 什么值得买 \| SSPanel 签到 \| 百度贴吧 \| 腾讯视频 \| 微博 \| 王者营地 \| 有道云笔记 |
+| ❔ | 百度搜索资源平台 \| Fa米家 \| 葫芦侠 \| 无忧行 \| 芒果 TV \| 哔咔漫画 \| SF 轻小说 \| Site \| 联通营业厅 \| V2EX \| 联通沃邮箱 \| 哔咔网单 \| 智友邦 |
 
 ## 致谢
 
