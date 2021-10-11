@@ -110,7 +110,10 @@ class SFACG:
         else:
             print("检测到今天还未签到，开始自动签到和完成任务")
             response = requests.put("https://api.sfacg.com/user/signInfo", headers=headers).json()
-            sign_msg = "签到提醒: " + response["status"]["msg"]
+            if str(response["status"]["httpCode"]) == 200:
+                sign_msg = "签到提醒: 签到成功！"
+            else:
+                sign_msg = "签到提醒: " + str(response["status"]["msg"])
             for data in self.get_re("https://api.sfacg.com/user/signInfo", headers)["data"]:
                 sign_msg += "\n签到日期: " + \
                     sign_date.format(data["year"], data["month"], data["day"]) + "，连续签到 " + data["continueNum"] + " 天"
@@ -120,8 +123,11 @@ class SFACG:
 
     def check_coin(self, authorization, cookie, useragent, sfsecurity):
         headers = self.generateHeader(authorization, cookie, useragent, sfsecurity)
-        coin = self.get_re("https://api.sfacg.com/user/welfare/income", headers)["data"]["coinRemain"]
-        coin_info = "金币数量: " + str(coin)
+        response = self.get_re("https://api.sfacg.com/user/welfare/income", headers)
+        try:
+            coin_info = "金币数量: " + str(response["data"]["coinRemain"])
+        except BaseException:
+            coin_info = "Cookie 凭证失效 httpCode: " + str(response["status"]["httpCode"])
         return coin_info
 
     def main(self):
