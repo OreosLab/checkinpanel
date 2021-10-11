@@ -115,8 +115,12 @@ def bark(title: str, content: str) -> None:
         "BARK_SOUND": "sound",
     }
     params = ''
-    for pair in filter(lambda pairs: pairs[0].startswith("BARK_") and pairs[1], push_config.items()):
-        params += f"{bark_params[pair[0]]}={pair[1]}&"
+    for pair in filter(lambda pairs: pairs[0].startswith("BARK_")
+                                     and pairs[0] != 'BARK_PUSH'
+                                     and pairs[1]
+                                     and bark_params.get(pair[0]),
+                       push_config.items()):
+        params += f"{bark_params.get(pair[0])}={pair[1]}&"
     if params:
         url = url + "?" + params.rstrip("&")
     response = requests.get(url).json()
