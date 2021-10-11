@@ -1,6 +1,48 @@
 # Changelog
 
 
+## 20211011-2-182 (2021-10-11)
+
+### Feature
+
+* :sparkles: : 新增 SF 轻小说. [Oreo]
+
+### Fix
+
+* :bug: : 修复 JS 配置文件路径变量读取错误. [Oreo]
+
+* :bug: : 修复 SF 轻小说签到判断. [Oreo]
+
+* :bug: : fix bark push. [night-raise]
+
+  fix type errror.
+
+* :bug: : fix bark push. [night-raise]
+
+  修复由于 BARK 修改为 BARK_PUSH 引起的问题。
+
+* :bug: : fix site.py. [night-raise]
+
+  1. 修复了 学校pt 签到匹配的正则错误。
+  2. 优化了 猫站pt 签到的日志输出。
+
+### Docs
+
+* :memo: : 完善 README. [Oreo]
+
+### Code Style
+
+* :art: : 修复联通营业厅和沃邮箱. [Oreo]
+
+* :racehorse: : 增加 EUserv 验证码识别方案. [Oreo]
+
+* :art: : 修改 Site 键名为 SITE，同时优化代码. [Oreo]
+
+### Other
+
+* :heavy_plus_sign: 增加依赖文件. [Oreo]
+
+
 ## 20211010-2-022 (2021-10-10)
 
 ### Feature
