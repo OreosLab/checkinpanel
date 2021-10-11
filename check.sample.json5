@@ -380,7 +380,7 @@
    ],
 
 // Site
-   Site: [
+   SITE: [
      {
        url: 'https://www.haidan.video',
        cookie: '',

@@ -16,11 +16,11 @@ from notify_mtr import send
 from utils import get_data
 
 urllib3.disable_warnings()
+
 desp = ""
-_print = print
 
 
-def print(info):
+def log(info):
     global desp
     desp = desp + info + "\n\n"
 
@@ -56,14 +56,14 @@ class Site:
             with session.post(attendance_url, data) as res:
                 r = re.compile(r"获得了\d+魔力值")
                 r1 = re.compile(r"重复")
-                print(res.text)
+                log(res.text)
                 if r.search(res.text):
                     tip = "签到成功"
                 elif r1.search(res.text):
                     tip = "重复签到"
                 else:
                     tip = "cookie 已过期或网站类型不对"
-                print(f"{url} {tip}")
+                log(f"{url} {tip}")
         # 猫站签到
         elif url == "https://pterclub.com":
             attendance_url = url + "/attendance-ajax.php"
@@ -79,7 +79,7 @@ class Site:
                     tip = "重复签到"
                 else:
                     tip = "cookie 已过期或网站类型不对"
-                print(f"{url} {tip}")
+                log(f"{url} {tip}")
         # 海胆签到
         elif url == "https://www.haidan.video":
             attendance_url = url + "/signin.php"
@@ -92,7 +92,7 @@ class Site:
                     tip = "重复签到"
                 else:
                     tip = "cookie 已过期或网站类型不对!"
-                print(f"{url} {tip}")
+                log(f"{url} {tip}")
         # bschool
         elif url == "https://pt.btschool.club":
             attendance_url = url + "/index.php?action=addbonus"
@@ -105,21 +105,21 @@ class Site:
                     tip = "重复签到"
                 else:
                     tip = "cookie已过期"
-                print(f"{url} {tip}")
+                log(f"{url} {tip}")
         # lemonhd
         elif url == "https://lemonhd.org":
             attendance_url = url + "/attendance.php"
             with session.get(attendance_url) as res:
                 r = re.compile(r"已签到")
                 r1 = re.compile(r"请勿重复刷新")
-                # print(res.text)
+                # log(res.text)
                 if r.search(res.text):
                     tip = "签到成功"
                 elif r1.search(res.text):
                     tip = "重复签到"
                 else:
                     tip = "cookie 已过期或网站类型不对"
-                print(f"{url} {tip}")
+                log(f"{url} {tip}")
         else:
             attendance_url = url + "/attendance.php"
             with session.get(attendance_url) as res:
@@ -131,7 +131,7 @@ class Site:
                     tip = res.text[location[0], location[1]]
                 else:
                     tip = "cookie 已过期或网站类型不对"
-                print(f"{url} {tip}")
+                log(f"{url} {tip}")
 
     @staticmethod
     # discuz 系列签到
@@ -146,11 +146,11 @@ class Site:
             r = re.compile(r"签到成功")
             r1 = re.compile(r"已经签到")
             if r.search(res.text):
-                print(f"{url} 签到成功")
+                log(f"{url} 签到成功")
             elif r1.search(res.text):
-                print(f"{url} 重复签到")
+                log(f"{url} 重复签到")
             else:
-                print(f"{url} {res.text}")
+                log(f"{url} {res.text}")
 
     @staticmethod
     # hifi 签到
@@ -160,11 +160,11 @@ class Site:
             r = re.compile(r"成功")
             r1 = re.compile(r"今天已经")
             if r.search(res.text):
-                print(f"{url} 签到成功")
+                log(f"{url} 签到成功")
             elif r1.search(res.text):
-                print(f"{url} 重复签到")
+                log(f"{url} 重复签到")
             else:
-                print(f"{url} {res.text}")
+                log(f"{url} {res.text}")
 
     def main(self):
         for check_item in self.check_items:
@@ -182,12 +182,12 @@ class Site:
             elif type == "hifi":
                 self.signin_hifi(s, url)
             else:
-                print("请在配置文件中配置网站类型，如 type: 'pt'")
+                log("请在配置文件中配置网站类型，如 type: 'pt'")
         return desp
 
 
 if __name__ == "__main__":
     data = get_data()
-    _check_items = data.get("Site", [])
+    _check_items = data.get("SITE", [])
     res = Site(check_items=_check_items).main()
     send("Site", res)
