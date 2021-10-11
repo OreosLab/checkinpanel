@@ -21,7 +21,6 @@ _print = print
 
 
 def print(info):
-    _print(info)
     global desp
     desp = desp + info + "\n\n"
 
@@ -74,7 +73,8 @@ class Site:
                 except JSONDecodeError:
                     msg = res.text
                 if "连续签到" in msg:
-                    tip = f"签到成功, {msg}"
+                    pattern = re.compile(r"</?.>")
+                    tip = f"签到成功, {re.sub(pattern, '', msg)}"
                 elif "重复刷新" in msg:
                     tip = "重复签到"
                 else:
@@ -100,7 +100,7 @@ class Site:
                 r = re.compile(r"今天签到您获得\d+点魔力值")
                 r1 = re.compile(r"退出")
                 if location := r.search(res.text):
-                    tip = res.text[location[0], location[1]]
+                    tip = location.group()
                 elif r1.search(res.text):
                     tip = "重复签到"
                 else:
