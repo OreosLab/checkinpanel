@@ -124,6 +124,10 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 特别的，如果你想要创建一个基于 python 的 elecV2P 或者 qinglong 项目，强烈建议你拷贝[此文件](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/notify_mtr.py)，如此可以大幅度降低用户脚本的配置难度和升级难度。
 
+### 5. 检查依赖
+
+> 如果任务列表安装不成功，参考 [#12](https://github.com/Oreomeow/checkinpanel/issues/12)
+
 ## 𝐪𝐢𝐧𝐠𝐥𝐨𝐧𝐠 使用方法
 
 ### 1. ssh 进入容器
@@ -136,11 +140,25 @@ docker exec -it qinglong bash
 
 ### 2. 安装依赖
 
+Alpine 依赖
+
 ```sh
-apk add gcc libffi-dev musl-dev openssl-dev python3-dev && pip3 install bs4 cryptography~=3.2.1 json5 requests rsa
+apk add gcc libffi-dev musl-dev openssl-dev python3-dev
 ```
 
-**依赖持久化配置**
+Python 依赖
+
+```sh
+pip3 install bs4 cryptography~=3.2.1 json5 requests rsa
+```
+
+JavaScript 依赖
+
+```sh
+cd /ql/scripts && npm install json5 request
+```
+
+**Python 依赖持久化配置**
 
 ```sh
 requirement_name="bs4 cryptography~=3.2.1 json5 requests rsa"
@@ -170,7 +188,81 @@ install_requirements() {
 install_requirements
 ```
 
-在 `extra.sh` 增加这段代码即可
+**JavaScript 依赖持久化配置**
+
+```sh
+package_name="json5 request"
+
+install_packages_normal(){
+    for i in $@; do
+        case $i in
+            canvas)
+                cd /ql/scripts
+                if [[ "$(echo $(npm ls $i) | grep ERR)" != "" ]]; then
+                    npm uninstall $i
+                fi
+                if [[ "$(npm ls $i)" =~ (empty) ]]; then
+                    apk add --no-cache build-base g++ cairo-dev pango-dev giflib-dev && npm i $i --prefix /ql/scripts --build-from-source
+                fi
+                ;;
+            *)
+                if [[ "$(npm ls $i)" =~ $i ]]; then
+                    npm uninstall $i
+                elif [[ "$(echo $(npm ls $i -g) | grep ERR)" != "" ]]; then
+                    npm uninstall $i -g
+                fi
+                if [[ "$(npm ls $i -g)" =~ (empty) ]]; then
+                    [[ $i = "typescript" ]] && npm i $i -g --force || npm i $i -g
+                fi
+                ;;
+        esac
+    done
+}
+
+install_packages_force(){
+    for i in $@; do
+        case $i in
+            canvas)
+                cd /ql/scripts
+                if [[ "$(npm ls $i)" =~ $i && "$(echo $(npm ls $i) | grep ERR)" != "" ]]; then
+                    npm uninstall $i
+                    rm -rf /ql/scripts/node_modules/$i
+                    rm -rf /usr/local/lib/node_modules/lodash/*
+                fi
+                if [[ "$(npm ls $i)" =~ (empty) ]]; then
+                    apk add --no-cache build-base g++ cairo-dev pango-dev giflib-dev && npm i $i --prefix /ql/scripts --build-from-source --force
+                fi
+                ;;
+            *)
+                cd /ql/scripts
+                if [[ "$(npm ls $i)" =~ $i ]]; then
+                    npm uninstall $i
+                    rm -rf /ql/scripts/node_modules/$i
+                    rm -rf /usr/local/lib/node_modules/lodash/*
+                elif [[ "$(npm ls $i -g)" =~ $i && "$(echo $(npm ls $i -g) | grep ERR)" != "" ]]; then
+                    npm uninstall $i -g
+                    rm -rf /ql/scripts/node_modules/$i
+                    rm -rf /usr/local/lib/node_modules/lodash/*
+                fi
+                if [[ "$(npm ls $i -g)" =~ (empty) ]]; then
+                    npm i $i -g --force
+                fi
+                ;;
+        esac
+    done
+}
+
+install_packages_all(){
+    install_packages_normal $package_name
+    for i in $package_name; do
+        install_packages_force $i
+    done
+}
+
+install_packages_all
+```
+
+在 `extra.sh` 增加这些代码即可
 
 ### 3. 拉取仓库
 
@@ -277,6 +369,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 * [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | 多账号 | AcFun | 百度搜索资源平台 | Bilibili | 天翼云盘 | CSDN | 多看阅读 | 恩山论坛 | Fa米家 | 网易云游戏 | 葫芦侠 | 爱奇艺 | 全民K歌 | MEIZU 社区 | 芒果 TV | 小米运动 | 网易云音乐 | 一加手机社区官方论坛 | 哔咔漫画 | 吾爱破解 | 什么值得买 | 百度贴吧 | V2EX | 腾讯视频 | 微博 | 联通沃邮箱 | 哔咔网单 | 王者营地 | 有道云笔记 | 智友邦
 * [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | 多账号 | 机场签到 | 欢太商城 | NGA | 掘金 | GLaDOS | HiFiNi | 时光相册 | 联通营业厅 | 无忧行 | FreeNom | EUserv | Site | SF 轻小说
 * [x] 𝑺𝒉𝒆𝒍𝒍 | 多账号 | SSPanel 签到
+* [x] 𝑱𝒂𝒗𝒂𝑺𝒄𝒓𝒊𝒑𝒕 | 多账号 | 什么值得买任务版
 
 ### 项目完成情况
 
@@ -298,7 +391,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 
 | 状态 | 名称 |
 | --- | --- |
-| ✅ | LeetCode 每日一题 \| 每日一句 \| 天气预报 \| AcFun \| 机场签到 \| Bilibili \| 天翼云盘 \| CSDN \| 多看阅读 \| 恩山论坛 \| EUserv \| 时光相册 \| FreeNom \| GLaDOS \| 网易云游戏 \| 欢太商城 \| HiFiNi \| 爱奇艺 \| 掘金 \| 全民K歌 \| MEIZU 社区 \| 小米运动 \| 网易云音乐 \| NGA \| 一加手机社区官方论坛 \| 吾爱破解 \| 什么值得买 \| SSPanel 签到 \| 百度贴吧 \| 腾讯视频 \| 微博 \| 王者营地 \| 有道云笔记 |
+| ✅ | LeetCode 每日一题 \| 每日一句 \| 天气预报 \| AcFun \| 机场签到 \| Bilibili \| 天翼云盘 \| CSDN \| 多看阅读 \| 恩山论坛 \| EUserv \| 时光相册 \| FreeNom \| GLaDOS \| 网易云游戏 \| 欢太商城 \| HiFiNi \| 爱奇艺 \| 掘金 \| 全民K歌 \| MEIZU 社区 \| 小米运动 \| 网易云音乐 \| NGA \| 一加手机社区官方论坛 \| 吾爱破解 \| 什么值得买 \| 什么值得买任务版 \| SSPanel 签到 \| 百度贴吧 \| 腾讯视频 \| 微博 \| 王者营地 \| 有道云笔记 |
 | ❔ | 百度搜索资源平台 \| Fa米家 \| 葫芦侠 \| 无忧行 \| 芒果 TV \| 哔咔漫画 \| SF 轻小说 \| Site \| 联通营业厅 \| V2EX \| 联通沃邮箱 \| 哔咔网单 \| 智友邦 |
 
 ## 致谢
