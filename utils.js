@@ -7,8 +7,8 @@ let ql_path = '/ql/config/';
 let ql_file = (fs.existsSync(ql_path + 'check.json5')) ? ql_path + 'check.json5' : ql_path + 'check.json';
 
 function get_data() {
-    if (process.env.CHECK_PATH) {
-        check_config = JSON5.parse(fs.readFileSync(CHECK_PATH, 'utf-8'))
+    if (process.env.CHECK_CONFIG) {
+        check_config = JSON5.parse(fs.readFileSync(process.env.CHECK_CONFIG, 'utf-8'))
     }
     else if (fs.existsSync(v2p_file)) {
         check_config = JSON5.parse(fs.readFileSync(v2p_file, 'utf-8'))
