@@ -102,7 +102,7 @@ class UniCom:
         try:
             result = response.json()
             if result["code"] == "0":
-                login_msg = {"name": "登录账号", "value": result["default"][:4] + "xxxx" + result["default"][-4:]}
+                login_msg = {"name": "账号信息", "value": result["default"][:4] + "xxxx" + result["default"][-4:]}
                 session.headers.update(
                     {
                         "User-Agent": "Mozilla/5.0 (Linux; Android 10; RMX1901 Build/QKQ1.190918.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.186 Mobile Safari/537.36; unicom{version:android@8.0100,desmobile:"
@@ -112,9 +112,9 @@ class UniCom:
                 )
                 flag = True
             else:
-                login_msg = {"name": "登录账号", "value": result["dsc"]}
+                login_msg = {"name": "账号信息", "value": result["dsc"]}
         except Exception as e:
-            login_msg = {"name": "登录账号", "value": str(e)}
+            login_msg = {"name": "账号信息", "value": str(e)}
         if flag:
             return session, login_msg
         else:
@@ -151,7 +151,6 @@ class UniCom:
                 return {"name": "每日签到", "value": "打卡成功!"}
             elif res["status"] == "0002":
                 return {"name": "每日签到", "value": res["msg"]}
-            time.sleep(1)
         except Exception as e:
             return {"name": "每日签到", "value": f"错误，原因为: {e}"}
 
@@ -218,7 +217,7 @@ class UniCom:
             else:
                 return {"name": "游戏频道打卡", "value": res["msg"]}
         except Exception as e:
-            return {"name": "游戏频道打卡", "value": f" 错误，原因为: {e}"}
+            return {"name": "游戏频道打卡", "value": f"错误，原因为: {e}"}
 
     @staticmethod
     def daily_integral_100(session):
@@ -277,7 +276,7 @@ class UniCom:
                         url="https://m.client.10010.com/mactivity/flowData/takeFlow.htm?flowId=" + flow["id"], timeout=1
                     )
                     take_flow.encoding = "utf-8"
-                except Exception as e:
+                except BaseException:
                     flag = True
                     print("【沃之树-领流量】: 4M流量 x" + str(num))
                 time.sleep(1)
@@ -304,8 +303,11 @@ class UniCom:
     def user_info(session):
         resp = session.get(url="https://m.client.10010.com/mobileService/home/queryUserInfoSeven.htm?showType=3")
         user_info_msg = []
-        for one in resp.json().get("data", {}).get("dataList", []):
-            user_info_msg.append({"name": one.get("remainTitle"), "value": one.get("number") + one.get("unit")})
+        try:
+            for one in resp.json().get("data", {}).get("dataList", []):
+                user_info_msg.append({"name": one.get("remainTitle"), "value": one.get("number") + one.get("unit")})
+        except Exception as e:
+            print(e)
         return user_info_msg
 
     def main(self):
@@ -335,7 +337,7 @@ class UniCom:
                     wo_tree_msg,
                 ] + user_info_msg
             else:
-                msg = login_msg
+                msg = [login_msg]
             msg = "\n".join([f"{one.get('name')}: {one.get('value')}" for one in msg])
             msg_all += msg + "\n\n"
         return msg_all
