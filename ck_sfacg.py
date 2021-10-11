@@ -116,7 +116,7 @@ class SFACG:
                 sign_msg = "签到提醒: " + str(response["status"]["msg"])
             for data in self.get_re("https://api.sfacg.com/user/signInfo", headers)["data"]:
                 sign_msg += "\n签到日期: " + \
-                    sign_date.format(data["year"], data["month"], data["day"]) + "，连续签到 " + data["continueNum"] + " 天"
+                    sign_date.format(data["year"], data["month"], data["day"]) + "，连续签到 " + str(data["continueNum"]) + " 天"
             self.task(authorization, cookie, useragent, sfsecurity)
             print(sign_msg)
         return sign_msg
