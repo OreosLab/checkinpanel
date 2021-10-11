@@ -118,7 +118,7 @@ def bark(title: str, content: str) -> None:
     for pair in filter(lambda pairs: pairs[0].startswith("BARK_")
                                      and pairs[0] != 'BARK_PUSH'
                                      and pairs[1]
-                                     and bark_params.get(pair[0]),
+                                     and bark_params.get(pairs[0]),
                        push_config.items()):
         params += f"{bark_params.get(pair[0])}={pair[1]}&"
     if params:
