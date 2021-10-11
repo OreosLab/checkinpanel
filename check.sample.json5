@@ -363,18 +363,34 @@
 //     },
    ],
 
+// SF 轻小说
+   SFACG: [
+     {
+       authorization: 'Basic xxxxxx==',
+       cookie: '.SFCommunity=xxxxxx; session_APP=xxxxxx',
+       useragent: 'boluobao/xxxxxx',
+       sfsecurity: 'nonce=xxxxxx&timestamp=xxxxxx&devicetoken=xxxxxx&sign=xxxxxx',
+     },
+//     {
+//       authorization: '',
+//       cookie: '',
+//       useragent: '',
+//       sfsecurity: '',
+//     },
+   ],
+
 // Site
    Site: [
      {
        url: 'https://www.haidan.video',
        cookie: '',
-       type: 'pt'
+       type: 'pt',
      },
 // 已测试支持站点：pterclub, btschool, pthome
 //     {
 //       url: '',     // 不带 /
 //       cookie: '',
-//       type: 'pt'   // 三种类型，pt discuz hifi
+//       type: 'pt',  // 三种类型，pt discuz hifi
 //     },
    ],
 

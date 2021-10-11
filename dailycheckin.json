@@ -415,6 +415,16 @@
             "running": true
         },
         {
+            "name": "SF 轻小说",
+            "type": "cron",
+            "time": "15 10 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkin.js -env PYNAME=ck_sfacg.py"
+            },
+            "running": true
+        },
+        {
             "name": "Site",
             "type": "cron",
             "time": "11 6 * * *",

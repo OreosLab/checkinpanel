@@ -1,6 +1,32 @@
 # Changelog
 
 
+## 20211010-2-022 (2021-10-10)
+
+### Feature
+
+* :sparkles: : bark 推送增加参数. [night-raise]
+
+  1. 增加若干可选参数
+  2. 当内容为空的时候不推送。
+
+### Fix
+
+* :bug: : 修复 bark 推送变量配置错误. [Oreo]
+
+### Code Style
+
+* :zap: : 调整推送. [Oreo]
+
+  1. 推送方式增加：iGot
+  2. 推送变量修改：BARK -> BARK_PUSH 等
+  3. 推送变量增加：+PUSH_PLUS_USER 等
+
+### Other
+
+* :page_facing_up: add MIT License. [Oreo]
+
+
 ## 20211008-2-010 (2021-10-07)
 
 ### Fix
