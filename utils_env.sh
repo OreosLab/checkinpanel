@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PATH="/usr/local/bin:/usr/bin:/bin"
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # 初始化变量
 V2P_FILE='/usr/local/app/script/Lists/task.list'
@@ -18,17 +18,17 @@ check_env() {
         release="centos"
     elif [ "${IS_MACOS}" -eq 1 ]; then
         release="macos"
-    elif < /etc/issue grep -q -E -i "debian"; then
+    elif grep </etc/issue -q -E -i "debian"; then
         release="debian"
-    elif < /etc/issue grep -q -E -i "ubuntu"; then
+    elif grep </etc/issue -q -E -i "ubuntu"; then
         release="ubuntu"
-    elif < /etc/issue grep -q -E -i "centos|red hat|redhat"; then
+    elif grep </etc/issue -q -E -i "centos|red hat|redhat"; then
         release="centos"
-    elif < /proc/version grep -q -E -i "debian"; then
+    elif grep </proc/version -q -E -i "debian"; then
         release="debian"
-    elif < /proc/version grep -q -E -i "ubuntu"; then
+    elif grep </proc/version -q -E -i "ubuntu"; then
         release="ubuntu"
-    elif < /proc/version grep -q -E -i "centos|red hat|redhat"; then
+    elif grep </proc/version -q -E -i "centos|red hat|redhat"; then
         release="centos"
     fi
 }
@@ -78,6 +78,22 @@ check_jq_installed_status() {
             echo -e "jq 依赖安装失败，请检查！" && exit 1
         else
             echo -e "jq 依赖安装成功！"
+        fi
+    fi
+}
+
+# 检查 Java 依赖
+check_java_installed_status() {
+    if [ -z "$(command -v java)" ]; then
+        echo -e "Java 依赖没有安装，开始安装..."
+        check_root
+        if [ "${pannel}" ]; then
+            apk add --no-cache openjdk8
+        fi
+        if [ -z "$(command -v java)" ]; then
+            echo -e "Java 依赖安装失败，请检查！" && exit 1
+        else
+            echo -e "Java 依赖安装成功！"
         fi
     fi
 }
