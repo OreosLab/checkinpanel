@@ -1,6 +1,28 @@
 # Changelog
 
 
+## 20211012-2-131 (2021-10-12)
+
+### Feature
+
+* :sparkles: : 新增 bili 助手一键脚本. [Oreo]
+
+  1. 支持青龙和 elecV2P
+  2. 自动安装 jq Java 依赖
+
+### Fix
+
+* :bug: : 修复 PATH 变量错误导致 apk command not found. [Oreo]
+
+* :bug: : 修复 SF 轻小说输出. [Oreo]
+
+* :bug: : 修复 SF 轻小说 int 和 str 类型连接问题. [Oreo]
+
+### Docs
+
+* :memo: : 更新测试情况. [Oreo]
+
+
 ## 20211011-2-182 (2021-10-11)
 
 ### Feature

@@ -120,7 +120,7 @@ class NGA:
                                     data=data,
                                     verify=False).content
                 res = json.loads(res)
-                # print(res)
+                print(res)
                 time.sleep(30)
                 if str(res["data"][1][0]) == "{}":
                     task_code[i] = res["data"][1][1][ids[i]]["raw_stat"]["6"]
@@ -130,7 +130,7 @@ class NGA:
                     time_code[i] = res["data"][1][0][ids[i]]["raw_stat"]["5"]
                 if task_code[i] == 1:
                     success_sum += 1
-                elif task_code[i] == 0 and time_code == 1:
+                elif task_code[i] == 0 and time_code[i] == 1:
                     success_sum += 1
             except Exception as e:
                 failure_msg = str(e)
