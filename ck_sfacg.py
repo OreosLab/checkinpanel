@@ -110,13 +110,17 @@ class SFACG:
         else:
             print("检测到今天还未签到，开始自动签到和完成任务")
             response = requests.put("https://api.sfacg.com/user/signInfo", headers=headers).json()
-            if str(response["status"]["httpCode"]) == 200:
-                sign_msg = "签到提醒: 签到成功！"
+            print(response)
+            if response["status"]["httpCode"] == 200:
+                sign_tip = "签到提醒: 签到成功！"
             else:
-                sign_msg = "签到提醒: " + str(response["status"]["msg"])
+                sign_tip = "签到提醒: " + str(response["status"]["msg"])
+            sign_msg = ""
             for data in self.get_re("https://api.sfacg.com/user/signInfo", headers)["data"]:
-                sign_msg += "\n签到日期: " + \
-                    sign_date.format(data["year"], data["month"], data["day"]) + "，连续签到 " + str(data["continueNum"]) + " 天"
+                sign_msg = "签到日期: " + \
+                    sign_date.format(data["year"], data["month"], data["day"]) + \
+                    "，连续签到 " + str(data["continueNum"]) + " 天"
+            sign_msg += "\n" + sign_tip
             self.task(authorization, cookie, useragent, sfsecurity)
             print(sign_msg)
         return sign_msg
