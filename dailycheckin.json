@@ -377,7 +377,7 @@
         {
             "name": "NGA",
             "type": "cron",
-            "time": "6,26 13 * * *",
+            "time": "26 13 * * *",
             "job": {
                 "type": "runjs",
                 "target": "checkin.js -env PYNAME=ck_nga.py"
