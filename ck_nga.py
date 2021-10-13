@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-cron: 6,26 13 * * *
+cron: 26 13 * * *
 new Env('NGA');
 """
+
 import json
+import re
 import time
 
 import requests
@@ -106,31 +108,25 @@ class NGA:
             "__lib": "mission",
             "__output": "11"
         }
-        ids = ("157", "157", "158", "158")
         success_sum = 0
         failure_sum = 0
         failure_msg = ""
         failure_msg_all = ""
-        task_code = {}
-        time_code = {}
-        for i in range(len(ids)):
+        for i in range(4):
             try:
                 res = requests.post(self.url,
                                     headers=self.headers,
                                     data=data,
                                     verify=False).content
                 res = json.loads(res)
-                print(res)
+                # print(res)
                 time.sleep(30)
-                if str(res["data"][1][0]) == "{}":
-                    task_code[i] = res["data"][1][1][ids[i]]["raw_stat"]["6"]
-                    time_code[i] = res["data"][1][1][ids[i]]["raw_stat"]["5"]
-                else:
-                    task_code[i] = res["data"][1][0][ids[i]]["raw_stat"]["6"]
-                    time_code[i] = res["data"][1][0][ids[i]]["raw_stat"]["5"]
-                if task_code[i] == 1:
+                raw_stat = re.search(r'\'raw_stat\':\s*{([^}]+)', str(res)).group(1)
+                task_code = re.search(r'\'6\':\s(\d)', raw_stat).group(1)
+                time_code = re.search(r'\'5\':\s(\d)', raw_stat).group(1)
+                if task_code == "1":
                     success_sum += 1
-                elif task_code[i] == 0 and time_code[i] == 1:
+                elif task_code == "0" and time_code == "1":
                     success_sum += 1
             except Exception as e:
                 failure_msg = str(e)
