@@ -635,7 +635,7 @@ class Heytap:
         for config in self.login:
             self.HT_cookies = config["cookie"]
             self.HT_UserAgent = config["useragent"]
-            self.if_draw = config["if_draw"]
+            self.if_draw = config["draw"]
             self.client = self.get_user_info()
             if self.client:
                 try:
