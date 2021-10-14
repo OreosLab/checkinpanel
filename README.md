@@ -1,10 +1,10 @@
 <div align="center"> 
 <h1 align="center">定时面板上的签到盒</h1>
 
-![GitHub stars](https://img.shields.io/github/stars/Oreomeow/checkinpanel?color=brightgreen&logo=Riseup&logoColor=brightgreen&style=flat-square)
-![GitHub forks](https://img.shields.io/github/forks/Oreomeow/checkinpanel?color=brightgreen&style=flat-square)
+<a href="https://github.com/Oreomeow/checkinpanel/stargazers"><img src="https://img.shields.io/github/stars/Oreomeow/checkinpanel?color=brightgreen&logo=Riseup&logoColor=brightgreen&style=flat-square" alt="GitHub stars"></a>
+<a href="https://github.com/Oreomeow/checkinpanel/network/members"><img src="https://img.shields.io/github/forks/Oreomeow/checkinpanel?color=brightgreen&style=flat-square" alt="GitHub forks"></a>
 <a href="https://github.com/Oreomeow/checkinpanel/issues"><img src="https://img.shields.io/github/issues/Oreomeow/checkinpanel?color=orange&style=flat-square" alt="GitHub issues"></a>
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Oreomeow/checkinpanel?color=informational&logo=Python&logoColor=informational&style=flat-square)
+<a href="https://github.com/Oreomeow/checkinpanel/search?l=python"><img src="https://img.shields.io/github/languages/code-size/Oreomeow/checkinpanel?color=informational&logo=Python&logoColor=informational&style=flat-square" alt="GitHub code size in bytes"></a>
 <a href="https://t.me/joinchat/muGNhnaZglQ0N2Q1"><img src="https://img.shields.io/badge/talk-Telegram-blue?logo=Telegram&style=flat-square" alt="Telegram"></a>
 <a href="https://github.com/Oreomeow/checkinpanel/commits"><img src="https://img.shields.io/github/last-commit/Oreomeow/checkinpanel?color=success&logo=GitHub&style=flat-square" alt="GitHub last commit"></a>
 
@@ -13,6 +13,8 @@
 ## 简介
 
 > 一个主要运行在 [𝐞𝐥𝐞𝐜𝐕𝟐𝐏](https://github.com/elecV2/elecV2P.git) 或 [𝐪𝐢𝐧𝐠𝐥𝐨𝐧𝐠](https://github.com/whyour/qinglong.git) 等定时面板，同时支持系统运行环境的签到项目
+>
+>环境：𝑷𝒚𝒕𝒉𝒐𝒏 3.8+ / 𝑵𝒐𝒅𝒆.𝒋𝒔 / 𝑩𝒂𝒔𝒉 4+ / 𝑶𝒑𝒆𝒏𝑱𝑫𝑲8
 
 ## 注意
 
@@ -76,13 +78,13 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 | BARK_PUSH | bark 设备码 | JS PY | BARK 推送[使用](https://github.com/Sitoi/dailycheckin/issues/29)，填写 URL 即可，例如： `https://api.day.app/DxHcxxxxxRxxxxxxcm/` |
 | BARK_ARCHIVE | * bark 存档 | PY | 是否存档 |
 | BARK_GROUP | * bark 消息分组 | JS PY | 消息分组 |
-| BARK_SOUND | * bark 声音 | JS PY | 例如： `choo`，具体值 bark-推送铃声-查看所有铃声 |
+| BARK_SOUND | * bark 声音 | JS PY | 例如： `choo` ，具体值 bark-推送铃声-查看所有铃声 |
 | CONSOLE | 控制台输出 | PY | True 为开启，False 为关闭，默认关闭 |
-| DD_BOT_SECRET | 钉钉机器人 | JS PY SH | 钉钉推送[官方文档](https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq)密钥，机器人安全设置页面，加签一栏下面显示的 `SEC` 开头的字符串，注：填写了 `DD_BOT_TOKEN` 和 `DD_BOT_SECRET` ，钉钉机器人安全设置只需勾选`加签`即可，其他选项不要勾选 |
+| DD_BOT_SECRET | 钉钉机器人 | JS PY SH | 钉钉推送[官方文档](https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq)密钥，机器人安全设置页面，加签一栏下面显示的 `SEC` 开头的字符串，注：填写了 `DD_BOT_TOKEN` 和 `DD_BOT_SECRET` ，钉钉机器人安全设置只需勾选 `加签` 即可，其他选项不要勾选 |
 | DD_BOT_TOKEN | 钉钉机器人 | JS PY SH | 钉钉推送[官方文档](https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq)，只需 `https://oapi.dingtalk.com/robot/send?access_token=XXX` 等于符号后面的 `XXX` |
 | FSKEY | 飞书 | PY | 飞书[官方文档](https://open.feishu.cn/document/ukTMukTMukTM/ucTM5YjL3ETO24yNxkjN)，只需 `https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxx` 的 `xxxxxx` 部分 |
 | GOBOT_URL | go-cqhttp | JS PY | 例如：推送到个人QQ： `http://127.0.0.1/send_private_msg` 群： `http://127.0.0.1/send_group_msg` |
-| GOBOT_QQ | go-cqhttp 的推送群或者用户 | JS PY | `GOBOT_URL` 设置 `/send_private_msg` 时填入 `user_id=个人QQ`；`/send_group_msg` 时填入 `group_id=QQ群` |
+| GOBOT_QQ | go-cqhttp 的推送群或者用户 | JS PY | `GOBOT_URL` 设置 `/send_private_msg` 时填入 `user_id=个人QQ` ； `/send_group_msg` 时填入 `group_id=QQ群` |
 | GOBOT_TOKEN | * go-cqhttp 的 access_token | JS PY | go-cqhttp 文件设置的访问密钥 |
 | IGOT_PUSH_TOKEN | iGot 聚合推送 | JS PY | [参考文档](https://wahao.github.io/Bark-MP-helper)，支持多方式推送 |
 | PUSH_KEY | server 酱 | JS PY SH | server 酱推送[官方文档](https://sc.ftqq.com/3.version)，JS 和 PY 推送兼容新旧版本 |
@@ -193,7 +195,7 @@ install_requirements
 ```sh
 package_name="json5 request"
 
-install_packages_normal(){
+install_packages_normal() {
     for i in $@; do
         case $i in
             canvas)
@@ -219,7 +221,7 @@ install_packages_normal(){
     done
 }
 
-install_packages_force(){
+install_packages_force() {
     for i in $@; do
         case $i in
             canvas)
@@ -252,7 +254,7 @@ install_packages_force(){
     done
 }
 
-install_packages_all(){
+install_packages_all() {
     install_packages_normal $package_name
     for i in $package_name; do
         install_packages_force $i
@@ -363,13 +365,12 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 
 ## 计划说明
 
-| 状态 | \*语言 | \*备注 | 名称 |
-| --- | --- | --- | --- |
-* [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | api | LeetCode 每日一题 | 每日一句 | 天气预报
-* [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | 多账号 | AcFun | 百度搜索资源平台 | Bilibili | 天翼云盘 | CSDN | 多看阅读 | 恩山论坛 | Fa米家 | 网易云游戏 | 葫芦侠 | 爱奇艺 | 全民K歌 | MEIZU 社区 | 芒果 TV | 小米运动 | 网易云音乐 | 一加手机社区官方论坛 | 哔咔漫画 | 吾爱破解 | 什么值得买 | 百度贴吧 | V2EX | 腾讯视频 | 微博 | 联通沃邮箱 | 哔咔网单 | 王者营地 | 有道云笔记 | 智友邦
-* [x] 𝑷𝒚𝒕𝒉𝒐𝒏 | 多账号 | 机场签到 | 欢太商城 | NGA | 掘金 | GLaDOS | HiFiNi | 时光相册 | 联通营业厅 | 无忧行 | FreeNom | EUserv | Site | SF 轻小说
-* [x] 𝑺𝒉𝒆𝒍𝒍 | 多账号 | SSPanel 签到
-* [x] 𝑱𝒂𝒗𝒂𝑺𝒄𝒓𝒊𝒑𝒕 | 多账号 | 什么值得买任务版
+* [x] 𝑷𝒚𝒕𝒉𝒐𝒏 \| **api** \| LeetCode 每日一题 \| 每日一句 \| 天气预报
+* [x] 𝑷𝒚𝒕𝒉𝒐𝒏 \| **多账号** \| AcFun \| 百度搜索资源平台 \| Bilibili \| 天翼云盘 \| CSDN \| 多看阅读 \| 恩山论坛 \| Fa米家 \| 网易云游戏 \| 葫芦侠 \| 爱奇艺 \| 全民K歌 \| MEIZU 社区 \| 芒果 TV \| 小米运动 \| 网易云音乐 \| 一加手机社区官方论坛 \| 哔咔漫画 \| 吾爱破解 \| 什么值得买 \| 百度贴吧 \| V2EX \| 腾讯视频 \| 微博 \| 联通沃邮箱 \| 哔咔网单 \| 王者营地 \| 有道云笔记 \| 智友邦
+* [x] 𝑷𝒚𝒕𝒉𝒐𝒏 \| **多账号** \| 机场签到 \| 欢太商城 \| NGA \| 掘金 \| GLaDOS \| HiFiNi \| 时光相册 \| 联通营业厅 \| 无忧行 \| FreeNom \| EUserv \| Site \| SF 轻小说
+* [x] 𝑺𝒉𝒆𝒍𝒍 \| **多账号** \| SSPanel 签到
+* [x] 𝑱𝒂𝒗𝒂𝑺𝒄𝒓𝒊𝒑𝒕 \| **多账号** \| 什么值得买任务版
+* [x] 𝑱𝒂𝒗𝒂 \| BILIBILI-HELPER
 
 ### 项目完成情况
 
