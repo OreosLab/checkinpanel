@@ -70,5 +70,4 @@ if __name__ == "__main__":
     leetcode = data.get("LEETCODE")
     if leetcode:
         res = LeetCode().main()
-        print(res)
         send("LeetCode 每日一题", res)

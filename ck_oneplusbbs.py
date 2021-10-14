@@ -128,5 +128,4 @@ if __name__ == "__main__":
     data = get_data()
     _check_items = data.get("ONEPLUSBBS", [])
     res = OnePlusBBS(check_items=_check_items).main()
-    print(res)
     send("一加手机社区官方论坛", res)

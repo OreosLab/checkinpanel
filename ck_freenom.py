@@ -105,5 +105,4 @@ if __name__ == "__main__":
     data = get_data()
     _check_items = data.get("FREENOM", [])
     res = FreeNom(check_items=_check_items).main()
-    print(res)
     send("FreeNom", res)

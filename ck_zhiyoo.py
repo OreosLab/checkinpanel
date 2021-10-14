@@ -81,5 +81,4 @@ if __name__ == "__main__":
     data = get_data()
     _check_items = data.get("ZHIYOO", [])
     res = Zhiyoo(check_items=_check_items).main()
-    print(res)
     send("智友邦", res)

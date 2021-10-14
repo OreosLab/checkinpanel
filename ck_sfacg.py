@@ -58,7 +58,7 @@ class SFACG:
             fireMoneyRemain = money["data"]["fireMoneyRemain"]
             user_vipLevel = money["data"]["vipLevel"]
             info = "账号名称: " + nick_Name + "\n火卷余额: " + str(fireMoneyRemain) + "\nVIP: " + str(user_vipLevel)
-            print("Cookie 凭证有效！", info)
+            print("Cookie 凭证有效！")
         except BaseException:
             info = "Cookie 凭证失效 httpCode: " + str(result["status"]["httpCode"])
             print(info)
@@ -92,7 +92,7 @@ class SFACG:
         self.post_re("https://api.sfacg.com/user/tasks/17", headers, data=ListenData)
         for i in range(3):
             r = self.put_re("https://api.sfacg.com/user/readingtime", put_headers, ReadData)
-            print(r)
+            # print(r)
             time.sleep(0.5)
             self.put_re("https://api.sfacg.com/user/tasks/5", put_headers, data=ListenData)
             self.put_re("https://api.sfacg.com/user/tasks/4", put_headers, data=ListenData)
@@ -110,7 +110,7 @@ class SFACG:
         else:
             print("检测到今天还未签到，开始自动签到和完成任务")
             response = requests.put("https://api.sfacg.com/user/signInfo", headers=headers).json()
-            print(response)
+            # print(response)
             if response["status"]["httpCode"] == 200:
                 sign_tip = "签到提醒: 签到成功！"
             else:
@@ -122,7 +122,6 @@ class SFACG:
                     "，连续签到 " + str(data["continueNum"]) + " 天"
             sign_msg += "\n" + sign_tip
             self.task(authorization, cookie, useragent, sfsecurity)
-            print(sign_msg)
         return sign_msg
 
     def check_coin(self, authorization, cookie, useragent, sfsecurity):

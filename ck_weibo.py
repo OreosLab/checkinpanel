@@ -113,5 +113,4 @@ if __name__ == "__main__":
     data = get_data()
     _check_items_list = data.get("WEIBO", [])
     res = WeiBo(check_items=_check_items_list).main()
-    print(res)
     send("微博", res)

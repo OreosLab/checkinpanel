@@ -51,5 +51,4 @@ if __name__ == "__main__":
     data = get_data()
     _check_items = data.get("EVERPHOTO", [])
     res = EverPhoto(check_items=_check_items).main()
-    print(res)
     send("时光相册", res)

@@ -41,5 +41,4 @@ if __name__ == "__main__":
     data = get_data()
     _check_items = data.get("GAME163", [])
     res = Game163(check_items=_check_items).main()
-    print(res)
     send("网易云游戏", res)

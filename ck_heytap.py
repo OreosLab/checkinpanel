@@ -669,7 +669,6 @@ def main_handler(event, context):
 if __name__ == "__main__":
     cf = get_data()
     res = Heytap(cf).main()
-    print(res)
     send("欢太商城", res)
 """
 # 云函数请将上方替换成下方代码，并将 py 改名为 index.py
