@@ -120,100 +120,97 @@ class WoMail:
                     res = requests.get(url=url, headers=headers)
                     result = res.json()
                     integraltotal = result.get("integralTotal")
-                    usermobile = result.get("userPhoneNum")
                     msg.append({"name": "当前积分", "value": f"{integraltotal}"})
-                    integral_task_data = [
+                    task_data = [
+                        # 签到任务
                         {
                             "resourceName": "每日签到（积分）",
-                            "url": "https://club.mail.wo.cn/clubwebservice/club-user/user-sign/create"
+                            "url": "https://club.mail.wo.cn/clubwebservice/club-user/user-sign/create?channelId=",
                         },
+                        # 积分任务
                         {
                             "irid": 539,
                             "resourceName": "参与俱乐部活动",
                             "resourceFlag": "Web_canyujulebuhuodong+2jifen",
-                            "taskState": 0,
                             "scoreNum": 1,
                             "scoreResourceType": "add",
-                            "attachData": "{\"jumpLink\":\"/clubwebservice/club-index/activity-scope?currentPage=activityScope\"}",
-                            "description": "Web端参与俱乐部活动+1积分"
+                            "attachData": '{"1":"每天只增加一次积分"}',
+                            "description": "参与俱乐部活动+1积分",
+                            "sourceType": 0,
+                            "link": '{"jumpLink":"https://club.mail.wo.cn/clubwebservice/club-index/activity-scope?currentPage=activityScope"}',
+                            "taskState": 1,
+                            "show": True,
                         },
                         {
                             "irid": 545,
                             "resourceName": "俱乐部积分兑换",
                             "resourceFlag": "Web_jifenduihuan+2jifen",
-                            "taskState": 0,
                             "scoreNum": 1,
                             "scoreResourceType": "add",
-                            "attachData": "{\"jumpLink\":\"/clubwebservice/score-exchange/into-score-exchange?currentPage=js-hover\"}",
-                            "description": "Web端积分兑换+1积分"
-                        }
-                    ]
-                    lenth = len(integral_task_data)
-                    # 执行积分任务
-                    for i in range(lenth):
-                        resource_name = integral_task_data[i]["resourceName"]
-                        try:
-                            if "每日签到" in resource_name:
-                                url = integral_task_data[i]["url"]
-                                res = requests.get(url=url, headers=headers).json()
-                                result = res.get("description")
-                                if "success" in result:
-                                    continuous_day = res["data"]["continuousDay"]
-                                    msg.append({"name": resource_name, "value": f"签到成功~已连续签到{str(continuous_day)}天！"})
-                                else:
-                                    msg.append({"name": resource_name, "value": result})
-                            else:
-                                resource_flag = integral_task_data[i]["resourceFlag"]
-                                resource_flag = resource_flag.replace("+", "%2B")
-                                url = f"https://club.mail.wo.cn/clubwebservice/growth/addIntegral?phoneNum={usermobile}&resourceType={resource_flag}"
-                                res = requests.get(url=url, headers=headers).json()
-                                result = res.get("description")
-                                msg.append({"name": resource_name, "value": result})
-                        except Exception as e:
-                            msg.append({"name": resource_name, "value": str(e)})
-                    growthtask_data = [
-                        {
-                            "resourceName": "每日签到（积分）",
-                            "url": "https://club.mail.wo.cn/clubwebservice/club-user/user-sign/create",
+                            "attachData": '{"1":"每天只增加一次积分"}',
+                            "description": "俱乐部积分兑换+1积分",
+                            "sourceType": 0,
+                            "link": '{"jumpLink":"https://club.mail.wo.cn/clubwebservice/score-exchange/into-score-exchange?currentPage=js-hover"}',
+                            "taskState": 1,
+                            "show": True,
                         },
+                        # 成长值任务
                         {
                             "irid": 254,
                             "resourceName": "参与俱乐部活动",
-                            "resourceFlag": "Web_canyujulebuhuodong+2jifen",
-                            "taskState": 0,
+                            "resourceFlag": "activity-web",
                             "scoreNum": 1,
                             "scoreResourceType": "add",
-                            "attachData": '{"jumpLink":"/clubwebservice/club-index/activity-scope?currentPage=activityScope"}',
-                            "description": "Web端参与俱乐部活动+1积分",
+                            "attachData": '{"limit":"true","每日限定几次":"1次"}',
+                            "description": "参与俱乐部活动",
+                            "sourceType": 1,
+                            "link": '{"jumpLink":"https://club.mail.wo.cn/clubwebservice/club-index/activity-scope?currentPage=activityScope"}',
+                            "taskState": 0,
+                            "show": True,
                         },
                         {
                             "irid": 561,
                             "resourceName": "俱乐部积分兑换",
-                            "resourceFlag": "Web_jifenduihuan+2jifen",
-                            "taskState": 0,
+                            "resourceFlag": "Web_jifenduihuan+5chengzhangzhi",
                             "scoreNum": 1,
                             "scoreResourceType": "add",
-                            "attachData": '{"jumpLink":"/clubwebservice/score-exchange/into-score-exchange?currentPage=js-hover"}',
-                            "description": "Web端积分兑换+1积分",
+                            "attachData": '{"limit":"true","每日限定几次":"1次"}',
+                            "description": "俱乐部积分兑换+1成长值",
+                            "sourceType": 1,
+                            "link": '{"jumpLink":"https://club.mail.wo.cn/clubwebservice/score-exchange/into-score-exchange?currentPage=js-hover"}',
+                            "taskState": 0,
+                            "show": True,
                         },
                     ]
-                    lenth = len(growthtask_data)
-                    for i in range(lenth):
-                        resource_name = growthtask_data[i]["resourceName"]
+                    # 执行积分任务
+                    for task_item in task_data:
+                        resource_name = task_item["resourceName"]
                         try:
                             if "每日签到" in resource_name:
-                                url = growthtask_data[i]["url"]
-                                res = requests.get(url=url, headers=headers).json()
-                                result = res.get("description")
-                                if "success" in result:
-                                    continuous_day = res["data"]["continuousDay"]
-                                    msg.append({"name": resource_name, "value": f"签到成功~已连续签到{str(continuous_day)}天！"})
+                                record_url = "https://club.mail.wo.cn/clubwebservice/club-user/user-sign/query-continuous-sign-record"
+                                record_res = requests.get(url=record_url, headers=headers).json()
+                                new_continuous_day = record_res[0].get("newContinuousDay")
+                                if new_continuous_day >= 21:
+                                    msg.append({"name": resource_name, "value": f"昨日为打卡{new_continuous_day}天，今日暂停打卡"})
                                 else:
-                                    msg.append({"name": resource_name, "value": result})
+                                    url = task_item["url"]
+                                    res = requests.get(url=url, headers=headers).json()
+                                    result = res.get("description")
+                                    if "success" in result:
+                                        continuous_day = res["data"]["continuousDay"]
+                                        msg.append(
+                                            {"name": resource_name, "value": f"签到成功~已连续签到{str(continuous_day)}天！"}
+                                        )
+                                    else:
+                                        msg.append({"name": resource_name, "value": result})
                             else:
-                                resource_flag = growthtask_data[i]["resourceFlag"]
+                                resource_flag = task_item["resourceFlag"]
                                 resource_flag = resource_flag.replace("+", "%2B")
-                                url = f"https://club.mail.wo.cn/clubwebservice/growth/addGrowthViaTask?phoneNum={usermobile}&resourceType={resource_flag}"
+                                url = (
+                                    f"https://club.mail.wo.cn/clubwebservice/growth/addGrowthViaTask?resourceType={resource_flag}"
+                                    if task_item["sourceType"]
+                                    else f"https://club.mail.wo.cn/clubwebservice/growth/addIntegral?resourceType={resource_flag}"
+                                )
                                 res = requests.get(url=url, headers=headers).json()
                                 result = res.get("description")
                                 msg.append({"name": resource_name, "value": result})
@@ -228,7 +225,8 @@ class WoMail:
             msg.append({"name": "沃邮箱俱乐部", "value": "获取 COOKIES 失败"})
         return msg
 
-    def dotask3(self, womail_url):
+    @staticmethod
+    def dotask3(womail_url):
         msg = []
         try:
             dated = int(time.time())
@@ -260,13 +258,12 @@ class WoMail:
                 res = session.post(url).json()
                 if res["success"]:
                     puzzle = res["result"]["puzzle"]
-                    if puzzle == 6:
-                        # 抽奖
+                    if puzzle >= 6:
                         url = "https://nyan.mail.wo.cn/cn/puzzle2/draw/draw"
                         res = session.get(url).json()
                         if res["success"]:
-                            prizeTitle = res["result"]["prizeTitle"]
-                            msg.append({"name": "抽奖结果", "value": prizeTitle})
+                            prize_title = res["result"]["prizeTitle"]
+                            msg.append({"name": "抽奖结果", "value": prize_title})
                         else:
                             msg.append({"name": "抽奖结果", "value": res["msg"]})
                     else:
