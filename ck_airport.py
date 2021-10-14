@@ -99,5 +99,4 @@ if __name__ == "__main__":
     data = get_data()
     _check_items = data.get("AIRPORT", [])
     res = SspanelQd(check_items=_check_items).main()
-    print(res)
     send("机场签到", res)

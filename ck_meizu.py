@@ -110,5 +110,4 @@ if __name__ == "__main__":
     data = get_data()
     _check_items = data.get("MEIZU", [])
     res = Meizu(check_items=_check_items).main()
-    print(res)
     send("MEIZU 社区", res)

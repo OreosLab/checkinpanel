@@ -63,5 +63,4 @@ if __name__ == "__main__":
     data = get_data()
     _check_items = data.get("JUEJIN", [])
     res = Juejin(check_items=_check_items).main()
-    print(res)
     send("掘金", res)

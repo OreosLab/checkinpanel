@@ -100,5 +100,4 @@ if __name__ == "__main__":
     _check_items = data.get("PICACOMIC", [])
     res = Picacomic(
         check_items=_check_items).main()
-    print(res)
     send("哔咔漫画", res)

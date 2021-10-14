@@ -71,5 +71,4 @@ if __name__ == "__main__":
     data = get_data()
     _check_items = data.get("JEGOTRIP", [])
     res = JegoTrip(check_items=_check_items).main()
-    print(res)
     send("无忧行", res)

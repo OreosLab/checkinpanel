@@ -125,7 +125,6 @@ def start():
     data = get_data()
     _check_items = data.get("MIMOTION", [])
     res = MiMotion(check_items=_check_items).main()
-    print(res)
     send("小米运动", res)
 
 

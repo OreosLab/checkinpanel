@@ -35,5 +35,4 @@ if __name__ == "__main__":
     motto = data.get("MOTTO")
     if motto:
         res = Motto().main()
-        print(res)
         send("每日一句", res)

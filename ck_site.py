@@ -63,6 +63,7 @@ class Site:
                     tip = "重复签到"
                 else:
                     tip = "cookie 已过期或网站类型不对"
+                    print(f"{url} {tip}")
                 log(f"{url} {tip}")
         # 猫站签到
         elif url == "https://pterclub.com":
@@ -79,6 +80,7 @@ class Site:
                     tip = "重复签到"
                 else:
                     tip = "cookie 已过期或网站类型不对"
+                    print(f"{url} {tip}")
                 log(f"{url} {tip}")
         # 海胆签到
         elif url == "https://www.haidan.video":
@@ -92,6 +94,7 @@ class Site:
                     tip = "重复签到"
                 else:
                     tip = "cookie 已过期或网站类型不对!"
+                    print(f"{url} {tip}")
                 log(f"{url} {tip}")
         # bschool
         elif url == "https://pt.btschool.club":
@@ -105,6 +108,7 @@ class Site:
                     tip = "重复签到"
                 else:
                     tip = "cookie已过期"
+                    print(f"{url} {tip}")
                 log(f"{url} {tip}")
         # lemonhd
         elif url == "https://lemonhd.org":
@@ -119,6 +123,7 @@ class Site:
                     tip = "重复签到"
                 else:
                     tip = "cookie 已过期或网站类型不对"
+                    print(f"{url} {tip}")
                 log(f"{url} {tip}")
         else:
             attendance_url = url + "/attendance.php"
@@ -131,6 +136,7 @@ class Site:
                     tip = res.text[location[0], location[1]]
                 else:
                     tip = "cookie 已过期或网站类型不对"
+                    print(f"{url} {tip}")
                 log(f"{url} {tip}")
 
     @staticmethod
@@ -151,6 +157,7 @@ class Site:
                 log(f"{url} 重复签到")
             else:
                 log(f"{url} {res.text}")
+                print(f"{url} {res.text}")
 
     @staticmethod
     # hifi 签到
@@ -165,6 +172,7 @@ class Site:
                 log(f"{url} 重复签到")
             else:
                 log(f"{url} {res.text}")
+                print(f"{url} {res.text}")
 
     def main(self):
         for check_item in self.check_items:
@@ -183,6 +191,7 @@ class Site:
                 self.signin_hifi(s, url)
             else:
                 log("请在配置文件中配置网站类型，如 type: 'pt'")
+                print("请在配置文件中配置网站类型，如 type: 'pt'")
         return desp
 
 
