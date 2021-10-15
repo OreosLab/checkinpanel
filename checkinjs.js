@@ -7,12 +7,12 @@ $exec(`node https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/${jsn
     env: {
         ENV_PATH: $store.get('ENV_PATH', 'string'),                               // 自定义配置文件路径，如 /usr/local/app/script/Lists/.env
         NOTIFY_CONFIG_PATH: $store.get('NOTIFY_CONFIG_PATH', 'string'),           // 自定义通知配置文件路径，如 /usr/locallocal/app/script/Lists/notify.json5
-        HITOKOTO: $store.get('HITOKOTO', 'boolean'),                              // 一言，True 为开启，False 为关闭，默认关闭
+        HITOKOTO: $store.get('HITOKOTO', 'boolean'),                              // 一言，true 为开启，false 为关闭，默认关闭
         BARK_PUSH: $store.get('BARK_PUSH', 'string'),                             // bark IP 或设备码，例：https://api.day.app/xxxxxx
         BARK_ARCHIVE: $store.get('BARK_ARCHIVE', 'string'),                       // bark 推送是否存档，可不填
         BARK_GROUP: $store.get('BARK_GROUP', 'string'),                           // bark 推送分组，可不填
         BARK_SOUND: $store.get('BARK_SOUND', 'string'),                           // bark 推送声音，可不填
-        CONSOLE: $store.get('CONSOLE', 'string'),                                 // 控制台输出，True 为开启，False 为关闭，默认关闭
+        CONSOLE: $store.get('CONSOLE', 'string'),                                 // 控制台输出，true 为开启，false 为关闭，默认关闭
         DD_BOT_SECRET: $store.get('DD_BOT_SECRET', 'string'),                     // 钉钉机器人的 DD_BOT_SECRET
         DD_BOT_TOKEN: $store.get('DD_BOT_TOKEN', 'string'),                       // 钉钉机器人的 DD_BOT_TOKEN
         FSKEY: $store.get('FSKEY', 'string'),                                     // 飞书机器人的 FSKEY，https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxx 的 xxxxxx 部分
