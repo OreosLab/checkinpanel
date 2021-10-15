@@ -1,6 +1,23 @@
 # Changelog
 
 
+## 20211014-2-121 (2021-10-14)
+
+### Fix
+
+* :bug: : 修复 nga 任务完成状态判断，使用 re 正则匹配. [Oreo]
+
+### Docs
+
+* :memo: : 修改 README. [Oreo]
+
+### Other
+
+* :hammer: : 修复联通沃邮箱. [Oreo]
+
+* :recycle: : 重构控制台输出核心信息. [Oreo]
+
+
 ## 20211013-2-011 (2021-10-13)
 
 ### Fix
