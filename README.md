@@ -74,12 +74,12 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 | 变量 / key | 描述 | 支持语言 | 参考 / value |
 | --- | --- | --- | --- |
-| HITOKOTO | 一言 | PY | True 为开启，False 为关闭，默认关闭 |
+| HITOKOTO | 一言 | PY | true 为开启，false 为关闭，默认关闭 |
 | BARK_PUSH | bark 设备码 | JS PY | BARK 推送[使用](https://github.com/Sitoi/dailycheckin/issues/29)，填写 URL 即可，例如： `https://api.day.app/DxHcxxxxxRxxxxxxcm/` |
 | BARK_ARCHIVE | * bark 存档 | PY | 是否存档 |
 | BARK_GROUP | * bark 消息分组 | JS PY | 消息分组 |
 | BARK_SOUND | * bark 声音 | JS PY | 例如： `choo` ，具体值 bark-推送铃声-查看所有铃声 |
-| CONSOLE | 控制台输出 | PY | True 为开启，False 为关闭，默认关闭 |
+| CONSOLE | 控制台输出 | PY | true 为开启，false 为关闭，默认关闭 |
 | DD_BOT_SECRET | 钉钉机器人 | JS PY SH | 钉钉推送[官方文档](https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq)密钥，机器人安全设置页面，加签一栏下面显示的 `SEC` 开头的字符串，注：填写了 `DD_BOT_TOKEN` 和 `DD_BOT_SECRET` ，钉钉机器人安全设置只需勾选 `加签` 即可，其他选项不要勾选 |
 | DD_BOT_TOKEN | 钉钉机器人 | JS PY SH | 钉钉推送[官方文档](https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq)，只需 `https://oapi.dingtalk.com/robot/send?access_token=XXX` 等于符号后面的 `XXX` |
 | FSKEY | 飞书 | PY | 飞书[官方文档](https://open.feishu.cn/document/ukTMukTMukTM/ucTM5YjL3ETO24yNxkjN)，只需 `https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxx` 的 `xxxxxx` 部分 |
