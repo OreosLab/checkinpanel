@@ -14,7 +14,7 @@
 
 > 一个主要运行在 [𝐞𝐥𝐞𝐜𝐕𝟐𝐏](https://github.com/elecV2/elecV2P.git) 或 [𝐪𝐢𝐧𝐠𝐥𝐨𝐧𝐠](https://github.com/whyour/qinglong.git) 等定时面板，同时支持系统运行环境的签到项目
 >
->环境：𝑷𝒚𝒕𝒉𝒐𝒏 3.8+ / 𝑵𝒐𝒅𝒆.𝒋𝒔 / 𝑩𝒂𝒔𝒉 4+ / 𝑶𝒑𝒆𝒏𝑱𝑫𝑲8
+> 环境：𝑷𝒚𝒕𝒉𝒐𝒏 3.8+ / 𝑵𝒐𝒅𝒆.𝒋𝒔 / 𝑩𝒂𝒔𝒉 4+ / 𝑶𝒑𝒆𝒏𝑱𝑫𝑲8
 
 ## 注意
 
@@ -106,11 +106,11 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 #### 4.2 另一种通知配置方式（当和 4.1 中值重复时，以 4.1 值为准）
 
-下载项目中的[推送配置文件](https://github.com/Oreomeow/checkinpanel/blob/master/notify.json5)到**配置文件夹**，按照上述说明修改配置文件中的值，你可以**自由地删除**该文件中某些不需要的值（注意语法）。
+下载项目中的[推送配置文件](https://github.com/Oreomeow/checkinpanel/blob/master/notify.sample.json5)到**配置文件夹**，按照上述说明修改配置文件中的值并改名为 `notify.json5` ，你可以**自由地删除**该文件中某些不需要的值（注意语法）。
 
 使用了配置文件后，你可以将配置文件放在持久化位置，不受脚本更新、重置容器的影响。
 
-如果想自定义配置文件的位置和文件名，请设置通知环境变量 `NOTIFY_CONFIG_PATH` ， 例如 `/usr/local/app/script/notify_config.json5` 。建议保持 `json5` 的后缀，防止编辑器的误解。
+如果想自定义配置文件的位置和文件名，请设置通知环境变量 `NOTIFY_CONFIG_PATH` ， 例如 `/usr/local/app/script/notify.json5` 。建议保持 `json5` 的后缀，防止编辑器的误解。
 
 关于 json5 的语法参考：
 
@@ -277,7 +277,9 @@ ql repo https://github.com/Oreomeow/checkinpanel.git "api_|ck_" "^checkin" "^not
 **解决 Shell 脚本无法拉取问题**
 
 ```sh
+
 ## ql repo命令拉取脚本时需要拉取的文件后缀，直接写文件后缀名即可
+
 RepoFileExtensions="js py sh ts"
 ```
 
