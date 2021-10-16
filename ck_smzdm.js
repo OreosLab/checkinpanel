@@ -29,8 +29,7 @@ function SignIn(cookie) {
                 "Cookie": cookie,
                 "Host": "zhiyou.smzdm.com",
                 "Referer": "https://m.smzdm.com/zhuanti/life/choujiang/",
-                "User-Agent":
-                    "Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148/smzdm 9.9.0 rv:91 (iPhone 11 Pro Max; iOS 14.2; zh_CN)/iphone_smzdmapp/9.9.0/wkwebview/jsbv_1.0.0",
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148/smzdm 9.9.0 rv:91 (iPhone 11 Pro Max; iOS 14.2; zh_CN)/iphone_smzdmapp/9.9.0/wkwebview/jsbv_1.0.0",
             },
         };
         magicJS.get(options, (err, resp, data) => {
@@ -284,8 +283,7 @@ function GetLotteryActiveId(cookie) {
                 "Connection": "keep-alive",
                 "Cookie": cookie,
                 "Host": "m.smzdm.com",
-                "User-Agent":
-                    "Mozilla/5.0 (iPhone; CPU iPhone OS 14_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148/smzdm 9.9.6 rv:93.4 (iPhone13,4; iOS 14.5; zh_CN)/iphone_smzdmapp/9.9.6/wkwebview/jsbv_1.0.0",
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148/smzdm 9.9.6 rv:93.4 (iPhone13,4; iOS 14.5; zh_CN)/iphone_smzdmapp/9.9.6/wkwebview/jsbv_1.0.0",
             },
         };
         magicJS.get(options, (err, resp, data) => {
@@ -323,8 +321,7 @@ function LotteryDraw(cookie, activeId) {
                 "Cookie": cookie,
                 "Host": "zhiyou.smzdm.com",
                 "Referer": "https://m.smzdm.com/zhuanti/life/choujiang/",
-                "User-Agent":
-                    "Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148/smzdm 9.9.0 rv:91 (iPhone 11 Pro Max; iOS 14.2; zh_CN)/iphone_smzdmapp/9.9.0/wkwebview/jsbv_1.0.0",
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148/smzdm 9.9.0 rv:91 (iPhone 11 Pro Max; iOS 14.2; zh_CN)/iphone_smzdmapp/9.9.0/wkwebview/jsbv_1.0.0",
             },
         };
         magicJS.get(options, (err, resp, data) => {
@@ -493,7 +490,10 @@ function WebGetCurrentInfo(smzdmCookie) {
                     }
 
                     // 获取去购买和好价Id列表
-                    let [, [goBuyList = [], likProductList = []]] = await magicJS.attempt(magicJS.retry(GetProductList, 5, 1000)(), [[], []]);
+                    let [, [goBuyList = [], likProductList = []]] = await magicJS.attempt(magicJS.retry(GetProductList, 5, 1000)(), [
+                        [],
+                        []
+                    ]);
                     // 获取好文列表
                     let [, articleList = []] = await magicJS.attempt(magicJS.retry(GetDataArticleIdList, 5, 1000)(), []);
 

@@ -60,7 +60,7 @@
             "time": "3 2",
             "job": {
                 "type": "exec",
-                "target": "npm install -g json5 request"
+                "target": "npm install -g got json5 request"
             },
             "running": true
         },
