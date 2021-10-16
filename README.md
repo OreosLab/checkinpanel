@@ -277,9 +277,7 @@ ql repo https://github.com/Oreomeow/checkinpanel.git "api_|ck_" "^checkin" "^not
 **解决 Shell 脚本无法拉取问题**
 
 ```sh
-
 ## ql repo命令拉取脚本时需要拉取的文件后缀，直接写文件后缀名即可
-
 RepoFileExtensions="js py sh ts"
 ```
 

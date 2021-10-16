@@ -9,17 +9,13 @@ let ql_file = (fs.existsSync(ql_path + 'check.json5')) ? ql_path + 'check.json5'
 function get_data() {
     if (process.env.CHECK_CONFIG) {
         check_config = JSON5.parse(fs.readFileSync(process.env.CHECK_CONFIG, 'utf-8'))
-    }
-    else if (fs.existsSync(v2p_file)) {
+    } else if (fs.existsSync(v2p_file)) {
         check_config = JSON5.parse(fs.readFileSync(v2p_file, 'utf-8'))
-    }
-    else if (fs.existsSync(ql_file)) {
+    } else if (fs.existsSync(ql_file)) {
         check_config = JSON5.parse(fs.readFileSync(ql_file, 'utf-8'))
-    }
-    else if (fs.existsSync('./check.json5')) {
+    } else if (fs.existsSync('./check.json5')) {
         check_config = JSON5.parse(fs.readFileSync('./check.json5', 'utf-8'))
-    }
-    else {
+    } else {
         console.log('错误：未检查到签到配置文件，请在指定位置创建文件或设置 CHECK_CONFIG 指定你的文件。')
     }
     return check_config

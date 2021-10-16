@@ -1,5 +1,3 @@
-check.json5
-
 ### Node template
 # Logs
 logs
@@ -328,3 +326,10 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+# Config
+check.json5
+notify.json5
+
+# Others
+magic.json
