@@ -157,7 +157,7 @@ pip3 install bs4 cryptography~=3.2.1 json5 requests rsa
 JavaScript 依赖
 
 ```sh
-cd /ql/scripts && npm install json5 request
+cd /ql/scripts && npm install got json5 request
 ```
 
 **Python 依赖持久化配置**
