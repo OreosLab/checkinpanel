@@ -2,7 +2,7 @@
     "name": "签到项目",
     "author": "Leon",
     "desc": "该订阅适用于 elecV2P，与其他软件并不兼容。相关说明参考：https://github.com/elecV2/elecV2P-dei/tree/master/docs/06-task.md",
-    "date": "2021-10-06 2:20:00",
+    "date": "2021-10-18 0:20:00",
     "list": [
         {
             "name": "签到仓库",
@@ -60,7 +60,7 @@
             "time": "3 2",
             "job": {
                 "type": "exec",
-                "target": "npm install -g got json5 request"
+                "target": "npm install axios got json5 request -cwd script/Shell/checkinpanel"
             },
             "running": true
         },
@@ -141,6 +141,16 @@
             "job": {
                 "type": "runjs",
                 "target": "checkin.js -env PYNAME=ck_airport.py"
+            },
+            "running": true
+        },
+        {
+            "name": "爱企查",
+            "type": "cron",
+            "time": "37 0-23/8 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkinjs.js -env JSNAME=ck_aqc.js"
             },
             "running": true
         },

@@ -43,6 +43,18 @@
 //     },
    ],
 
+// 爱企查
+   AQC: [
+     {
+       cookie: 'log_guid=xxxxxx; BDPPN=xxxxxx;...',
+       exportkey: '',
+     },
+//     {
+//       cookie: '',     // 同百度贴吧一样 
+//       exportkey: '',  // 批量查询任务需手动抓包查询之后的 exportkey，留空也可
+//     },
+   ],
+
 // 百度搜索资源平台
    BAIDU: [
      {
