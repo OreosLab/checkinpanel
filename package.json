@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "axios": "^0.23.0",
     "got": "^11.8.2",
     "json5": "^2.2.0",
     "request": "^2.88.2"
