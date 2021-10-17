@@ -1,6 +1,19 @@
 # Changelog
 
 
+## 20211016-2-003 (2021-10-16)
+
+### Fix
+
+* :wrench: : 修改配置文件为示例. [Oreo]
+
+### Other
+
+* :see_no_evil: update .gitignore. [Oreo]
+
+* :heavy_plus_sign: add npm dependency got. [Oreo]
+
+
 ## 20211015-2-002 (2021-10-15)
 
 ### Docs
@@ -22,7 +35,7 @@
 
 * :memo: : 修改 README. [Oreo]
 
-### Other
+### Refactor Functions
 
 * :hammer: : 修复联通沃邮箱. [Oreo]
 

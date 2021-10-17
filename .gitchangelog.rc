@@ -38,7 +38,7 @@ section_regexps = [
         r'^:(art|zap|racehorse|building_construction):\s*([^\n]*)$',
      ]),
     ('Refactor Functions', [
-        r'^:(recycle:hammer):\s*([^\n]*)$',
+        r'^:(recycle|hammer):\s*([^\n]*)$',
      ]),
 
     ('Other', None ## Match all lines
