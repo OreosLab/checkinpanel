@@ -50,7 +50,12 @@ class WoMail:
             wxname = result.get("result").get("wxName")
             usermobile = result.get("result").get("userMobile")
             keep_sign = result["result"]["keepSign"]
-            msg.append({"name": "帐号信息", "value": f"{wxname} - {usermobile[:3]}****{usermobile[-4:]}"})
+            msg.append(
+                {
+                    "name": "帐号信息",
+                    "value": f"{wxname} - {usermobile[:3]}****{usermobile[-4:]}",
+                }
+            )
         except Exception as e:
             keep_sign = 0
             msg.append({"name": "帐号信息", "value": str(e)})
@@ -70,7 +75,9 @@ class WoMail:
         except Exception as e:
             msg.append({"name": "每日签到", "value": str(e)})
         try:
-            url = "https://nyan.mail.wo.cn/cn/sign/user/doTask.do?rand=0.8776674762904109"
+            url = (
+                "https://nyan.mail.wo.cn/cn/sign/user/doTask.do?rand=0.8776674762904109"
+            )
             data_params = {
                 "每日首次登录手机邮箱": {"taskName": "loginmail"},
                 "去用户俱乐部逛一逛": {"taskName": "club"},
@@ -188,10 +195,19 @@ class WoMail:
                         try:
                             if "每日签到" in resource_name:
                                 record_url = "https://club.mail.wo.cn/clubwebservice/club-user/user-sign/query-continuous-sign-record"
-                                record_res = requests.get(url=record_url, headers=headers).json()
-                                new_continuous_day = record_res[0].get("newContinuousDay")
+                                record_res = requests.get(
+                                    url=record_url, headers=headers
+                                ).json()
+                                new_continuous_day = record_res[0].get(
+                                    "newContinuousDay"
+                                )
                                 if new_continuous_day >= 21:
-                                    msg.append({"name": resource_name, "value": f"昨日为打卡{new_continuous_day}天，今日暂停打卡"})
+                                    msg.append(
+                                        {
+                                            "name": resource_name,
+                                            "value": f"昨日为打卡{new_continuous_day}天，今日暂停打卡",
+                                        }
+                                    )
                                 else:
                                     url = task_item["url"]
                                     res = requests.get(url=url, headers=headers).json()
@@ -199,10 +215,15 @@ class WoMail:
                                     if "success" in result:
                                         continuous_day = res["data"]["continuousDay"]
                                         msg.append(
-                                            {"name": resource_name, "value": f"签到成功~已连续签到{str(continuous_day)}天！"}
+                                            {
+                                                "name": resource_name,
+                                                "value": f"签到成功~已连续签到{str(continuous_day)}天！",
+                                            }
                                         )
                                     else:
-                                        msg.append({"name": resource_name, "value": result})
+                                        msg.append(
+                                            {"name": resource_name, "value": result}
+                                        )
                             else:
                                 resource_flag = task_item["resourceFlag"]
                                 resource_flag = resource_flag.replace("+", "%2B")
@@ -230,7 +251,9 @@ class WoMail:
         msg = []
         try:
             dated = int(time.time())
-            end_time = time.mktime(time.strptime("2021-10-31 23:59:59", "%Y-%m-%d %H:%M:%S"))  # 设置活动结束日期
+            end_time = time.mktime(
+                time.strptime("2021-10-31 23:59:59", "%Y-%m-%d %H:%M:%S")
+            )  # 设置活动结束日期
             if dated < end_time:
                 # 登录账户
                 userdata = re.findall("mobile.*", womail_url)[0]

@@ -18,8 +18,10 @@ class HLX:
 
     @staticmethod
     def login(user, passwd):
-        url = "http://floor.huluxia.com/account/login/ANDROID/4.0?platform=2&gkey=000000&app_version=4.0.0.6.2" \
-              "&versioncode=20141433&market_id=floor_baidu&_key=&device_code=%5Bw%5D02%3A00%3A00%3A00%3A00%3A00 "
+        url = (
+            "http://floor.huluxia.com/account/login/ANDROID/4.0?platform=2&gkey=000000&app_version=4.0.0.6.2"
+            "&versioncode=20141433&market_id=floor_baidu&_key=&device_code=%5Bw%5D02%3A00%3A00%3A00%3A00%3A00 "
+        )
         params = {"account": user, "login_type": "2", "password": passwd}
         login_res = r.post(url=url, data=params)
         login_res = login_res.json()
@@ -63,7 +65,7 @@ class HLX:
             "market_id": "floor_huluxia",
             "_key": key,
             "device_code": "%5Bw%5D02%3A00%3A00%3A00%3A00%3A00",
-            "is_hidden": "1"
+            "is_hidden": "1",
         }
         category_res = r.get(url=category_url, params=params)
         category_res = category_res.json()
@@ -73,7 +75,7 @@ class HLX:
             titles.append(res["title"])
             categoryIDs.append(res["categoryID"])
             # print(res)
-        url = f"http://floor.huluxia.com/user/signin/ANDROID/4.0"
+        url = "http://floor.huluxia.com/user/signin/ANDROID/4.0"
         all_experienceVal = 0
         for i in range(0, len(categoryIDs)):
             IDS = str(categoryIDs[i])
@@ -85,12 +87,11 @@ class HLX:
                 "market_id": "floor_baidu",
                 "_key": key,
                 "device_code": "%5Bw%5D02%3A00%3A00%3A00%3A00%3A00",
-                "cat_id": IDS
+                "cat_id": IDS,
             }
             try:
-                experienceVal = r.get(url=url, params=params) \
-                    .json()["experienceVal"]
-            except:
+                experienceVal = r.get(url=url, params=params).json()["experienceVal"]
+            except Exception:
                 experienceVal = 0
             finally:
                 all_experienceVal = all_experienceVal + experienceVal

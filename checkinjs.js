@@ -4,6 +4,7 @@ console.log(`⏳ 开始执行 ${jsname}`)
 $exec(`node https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/${jsname}`, {
     cwd: './script/Shell/checkinpanel',
     timeout: 0,
+    // prettier-ignore
     env: {
         ENV_PATH: $store.get('ENV_PATH', 'string'),                               // 自定义配置文件路径，如 /usr/local/app/script/Lists/.env
         NOTIFY_CONFIG_PATH: $store.get('NOTIFY_CONFIG_PATH', 'string'),           // 自定义通知配置文件路径，如 /usr/locallocal/app/script/Lists/notify.json5
@@ -33,5 +34,5 @@ $exec(`node https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/${jsn
         TG_PROXY_AUTH: $store.get('TG_PROXY_AUTH', 'string'),                     // tg 代理配置认证参数，可不填
         TG_PROXY_HOST: $store.get('TG_PROXY_HOST', 'string'),                     // tg 机器人的 TG_PROXY_HOST，例：127.0.0.1，可不填
         TG_PROXY_PORT: $store.get('TG_PROXY_PORT', 'string')                      // tg 机器人的 TG_PROXY_PORT，例：1080，可不填
-    }
+    },
 })

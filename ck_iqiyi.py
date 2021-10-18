@@ -22,8 +22,11 @@ class IQIYI:
     @staticmethod
     def parse_cookie(cookie):
         p00001 = re.findall(r"P00001=(.*?);", cookie)[0]
-        p00002 = re.findall(r"P00002=(.*?);", cookie)[0] if re.findall(
-            r"P00002=(.*?);", cookie) else ""
+        p00002 = (
+            re.findall(r"P00002=(.*?);", cookie)[0]
+            if re.findall(r"P00002=(.*?);", cookie)
+            else ""
+        )
         p00003 = re.findall(r"P00003=(.*?);", cookie)[0]
         return p00001, p00002, p00003
 
@@ -43,8 +46,7 @@ class IQIYI:
                 growthvalue = res_data.get("growthvalue", 0)  # 当前 VIP 成长值
                 distance = res_data.get("distance", 0)  # 升级需要成长值
                 deadline = res_data.get("deadline", "非 VIP 用户")  # VIP 到期时间
-                today_growth_value = res_data \
-                    .get("todayGrowthValue", 0)  # 今日成长值
+                today_growth_value = res_data.get("todayGrowthValue", 0)  # 今日成长值
                 msg = (
                     f"VIP 等级: {level}\n当前成长值: {growthvalue}\n"
                     f"升级需成长值: {distance}\n今日成长值: +{today_growth_value}\nVIP 到期时间: {deadline}"
@@ -67,7 +69,9 @@ class IQIYI:
         if res["code"] == "A00000":
             try:
                 growth = res["data"]["signInfo"]["data"]["rewardMap"]["growth"]
-                cumulate_sign_days_sum = res["data"]["signInfo"]["data"]["cumulateSignDaysSum"]
+                cumulate_sign_days_sum = res["data"]["signInfo"]["data"][
+                    "cumulateSignDaysSum"
+                ]
                 msg = f"+{growth}成长值\n当月签到: {cumulate_sign_days_sum}天"
             except Exception as e:
                 print(e)
@@ -87,12 +91,14 @@ class IQIYI:
         res = requests.get(url=url, params=params).json()
         if res["code"] == "A00000":
             for item in res["data"]["tasks"]["daily"]:
-                task_list.append({
-                    "name": item["name"],
-                    "taskCode": item["taskCode"],
-                    "status": item["status"],
-                    "taskReward": item["taskReward"]["task_reward_growth"]
-                })
+                task_list.append(
+                    {
+                        "name": item["name"],
+                        "taskCode": item["taskCode"],
+                        "status": item["status"],
+                        "taskReward": item["taskReward"]["task_reward_growth"],
+                    }
+                )
         return task_list
 
     @staticmethod
@@ -105,7 +111,7 @@ class IQIYI:
             "P00001": p00001,
             "taskCode": "",
             "platform": "bb136ff4276771f3",
-            "lang": "zh_CN"
+            "lang": "zh_CN",
         }
         for item in task_list:
             if item["status"] == 2:
@@ -123,7 +129,7 @@ class IQIYI:
             "P00001": p00001,
             "taskCode": "",
             "platform": "bb136ff4276771f3",
-            "lang": "zh_CN"
+            "lang": "zh_CN",
         }
         growth_task = 0
         for item in task_list:
@@ -132,8 +138,7 @@ class IQIYI:
                 requests.get(url=url, params=params)
             elif item["status"] == 4:
                 requests.get(
-                    url="https://tc.vip.iqiyi.com/taskCenter/task/notify",
-                    params=params
+                    url="https://tc.vip.iqiyi.com/taskCenter/task/notify", params=params
                 )
                 params["taskCode"] = item.get("taskCode")
                 requests.get(url=url, params=params)
@@ -166,7 +171,7 @@ class IQIYI:
             "psp_status": 3,
             "secure_v": 1,
             "secure_p": "GPhone",
-            "req_sn": round(time.time() * 1000)
+            "req_sn": round(time.time() * 1000),
         }
         if draw_type == 1:
             del params["lottery_chance"]
@@ -201,8 +206,7 @@ class IQIYI:
                 task_list = self.query_user_task(p00001=p00001)
                 self.join_task(p00001=p00001, task_list=task_list)
                 time.sleep(10)
-                task_msg = self.get_task_rewards(p00001=p00001,
-                                                 task_list=task_list)
+                task_msg = self.get_task_rewards(p00001=p00001, task_list=task_list)
             try:
                 user_info = json.loads(unquote(p00002, encoding="utf-8"))
                 user_name = user_info.get("user_name")

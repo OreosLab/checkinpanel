@@ -42,7 +42,7 @@ class SspanelQd(object):
         login_url = url + "/auth/login"
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36",
-            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
         }
 
         post_data = "email=" + email + "&passwd=" + password + "&code="
@@ -51,11 +51,10 @@ class SspanelQd(object):
 
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36",
-            "Referer": url + "/user"
+            "Referer": url + "/user",
         }
 
-        response = session.post(
-            url + "/user/checkin", headers=headers, verify=False)
+        response = session.post(url + "/user/checkin", headers=headers, verify=False)
         # print(response.text)
         msg = url + "\n" + (response.json()).get("msg")
 
@@ -70,10 +69,14 @@ class SspanelQd(object):
             rest = re.findall(r'\["Unused_Traffic", "(.*?)"]', response.text)[0]
             msg = (
                 url
-                + "\n- 今日签到信息：" + str(msg)
-                + "\n- 用户等级：" + str(level)
-                + "\n- 到期时间：" + str(day)
-                + "\n- 剩余流量：" + str(rest)
+                + "\n- 今日签到信息："
+                + str(msg)
+                + "\n- 用户等级："
+                + str(level)
+                + "\n- 到期时间："
+                + str(day)
+                + "\n- 剩余流量："
+                + str(rest)
             )
             return msg
         except Exception:

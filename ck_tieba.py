@@ -36,17 +36,18 @@ class Tieba:
 
     @staticmethod
     def tieba_list_more(session):
-        content = session.get(url="http://tieba.baidu.com/f/like/mylike?&pn=1",
-                              timeout=(5, 20),
-                              allow_redirects=False)
+        content = session.get(
+            url="http://tieba.baidu.com/f/like/mylike?&pn=1",
+            timeout=(5, 20),
+            allow_redirects=False,
+        )
         try:
             pn = int(
                 re.match(
-                    r".*/f/like/mylike\?&pn=(.*?)\">尾页.*",
-                    content.text,
-                    re.S | re.I).group(1)
+                    r".*/f/like/mylike\?&pn=(.*?)\">尾页.*", content.text, re.S | re.I
+                ).group(1)
             )
-        except Exception as e:
+        except Exception:
             pn = 1
         next_page = 1
         pattern = re.compile(r".*?<a href=\"/f\?kw=.*?title=\"(.*?)\">")
@@ -58,7 +59,8 @@ class Tieba:
             content = session.get(
                 url=f"http://tieba.baidu.com/f/like/mylike?&pn={next_page}",
                 timeout=(5, 20),
-                allow_redirects=False)
+                allow_redirects=False,
+            )
 
     def get_tieba_list(self, session):
         tieba_list = list(self.tieba_list_more(session=session))
@@ -68,13 +70,14 @@ class Tieba:
     def sign(session, tb_name_list, tbs):
         success_count, error_count, exist_count, shield_count = 0, 0, 0, 0
         for tb_name in tb_name_list:
-            md5 = hashlib.md5(f"kw={tb_name}tbs={tbs}tiebaclient!!!".encode(
-                "utf-8")).hexdigest()
+            md5 = hashlib.md5(
+                f"kw={tb_name}tbs={tbs}tiebaclient!!!".encode("utf-8")
+            ).hexdigest()
             data = {"kw": tb_name, "tbs": tbs, "sign": md5}
             try:
                 response = session.post(
-                    url="http://c.tieba.baidu.com/c/c/forum/sign",
-                    data=data).json()
+                    url="http://c.tieba.baidu.com/c/c/forum/sign", data=data
+                ).json()
                 if response["error_code"] == "0":
                     success_count += 1
                 elif response["error_code"] == "160002":
@@ -101,9 +104,7 @@ class Tieba:
             tbs, user_name = self.valid(session=session)
             if tbs:
                 tb_name_list = self.get_tieba_list(session=session)
-                msg = self.sign(session=session,
-                                tb_name_list=tb_name_list,
-                                tbs=tbs)
+                msg = self.sign(session=session, tb_name_list=tb_name_list, tbs=tbs)
                 msg = f"帐号信息: {user_name}\n{msg}"
             else:
                 msg = f"帐号信息: {user_name}\n签到状态: Cookie 可能过期"

@@ -38,18 +38,15 @@ class MiMotion:
         url1 = f"https://api-user.huami.com/registrations/+86{phone}/tokens"
         headers = {
             "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-            "User-Agent": "MiFit/4.6.0 (iPhone; iOS 14.0.1; Scale/2.00)"
+            "User-Agent": "MiFit/4.6.0 (iPhone; iOS 14.0.1; Scale/2.00)",
         }
         data1 = {
             "client_id": "HuaMi",
             "password": f"{password}",
             "redirect_uri": "https://s3-us-west-2.amazonaws.com/hm-registration/successsignin.html",
-            "token": "access"
+            "token": "access",
         }
-        r1 = requests.post(url=url1,
-                           data=data1,
-                           headers=headers,
-                           allow_redirects=False)
+        r1 = requests.post(url=url1, data=data1, headers=headers, allow_redirects=False)
         location = r1.headers["Location"]
         try:
             code_pattern = re.compile("(?<=access=).*?(?=&)")
@@ -79,14 +76,12 @@ class MiMotion:
             phone = str(check_item.get("phone"))
             password = str(check_item.get("password"))
             try:
-                min_step = int(check_item.get("min_step",
-                                              10000))
+                min_step = int(check_item.get("min_step", 10000))
             except Exception as e:
                 print("初始化步数失败: 已将最小值设置为 19999", e)
                 min_step = 10000
             try:
-                max_step = int(check_item.get("max_step",
-                                              19999))
+                max_step = int(check_item.get("max_step", 19999))
             except Exception as e:
                 print("初始化步数失败: 已将最大值设置为 19999", e)
                 max_step = 19999
@@ -104,18 +99,14 @@ class MiMotion:
                 data_json = re.sub(
                     finddate.findall(data_json)[0], today, str(data_json)
                 )
-                data_json = re.sub(
-                    findstep.findall(data_json)[0], step, str(data_json)
-                )
+                data_json = re.sub(findstep.findall(data_json)[0], step, str(data_json))
                 url = f"https://api-mifit-cn.huami.com/v1/data/band_data.json?&t={t}"
                 headers = {
                     "apptoken": app_token,
-                    "Content-Type": "application/x-www-form-urlencoded"
+                    "Content-Type": "application/x-www-form-urlencoded",
                 }
                 data = f"userid={userid}&last_sync_data_time=1628256960&device_type=0&last_deviceid=C4BDB6FFFE2BCA4C&data_json={data_json}"
-                response = requests.post(url=url,
-                                         data=data,
-                                         headers=headers).json()
+                response = requests.post(url=url, data=data, headers=headers).json()
                 msg = f"帐号信息: *******{phone[-4:]}\n修改状态: {response['message']}\n修改步数: {step}"
                 msg_all += msg + "\n\n"
         return msg_all

@@ -18,9 +18,9 @@ const timeout = 15000; //超时时间(单位毫秒)
 //gobot_token 填写在go-cqhttp文件设置的访问密钥
 //gobot_qq 填写推送到个人QQ或者QQ群号
 //go-cqhttp相关API https://docs.go-cqhttp.org/api
-let GOBOT_URL = ''; // 推送到个人QQ: http://127.0.0.1/send_private_msg  群：http://127.0.0.1/send_group_msg 
+let GOBOT_URL = ''; // 推送到个人QQ: http://127.0.0.1/send_private_msg  群：http://127.0.0.1/send_group_msg
 let GOBOT_TOKEN = ''; //访问密钥
-let GOBOT_QQ = ''; // 如果GOBOT_URL设置 /send_private_msg 则需要填入 user_id=个人QQ 相反如果是 /send_group_msg 则需要填入 group_id=QQ群 
+let GOBOT_QQ = ''; // 如果GOBOT_URL设置 /send_private_msg 则需要填入 user_id=个人QQ 相反如果是 /send_group_msg 则需要填入 group_id=QQ群
 
 // =======================================微信server酱通知设置区域===========================================
 //此处填你申请的SCKEY.
@@ -107,10 +107,7 @@ if (process.env.QQ_MODE) {
 }
 
 if (process.env.BARK_PUSH) {
-    if (
-        process.env.BARK_PUSH.indexOf('https') > -1 ||
-        process.env.BARK_PUSH.indexOf('http') > -1
-    ) {
+    if (process.env.BARK_PUSH.indexOf('https') > -1 || process.env.BARK_PUSH.indexOf('http') > -1) {
         //兼容BARK自建用户
         BARK_PUSH = process.env.BARK_PUSH;
     } else {
@@ -123,11 +120,7 @@ if (process.env.BARK_PUSH) {
         BARK_GROUP = process.env.BARK_GROUP;
     }
 } else {
-    if (
-        BARK_PUSH &&
-        BARK_PUSH.indexOf('https') === -1 &&
-        BARK_PUSH.indexOf('http') === -1
-    ) {
+    if (BARK_PUSH && BARK_PUSH.indexOf('https') === -1 && BARK_PUSH.indexOf('http') === -1) {
         //兼容BARK本地用户只填写设备码的情况
         BARK_PUSH = `https://api.day.app/${BARK_PUSH}`;
     }
@@ -178,12 +171,7 @@ if (process.env.PUSH_PLUS_USER) {
  * @param author 作者仓库等信息  例：`本通知 By：https://github.com/whyour/qinglong`
  * @returns {Promise<unknown>}
  */
-async function sendNotify(
-    text,
-    desp,
-    params = {},
-    author = '\n\nGitHub: https://github.com/Oreomeow/checkinpanel',
-) {
+async function sendNotify(text, desp, params = {}, author = '\n\nGitHub: https://github.com/Oreomeow/checkinpanel') {
     //提供6种通知
     desp += author; //增加作者信息，防止被贩卖等
     await Promise.all([
@@ -199,7 +187,7 @@ async function sendNotify(
         qywxBotNotify(text, desp), //企业微信机器人
         qywxamNotify(text, desp), //企业微信应用消息推送
         iGotNotify(text, desp, params), //iGot
-        gobotNotify(text, desp),//go-cqhttp
+        gobotNotify(text, desp), //go-cqhttp
     ]);
 }
 
@@ -227,9 +215,7 @@ function gobotNotify(text, desp, time = 2100) {
                             } else if (data.retcode === 100) {
                                 console.log(`go-cqhttp发送通知消息异常: ${data.errmsg}\n`);
                             } else {
-                                console.log(
-                                    `go-cqhttp发送通知消息异常\n${JSON.stringify(data)}`,
-                                );
+                                console.log(`go-cqhttp发送通知消息异常\n${JSON.stringify(data)}`);
                             }
                         }
                     } catch (e) {
@@ -251,9 +237,7 @@ function serverNotify(text, desp, time = 2100) {
             //微信server酱推送通知一个\n不会换行，需要两个\n才能换行，故做此替换
             desp = desp.replace(/[\n\r]/g, '\n\n');
             const options = {
-                url: SCKEY.includes('SCT')
-                    ? `https://sctapi.ftqq.com/${SCKEY}.send`
-                    : `https://sc.ftqq.com/${SCKEY}.send`,
+                url: SCKEY.includes('SCT') ? `https://sctapi.ftqq.com/${SCKEY}.send` : `https://sc.ftqq.com/${SCKEY}.send`,
                 body: `text=${text}&desp=${desp}`,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -275,9 +259,7 @@ function serverNotify(text, desp, time = 2100) {
                                 // 一分钟内发送相同的内容会触发
                                 console.log(`server酱发送通知消息异常: ${data.errmsg}\n`);
                             } else {
-                                console.log(
-                                    `server酱发送通知消息异常\n${JSON.stringify(data)}`,
-                                );
+                                console.log(`server酱发送通知消息异常\n${JSON.stringify(data)}`);
                             }
                         }
                     } catch (e) {
@@ -347,10 +329,7 @@ function CoolPush(text, desp) {
                         if (data.code === 200) {
                             console.log(`酷推发送${pushMode(QQ_MODE)}通知消息成功🎉\n`);
                         } else if (data.code === 400) {
-                            console.log(
-                                `QQ酷推(Cool Push)发送${pushMode(QQ_MODE)}推送失败：${data.msg
-                                }\n`,
-                            );
+                            console.log(`QQ酷推(Cool Push)发送${pushMode(QQ_MODE)}推送失败：${data.msg}\n`);
                         } else if (data.code === 503) {
                             console.log(`QQ酷推出错，${data.message}：${data.data}\n`);
                         } else {
@@ -373,9 +352,9 @@ function BarkNotify(text, desp, params = {}) {
     return new Promise((resolve) => {
         if (BARK_PUSH) {
             const options = {
-                url: `${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(
-                    desp,
-                )}?sound=${BARK_SOUND}&group=${BARK_GROUP}&${querystring.stringify(params)}`,
+                url: `${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(desp)}?sound=${BARK_SOUND}&group=${BARK_GROUP}&${querystring.stringify(
+                    params
+                )}`,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
@@ -440,9 +419,7 @@ function tgBotNotify(text, desp) {
                         if (data.ok) {
                             console.log('Telegram发送通知消息成功🎉。\n');
                         } else if (data.error_code === 400) {
-                            console.log(
-                                '请主动给bot发送一条消息并检查接收用户ID是否正确。\n',
-                            );
+                            console.log('请主动给bot发送一条消息并检查接收用户ID是否正确。\n');
                         } else if (data.error_code === 401) {
                             console.log('Telegram bot token 填写错误。\n');
                         }
@@ -670,20 +647,12 @@ function qywxamNotify(text, desp) {
                 $.post(options, (err, resp, data) => {
                     try {
                         if (err) {
-                            console.log(
-                                '成员ID:' +
-                                ChangeUserId(desp) +
-                                '企业微信应用消息发送通知消息失败！！\n',
-                            );
+                            console.log('成员ID:' + ChangeUserId(desp) + '企业微信应用消息发送通知消息失败！！\n');
                             console.log(err);
                         } else {
                             data = JSON.parse(data);
                             if (data.errcode === 0) {
-                                console.log(
-                                    '成员ID:' +
-                                    ChangeUserId(desp) +
-                                    '企业微信应用消息发送通知消息成功🎉。\n',
-                                );
+                                console.log('成员ID:' + ChangeUserId(desp) + '企业微信应用消息发送通知消息成功🎉。\n');
                             } else {
                                 console.log(`${data.errmsg}\n`);
                             }
@@ -765,23 +734,14 @@ function pushPlusNotify(text, desp) {
             $.post(options, (err, resp, data) => {
                 try {
                     if (err) {
-                        console.log(
-                            `push+发送${PUSH_PLUS_USER ? '一对多' : '一对一'
-                            }通知消息失败！！\n`,
-                        );
+                        console.log(`push+发送${PUSH_PLUS_USER ? '一对多' : '一对一'}通知消息失败！！\n`);
                         console.log(err);
                     } else {
                         data = JSON.parse(data);
                         if (data.code === 200) {
-                            console.log(
-                                `push+发送${PUSH_PLUS_USER ? '一对多' : '一对一'
-                                }通知消息完成。\n`,
-                            );
+                            console.log(`push+发送${PUSH_PLUS_USER ? '一对多' : '一对一'}通知消息完成。\n`);
                         } else {
-                            console.log(
-                                `push+发送${PUSH_PLUS_USER ? '一对多' : '一对一'
-                                }通知消息失败：${data.msg}\n`,
-                            );
+                            console.log(`push+发送${PUSH_PLUS_USER ? '一对多' : '一对一'}通知消息失败：${data.msg}\n`);
                         }
                     }
                 } catch (e) {

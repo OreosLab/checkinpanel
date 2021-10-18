@@ -1,12 +1,13 @@
 <div align="center"> 
 <h1 align="center">定时面板上的签到盒</h1>
 
-<a href="https://github.com/Oreomeow/checkinpanel/stargazers"><img src="https://img.shields.io/github/stars/Oreomeow/checkinpanel?color=brightgreen&logo=Riseup&logoColor=brightgreen&style=flat-square" alt="GitHub stars"></a>
-<a href="https://github.com/Oreomeow/checkinpanel/network/members"><img src="https://img.shields.io/github/forks/Oreomeow/checkinpanel?color=brightgreen&style=flat-square" alt="GitHub forks"></a>
-<a href="https://github.com/Oreomeow/checkinpanel/issues"><img src="https://img.shields.io/github/issues/Oreomeow/checkinpanel?color=orange&style=flat-square" alt="GitHub issues"></a>
-<a href="https://github.com/Oreomeow/checkinpanel/search?l=python"><img src="https://img.shields.io/github/languages/code-size/Oreomeow/checkinpanel?color=informational&logo=Python&logoColor=informational&style=flat-square" alt="GitHub code size in bytes"></a>
-<a href="https://t.me/joinchat/muGNhnaZglQ0N2Q1"><img src="https://img.shields.io/badge/talk-Telegram-blue?logo=Telegram&style=flat-square" alt="Telegram"></a>
-<a href="https://github.com/Oreomeow/checkinpanel/commits"><img src="https://img.shields.io/github/last-commit/Oreomeow/checkinpanel?color=success&logo=GitHub&style=flat-square" alt="GitHub last commit"></a>
+<a href="https://github.com/Oreomeow/checkinpanel/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/Oreomeow/checkinpanel?color=yellow&amp;logo=Riseup&amp;logoColor=yellow&amp;style=flat-square"/></a>
+<a href="https://github.com/Oreomeow/checkinpanel/network/members"><img alt="GitHub forks" src="https://img.shields.io/github/forks/Oreomeow/checkinpanel?color=orange&amp;style=flat-square"/></a>
+<a href="https://github.com/Oreomeow/checkinpanel/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/Oreomeow/checkinpanel?color=red&amp;style=flat-square"/></a>
+<a href="https://github.com/Oreomeow/checkinpanel/search?l=python"><img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/Oreomeow/checkinpanel?color=blueviolet&amp;logoColor=informational&amp;style=flat-square"/></a>
+<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000?logo=Python&amp;style=flat-square"/></a>
+<a href="https://t.me/joinchat/muGNhnaZglQ0N2Q1"><img alt="Telegram" src="https://img.shields.io/badge/talk-Telegram-blue?logo=Telegram&amp;style=flat-square"/></a>
+<a href="https://github.com/Oreomeow/checkinpanel/commits"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Oreomeow/checkinpanel?color=success&amp;logo=GitHub&amp;style=flat-square"/></a>
 
 </div>
 
@@ -72,35 +73,35 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 #### 4.1 JSMANAGE -> store/cookie 常量储存管理填写通知环境变量
 
-| 变量 / key | 描述 | 支持语言 | 参考 / value |
-| --- | --- | --- | --- |
-| HITOKOTO | 一言 | PY | true 为开启，false 为关闭，默认关闭 |
-| BARK_PUSH | bark 设备码 | JS PY | BARK 推送[使用](https://github.com/Sitoi/dailycheckin/issues/29)，填写 URL 即可，例如： `https://api.day.app/DxHcxxxxxRxxxxxxcm/` |
-| BARK_ARCHIVE | * bark 存档 | PY | 是否存档 |
-| BARK_GROUP | * bark 消息分组 | JS PY | 消息分组 |
-| BARK_SOUND | * bark 声音 | JS PY | 例如： `choo` ，具体值 bark-推送铃声-查看所有铃声 |
-| CONSOLE | 控制台输出 | PY | true 为开启，false 为关闭，默认关闭 |
-| DD_BOT_SECRET | 钉钉机器人 | JS PY SH | 钉钉推送[官方文档](https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq)密钥，机器人安全设置页面，加签一栏下面显示的 `SEC` 开头的字符串，注：填写了 `DD_BOT_TOKEN` 和 `DD_BOT_SECRET` ，钉钉机器人安全设置只需勾选 `加签` 即可，其他选项不要勾选 |
-| DD_BOT_TOKEN | 钉钉机器人 | JS PY SH | 钉钉推送[官方文档](https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq)，只需 `https://oapi.dingtalk.com/robot/send?access_token=XXX` 等于符号后面的 `XXX` |
-| FSKEY | 飞书 | PY | 飞书[官方文档](https://open.feishu.cn/document/ukTMukTMukTM/ucTM5YjL3ETO24yNxkjN)，只需 `https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxx` 的 `xxxxxx` 部分 |
-| GOBOT_URL | go-cqhttp | JS PY | 例如：推送到个人QQ： `http://127.0.0.1/send_private_msg` 群： `http://127.0.0.1/send_group_msg` |
-| GOBOT_QQ | go-cqhttp 的推送群或者用户 | JS PY | `GOBOT_URL` 设置 `/send_private_msg` 时填入 `user_id=个人QQ` ； `/send_group_msg` 时填入 `group_id=QQ群` |
-| GOBOT_TOKEN | * go-cqhttp 的 access_token | JS PY | go-cqhttp 文件设置的访问密钥 |
-| IGOT_PUSH_TOKEN | iGot 聚合推送 | JS PY | [参考文档](https://wahao.github.io/Bark-MP-helper)，支持多方式推送 |
-| PUSH_KEY | server 酱 | JS PY SH | server 酱推送[官方文档](https://sc.ftqq.com/3.version)，JS 和 PY 推送兼容新旧版本 |
-| PUSH_TURBO_KEY | server 酱 Turbo 版 | SH | server 酱 TURBO 推送[官方文档](https://sct.ftqq.com/sendkey)，仅支持 SH |
-| PUSH_PLUS_TOKEN | pushplus 用户令牌 | JS PY SH | 可直接加到请求地址后，如： `http://www.pushplus.plus/send/{token}` [官方文档](https://www.pushplus.plus/doc/) |
-| PUSH_PLUS_USER | * pushplus 群组编码 | JS PY | 一对多推送下面 -> 您的群组（如无则新建） -> 群组编码 1. 需订阅者扫描二维码 2. 如果您是创建群组所属人，也需点击“查看二维码”扫描绑定，否则不能接受群组消息推送 |
-| QMSG_KEY | qmsg 酱 | JS PY SH | qmsg 酱推送[官方文档](https://qmsg.zendee.cn/index.html)，填写 `KEY` 代码即可 |
-| QMSG_TYPE | * qmsg 酱推送类型 | JS PY | qmsg 酱推送[官方文档](https://qmsg.zendee.cn/index.html)，如果需要推送到群填写 `group` ，其他的都推送到 QQ |
-| QYWX_AM | 企业微信应用 | JS PY | [参考文档](http://note.youdao.com/s/HMiudGkb)，依次填入 corpid, corpsecret, touser(注：多个成员ID使用 \| 隔开), agentid, media_id(选填，不填默认文本消息类型) |
-| QYWX_KEY | 企业微信机器人 | JS PY | [官方文档](https://work.weixin.qq.com/api/doc/90000/90136/91770)，只需 `https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=693a91f6-7xxx-4bc4-97a0-0ec2sifa5aaa` key= 后面部分 |
-| TG_BOT_TOKEN | tg 机器人 | JS PY SH | 申请 [@BotFather](https://t.me/BotFather) 的 Token，如 `10xxx4:AAFcqxxxxgER5uw` |
-| TG_USER_ID | tg 机器人 | JS PY SH | 给 [@getidsbot](https://t.me/getidsbot) 发送 /start 获取到的纯数字 ID，如 `1434078534` |
-| TG_API_HOST | * tg 代理 api | JS PY | Telegram api 自建的反向代理地址 例子：反向代理地址 `http://aaa.bbb.ccc` 则填写 aaa.bbb.ccc [简略搭建教程](https://shimo.im/docs/JD38CJDQtYy3yTd8/read) |
-| TG_PROXY_AUTH | * tg 代理认证参数 | JS | 代理认证参数 |
-| TG_PROXY_HOST | * tg 机器人代理 IP 地址 | JS PY | 代理类型为 http，比如您代理是 `http://127.0.0.1:1080` ，则填写 `127.0.0.1` ，有密码例子: `username:password@127.0.0.1` |
-| TG_PROXY_PORT | * tg 机器人代理端口 | JS PY | 代理端口号，代理类型为 http，比如您代理是 `http://127.0.0.1:1080` ，则填写 `1080` |
+| 变量 / key      | 描述                        | 支持语言 | 参考 / value                                                                                                                                                                                                                                     |
+| --------------- | --------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| HITOKOTO        | 一言                        | PY       | true 为开启，false 为关闭，默认关闭                                                                                                                                                                                                              |
+| BARK_PUSH       | bark 设备码                 | JS PY    | BARK 推送[使用](https://github.com/Sitoi/dailycheckin/issues/29)，填写 URL 即可，例如： `https://api.day.app/DxHcxxxxxRxxxxxxcm/`                                                                                                                |
+| BARK_ARCHIVE    | * bark 存档                 | PY       | 是否存档                                                                                                                                                                                                                                         |
+| BARK_GROUP      | * bark 消息分组             | JS PY    | 消息分组                                                                                                                                                                                                                                         |
+| BARK_SOUND      | * bark 声音                 | JS PY    | 例如： `choo` ，具体值 bark-推送铃声-查看所有铃声                                                                                                                                                                                                |
+| CONSOLE         | 控制台输出                  | PY       | true 为开启，false 为关闭，默认关闭                                                                                                                                                                                                              |
+| DD_BOT_SECRET   | 钉钉机器人                  | JS PY SH | 钉钉推送[官方文档](https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq)密钥，机器人安全设置页面，加签一栏下面显示的 `SEC` 开头的字符串，注：填写了 `DD_BOT_TOKEN` 和 `DD_BOT_SECRET` ，钉钉机器人安全设置只需勾选 `加签` 即可，其他选项不要勾选 |
+| DD_BOT_TOKEN    | 钉钉机器人                  | JS PY SH | 钉钉推送[官方文档](https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq)，只需 `https://oapi.dingtalk.com/robot/send?access_token=XXX` 等于符号后面的 `XXX`                                                                                      |
+| FSKEY           | 飞书                        | PY       | 飞书[官方文档](https://open.feishu.cn/document/ukTMukTMukTM/ucTM5YjL3ETO24yNxkjN)，只需 `https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxx` 的 `xxxxxx` 部分                                                                                   |
+| GOBOT_URL       | go-cqhttp                   | JS PY    | 例如：推送到个人QQ： `http://127.0.0.1/send_private_msg` 群： `http://127.0.0.1/send_group_msg`                                                                                                                                                  |
+| GOBOT_QQ        | go-cqhttp 的推送群或者用户  | JS PY    | `GOBOT_URL` 设置 `/send_private_msg` 时填入 `user_id=个人QQ` ； `/send_group_msg` 时填入 `group_id=QQ群`                                                                                                                                         |
+| GOBOT_TOKEN     | * go-cqhttp 的 access_token | JS PY    | go-cqhttp 文件设置的访问密钥                                                                                                                                                                                                                     |
+| IGOT_PUSH_TOKEN | iGot 聚合推送               | JS PY    | [参考文档](https://wahao.github.io/Bark-MP-helper)，支持多方式推送                                                                                                                                                                               |
+| PUSH_KEY        | server 酱                   | JS PY SH | server 酱推送[官方文档](https://sc.ftqq.com/3.version)，JS 和 PY 推送兼容新旧版本                                                                                                                                                                |
+| PUSH_TURBO_KEY  | server 酱 Turbo 版          | SH       | server 酱 TURBO 推送[官方文档](https://sct.ftqq.com/sendkey)，仅支持 SH                                                                                                                                                                          |
+| PUSH_PLUS_TOKEN | pushplus 用户令牌           | JS PY SH | 可直接加到请求地址后，如： `http://www.pushplus.plus/send/{token}` [官方文档](https://www.pushplus.plus/doc/)                                                                                                                                    |
+| PUSH_PLUS_USER  | * pushplus 群组编码         | JS PY    | 一对多推送下面 -> 您的群组（如无则新建） -> 群组编码 1. 需订阅者扫描二维码 2. 如果您是创建群组所属人，也需点击“查看二维码”扫描绑定，否则不能接受群组消息推送                                                                                     |
+| QMSG_KEY        | qmsg 酱                     | JS PY SH | qmsg 酱推送[官方文档](https://qmsg.zendee.cn/index.html)，填写 `KEY` 代码即可                                                                                                                                                                    |
+| QMSG_TYPE       | * qmsg 酱推送类型           | JS PY    | qmsg 酱推送[官方文档](https://qmsg.zendee.cn/index.html)，如果需要推送到群填写 `group` ，其他的都推送到 QQ                                                                                                                                       |
+| QYWX_AM         | 企业微信应用                | JS PY    | [参考文档](http://note.youdao.com/s/HMiudGkb)，依次填入 corpid, corpsecret, touser(注：多个成员ID使用 \| 隔开), agentid, media_id(选填，不填默认文本消息类型)                                                                                    |
+| QYWX_KEY        | 企业微信机器人              | JS PY    | [官方文档](https://work.weixin.qq.com/api/doc/90000/90136/91770)，只需 `https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=693a91f6-7xxx-4bc4-97a0-0ec2sifa5aaa` key= 后面部分                                                                 |
+| TG_BOT_TOKEN    | tg 机器人                   | JS PY SH | 申请 [@BotFather](https://t.me/BotFather) 的 Token，如 `10xxx4:AAFcqxxxxgER5uw`                                                                                                                                                                  |
+| TG_USER_ID      | tg 机器人                   | JS PY SH | 给 [@getidsbot](https://t.me/getidsbot) 发送 /start 获取到的纯数字 ID，如 `1434078534`                                                                                                                                                           |
+| TG_API_HOST     | * tg 代理 api               | JS PY    | Telegram api 自建的反向代理地址 例子：反向代理地址 `http://aaa.bbb.ccc` 则填写 aaa.bbb.ccc [简略搭建教程](https://shimo.im/docs/JD38CJDQtYy3yTd8/read)                                                                                           |
+| TG_PROXY_AUTH   | * tg 代理认证参数           | JS       | 代理认证参数                                                                                                                                                                                                                                     |
+| TG_PROXY_HOST   | * tg 机器人代理 IP 地址     | JS PY    | 代理类型为 http，比如您代理是 `http://127.0.0.1:1080` ，则填写 `127.0.0.1` ，有密码例子: `username:password@127.0.0.1`                                                                                                                           |
+| TG_PROXY_PORT   | * tg 机器人代理端口         | JS PY    | 代理端口号，代理类型为 http，比如您代理是 `http://127.0.0.1:1080` ，则填写 `1080`                                                                                                                                                                |
 
 *\* 表示选填*
 
@@ -390,11 +391,11 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 
 ### 测试情况
 
-| 状态 | 名称 |
-| --- | --- |
-| ✅ | LeetCode 每日一题 \| 每日一句 \| 天气预报 \| AcFun \| 机场签到 \| 爱企查 \| 百度搜索资源平台 \| Bilibili \| 天翼云盘 \| CSDN \| 多看阅读 \| 恩山论坛 \| EUserv \| 时光相册 \| Fa米家 \| FreeNom \| GLaDOS \| 网易云游戏 \| 欢太商城 \| HiFiNi \| 爱奇艺 \| 掘金 \| 全民K歌 \| MEIZU 社区 \| 小米运动 \| 网易云音乐 \| NGA \| 一加手机社区官方论坛 \| 吾爱破解 \| SF 轻小说 \| Site \| 什么值得买 \| 什么值得买任务版 \| SSPanel 签到 \| 百度贴吧 \| 腾讯视频 \| 微博 \| 王者营地 \| 有道云笔记 |
-| ❔ | 葫芦侠 \| 无忧行 \| 哔咔漫画 \| 联通营业厅 \| V2EX \| 联通沃邮箱 \| 哔咔网单 \| 智友邦 |
-| ❌ | 芒果 TV |
+| 状态 | 名称                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ✅    | LeetCode 每日一题 \| 每日一句 \| 天气预报 \| AcFun \| 机场签到 \| 爱企查 \| 百度搜索资源平台 \| Bilibili \| 天翼云盘 \| CSDN \| 多看阅读 \| 恩山论坛 \| EUserv \| 时光相册 \| Fa米家 \| FreeNom \| GLaDOS \| 网易云游戏 \| 欢太商城 \| HiFiNi \| 爱奇艺 \| 掘金 \| 全民K歌 \| MEIZU 社区 \| 小米运动 \| 网易云音乐 \| NGA \| 一加手机社区官方论坛 \| 吾爱破解 \| SF 轻小说 \| Site \| 什么值得买 \| 什么值得买任务版 \| SSPanel 签到 \| 百度贴吧 \| 腾讯视频 \| 微博 \| 王者营地 \| 有道云笔记 |
+| ❔    | 葫芦侠 \| 无忧行 \| 哔咔漫画 \| 联通营业厅 \| V2EX \| 联通沃邮箱 \| 哔咔网单 \| 智友邦                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ❌    | 芒果 TV                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 
 ## 致谢
 

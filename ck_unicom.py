@@ -96,18 +96,24 @@ class UniCom:
         }
 
         response = session.post(
-            url="https://m.client.10010.com/mobileService/login.htm", headers=headers, cookies=cookies, data=data
+            url="https://m.client.10010.com/mobileService/login.htm",
+            headers=headers,
+            cookies=cookies,
+            data=data,
         )
         response.encoding = "utf-8"
         try:
             result = response.json()
             if result["code"] == "0":
-                login_msg = {"name": "账号信息", "value": result["default"][:4] + "xxxx" + result["default"][-4:]}
+                login_msg = {
+                    "name": "账号信息",
+                    "value": result["default"][:4] + "xxxx" + result["default"][-4:],
+                }
                 session.headers.update(
                     {
                         "User-Agent": "Mozilla/5.0 (Linux; Android 10; RMX1901 Build/QKQ1.190918.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.186 Mobile Safari/537.36; unicom{version:android@8.0100,desmobile:"
-                                      + str(mobile)
-                                      + "};devicetype{deviceBrand:Realme,deviceModel:RMX1901};{yw_code:}"
+                        + str(mobile)
+                        + "};devicetype{deviceBrand:Realme,deviceModel:RMX1901};{yw_code:}"
                     }
                 )
                 flag = True
@@ -122,7 +128,9 @@ class UniCom:
 
     @staticmethod
     def get_encryptmobile(session):
-        page = session.post(url="https://m.client.10010.com/dailylottery/static/textdl/userLogin")
+        page = session.post(
+            url="https://m.client.10010.com/dailylottery/static/textdl/userLogin"
+        )
         page.encoding = "utf-8"
         match = re.search(r"encryptmobile=\w+", page.text, flags=0)
         user_number = match.group(0)[14:]
@@ -132,13 +140,23 @@ class UniCom:
     @staticmethod
     def daily_daysign(session, mobile):
         try:
-            session.headers.update({"referer": "https://img.client.10010.com/activitys/member/index.html"})
-            param = f"yw_code=&desmobile={mobile}&version=android@$8.0100"
-            session.get(url="https://act.10010.com/SigninApp/signin/querySigninActivity.htm?" + param)
             session.headers.update(
-                {"referer": "https://act.10010.com/SigninApp/signin/querySigninActivity.htm?" + param}
+                {"referer": "https://img.client.10010.com/activitys/member/index.html"}
             )
-            day_sign = session.post(url="https://act.10010.com/SigninApp/signin/daySign")
+            param = f"yw_code=&desmobile={mobile}&version=android@$8.0100"
+            session.get(
+                url="https://act.10010.com/SigninApp/signin/querySigninActivity.htm?"
+                + param
+            )
+            session.headers.update(
+                {
+                    "referer": "https://act.10010.com/SigninApp/signin/querySigninActivity.htm?"
+                    + param
+                }
+            )
+            day_sign = session.post(
+                url="https://act.10010.com/SigninApp/signin/daySign"
+            )
             day_sign.encoding = "utf-8"
             session.post(url="https://act.10010.com/SigninApp/signin/todaySign")
             session.post(url="https://act.10010.com/SigninApp/signin/addIntegralDA")
@@ -158,20 +176,24 @@ class UniCom:
         daily_lottery_msg = []
         try:
             numjsp = self.get_encryptmobile(session=session)
-            session.post(url="https://m.client.10010.com/mobileservicequery/customerService/share/defaultShare.htm")
+            session.post(
+                url="https://m.client.10010.com/mobileservicequery/customerService/share/defaultShare.htm"
+            )
             session.get(
-                url="https://m.client.10010.com/dailylottery/static/doubleball/firstpage?encryptmobile=" + numjsp
+                url="https://m.client.10010.com/dailylottery/static/doubleball/firstpage?encryptmobile="
+                + numjsp
             )
             session.get(
                 url="https://m.client.10010.com/dailylottery/static/outdailylottery/getRandomGoodsAndInfo?areaCode=076"
             )
             session.get(
                 url="https://m.client.10010.com/dailylottery/static/active/findActivityInfo?areaCode=076&groupByType=&mobile="
-                    + numjsp
+                + numjsp
             )
             for i in range(3):
                 luck = session.post(
-                    url="https://m.client.10010.com/dailylottery/static/doubleball/choujiang?usernumberofjsp=" + numjsp
+                    url="https://m.client.10010.com/dailylottery/static/doubleball/choujiang?usernumberofjsp="
+                    + numjsp
                 )
                 luck.encoding = "utf-8"
                 res = luck.json()
@@ -184,7 +206,8 @@ class UniCom:
         try:
             numjsp = self.get_encryptmobile(session=session)
             one_free = session.post(
-                url="https://m.client.10010.com/dailylottery/static/integral/choujiang?usernumberofjsp=" + numjsp
+                url="https://m.client.10010.com/dailylottery/static/integral/choujiang?usernumberofjsp="
+                + numjsp
             )
             one_free.encoding = "utf-8"
             res = one_free.json()
@@ -206,7 +229,9 @@ class UniCom:
                 "referer": f"https://img.client.10010.com/gametask/index.html?yw_code=&desmobile={mobile}&version=android@8.0100",
             }
             session.headers.update(headers)
-            game_center_exp = session.post(url="https://m.client.10010.com/producGameApp", data=data)
+            game_center_exp = session.post(
+                url="https://m.client.10010.com/producGameApp", data=data
+            )
             game_center_exp.encoding = "utf-8"
             res = game_center_exp.json()
             session.headers.pop("referer")
@@ -221,10 +246,14 @@ class UniCom:
 
     @staticmethod
     def daily_integral_100(session):
-        data = {"from": random.choice("123456789") + "".join(random.choice("0123456789") for i in range(10))}
+        data = {
+            "from": random.choice("123456789")
+            + "".join(random.choice("0123456789") for i in range(10))
+        }
         try:
             integral = session.post(
-                url="https://m.client.10010.com/welfare-mall-front/mobile/integral/gettheintegral/v1", data=data
+                url="https://m.client.10010.com/welfare-mall-front/mobile/integral/gettheintegral/v1",
+                data=data,
             )
             integral.encoding = "utf-8"
             res = integral.json()
@@ -234,33 +263,46 @@ class UniCom:
 
     @staticmethod
     def game_dongao(session):
-        data = {"from": random.choice("123456789") + "".join(random.choice("0123456789") for i in range(10))}
+        data = {
+            "from": random.choice("123456789")
+            + "".join(random.choice("0123456789") for i in range(10))
+        }
         trance = [600, 300, 300, 300, 300, 300, 300]
         try:
             dongao_point = session.post(
-                url="https://m.client.10010.com/welfare-mall-front/mobile/winterTwo/getIntegral/v1", data=data
+                url="https://m.client.10010.com/welfare-mall-front/mobile/winterTwo/getIntegral/v1",
+                data=data,
             )
             dongao_point.encoding = "utf-8"
             res1 = dongao_point.json()
             dongao_num = session.post(
-                url="https://m.client.10010.com/welfare-mall-front/mobile/winterTwo/winterTwoShop/v1", data=data
+                url="https://m.client.10010.com/welfare-mall-front/mobile/winterTwo/winterTwoShop/v1",
+                data=data,
             )
             dongao_num.encoding = "utf-8"
             res2 = dongao_num.json()
             if res1["resdata"]["code"] == "0000":
                 return {
                     "name": "冬奥积分活动",
-                    "value": res1["resdata"]["desc"] + "，" + str(trance[int(res2["resdata"]["signDays"])]) + "积分",
+                    "value": res1["resdata"]["desc"]
+                    + "，"
+                    + str(trance[int(res2["resdata"]["signDays"])])
+                    + "积分",
                 }
 
             else:
-                return {"name": "冬奥积分活动", "value": res1["resdata"]["desc"] + "，" + res2["resdata"]["desc"]}
+                return {
+                    "name": "冬奥积分活动",
+                    "value": res1["resdata"]["desc"] + "，" + res2["resdata"]["desc"],
+                }
         except Exception as e:
             return {"name": "冬奥积分活动", "value": str(e)}
 
     @staticmethod
     def get_wotree_glowlist(session):
-        response = session.post(url="https://m.client.10010.com/mactivity/arbordayJson/index.htm")
+        response = session.post(
+            url="https://m.client.10010.com/mactivity/arbordayJson/index.htm"
+        )
         res = response.json()
         return res["data"]["flowChangeList"]
 
@@ -273,7 +315,9 @@ class UniCom:
                 flag = False
                 try:
                     take_flow = session.get(
-                        url="https://m.client.10010.com/mactivity/flowData/takeFlow.htm?flowId=" + flow["id"], timeout=1
+                        url="https://m.client.10010.com/mactivity/flowData/takeFlow.htm?flowId="
+                        + flow["id"],
+                        timeout=1,
                     )
                     take_flow.encoding = "utf-8"
                 except BaseException:
@@ -290,8 +334,12 @@ class UniCom:
                     print("【沃之树-领流量】: 已领取过 x" + str(num))
                 time.sleep(1)
                 num = num + 1
-            session.post(url="https://m.client.10010.com/mactivity/arbordayJson/getChanceByIndex.htm?index=0")
-            grow = session.post(url="https://m.client.10010.com/mactivity/arbordayJson/arbor/3/0/3/grow.htm")
+            session.post(
+                url="https://m.client.10010.com/mactivity/arbordayJson/getChanceByIndex.htm?index=0"
+            )
+            grow = session.post(
+                url="https://m.client.10010.com/mactivity/arbordayJson/arbor/3/0/3/grow.htm"
+            )
             grow.encoding = "utf-8"
             res2 = grow.json()
             time.sleep(1)
@@ -301,11 +349,18 @@ class UniCom:
 
     @staticmethod
     def user_info(session):
-        resp = session.get(url="https://m.client.10010.com/mobileService/home/queryUserInfoSeven.htm?showType=3")
+        resp = session.get(
+            url="https://m.client.10010.com/mobileService/home/queryUserInfoSeven.htm?showType=3"
+        )
         user_info_msg = []
         try:
             for one in resp.json().get("data", {}).get("dataList", []):
-                user_info_msg.append({"name": one.get("remainTitle"), "value": one.get("number") + one.get("unit")})
+                user_info_msg.append(
+                    {
+                        "name": one.get("remainTitle"),
+                        "value": one.get("number") + one.get("unit"),
+                    }
+                )
         except Exception as e:
             print(e)
         return user_info_msg
@@ -316,7 +371,9 @@ class UniCom:
             mobile = check_item.get("mobile")
             password = check_item.get("password")
             app_id = check_item.get("app_id")
-            session, login_msg = self.login(mobile=mobile, password=password, app_id=app_id)
+            session, login_msg = self.login(
+                mobile=mobile, password=password, app_id=app_id
+            )
             if session:
                 daily_daysign_msg = self.daily_daysign(session=session, mobile=mobile)
                 daily_integral_100_msg = self.daily_integral_100(session=session)

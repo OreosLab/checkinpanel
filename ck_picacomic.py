@@ -34,12 +34,10 @@ class Picacomic:
             "app-platform": "android",
             "app-build-version": "44",
             "User-Agent": "okhttp/3.8.1",
-            "image-quality": "original"
+            "image-quality": "original",
         }
         current_time = str(int(time.time()))
-        nonce = "".join(
-            random.choices(string.ascii_lowercase + string.digits, k=32)
-        )
+        nonce = "".join(random.choices(string.ascii_lowercase + string.digits, k=32))
         raw = path + current_time + nonce + "POST" + api_key
         raw = raw.lower()
         h = hmac.new(api_secret.encode(), digestmod=hashlib.sha256)
@@ -60,22 +58,17 @@ class Picacomic:
             sign_headers = self.generate_headers(path="auth/sign-in", data=data)
             sign_response = requests.post(
                 url="https://picaapi.picacomic.com/auth/sign-in",
-                data=json.dumps(
-                    {
-                        "email": "sitoi",
-                        "password": "123456st"
-                    }
-                ),
+                data=json.dumps({"email": "sitoi", "password": "123456st"}),
                 headers=sign_headers,
                 timeout=60,
             ).json()
             token = sign_response.get("data", {}).get("token")
-            punch_headers = self.generate_headers(
-                path="users/punch-in", token=token)
+            punch_headers = self.generate_headers(path="users/punch-in", token=token)
             response = requests.post(
                 url="https://picaapi.picacomic.com/users/punch-in",
                 headers=punch_headers,
-                timeout=60).json()
+                timeout=60,
+            ).json()
             if response.get("data", {}).get("res", {}).get("status", {}) == "ok":
                 msg = "打卡成功"
             else:
@@ -98,6 +91,5 @@ class Picacomic:
 if __name__ == "__main__":
     data = get_data()
     _check_items = data.get("PICACOMIC", [])
-    res = Picacomic(
-        check_items=_check_items).main()
+    res = Picacomic(check_items=_check_items).main()
     send("哔咔漫画", res)

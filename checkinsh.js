@@ -4,6 +4,7 @@ console.log(`⏳ 开始执行 ${shname}`)
 $exec(`chmod +x ${shname} && bash ${shname}`, {
     cwd: './script/Shell/checkinpanel',
     timeout: 0,
+    // prettier-ignore
     env: {
         ENV_PATH: $store.get('ENV_PATH', 'string'),                               // 自定义配置文件路径，如 /usr/local/app/script/Lists/.env
         NOTIFY_CONFIG_PATH: $store.get('NOTIFY_CONFIG_PATH', 'string'),           // 自定义通知配置文件路径，如 /usr/locallocal/app/script/Lists/notify.json5
@@ -36,5 +37,5 @@ $exec(`chmod +x ${shname} && bash ${shname}`, {
     },
     cb(data, error) {
         error ? console.error(error) : console.log(data)
-    }
+    },
 })

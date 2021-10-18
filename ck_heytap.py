@@ -42,16 +42,16 @@ class Heytap:
             app_param = json.loads(app_param)
             self.sa_device_id = app_param["sa_device_id"]
             self.brand = app_param["brand"]
-            self.sa_distinct_id = re.findall(
-                "sa_distinct_id=(.*?);", self.HT_cookies)[0]
-            self.source_type = re.findall(
-                "source_type=(.*?);", self.HT_cookies)[0]
+            self.sa_distinct_id = re.findall("sa_distinct_id=(.*?);", self.HT_cookies)[
+                0
+            ]
+            self.source_type = re.findall("source_type=(.*?);", self.HT_cookies)[0]
             self.s_version = re.findall("s_version=(.*?);", self.HT_cookies)[0]
             self.s_channel = re.findall("s_channel=(.*?);", self.HT_cookies)[0]
         except Exception as e:
             print(
                 "获取Cookie部分数据失败，将采用默认设置，请检查Cookie是否包含s_channel，s_version，source_type，sa_distinct_id\n",
-                e
+                e,
             )
             self.s_channel = "ios_oppostore"
             self.source_type = "505"
@@ -61,15 +61,14 @@ class Heytap:
         flag = False
         url = "https://www.heytap.com/cn/oapi/users/web/member/info"
         headers = {
-            'Host': 'www.heytap.com',
-            'Accept':
-                'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Connection': 'keep-alive',
-            'User-Agent': self.HT_UserAgent,
-            'Accept-Language': 'zh-cn',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'cookie': self.HT_cookies
+            "Host": "www.heytap.com",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Connection": "keep-alive",
+            "User-Agent": self.HT_UserAgent,
+            "Accept-Language": "zh-cn",
+            "Accept-Encoding": "gzip, deflate, br",
+            "cookie": self.HT_cookies,
         }
         response = self.session.get(url=url, headers=headers)
         response.encoding = "utf-8"
@@ -77,10 +76,16 @@ class Heytap:
             result = response.json()
             if result["code"] == 200:
                 self.log += f"======== {result['data']['realName']} ========\n"
-                self.log += "【登录成功】：" + result["data"][
-                    "realName"] + f"\n【抽奖开关】：{self.if_draw}\n"
-                print("【登录成功】：" + result["data"]["realName"] +
-                      f"\n【抽奖开关】：{self.if_draw}\n")
+                self.log += (
+                    "【登录成功】："
+                    + result["data"]["realName"]
+                    + f"\n【抽奖开关】：{self.if_draw}\n"
+                )
+                print(
+                    "【登录成功】："
+                    + result["data"]["realName"]
+                    + f"\n【抽奖开关】：{self.if_draw}\n"
+                )
                 flag = True
             else:
                 self.log += "【登录失败】: " + result["errorMessage"] + "\n"
@@ -100,16 +105,15 @@ class Heytap:
     def taskCenter(self):
         url = "https://store.oppo.com/cn/oapi/credits/web/credits/show"
         headers = {
-            'Host': 'store.oppo.com',
-            'Accept':
-                'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Connection': 'keep-alive',
-            'User-Agent': self.HT_UserAgent,
-            'Accept-Language': 'zh-cn',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'cookie': self.HT_cookies,
-            'referer': 'https://store.oppo.com/cn/app/taskCenter/index'
+            "Host": "store.oppo.com",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Connection": "keep-alive",
+            "User-Agent": self.HT_UserAgent,
+            "Accept-Language": "zh-cn",
+            "Accept-Encoding": "gzip, deflate, br",
+            "cookie": self.HT_cookies,
+            "referer": "https://store.oppo.com/cn/app/taskCenter/index",
         }
         res1 = self.client.get(url=url, headers=headers)
         res1 = res1.json()
@@ -122,16 +126,15 @@ class Heytap:
         try:
             dated = time.strftime("%Y-%m-%d")
             headers = {
-                'Host': 'store.oppo.com',
-                'Accept':
-                    'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Connection': 'keep-alive',
-                'User-Agent': self.HT_UserAgent,
-                'Accept-Language': 'zh-cn',
-                'Accept-Encoding': 'gzip, deflate, br',
-                'cookie': self.HT_cookies,
-                'referer': 'https://store.oppo.com/cn/app/taskCenter/index'
+                "Host": "store.oppo.com",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Connection": "keep-alive",
+                "User-Agent": self.HT_UserAgent,
+                "Accept-Language": "zh-cn",
+                "Accept-Encoding": "gzip, deflate, br",
+                "cookie": self.HT_cookies,
+                "referer": "https://store.oppo.com/cn/app/taskCenter/index",
             }
             res = self.taskCenter()
             status = res["data"]["userReportInfoForm"]["status"]
@@ -142,14 +145,13 @@ class Heytap:
                         qd = data
                         if not qd["today"]:
                             data = "amount=" + str(qd["credits"])
-                            res1 = self.client.post(
-                                url=url, data=data, headers=headers)
+                            res1 = self.client.post(url=url, data=data, headers=headers)
                             res1 = res1.json()
                             if res1["code"] == 200:
-                                self.log += "【每日签到成功】: " + \
-                                    res1["data"]["message"] + "\n"
-                                print("【每日签到成功】: " +
-                                      res1["data"]["message"] + "\n")
+                                self.log += (
+                                    "【每日签到成功】: " + res1["data"]["message"] + "\n"
+                                )
+                                print("【每日签到成功】: " + res1["data"]["message"] + "\n")
                             else:
                                 self.log += "【每日签到失败】: " + res1 + "\n"
                                 print("【每日签到失败】: " + res1 + "\n")
@@ -158,19 +160,25 @@ class Heytap:
                             if not qd["type"]:
                                 data = "amount=" + str(qd["credits"])
                             else:
-                                data = "amount=" + str(qd['credits']) + \
-                                       "&type=" + str(qd['type']) + \
-                                       "&gift=" + str(qd['gift'])
+                                data = (
+                                    "amount="
+                                    + str(qd["credits"])
+                                    + "&type="
+                                    + str(qd["type"])
+                                    + "&gift="
+                                    + str(qd["gift"])
+                                )
                             res1 = self.client.post(
-                                'https://store.oppo.com/cn/oapi/credits/web/report/immediately',
+                                "https://store.oppo.com/cn/oapi/credits/web/report/immediately",
                                 headers=headers,
-                                data=data)
+                                data=data,
+                            )
                             res1 = res1.json()
                             if res1["code"] == 200:
-                                self.log += "【每日签到成功】: " + \
-                                            res1["data"]["message"] + "\n"
-                                print("【每日签到成功】: " +
-                                      res1["data"]["message"] + "\n")
+                                self.log += (
+                                    "【每日签到成功】: " + res1["data"]["message"] + "\n"
+                                )
+                                print("【每日签到成功】: " + res1["data"]["message"] + "\n")
                             else:
                                 self.log += "【每日签到失败】: " + str(res1) + "\n"
                                 print("【每日签到失败】: " + str(res1) + "\n")
@@ -188,15 +196,14 @@ class Heytap:
     def daily_viewgoods(self):
         try:
             headers = {
-                'self.clientPackage': 'com.oppo.store',
-                'Host': 'msec.opposhop.cn',
-                'Accept':
-                    'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Connection': 'keep-alive',
-                'User-Agent': 'okhttp/3.12.12.200sp1',
-                'Accept-Encoding': 'gzip',
-                'cookie': self.HT_cookies
+                "self.clientPackage": "com.oppo.store",
+                "Host": "msec.opposhop.cn",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Connection": "keep-alive",
+                "User-Agent": "okhttp/3.12.12.200sp1",
+                "Accept-Encoding": "gzip",
+                "cookie": self.HT_cookies,
             }
             res = self.taskCenter()
             res = res["data"]["everydayList"]
@@ -205,7 +212,8 @@ class Heytap:
                     if data["completeStatus"] == 0:
                         # 原链接貌似获取不到商品id，更换一个 原链接https://msec.opposhop.cn/goods/v1/SeckillRound/goods/3016?pageSize=12&currentPage=1
                         shopList = self.client.get(
-                            "https://msec.opposhop.cn/goods/v1/products/010239")
+                            "https://msec.opposhop.cn/goods/v1/products/010239"
+                        )
                         res = shopList.json()
                         if res["meta"]["code"] == 200:
                             i = 0
@@ -213,9 +221,9 @@ class Heytap:
                                 skuid = skuinfo["skuId"]
                                 print("正在浏览商品ID：", skuid)
                                 self.client.get(
-                                    "https://msec.opposhop.cn/goods/v1/info/sku?skuId=" +
-                                    str(skuid),
-                                    headers=headers
+                                    "https://msec.opposhop.cn/goods/v1/info/sku?skuId="
+                                    + str(skuid),
+                                    headers=headers,
                                 )
                                 i += 1
                                 if i > 10:
@@ -225,10 +233,18 @@ class Heytap:
                                 data["marking"], data["type"], data["credits"]
                             )
                             if res2:
-                                self.log += "【每日浏览商品】：" + "任务完成！积分领取+" + \
-                                            str(data["credits"]) + "\n"
-                                print("【每日浏览商品】：" + "任务完成！积分领取+" +
-                                      str(data["credits"]) + "\n")
+                                self.log += (
+                                    "【每日浏览商品】："
+                                    + "任务完成！积分领取+"
+                                    + str(data["credits"])
+                                    + "\n"
+                                )
+                                print(
+                                    "【每日浏览商品】："
+                                    + "任务完成！积分领取+"
+                                    + str(data["credits"])
+                                    + "\n"
+                                )
                             else:
                                 self.log += "【每日浏览商品】：" + "领取积分奖励出错！\n"
                                 print("【每日浏览商品】：" + "领取积分奖励出错！\n")
@@ -240,10 +256,12 @@ class Heytap:
                             data["marking"], data["type"], data["credits"]
                         )
                         if res2:
-                            self.log += "【每日浏览商品】：" + "任务完成！积分领取+" + \
-                                        str(data["credits"]) + "\n"
-                            print("【每日浏览商品】：" + "任务完成！积分领取+" +
-                                  str(data["credits"]) + "\n")
+                            self.log += (
+                                "【每日浏览商品】：" + "任务完成！积分领取+" + str(data["credits"]) + "\n"
+                            )
+                            print(
+                                "【每日浏览商品】：" + "任务完成！积分领取+" + str(data["credits"]) + "\n"
+                            )
                         else:
                             self.log += "【每日浏览商品】：" + "领取积分奖励出错！\n"
                             print("【每日浏览商品】：" + "领取积分奖励出错！\n")
@@ -258,15 +276,14 @@ class Heytap:
     def daily_sharegoods(self):
         try:
             headers = {
-                'self.clientPackage': 'com.oppo.store',
-                'Host': 'msec.opposhop.cn',
-                'Accept':
-                    'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Connection': 'keep-alive',
-                'User-Agent': 'okhttp/3.12.12.200sp1',
-                'Accept-Encoding': 'gzip',
-                'cookie': self.HT_cookies
+                "self.clientPackage": "com.oppo.store",
+                "Host": "msec.opposhop.cn",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Connection": "keep-alive",
+                "User-Agent": "okhttp/3.12.12.200sp1",
+                "Accept-Encoding": "gzip",
+                "cookie": self.HT_cookies,
             }
             daySignList = self.taskCenter()
             res = daySignList
@@ -280,28 +297,21 @@ class Heytap:
                 while count <= endcount:
                     self.client.get(
                         "https://msec.opposhop.cn/users/vi/creditsTask/pushTask?marking=daily_sharegoods",
-                        headers=headers)
+                        headers=headers,
+                    )
                     count += 1
-                res2 = self.cashingCredits(
-                    qd["marking"], qd["type"], qd["credits"]
-                )
+                res2 = self.cashingCredits(qd["marking"], qd["type"], qd["credits"])
                 if res2:
-                    self.log += "【每日分享商品】：" + "任务完成！积分领取+" + \
-                                str(qd["credits"]) + "\n"
-                    print("【每日分享商品】：" + "任务完成！积分领取+" +
-                          str(qd["credits"]) + "\n")
+                    self.log += "【每日分享商品】：" + "任务完成！积分领取+" + str(qd["credits"]) + "\n"
+                    print("【每日分享商品】：" + "任务完成！积分领取+" + str(qd["credits"]) + "\n")
                 else:
                     self.log += "【每日分享商品】：" + "领取积分奖励出错！\n"
                     print("【每日分享商品】：" + "领取积分奖励出错！\n")
             elif qd["completeStatus"] == 1:
-                res2 = self.cashingCredits(
-                    qd["marking"], qd["type"], qd["credits"]
-                )
+                res2 = self.cashingCredits(qd["marking"], qd["type"], qd["credits"])
                 if res2:
-                    self.log += "【每日分享商品】：" + "任务完成！积分领取+" + \
-                                str(qd["credits"]) + "\n"
-                    print("【每日分享商品】：" + "任务完成！积分领取+" +
-                          str(qd["credits"]) + "\n")
+                    self.log += "【每日分享商品】：" + "任务完成！积分领取+" + str(qd["credits"]) + "\n"
+                    print("【每日分享商品】：" + "任务完成！积分领取+" + str(qd["credits"]) + "\n")
                 else:
                     self.log += "【每日分享商品】：" + "领取积分奖励出错！\n"
                     print("【每日分享商品】：" + "领取积分奖励出错！\n")
@@ -316,15 +326,14 @@ class Heytap:
     def daily_viewpush(self):
         try:
             headers = {
-                'self.clientPackage': 'com.oppo.store',
-                'Host': 'msec.opposhop.cn',
-                'Accept':
-                    'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Connection': 'keep-alive',
-                'User-Agent': 'okhttp/3.12.12.200sp1',
-                'Accept-Encoding': 'gzip',
-                'cookie': self.HT_cookies
+                "self.clientPackage": "com.oppo.store",
+                "Host": "msec.opposhop.cn",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Connection": "keep-alive",
+                "User-Agent": "okhttp/3.12.12.200sp1",
+                "Accept-Encoding": "gzip",
+                "cookie": self.HT_cookies,
             }
             daySignList = self.taskCenter()
             res = daySignList
@@ -338,28 +347,21 @@ class Heytap:
                 while count <= endcount:
                     self.client.get(
                         "https://msec.opposhop.cn/users/vi/creditsTask/pushTask?marking=daily_viewpush",
-                        headers=headers)
+                        headers=headers,
+                    )
                     count += 1
-                res2 = self.cashingCredits(
-                    qd["marking"], qd["type"], qd["credits"]
-                )
+                res2 = self.cashingCredits(qd["marking"], qd["type"], qd["credits"])
                 if res2:
-                    self.log += "【每日点推送】: " + "任务完成！积分领取+" + \
-                                str(qd["credits"]) + "\n"
-                    print("【每日点推送】: " + "任务完成！积分领取+" +
-                          str(qd["credits"]) + "\n")
+                    self.log += "【每日点推送】: " + "任务完成！积分领取+" + str(qd["credits"]) + "\n"
+                    print("【每日点推送】: " + "任务完成！积分领取+" + str(qd["credits"]) + "\n")
                 else:
                     self.log += "【每日点推送】: " + "领取积分奖励出错！\n"
                     print("【每日点推送】: " + "领取积分奖励出错！\n")
             elif qd["completeStatus"] == 1:
-                res2 = self.cashingCredits(
-                    qd["marking"], qd["type"], qd["credits"]
-                )
+                res2 = self.cashingCredits(qd["marking"], qd["type"], qd["credits"])
                 if res2:
-                    self.log += "【每日点推送】: " + "任务完成！积分领取+" + \
-                                str(qd["credits"]) + "\n"
-                    print("【每日点推送】: " + "任务完成！积分领取+" +
-                          str(qd["credits"]) + "\n")
+                    self.log += "【每日点推送】: " + "任务完成！积分领取+" + str(qd["credits"]) + "\n"
+                    print("【每日点推送】: " + "任务完成！积分领取+" + str(qd["credits"]) + "\n")
                 else:
                     self.log += "【每日点推送】: " + "领取积分奖励出错！\n"
                     print("【每日点推送】: " + "领取积分奖励出错！\n")
@@ -385,15 +387,21 @@ class Heytap:
             "cookie": self.HT_cookies,
             "Origin": "https://store.oppo.com",
             "X-Requested-With": "com.oppo.store",
-            "referer": "https://store.oppo.com/cn/app/taskCenter/index?us=gerenzhongxin&um=hudongleyuan&uc=renwuzhongxin"
+            "referer": "https://store.oppo.com/cn/app/taskCenter/index?us=gerenzhongxin&um=hudongleyuan&uc=renwuzhongxin",
         }
-        data = "marking=" + str(info_marking) + \
-            "&type=" + str(info_type) + \
-            "&amount=" + str(info_credits)
+        data = (
+            "marking="
+            + str(info_marking)
+            + "&type="
+            + str(info_type)
+            + "&amount="
+            + str(info_credits)
+        )
         res = self.client.post(
             "https://store.oppo.com/cn/oapi/credits/web/credits/cashingCredits",
             data=data,
-            headers=headers)
+            headers=headers,
+        )
         res = res.json()
         if res["code"] == 200:
             return True
@@ -408,12 +416,11 @@ class Heytap:
             "cookie": extra_draw_cookie + self.HT_cookies,
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
             "Accept": "application/json, text/javascript, */*; q=0.01",
-            "Origin": "https://hd.oppo.com"
+            "Origin": "https://hd.oppo.com",
         }
         res = self.client.post(
-            "https://hd.oppo.com/platform/lottery",
-            data=datas,
-            headers=headers)
+            "https://hd.oppo.com/platform/lottery", data=datas, headers=headers
+        )
         res = res.json()
         return res
 
@@ -427,13 +434,12 @@ class Heytap:
             "Accept-Encoding": "gzip, deflate",
             "cookie": self.HT_cookies,
             "Origin": "https://hd.oppo.com",
-            "X-Requested-With": "XMLHttpRequest"
+            "X-Requested-With": "XMLHttpRequest",
         }
         datas = "aid=" + str(aid) + "&t_index=" + str(t_index)
         res = self.client.post(
-            "https://hd.oppo.com/task/finish",
-            data=datas,
-            headers=headers)
+            "https://hd.oppo.com/task/finish", data=datas, headers=headers
+        )
         res = res.json()
         return res
 
@@ -447,13 +453,12 @@ class Heytap:
             "Accept-Encoding": "gzip, deflate",
             "cookie": self.HT_cookies,
             "Origin": "https://hd.oppo.com",
-            "X-Requested-With": "XMLHttpRequest"
+            "X-Requested-With": "XMLHttpRequest",
         }
         datas = "aid=" + str(aid) + "&t_index=" + str(t_index)
         res = self.client.post(
-            "https://hd.oppo.com/task/award",
-            data=datas,
-            headers=headers)
+            "https://hd.oppo.com/task/award", data=datas, headers=headers
+        )
         res = res.json()
         return res
 
@@ -473,24 +478,25 @@ class Heytap:
                 "Accept-Encoding": "gzip, deflate",
                 "cookie": self.HT_cookies,
                 "X-Requested-With": "XMLHttpRequest",
-                "Referer": referer
+                "Referer": referer,
             }
             dated = int(time.time())
-            end_time = time.mktime(time.strptime(
-                end_time, "%Y-%m-%d %H:%M:%S"))  # 设置活动结束日期
+            end_time = time.mktime(
+                time.strptime(end_time, "%Y-%m-%d %H:%M:%S")
+            )  # 设置活动结束日期
 
             if dated < end_time:
                 if if_task:
                     self.log += f"【{act_name}-任务】\n"
                     print(f"【{act_name}-任务】\n")
                     taskList = self.client.get(
-                        f"https://hd.oppo.com/task/list?aid={aid}",
-                        headers=headers)
+                        f"https://hd.oppo.com/task/list?aid={aid}", headers=headers
+                    )
                     taskList = taskList.json()
                     for i, jobs in enumerate(taskList["data"]):
                         title = jobs["title"]
                         t_index = jobs["t_index"]
-                        aid = t_index[:t_index.index("i")]
+                        aid = t_index[: t_index.index("i")]
                         if jobs["t_status"] == 0:
                             finishmsg = self.task_finish(aid, t_index)
                             if finishmsg["no"] == "200":
@@ -525,10 +531,12 @@ class Heytap:
                                 break
                             goods_name = res["data"]["goods_name"]
                             if goods_name:
-                                self.log += "  第" + str(x + 1) + "次抽奖：" + str(
-                                    goods_name) + "\n"
-                                print("  第" + str(x + 1) + "次抽奖：" +
-                                      str(goods_name) + "\n")
+                                self.log += (
+                                    "  第" + str(x + 1) + "次抽奖：" + str(goods_name) + "\n"
+                                )
+                                print(
+                                    "  第" + str(x + 1) + "次抽奖：" + str(goods_name) + "\n"
+                                )
                             elif "提交成功" in msg:
                                 # tips_msg = res["data"]["tips_msg"]
                                 self.log += "  第" + str(x + 1) + "次抽奖：未中奖\n"
@@ -586,11 +594,12 @@ class Heytap:
                 "Referer": "https://store.oppo.com/cn/app/cardingActivities?utm_source=opposhop&utm_medium=task",
                 "Accept-Encoding": "gzip, deflate",
                 "Accept-Language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
-                "cookie": self.HT_cookies
+                "cookie": self.HT_cookies,
             }
             res = self.client.get(
                 "https://store.oppo.com/cn/oapi/credits/web/clockin/applyOrClockIn",
-                headers=headers).json()
+                headers=headers,
+            ).json()
             if "余额不足" in str(res):
                 self.log += "【早睡打卡】\n申请失败，积分余额不足\n"
                 print("【早睡打卡】\n申请失败，积分余额不足\n")
@@ -608,19 +617,30 @@ class Heytap:
             # 打卡记录
             res = self.client.get(
                 "https://store.oppo.com/cn/oapi/credits/web/clockin/getMyRecord",
-                headers=headers).json()
+                headers=headers,
+            ).json()
             if res["code"] == 200:
                 record = res["data"]["everydayRecordForms"]
                 self.log += "【早睡打卡记录】\n"
                 print("【早睡打卡记录】\n")
                 i = 0
                 for data in record:
-                    self.log += data["everydayDate"] + "——" +\
-                        data["applyClockInStatus"] + "——" +\
-                        data["credits"] + "\n"
-                    print(data["everydayDate"] + "——" +
-                          data["applyClockInStatus"] + "——" +
-                          data["credits"] + "\n")
+                    self.log += (
+                        data["everydayDate"]
+                        + "——"
+                        + data["applyClockInStatus"]
+                        + "——"
+                        + data["credits"]
+                        + "\n"
+                    )
+                    print(
+                        data["everydayDate"]
+                        + "——"
+                        + data["applyClockInStatus"]
+                        + "——"
+                        + data["credits"]
+                        + "\n"
+                    )
                     i += 1
                     if i == 4:  # 最多显示最近2条记录
                         break
@@ -658,7 +678,9 @@ class Heytap:
 
 def main_handler(event, context):
     # 读取 src 目录下 check.json 配置文件
-    with open(os.path.join(os.path.dirname(__file__), "check.json"), "r", encoding="utf-8") as f:
+    with open(
+        os.path.join(os.path.dirname(__file__), "check.json"), "r", encoding="utf-8"
+    ) as f:
         cf = json.loads(f.read())
     cf = get_data()
     res = Heytap(cf).main()

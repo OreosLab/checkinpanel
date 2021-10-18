@@ -33,8 +33,8 @@ class GLaDOS(object):
                 "referer": referer_url,
                 "origin": self.original_url,
                 "user-agent": self.UA,
-                "content-type": "application/json;charset=UTF-8"
-            }
+                "content-type": "application/json;charset=UTF-8",
+            },
         ) as r:
             return r.json()
 
@@ -51,9 +51,9 @@ class GLaDOS(object):
                 "referer": referer_url,
                 "origin": self.original_url,
                 "user-agent": self.UA,
-                "content-type": "application/json;charset=UTF-8"
+                "content-type": "application/json;charset=UTF-8",
             },
-            data=json.dumps(payload)
+            data=json.dumps(payload),
         ) as r:
             return r.json()
 
@@ -67,23 +67,25 @@ class GLaDOS(object):
                 "cookie": cookies,
                 "referer": referer_url,
                 "origin": self.original_url,
-                "user-agent": self.UA
-            }
+                "user-agent": self.UA,
+            },
         ) as r:
             return r.json()
 
     def get_budget(self, vip_level: Optional[int]) -> dict:
         budget_info = utils_tmp.budget_list
         user_budgets = [
-            i for i in budget_info
-            if (vip_level is not None and 'vip' in i and i['vip'] == vip_level)
-            or (vip_level is None and 'vip' not in i)
+            i
+            for i in budget_info
+            if (vip_level is not None and "vip" in i and i["vip"] == vip_level)
+            or (vip_level is None and "vip" not in i)
         ]
         if len(user_budgets) > 0:
             return user_budgets[0]
         else:
             raise EnvironmentError(
-                f"Budget info not found for this user! VIP: {vip_level}")
+                f"Budget info not found for this user! VIP: {vip_level}"
+            )
 
     def main(self):
         msg_all = ""
@@ -100,9 +102,7 @@ class GLaDOS(object):
                         "--------------------"
                     )
                 status_response = self.api_status(cookie)
-                left_days = int(
-                    status_response["data"]["leftDays"].split(".")[0]
-                )
+                left_days = int(status_response["data"]["leftDays"].split(".")[0])
                 vip_level = status_response["data"]["vip"]
                 traffic_response = self.api_traffic(cookie)
                 used_gb = traffic_response["data"]["today"] / 1024 / 1024 / 1024
@@ -112,11 +112,21 @@ class GLaDOS(object):
                 msg = (
                     "--------------------\n"
                     "GLaDOS \n"
-                    + "Msg: " + check_in_msg + "\n"
-                    + "Plan: " + plan + " Plan\n"
-                    + "Left days: " + str(left_days) + "\n"
-                    + "Usage: " + "%.3f" % used_gb + "GB\n"
-                    + "Total: " + str(total_gb) + "GB\n"
+                    + "Msg: "
+                    + check_in_msg
+                    + "\n"
+                    + "Plan: "
+                    + plan
+                    + " Plan\n"
+                    + "Left days: "
+                    + str(left_days)
+                    + "\n"
+                    + "Usage: "
+                    + "%.3f" % used_gb
+                    + "GB\n"
+                    + "Total: "
+                    + str(total_gb)
+                    + "GB\n"
                     "--------------------"
                 )
             except BaseException:

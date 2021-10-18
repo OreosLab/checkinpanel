@@ -23,20 +23,19 @@ class Meizu:
             "pragma": "no-cache",
             "cache-control": "no-cache",
             "accept": "application/json, text/javascript, */*; q=0.01",
-            "user-agent":
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36 Edg/88.0.705.74",
+            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36 Edg/88.0.705.74",
             "origin": "https://bbs.meizu.cn",
             "referer": "https://bbs.meizu.cn/",
             "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",
-            "cookie": cookie
+            "cookie": cookie,
         }
         params = (
             ("mod", "signin"),
             ("action", "sign"),
         )
-        response = requests.get(url="https://bbs-act.meizu.cn/index.php",
-                                headers=headers,
-                                params=params).json()
+        response = requests.get(
+            url="https://bbs-act.meizu.cn/index.php", headers=headers, params=params
+        ).json()
         msg = response.get("message")
         return msg
 
@@ -46,13 +45,12 @@ class Meizu:
             "authority": "bbs-act.meizu.cn",
             "accept": "application/json, text/javascript, */*; q=0.01",
             "x-requested-with": "XMLHttpRequest",
-            "user-agent":
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36 Edg/88.0.705.74",
+            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36 Edg/88.0.705.74",
             "content-type": "application/x-www-form-urlencoded",
             "origin": "https://bbs-act.meizu.cn",
             "referer": "https://bbs-act.meizu.cn/2/index.html",
             "accept-language": "zh-CN,zh;q=0.9",
-            "cookie": cookie
+            "cookie": cookie,
         }
         data = {"mod": "index", "action": "draw", "id": "2"}
         award_list = []
@@ -64,7 +62,8 @@ class Meizu:
                     data = requests.post(
                         url="https://bbs-act.meizu.cn/index.php",
                         headers=headers,
-                        data=data).json()
+                        data=data,
+                    ).json()
                     if data["code"] == 200:
                         one_msg = data.get("data", {}).get("award_name")
                         award_list.append(one_msg)
@@ -84,9 +83,9 @@ class Meizu:
         else:
             draw_msg = "抽奖结果: 未开启抽奖"
         data = {"mod": "index", "action": "get_user_count", "id": "2"}
-        user_info = requests.post("https://bbs-act.meizu.cn/index.php",
-                                  headers=headers,
-                                  data=data).json()
+        user_info = requests.post(
+            "https://bbs-act.meizu.cn/index.php", headers=headers, data=data
+        ).json()
         uid = user_info.get("data", {}).get("uid")
         return draw_msg, uid
 
@@ -102,7 +101,7 @@ class Meizu:
             sign_msg = self.sign(cookie=cookie)
             draw_msg, uid = self.draw(cookie=cookie, count=draw_count)
             msg = f"帐号信息: {uid}\n签到信息: {sign_msg}\n{draw_msg}"
-            msg_all += msg + '\n\n'
+            msg_all += msg + "\n\n"
         return msg_all
 
 

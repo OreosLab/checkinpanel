@@ -21,10 +21,9 @@ class NGA:
         self.check_items = check_items
         self.url = "https://ngabbs.com/nuke.php"
         self.headers = {
-            "User-Agent":
-                "Mozilla/5.0 (Linux; Android 10; NOH-AN00 Build/HUAWEINOH-AN00; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/83.0.4103.106 Mobile Safari/537.36 Nga_Official/90021",
+            "User-Agent": "Mozilla/5.0 (Linux; Android 10; NOH-AN00 Build/HUAWEINOH-AN00; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/83.0.4103.106 Mobile Safari/537.36 Nga_Official/90021",
             "X-Requested-With": "gov.pianzong.androidnga",
-            "X-USER-AGENT": "Nga_Official/90021(HUAWEI NOH-AN00;Android 10)"
+            "X-USER-AGENT": "Nga_Official/90021(HUAWEI NOH-AN00;Android 10)",
         }
 
     def signin(self, token, uid):
@@ -35,12 +34,11 @@ class NGA:
             "app_id": "1010",
             "__act": "check_in",
             "__lib": "check_in",
-            "__output": "12"
+            "__output": "12",
         }
-        req = requests.post(self.url,
-                            headers=self.headers,
-                            data=data,
-                            verify=False).content
+        req = requests.post(
+            self.url, headers=self.headers, data=data, verify=False
+        ).content
         # print(json.loads(req))
         return json.loads(req)
 
@@ -53,12 +51,11 @@ class NGA:
             "mid": "2",
             "__act": "check_mission",
             "__lib": "mission",
-            "__output": "11"
+            "__output": "11",
         }
-        res = requests.post(self.url,
-                            headers=self.headers,
-                            data=data,
-                            verify=False).content
+        res = requests.post(
+            self.url, headers=self.headers, data=data, verify=False
+        ).content
         res = json.loads(res)
         data = res["data"][0]
         # print(data)
@@ -80,12 +77,11 @@ class NGA:
             "mid": "30",
             "__act": "check_mission",
             "__lib": "mission",
-            "__output": "11"
+            "__output": "11",
         }
-        res = requests.post(self.url,
-                            headers=self.headers,
-                            data=data,
-                            verify=False).content
+        res = requests.post(
+            self.url, headers=self.headers, data=data, verify=False
+        ).content
         res = json.loads(res)
         data = res["data"][0]
         # print(data)
@@ -106,7 +102,7 @@ class NGA:
             "app_id": "1010",
             "__act": "video_view_task_counter_add_v2",
             "__lib": "mission",
-            "__output": "11"
+            "__output": "11",
         }
         success_sum = 0
         failure_sum = 0
@@ -114,16 +110,15 @@ class NGA:
         failure_msg_all = ""
         for i in range(4):
             try:
-                res = requests.post(self.url,
-                                    headers=self.headers,
-                                    data=data,
-                                    verify=False).content
+                res = requests.post(
+                    self.url, headers=self.headers, data=data, verify=False
+                ).content
                 res = json.loads(res)
                 # print(res)
                 time.sleep(30)
-                raw_stat = re.search(r'\'raw_stat\':\s*{([^}]+)', str(res)).group(1)
-                task_code = re.search(r'\'6\':\s(\d)', raw_stat).group(1)
-                time_code = re.search(r'\'5\':\s(\d)', raw_stat).group(1)
+                raw_stat = re.search(r"\'raw_stat\':\s*{([^}]+)", str(res)).group(1)
+                task_code = re.search(r"\'6\':\s(\d)", raw_stat).group(1)
+                time_code = re.search(r"\'5\':\s(\d)", raw_stat).group(1)
                 if task_code == "1":
                     success_sum += 1
                 elif task_code == "0" and time_code == "1":
@@ -133,7 +128,11 @@ class NGA:
                 failure_sum += 1
             failure_msg_all += failure_msg + "\n"
         video_coin = success_sum // 2 * 1
-        video_view_stat = f"观看视频成功次数：{success_sum}，共获得N币：{video_coin}" if failure_sum == 0 else f"观看视频成功次数：{success_sum}，共获得N币：{video_coin}；\n观看视频失败次数：{failure_sum}；\n错误信息：{failure_msg_all}"
+        video_view_stat = (
+            f"观看视频成功次数：{success_sum}，共获得N币：{video_coin}"
+            if failure_sum == 0
+            else f"观看视频成功次数：{success_sum}，共获得N币：{video_coin}；\n观看视频失败次数：{failure_sum}；\n错误信息：{failure_msg_all}"
+        )
         return video_view_stat
 
     def view_video_for_adfree_24h(self, token, uid):
@@ -144,13 +143,12 @@ class NGA:
             "app_id": "1010",
             "__act": "video_view_task_counter_add_v2_for_adfree_sp1",
             "__lib": "mission",
-            "__output": "11"
+            "__output": "11",
         }
         try:
-            res = requests.post(self.url,
-                                headers=self.headers,
-                                data=data,
-                                verify=False).content
+            res = requests.post(
+                self.url, headers=self.headers, data=data, verify=False
+            ).content
             res = json.loads(res)
             # print(res)
             time.sleep(30)
@@ -174,7 +172,7 @@ class NGA:
             "app_id": "1010",
             "__act": "video_view_task_counter_add_v2_for_adfree",
             "__lib": "mission",
-            "__output": "11"
+            "__output": "11",
         }
         ids = ("142", "143", "144", "145")
         success_sum = 0
@@ -184,10 +182,9 @@ class NGA:
         code = {}
         for i in range(len(ids)):
             try:
-                res = requests.post(self.url,
-                                    headers=self.headers,
-                                    data=data,
-                                    verify=False).content
+                res = requests.post(
+                    self.url, headers=self.headers, data=data, verify=False
+                ).content
                 res = json.loads(res)
                 time.sleep(30)
                 code[i] = res["data"][1][0][ids[i]]["raw_stat"]["6"]
@@ -200,7 +197,11 @@ class NGA:
                 failure_sum += 1
             failure_msg_all += failure_msg + "\n"
         adfree_time = success_sum * 6
-        adfree_stat = f"观看视频成功次数：{success_sum}，共获得免广告时长：{adfree_time}h" if failure_sum == 0 else f"观看视频成功次数：{success_sum}，共获得免广告时长：{adfree_time}h；\n观看视频失败次数：{failure_sum}；\n错误信息：{failure_msg_all}"
+        adfree_stat = (
+            f"观看视频成功次数：{success_sum}，共获得免广告时长：{adfree_time}h"
+            if failure_sum == 0
+            else f"观看视频成功次数：{success_sum}，共获得免广告时长：{adfree_time}h；\n观看视频失败次数：{failure_sum}；\n错误信息：{failure_msg_all}"
+        )
         return adfree_stat
 
     def get_signin_stat(self, token, uid):
@@ -212,12 +213,11 @@ class NGA:
             "app_id": "1010",
             "__act": "get_stat",
             "__lib": "check_in",
-            "__output": "14"
+            "__output": "14",
         }
-        res = requests.post(self.url,
-                            headers=self.headers,
-                            data=data,
-                            verify=False).content
+        res = requests.post(
+            self.url, headers=self.headers, data=data, verify=False
+        ).content
         res = json.loads(res)
         result = res["result"][0]
         continued = result["continued"]
@@ -233,12 +233,11 @@ class NGA:
             "app_id": "1010",
             "__act": "iflogin",
             "__lib": "login",
-            "__output": "12"
+            "__output": "12",
         }
-        req = requests.post(self.url,
-                            headers=self.headers,
-                            data=data,
-                            verify=False).content
+        req = requests.post(
+            self.url, headers=self.headers, data=data, verify=False
+        ).content
         req = json.loads(req)["result"]["username"]
         return req
 
@@ -252,16 +251,18 @@ class NGA:
                 continued, total = self.get_signin_stat(token=token, uid=uid)
                 username = self.get_user(token=token, uid=uid)
                 if signin_res["code"] == 0:
-                    signin_stat = f"用户：{username}\n统计信息：签到成功，连续签到{continued}天，累计签到{total}天"
+                    signin_stat = (
+                        f"用户：{username}\n统计信息：签到成功，连续签到{continued}天，累计签到{total}天"
+                    )
                 elif signin_res["code"] == 1:
-                    signin_stat = f"用户：{username}\n统计信息：今日已签，连续签到{continued}天，累计签到{total}天"
+                    signin_stat = (
+                        f"用户：{username}\n统计信息：今日已签，连续签到{continued}天，累计签到{total}天"
+                    )
                 time.sleep(1)
-                silver_coin_get_stat = self.silver_coin_get(token=token,
-                                                            uid=uid)
+                silver_coin_get_stat = self.silver_coin_get(token=token, uid=uid)
                 N_coin_get_stat = self.N_coin_get(token=token, uid=uid)
                 video_view_stat = self.view_video(token=token, uid=uid)
-                adfree_24h_stat = self.view_video_for_adfree_24h(token=token,
-                                                                 uid=uid)
+                adfree_24h_stat = self.view_video_for_adfree_24h(token=token, uid=uid)
                 # adfree_stat = self.view_video_for_adfree(token=token, uid=uid)
                 msg = (
                     f"{signin_stat}\n"
