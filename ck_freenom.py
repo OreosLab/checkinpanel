@@ -26,7 +26,8 @@ token_ptn = re.compile('name="token" value="(.*?)"', re.I)
 # 域名信息正则
 domain_info_ptn = re.compile(
     r'<tr><td>(.*?)</td><td>[^<]+</td><td>[^<]+<span class="[^<]+>(\d+?).Days</span>[^&]+&domain=(\d+?)">.*?</tr>',
-    re.I)
+    re.I,
+)
 
 # 登录状态正则
 login_status_ptn = re.compile('<a href="logout.php">Logout</a>', re.I)
@@ -36,15 +37,19 @@ class FreeNom:
     def __init__(self, check_items: dict):
         self.check_items = check_items
         self._s = requests.Session()
-        self._s.headers.update({
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/79.0.3945.130 Safari/537.36"
-        })
+        self._s.headers.update(
+            {
+                "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/79.0.3945.130 Safari/537.36"
+            }
+        )
 
     def _login(self, usr: str, pwd: str) -> bool:
-        self._s.headers.update({
-            "content-type": "application/x-www-form-urlencoded",
-            "referer": "https://my.freenom.com/clientarea.php"
-        })
+        self._s.headers.update(
+            {
+                "content-type": "application/x-www-form-urlencoded",
+                "referer": "https://my.freenom.com/clientarea.php",
+            }
+        )
         r = self._s.post(LOGIN_URL, data={"username": usr, "password": pwd})
         return r.status_code == 200
 
@@ -83,17 +88,26 @@ class FreeNom:
             for domain, days, renewal_id in domains:
                 days = int(days)
                 if days < 14:
-                    self._s.headers.update({
-                        "referer": f"https://my.freenom.com/domains.php?a=renewdomain&domain={renewal_id}",
-                        "content-type": "application/x-www-form-urlencoded"
-                    })
-                    r = self._s.post(RENEW_DOMAIN_URL, data={
-                        "token": token,
-                        "renewalid": renewal_id,
-                        f"renewalperiod[{renewal_id}]": "12M",
-                        "paymentmethod": "credit"
-                    })
-                    result += f"{domain} 续期成功\n" if r.text.find("Order Confirmation") != -1 else f"{domain} 续期失败"
+                    self._s.headers.update(
+                        {
+                            "referer": f"https://my.freenom.com/domains.php?a=renewdomain&domain={renewal_id}",
+                            "content-type": "application/x-www-form-urlencoded",
+                        }
+                    )
+                    r = self._s.post(
+                        RENEW_DOMAIN_URL,
+                        data={
+                            "token": token,
+                            "renewalid": renewal_id,
+                            f"renewalperiod[{renewal_id}]": "12M",
+                            "paymentmethod": "credit",
+                        },
+                    )
+                    result += (
+                        f"{domain} 续期成功\n"
+                        if r.text.find("Order Confirmation") != -1
+                        else f"{domain} 续期失败"
+                    )
                 result += f"{domain} 还有 {days} 天续期\n"
                 msg = f"账号{i}\n" + result
             i += 1

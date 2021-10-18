@@ -29,7 +29,7 @@ class EverPhoto:
             login_key = f"mobile={mobile}&password={password}"
             login_res = requests.post(login_url, data=login_key, headers=header)
             login_data = json.loads(login_res.text)["data"]
-            header["authorization"] = "Bearer "+login_data["token"]
+            header["authorization"] = "Bearer " + login_data["token"]
 
             response = requests.post(url, headers=header)
             data = json.loads(response.text)
@@ -37,11 +37,7 @@ class EverPhoto:
             continuity = data["data"]["continuity"]
 
             msg = (
-                "是否为今日第一次签到："
-                + str(checkin_result)
-                + "\n"
-                + "累积签到天数："
-                + str(continuity)
+                "是否为今日第一次签到：" + str(checkin_result) + "\n" + "累积签到天数：" + str(continuity)
             )
             msg_all += msg + "\n\n"
         return msg_all

@@ -33,11 +33,12 @@ class Mgtv:
             "src": "mgtv",
             "testversion": "",
             "ticket": params.get("ticket"),
-            "uuid": params.get("uuid")
+            "uuid": params.get("uuid"),
         }
         try:
-            user_info = requests.get(url="https://homepage.bz.mgtv.com/v2/user/userInfo",
-                                     params=user_params).json()
+            user_info = requests.get(
+                url="https://homepage.bz.mgtv.com/v2/user/userInfo", params=user_params
+            ).json()
             username = user_info.get("data", {}).get("nickName")
         except Exception as e:
             print("获取用户信息失败", e)
@@ -62,7 +63,7 @@ class Mgtv:
             params["timestamp"] = [round(time.time())]
             params = {key: value[0] for key, value in params.items()}
             msg = self.sign(params=params)
-            msg_all += msg + '\n\n'
+            msg_all += msg + "\n\n"
         return msg_all
 
 

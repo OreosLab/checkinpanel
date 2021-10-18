@@ -19,8 +19,8 @@ class WZYD:
     @staticmethod
     def sign(data):
         response = requests.post(
-            url="https://ssl.kohsocialapp.qq.com:10001/play/h5sign",
-            data=data).json()
+            url="https://ssl.kohsocialapp.qq.com:10001/play/h5sign", data=data
+        ).json()
         try:
             if response["result"] == 0:
                 msg = "签到成功"
@@ -42,7 +42,7 @@ class WZYD:
                 user_id = "未获取到用户信息"
             sign_msg = self.sign(data=data)
             msg = f"帐号信息: {user_id}\n签到信息: {sign_msg}"
-            msg_all += msg + '\n\n'
+            msg_all += msg + "\n\n"
         return msg_all
 
 
@@ -50,4 +50,4 @@ if __name__ == "__main__":
     data = get_data()
     _check_items = data.get("WZYD", [])
     res = WZYD(check_items=_check_items).main()
-    send('王者营地', res)
+    send("王者营地", res)

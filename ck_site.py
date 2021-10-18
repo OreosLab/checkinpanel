@@ -34,16 +34,16 @@ class Site:
         header = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36",
             "Accept-Language": "zh-CN,zh;q=0.9",
-            "Referer": url
+            "Referer": url,
         }
         return header
 
     @staticmethod
     def cookieParse(cookiesStr):
         cookie_dict = {}
-        cookies = cookiesStr.split(';')
+        cookies = cookiesStr.split(";")
         for cookie in cookies:
-            cookie = cookie.split('=')
+            cookie = cookie.split("=")
             cookie_dict[cookie[0]] = cookie[1]
         return cookie_dict
 
@@ -70,7 +70,9 @@ class Site:
             attendance_url = url + "/attendance-ajax.php"
             with session.get(attendance_url) as res:
                 try:
-                    msg = json.loads(res.text.encode("utf-8").decode("unicode-escape")).get("message")
+                    msg = json.loads(
+                        res.text.encode("utf-8").decode("unicode-escape")
+                    ).get("message")
                 except JSONDecodeError:
                     msg = res.text
                 if "连续签到" in msg:
@@ -142,12 +144,21 @@ class Site:
     @staticmethod
     # discuz 系列签到
     def signin_discuz_dsu(session, url):
-        attendance_url = url + "/plugin.php?id=dsu_paulsign:sign&operation=qiandao&infloat=1&sign_as=1&inajax=1"
+        attendance_url = (
+            url
+            + "/plugin.php?id=dsu_paulsign:sign&operation=qiandao&infloat=1&sign_as=1&inajax=1"
+        )
         hash_url = url + "/plugin.php?id=dsu_paulsign:sign"
         with session.get(hash_url) as hashurl:
             h = re.compile(r'name="formhash" value="(.*?)"')
             formhash = h.search(hashurl.text).group(1)
-        data = {"qdmode": 3, "qdxq": "kx", "fastreply": 0, "formhash": formhash, "todaysay": ""}
+        data = {
+            "qdmode": 3,
+            "qdxq": "kx",
+            "fastreply": 0,
+            "formhash": formhash,
+            "todaysay": "",
+        }
         with session.post(attendance_url, data) as res:
             r = re.compile(r"签到成功")
             r1 = re.compile(r"已经签到")

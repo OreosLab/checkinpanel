@@ -25,7 +25,8 @@ class WeiBo:
         response = requests.get(
             url=f"https://api.weibo.cn/2/checkin/add?c=iphone&{token}",
             headers=headers,
-            verify=False)
+            verify=False,
+        )
         result = response.json()
         if result.get("status") == 10000:
             msg = f'连续签到: {result.get("data").get("continuous")}天\n本次收益: {result.get("data").get("desc")}'
@@ -43,7 +44,8 @@ class WeiBo:
         response = requests.get(
             url=f"https://api.weibo.cn/2/!/ug/king_act_home?c=iphone&{token}",
             headers=headers,
-            verify=False)
+            verify=False,
+        )
         result = response.json()
         if result.get("status") == 10000:
             nickname = result.get("data").get("user").get("nickname")
@@ -62,15 +64,15 @@ class WeiBo:
             "Connection": "keep-alive",
             "Content-Type": "application/x-www-form-urlencoded",
             "Host": "pay.sc.weibo.com",
-            "User-Agent":
-                "Mozilla/5.0 (iPhone; CPU iPhone OS 14_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Weibo (iPhone10,1__weibo__11.2.1__iphone__os14.5)"
+            "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Weibo (iPhone10,1__weibo__11.2.1__iphone__os14.5)",
         }
         data = token + "&lang=zh_CN&wm=3333_2001"
         response = requests.post(
             url="https://pay.sc.weibo.com/aj/mobile/home/welfare/signin/do",
             headers=headers,
             data=data,
-            verify=False)
+            verify=False,
+        )
         try:
             result = response.json()
             if result.get("status") == 1:
@@ -80,7 +82,8 @@ class WeiBo:
                 info_response = requests.post(
                     url="https://pay.sc.weibo.com/api/client/sdk/app/balance",
                     headers=headers,
-                    data=data)
+                    data=data,
+                )
                 info_result = info_response.json()
                 msg += f"\n当前现金: {info_result.get('data').get('balance')} 元"
             else:
@@ -97,7 +100,8 @@ class WeiBo:
             query_dict = dict(parse.parse_qsl(parse.urlsplit(url).query))
             token = "&".join(
                 [
-                    f"{key}={value}" for key, value in query_dict.items()
+                    f"{key}={value}"
+                    for key, value in query_dict.items()
                     if key in ["from", "uid", "s", "gsid"]
                 ]
             )

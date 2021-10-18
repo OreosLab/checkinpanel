@@ -24,12 +24,15 @@ class LeetCode:
                 "operationName": "questionOfToday",
                 "variables": {},
                 "query": "query questionOfToday { todayRecord {   question {     questionFrontendId     questionTitleSlug "
-                "__typename   }   lastSubmission {     id     __typename   }   date   userStatus   __typename }} "
-            }
+                "__typename   }   lastSubmission {     id     __typename   }   date   userStatus   __typename }} ",
+            },
         )
         leetcodeTitle = (
             json.loads(response.text)
-                .get("data").get("todayRecord")[0].get("question").get("questionTitleSlug")
+            .get("data")
+            .get("todayRecord")[0]
+            .get("question")
+            .get("questionTitleSlug")
         )
 
         # 获取今日每日一题的所有信息
@@ -52,8 +55,8 @@ class LeetCode:
                 "envInfo    book {      id      bookName      pressName      source      "
                 "shortDescription      fullDescription      bookImgUrl      pressImgUrl      "
                 "productUrl      __typename    }    isSubscribed    isDailyQuestion    "
-                "dailyRecordStatus    editorType    ugcQuestionId    style    __typename  }}"
-            }
+                "dailyRecordStatus    editorType    ugcQuestionId    style    __typename  }}",
+            },
         )
         # 转化成json格式
         jsonText = json.loads(response.text).get("data").get("question")

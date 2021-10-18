@@ -14,15 +14,13 @@ class CSDN:
     def __init__(self, check_items):
         self.check_items = check_items
         self.headers = {
-            "user-agent":
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_2) AppleWebKit/537.36 (KHTML, like Gecko)"
-                "Chrome/88.0.4324.182 Safari/537.36 Edg/88.0.705.74"
+            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_2) AppleWebKit/537.36 (KHTML, like Gecko)"
+            "Chrome/88.0.4324.182 Safari/537.36 Edg/88.0.705.74"
         }
 
     def sign(self, cookies):
         url = "https://me.csdn.net/api/LuckyDraw_v2/signIn"
-        response = requests.get(
-            url=url, headers=self.headers, cookies=cookies).json()
+        response = requests.get(url=url, headers=self.headers, cookies=cookies).json()
         if response.get("code") == 200:
             msg = response.get("data").get("msg")
         else:
@@ -32,8 +30,7 @@ class CSDN:
 
     def draw(self, cookies):
         url = "https://me.csdn.net/api/LuckyDraw_v2/goodluck"
-        response = requests.get(
-            url=url, headers=self.headers, cookies=cookies).json()
+        response = requests.get(url=url, headers=self.headers, cookies=cookies).json()
         if response.get("code") == 200:
             msg = response.get("data").get("msg")
         else:

@@ -18,19 +18,21 @@ class YouDao:
     def sign(cookies):
         ad_space = 0
         refresh_cookies_res = requests.get(
-            "http://note.youdao.com/login/acc/pe/getsess?product=YNOTE",
-            cookies=cookies)
+            "http://note.youdao.com/login/acc/pe/getsess?product=YNOTE", cookies=cookies
+        )
         cookies = dict(refresh_cookies_res.cookies)
         url = "https://note.youdao.com/yws/api/daupromotion?method=sync"
         res = requests.post(url=url, cookies=cookies)
         if "error" not in res.text:
             checkin_response = requests.post(
                 url="https://note.youdao.com/yws/mapi/user?method=checkin",
-                cookies=cookies)
+                cookies=cookies,
+            )
             for i in range(3):
                 ad_response = requests.post(
                     url="https://note.youdao.com/yws/mapi/user?method=adRandomPrompt",
-                    cookies=cookies)
+                    cookies=cookies,
+                )
                 ad_space += ad_response.json().get("space", 0) // 1048576
             if "reward" in res.text:
                 sync_space = res.json().get("rewardSpace", 0) // 1048576

@@ -55,8 +55,10 @@ class VQQ:
     @staticmethod
     def sign_twice(headers, cookies):
         this_time = int(round(time.time() * 1000))
-        url = "https://vip.video.qq.com/fcgi-bin/comm_cgi?name=hierarchical_task_system&cmd=2&_=" + \
-            str(this_time)
+        url = (
+            "https://vip.video.qq.com/fcgi-bin/comm_cgi?name=hierarchical_task_system&cmd=2&_="
+            + str(this_time)
+        )
         res = requests.get(url=url, headers=headers, cookies=cookies)
         res.encoding = "utf8"
         if "Account Verify Error" in res.text:
@@ -110,12 +112,11 @@ class VQQ:
             }
             headers = {
                 "Referer": "https://v.qq.com",
-                "User-Agent":
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.204 Safari/537.36"
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.204 Safari/537.36",
             }
-            login_cookie, nick = self.refresh_cookie(url=auth_refresh,
-                                                     headers=headers,
-                                                     cookies=cookie)
+            login_cookie, nick = self.refresh_cookie(
+                url=auth_refresh, headers=headers, cookies=cookie
+            )
             if login_cookie.get("main_login") == "qq":
                 cookie["vqq_vusession"] = login_cookie.get("vqq_vusession")
             else:

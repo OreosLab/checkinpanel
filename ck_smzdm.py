@@ -20,7 +20,8 @@ class Smzdm:
     def sign(session):
         try:
             current = session.get(
-                url="https://zhiyou.smzdm.com/user/info/jsonp_get_current").json()
+                url="https://zhiyou.smzdm.com/user/info/jsonp_get_current"
+            ).json()
             if current["checkin"]["has_checkin"]:
                 msg = (
                     f"用户信息: {current.get('nickname', '')}\n目前积分: {current.get('point', '')}\n"
@@ -30,15 +31,20 @@ class Smzdm:
                     f"已经签到: {current.get('checkin', {}).get('daily_checkin_num', '')} 天"
                 )
             else:
-                response = session.get(
-                    url="https://zhiyou.smzdm.com/user/checkin/jsonp_checkin"
-                ).json().get("data", {})
+                response = (
+                    session.get(
+                        url="https://zhiyou.smzdm.com/user/checkin/jsonp_checkin"
+                    )
+                    .json()
+                    .get("data", {})
+                )
                 msg = (
                     f"用户信息: {current.get('nickname', '')}\n目前积分: {response.get('point', '')}\n"
                     f"增加积分: {response.get('add_point', '')}\n经验值: {response.get('exp', '')}\n"
                     f"金币: {response.get('gold', '')}\n威望: {response.get('prestige', '')}\n"
                     f"等级: {response.get('rank', '')}\n"
-                    f"已经签到: {response.get('checkin_num', {})} 天")
+                    f"已经签到: {response.get('checkin_num', {})} 天"
+                )
         except Exception as e:
             msg = f"签到状态: 签到失败\n错误信息: {e}，请重新获取 cookie"
         return msg
@@ -66,8 +72,7 @@ class Smzdm:
                     "Sec-Fetch-Dest": "script",
                     "Sec-Fetch-Mode": "no-cors",
                     "Sec-Fetch-Site": "same-site",
-                    "User-Agent":
-                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36"
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
                 }
             )
             sign_msg = self.sign(session=session)

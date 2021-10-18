@@ -60,7 +60,9 @@ class EUserv:
             "Chrome/94.0.4606.61 Safari/537.36 "
         )
 
-    def captcha_solver(self, captcha_image_url: str, session: requests.session, userid, apikey) -> dict:
+    def captcha_solver(
+        self, captcha_image_url: str, session: requests.session, userid, apikey
+    ) -> dict:
         """
         TrueCaptcha API doc: https://apitruecaptcha.org/api
         Free to use 100 requests per day.
@@ -132,7 +134,14 @@ class EUserv:
         j = json.loads(r.text)
         return j
 
-    def login(self, username: str, password: str, userid: str, apikey: str, CHECK_CAPTCHA_SOLVER_USAGE: bool) -> tuple:
+    def login(
+        self,
+        username: str,
+        password: str,
+        userid: str,
+        apikey: str,
+        CHECK_CAPTCHA_SOLVER_USAGE: bool,
+    ) -> tuple:
         headers = {"user-agent": self.user_agent, "origin": "https://www.euserv.com"}
         url = "https://support.euserv.com/index.iphp"
         captcha_image_url = "https://support.euserv.com/securimage_show.php"
@@ -168,7 +177,9 @@ class EUserv:
                 return "-1", session
             else:
                 log("[Captcha Solver] 进行验证码识别...")
-                solved_result = self.captcha_solver(captcha_image_url, session, userid, apikey)
+                solved_result = self.captcha_solver(
+                    captcha_image_url, session, userid, apikey
+                )
                 captcha_code = self.handle_captcha_solved_result(solved_result)
                 log("[Captcha Solver] 识别的验证码是: {}".format(captcha_code))
 
@@ -228,7 +239,9 @@ class EUserv:
             d[server_id[0].get_text()] = flag
         return d
 
-    def renew(self, sess_id: str, session: requests.session, password: str, order_id: str) -> bool:
+    def renew(
+        self, sess_id: str, session: requests.session, password: str, order_id: str
+    ) -> bool:
         url = "https://support.euserv.com/index.iphp"
         headers = {
             "user-agent": self.user_agent,
@@ -287,7 +300,9 @@ class EUserv:
             apikey = check_item.get("apikey")
             log("*" * 12)
             log("[EUserv] 正在续费第 %d 个账号" % (i + 1))
-            sessid, s = self.login(username, password, userid, apikey, CHECK_CAPTCHA_SOLVER_USAGE)
+            sessid, s = self.login(
+                username, password, userid, apikey, CHECK_CAPTCHA_SOLVER_USAGE
+            )
             if sessid == "-1":
                 log("[EUserv] 第 %d 个账号登陆失败，请检查登录信息" % (i + 1))
                 continue

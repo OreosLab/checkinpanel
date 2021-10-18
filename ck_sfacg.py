@@ -32,8 +32,14 @@ class SFACG:
             "authorization": authorization,
             "cookie": cookie,
             "user-agent": useragent,
-            "sfsecurity": sfsecurity.split("&")[0] + "&timestamp=" + str(int(timestamp)) + "&" + sfsecurity.split("&")[2] + "&" + sfsecurity.split("&")[3],
-            "accept-encoding": "gzip"
+            "sfsecurity": sfsecurity.split("&")[0]
+            + "&timestamp="
+            + str(int(timestamp))
+            + "&"
+            + sfsecurity.split("&")[2]
+            + "&"
+            + sfsecurity.split("&")[3],
+            "accept-encoding": "gzip",
         }
         return headers
 
@@ -57,7 +63,14 @@ class SFACG:
             nick_Name = result["data"]["nickName"]
             fireMoneyRemain = money["data"]["fireMoneyRemain"]
             user_vipLevel = money["data"]["vipLevel"]
-            info = "账号名称: " + nick_Name + "\n火卷余额: " + str(fireMoneyRemain) + "\nVIP: " + str(user_vipLevel)
+            info = (
+                "账号名称: "
+                + nick_Name
+                + "\n火卷余额: "
+                + str(fireMoneyRemain)
+                + "\nVIP: "
+                + str(user_vipLevel)
+            )
             print("Cookie 凭证有效！")
         except BaseException:
             info = "Cookie 凭证失效 httpCode: " + str(result["status"]["httpCode"])
@@ -67,16 +80,8 @@ class SFACG:
     def task(self, authorization, cookie, useragent, sfsecurity):
         headers = self.generateHeader(authorization, cookie, useragent, sfsecurity)
         print("运行时间:", readingDate)
-        ReadTime = {
-            "seconds": 3605,
-            "readingDate": readingDate,
-            "entityType": 2
-        }
-        ListenTime = {
-            "seconds": 3605,
-            "readingDate": readingDate,
-            "entityType": 3
-        }
+        ReadTime = {"seconds": 3605, "readingDate": readingDate, "entityType": 2}
+        ListenTime = {"seconds": 3605, "readingDate": readingDate, "entityType": 3}
         ReadData = json.dumps(ReadTime)
         ListenData = json.dumps(ListenTime)
 
@@ -86,17 +91,26 @@ class SFACG:
         put_headers["content-type"] = "application/json; charset=UTF-8"
 
         print("开始执行任务")
-        self.put_re("https://api.sfacg.com/user/readingtime", put_headers, data=ListenData)
+        self.put_re(
+            "https://api.sfacg.com/user/readingtime", put_headers, data=ListenData
+        )
         self.post_re("https://api.sfacg.com/user/tasks/4", headers, data=ListenData)
         self.post_re("https://api.sfacg.com/user/tasks/5", headers, data=ListenData)
         self.post_re("https://api.sfacg.com/user/tasks/17", headers, data=ListenData)
         for i in range(3):
-            r = self.put_re("https://api.sfacg.com/user/readingtime", put_headers, ReadData)
-            # print(r)
+            self.put_re(
+                "https://api.sfacg.com/user/readingtime", put_headers, ReadData
+            )
             time.sleep(0.5)
-            self.put_re("https://api.sfacg.com/user/tasks/5", put_headers, data=ListenData)
-            self.put_re("https://api.sfacg.com/user/tasks/4", put_headers, data=ListenData)
-            self.put_re("https://api.sfacg.com/user/tasks/17", put_headers, data=ListenData)
+            self.put_re(
+                "https://api.sfacg.com/user/tasks/5", put_headers, data=ListenData
+            )
+            self.put_re(
+                "https://api.sfacg.com/user/tasks/4", put_headers, data=ListenData
+            )
+            self.put_re(
+                "https://api.sfacg.com/user/tasks/17", put_headers, data=ListenData
+            )
 
     def checkin(self, authorization, cookie, useragent, sfsecurity):
         headers = self.generateHeader(authorization, cookie, useragent, sfsecurity)
@@ -109,17 +123,25 @@ class SFACG:
             print(sign_msg)
         else:
             print("检测到今天还未签到，开始自动签到和完成任务")
-            response = requests.put("https://api.sfacg.com/user/signInfo", headers=headers).json()
+            response = requests.put(
+                "https://api.sfacg.com/user/signInfo", headers=headers
+            ).json()
             # print(response)
             if response["status"]["httpCode"] == 200:
                 sign_tip = "签到提醒: 签到成功！"
             else:
                 sign_tip = "签到提醒: " + str(response["status"]["msg"])
             sign_msg = ""
-            for data in self.get_re("https://api.sfacg.com/user/signInfo", headers)["data"]:
-                sign_msg = "签到日期: " + \
-                    sign_date.format(data["year"], data["month"], data["day"]) + \
-                    "，连续签到 " + str(data["continueNum"]) + " 天"
+            for data in self.get_re("https://api.sfacg.com/user/signInfo", headers)[
+                "data"
+            ]:
+                sign_msg = (
+                    "签到日期: "
+                    + sign_date.format(data["year"], data["month"], data["day"])
+                    + "，连续签到 "
+                    + str(data["continueNum"])
+                    + " 天"
+                )
             sign_msg += "\n" + sign_tip
             self.task(authorization, cookie, useragent, sfsecurity)
         return sign_msg

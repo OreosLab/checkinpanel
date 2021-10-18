@@ -19,7 +19,9 @@ class FMAPP:
     @staticmethod
     def sign(headers):
         try:
-            url = "https://fmapp.chinafamilymart.com.cn/api/app/market/member/signin/sign"
+            url = (
+                "https://fmapp.chinafamilymart.com.cn/api/app/market/member/signin/sign"
+            )
             response = requests.post(url=url, headers=headers).json()
             code = response.get("code")
             if code == "200":
@@ -56,9 +58,7 @@ class FMAPP:
         try:
             url = "https://fmapp.chinafamilymart.com.cn/api/app/member/v1/mili/service/detail"
             response = requests.post(
-                url=url,
-                headers=headers,
-                data=json.dumps({"pageSize": 10, "pageNo": 1})
+                url=url, headers=headers, data=json.dumps({"pageSize": 10, "pageNo": 1})
             ).json()
             code = response.get("code")
             if code == "200":
@@ -94,7 +94,7 @@ class FMAPP:
                 "User-Agent": useragent,
                 "os": os,
                 "cookie": cookie,
-                "blackBox": blackbox
+                "blackBox": blackbox,
             }
             sign_msg = self.sign(headers=headers)
             name_msg = self.user_info(headers=headers)
