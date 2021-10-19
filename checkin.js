@@ -1,7 +1,7 @@
 // @grant nodejs
 let pyname = $env.PYNAME
 console.log(`⏳ 开始执行 ${pyname}`)
-$exec(`python3 https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/${pyname}`, {
+$exec(`python3 ${pyname}`, {
     cwd: './script/Shell/checkinpanel',
     timeout: 0,
     // prettier-ignore
