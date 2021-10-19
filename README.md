@@ -196,73 +196,18 @@ install_requirements
 ```sh
 package_name="axios got json5 request"
 
-install_packages_normal() {
-    for i in $@; do
-        case $i in
-            canvas)
-                cd /ql/scripts
-                if [[ "$(echo $(npm ls $i) | grep ERR)" != "" ]]; then
-                    npm uninstall $i
-                fi
-                if [[ "$(npm ls $i)" =~ (empty) ]]; then
-                    apk add --no-cache build-base g++ cairo-dev pango-dev giflib-dev && npm i $i --prefix /ql/scripts --build-from-source
-                fi
-                ;;
-            *)
-                if [[ "$(npm ls $i)" =~ $i ]]; then
-                    npm uninstall $i
-                elif [[ "$(echo $(npm ls $i -g) | grep ERR)" != "" ]]; then
-                    npm uninstall $i -g
-                fi
-                if [[ "$(npm ls $i -g)" =~ (empty) ]]; then
-                    [[ $i = "typescript" ]] && npm i $i -g --force || npm i $i -g
-                fi
-                ;;
-        esac
-    done
-}
-
-install_packages_force() {
-    for i in $@; do
-        case $i in
-            canvas)
-                cd /ql/scripts
-                if [[ "$(npm ls $i)" =~ $i && "$(echo $(npm ls $i) | grep ERR)" != "" ]]; then
-                    npm uninstall $i
-                    rm -rf /ql/scripts/node_modules/$i
-                    rm -rf /usr/local/lib/node_modules/lodash/*
-                fi
-                if [[ "$(npm ls $i)" =~ (empty) ]]; then
-                    apk add --no-cache build-base g++ cairo-dev pango-dev giflib-dev && npm i $i --prefix /ql/scripts --build-from-source --force
-                fi
-                ;;
-            *)
-                cd /ql/scripts
-                if [[ "$(npm ls $i)" =~ $i ]]; then
-                    npm uninstall $i
-                    rm -rf /ql/scripts/node_modules/$i
-                    rm -rf /usr/local/lib/node_modules/lodash/*
-                elif [[ "$(npm ls $i -g)" =~ $i && "$(echo $(npm ls $i -g) | grep ERR)" != "" ]]; then
-                    npm uninstall $i -g
-                    rm -rf /ql/scripts/node_modules/$i
-                    rm -rf /usr/local/lib/node_modules/lodash/*
-                fi
-                if [[ "$(npm ls $i -g)" =~ (empty) ]]; then
-                    npm i $i -g --force
-                fi
-                ;;
-        esac
-    done
-}
-
-install_packages_all() {
-    install_packages_normal $package_name
+install_packages_local() {
+    cd /ql/scripts
     for i in $package_name; do
-        install_packages_force $i
+        if [[ "$(npm list --depth=0)" =~ $i ]]; then
+            echo "$i 已安装"
+        else
+            npm install $i
+        fi
     done
 }
 
-install_packages_all
+install_packages_local
 ```
 
 在 `extra.sh` 增加这些代码即可
