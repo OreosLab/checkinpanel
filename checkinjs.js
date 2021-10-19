@@ -1,7 +1,7 @@
 // @grant nodejs
 let jsname = $env.JSNAME
 console.log(`⏳ 开始执行 ${jsname}`)
-$exec(`node https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/${jsname}`, {
+$exec(`node ${jsname}`, {
     cwd: './script/Shell/checkinpanel',
     timeout: 0,
     // prettier-ignore

@@ -1,4 +1,4 @@
-<div align="center"> 
+<div align="center">
 <h1 align="center">定时面板上的签到盒</h1>
 
 <a href="https://github.com/Oreomeow/checkinpanel/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/Oreomeow/checkinpanel?color=yellow&amp;logo=Riseup&amp;logoColor=yellow&amp;style=flat-square"/></a>
@@ -53,7 +53,7 @@ TASK -> 添加订阅任务 -> 修改名称、更新方式、任务 -> 获取内�
 
 任务：
 
-```
+```text
 https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 ```
 
@@ -129,7 +129,11 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 ### 5. 检查依赖
 
-> 如果任务列表安装不成功，参考 [#12](https://github.com/Oreomeow/checkinpanel/issues/12)
+* 运行 `签到依赖` 任务后的日志
+
+    [![50mFht.png](https://z3.ax1x.com/2021/10/19/50mFht.png)](https://imgtu.com/i/50mFht)
+
+* 如果任务列表安装不成功，参考 [#12](https://github.com/Oreomeow/checkinpanel/issues/12)
 
 ## 𝐪𝐢𝐧𝐠𝐥𝐨𝐧𝐠 使用方法
 
@@ -161,63 +165,16 @@ JavaScript 依赖
 cd /ql/scripts && npm install axios got json5 request
 ```
 
-**Python 依赖持久化配置**
+依赖持久化配置
 
-```sh
-requirement_name="bs4 cryptography~=3.2.1 json5 requests rsa"
-
-install_requirements() {
-    for i in $requirement_name; do
-        case $i in
-            cryptography~=3.2.1)
-                cd /ql/scripts
-                if [[ "$(pip3 freeze)" =~ "cryptography==3.2.1" ]]; then
-                    echo "cryptography==3.2.1 已安装"
-                else
-                    apk add --no-cache gcc libffi-dev musl-dev openssl-dev python3-dev && pip3 install cryptography~=3.2.1
-                fi
-                ;;
-            *)
-                if [[ "$(pip3 freeze)" =~ $i ]]; then
-                    echo "$i 已安装"
-                else
-                    pip3 install $i
-                fi
-                ;;
-        esac
-    done
-}
-
-install_requirements
-```
-
-**JavaScript 依赖持久化配置**
-
-```sh
-package_name="axios got json5 request"
-
-install_packages_local() {
-    cd /ql/scripts
-    for i in $package_name; do
-        if [[ "$(npm list --depth=0)" =~ $i ]]; then
-            echo "$i 已安装"
-        else
-            npm install $i
-        fi
-    done
-}
-
-install_packages_local
-```
-
-在 `extra.sh` 增加这些代码即可
+> `签到依赖` 任务保持定时运行即可
 
 ### 3. 拉取仓库
 
 可添加定时任务，名称、时间自定
 
-```
-ql repo https://github.com/Oreomeow/checkinpanel.git "api_|ck_" "^checkin" "^notify|^utils" "master"
+```sh
+ql repo https://github.com/Oreomeow/checkinpanel.git "api_|ck_|ins_" "^checkin" "^notify|^utils" "master"
 ```
 
 **解决 Shell 脚本无法拉取问题**
@@ -237,9 +194,9 @@ cp /ql/repo/Oreomeow_checkinpanel_master/check.sample.json5 /ql/config/check.jso
 
 *通知配置文件（可选）*
 
-~~~shell
+```sh
 cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
-~~~
+```
 
 ### 5. 配置通知
 
@@ -278,8 +235,8 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 
 * 目前 Shell 脚本只有一个 SSPanel 签到，如需使用请参考 `env.sample` 配置 `.env` 后放入 `script/Lists` 或 `/ql/config` 文件夹
 * 支持自定义配置文件路径
-    - 环境变量 / store KEY 名称：`ENV_PATH`
-    - 参考值 / VALUE：`/usr/local/app/script/.env`
+  * 环境变量 / store KEY 名称：`ENV_PATH`
+  * 参考值 / VALUE：`/usr/local/app/script/.env`
 
 ### 4. **添加了欢太商城的签到配置**
 
@@ -329,6 +286,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 * [x] 通知方式增加，如飞书
 * [x] Shell 消息推送、环境检查单列
 * [x] 项目重新初始化，更新日志规范化
+* [x] 依赖安装重构
 * [ ] cron 随机
 * [ ] elecV2P 任务列表自动更新
 * [ ] 任务多合一执行
