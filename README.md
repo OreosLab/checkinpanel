@@ -131,7 +131,7 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 * 运行 `签到依赖` 任务后的日志
 
-    [![50mFht.png](https://z3.ax1x.com/2021/10/19/50mFht.png)](https://imgtu.com/i/50mFht)
+    [![5BMl7D.png](https://z3.ax1x.com/2021/10/20/5BMl7D.png)](https://imgtu.com/i/5BMl7D)
 
 * 如果任务列表安装不成功，参考 [#12](https://github.com/Oreomeow/checkinpanel/issues/12)
 
@@ -251,8 +251,10 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 ### 6. **EUserv 在未开启登录验证时有效**
 
 * [True Captcha](https://apitruecaptcha.org/api)
+
 * 如图注册账号后获取 `userid` 和 `apikey`
-[![5e9nF1.png](https://z3.ax1x.com/2021/10/11/5e9nF1.png)](https://imgtu.com/i/5e9nF1)
+
+  [![5e9nF1.png](https://z3.ax1x.com/2021/10/11/5e9nF1.png)](https://imgtu.com/i/5e9nF1)
 
 ## 其他说明
 
