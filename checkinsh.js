@@ -1,6 +1,6 @@
 // @grant nodejs
-let shname = $env.SHNAME
-console.log(`⏳ 开始执行 ${shname}`)
+let shname = $env.SHNAME;
+console.log(`⏳ 开始执行 ${shname}`);
 $exec(`chmod +x ${shname} && bash ${shname}`, {
     cwd: './script/Shell/checkinpanel',
     timeout: 0,
@@ -36,6 +36,6 @@ $exec(`chmod +x ${shname} && bash ${shname}`, {
         TG_PROXY_PORT: $store.get('TG_PROXY_PORT', 'string')                      // tg 机器人的 TG_PROXY_PORT，例：1080，可不填
     },
     cb(data, error) {
-        error ? console.error(error) : console.log(data)
+        error ? console.error(error) : console.log(data);
     },
-})
+});
