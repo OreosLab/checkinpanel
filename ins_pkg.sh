@@ -16,7 +16,7 @@ install() {
     count=0
     flag=0
     while true; do
-        echo ".......... $1 begin  .........."
+        echo ".......... $1 begin .........."
         result=$2
         if [[ $3 ]]; then
             flag=0
@@ -41,7 +41,7 @@ install() {
 install_alpine_pkgs() {
     apk update
     for i in $alpine_pkgs; do
-        if [[ $(apk info) =~ $i ]]; then
+        if [[ $(apk info | grep "^$i$") = "$i" ]]; then
             echo "$i 已安装"
         else
             install "apk add $i" "$(apk add --no-cache "$i")" "$result =~ OK" "apk add $i"
@@ -51,22 +51,11 @@ install_alpine_pkgs() {
 
 install_py_reqs() {
     for i in $py_reqs; do
-        case $i in
-        cryptography==3.2.1)
-            if [[ "$(pip3 freeze)" =~ cryptography==3.2.1 ]]; then
-                echo "cryptography==3.2.1 已安装"
-            else
-                install "pip3 install $i" "$(apk add --no-cache gcc libffi-dev musl-dev openssl-dev python3-dev && pip3 install cryptography==3.2.1)" "$result =~ Successfully" "pip3 install $i"
-            fi
-            ;;
-        *)
-            if [[ "$(pip3 freeze)" =~ $i ]]; then
-                echo "$i 已安装"
-            else
-                install "pip3 install $i" "$(pip3 install "$i")" "$result =~ Successfully" "pip3 install $i"
-            fi
-            ;;
-        esac
+        if [[ "$(pip3 freeze)" =~ $i ]]; then
+            echo "$i 已安装"
+        else
+            install "pip3 install $i" "$(pip3 install "$i")" "$result =~ Successfully" "pip3 install $i"
+        fi
     done
 }
 

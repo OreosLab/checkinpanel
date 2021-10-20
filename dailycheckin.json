@@ -55,6 +55,16 @@
             "running": true
         },
         {
+            "name": "日常依赖",
+            "type": "cron",
+            "time": "10 16 * * *",
+            "job": {
+                "type": "exec",
+                "target": "chmod +x ins_pkg.sh && bash ins_pkg.sh -cwd script/Shell/checkinpanel -timeout 600000"
+            },
+            "running": true
+        },
+        {
             "name": "JS-JS",
             "type": "schedule",
             "time": "0",
@@ -212,7 +222,7 @@
                 "type": "runjs",
                 "target": "checkin.js -env PYNAME=ck_euserv.py"
             },
-            "running": false
+            "running": true
         },
         {
             "name": "时光相册",
@@ -462,7 +472,7 @@
                 "type": "runjs",
                 "target": "checkinsh.js -env SHNAME=ck_sspanel.sh"
             },
-            "running": false
+            "running": true
         },
         {
             "name": "百度贴吧",

@@ -6,7 +6,7 @@ import time
 import requests
 
 
-__version__ = "20211019-3-200"
+__version__ = "20211020-3-010"
 ONLINE_VERSION = ""
 ver_re = re.compile("__version__ = .(\\d+-\\d+-...).")
 
