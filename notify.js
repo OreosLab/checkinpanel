@@ -398,6 +398,10 @@ function tgBotNotify(text, desp) {
             };
             if (TG_PROXY_HOST && TG_PROXY_PORT) {
                 const tunnel = require('tunnel');
+                if (TG_PROXY_HOST.indexOf('@') != -1) {
+                    TG_PROXY_AUTH = TG_PROXY_HOST.split('@')[0];
+                    TG_PROXY_HOST = TG_PROXY_HOST.split('@')[1];
+                }
                 const agent = {
                     https: tunnel.httpsOverHttp({
                         proxy: {
