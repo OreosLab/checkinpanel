@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# shellcheck disable=SC2188
 <<'COMMENT'
 cron: 28 11 * * *
 new Env('SSPanel 签到');
