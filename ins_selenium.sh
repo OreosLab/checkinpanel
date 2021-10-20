@@ -1,16 +1,13 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC2188
-<<'COMMENT'
-cron: 16 */2 * * *
-new Env('签到依赖');
-COMMENT
-
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 alpine_pkgs="bash curl gcc git jq libffi-dev musl-dev openssl-dev python3 python3-dev py3-pip"
-py_reqs="bs4 cryptography==3.2.1 json5 requests rsa"
-js_pkgs="axios got json5 request"
+py_reqs="cryptography==3.2.1 selenium PyVirtualDisplay"
+chromium_pkgs="chromium libexif eudev"
+chromedriver_pkgs="chromium-chromedriver"
+xvfb_pkgs="xvfb"
+alpine_pkgs="$alpine_pkgs $chromium_pkgs $chromedriver_pkgs $xvfb_pkgs"
 
 install() {
     count=0
@@ -60,21 +57,5 @@ install_py_reqs() {
     done
 }
 
-install_js_pkgs() {
-    for i in $js_pkgs; do
-        if [[ "$(npm ls "$i")" =~ $i ]]; then
-            echo "$i 已安装"
-        else
-            if [ -d "/ql/scripts" ]; then
-                install "npm install $i" "$(npm install "$i" --force)" "$(npm ls "$i") =~ $i" "cd /ql/scripts && npm install $i"
-            else
-                npm install
-                break
-            fi
-        fi
-    done
-}
-
 install_alpine_pkgs
 install_py_reqs
-install_js_pkgs
