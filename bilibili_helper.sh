@@ -11,6 +11,7 @@ check_env
 check_jq_installed_status
 check_java_installed_status
 
+# shellcheck disable=SC2154
 if [ "${pannel}" == "qinglong" ]; then
     bili_path="/ql/scripts/bilibili"
     conf_file="/ql/config/java_conf.json"

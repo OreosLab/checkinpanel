@@ -34,6 +34,7 @@ check_env() {
 }
 
 # 获取配置
+# shellcheck disable=SC2034
 source_config() {
     check_env
     if [ "${ENV_PATH}" ]; then

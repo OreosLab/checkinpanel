@@ -1,70 +1,70 @@
 {
     // 一言
     // true 为开启，false 为关闭，默认关闭
-    'HITOKOTO': true,
+    HITOKOTO: true,
 
     // bark 服务
     // bark IP 或设备码，例：DxHcxxxxxRxxxxxxcm 或 https://api.example.com/DxHcxxxxxRxxxxxxcm/
-    'BARK_PUSH': '',
+    BARK_PUSH: '',
     // bark 推送是否存档，可不填
-    'BARK_ARCHIVE': '',
+    BARK_ARCHIVE: '',
     // bark 推送分组，可不填
-    'BARK_GROUP': '',
+    BARK_GROUP: '',
     // bark 推送声音，可不填
-    'BARK_SOUND': '',
+    BARK_SOUND: '',
 
     // 控制台输出
     // true 为开启，false 为关闭，默认关闭
     CONSOLE: true,
 
     // 钉钉机器人
-    'DD_BOT_SECRET': '',
-    'DD_BOT_TOKEN': '',
+    DD_BOT_SECRET: '',
+    DD_BOT_TOKEN: '',
 
     // 飞书机器人
-    'FSKEY': '',
+    FSKEY: '',
 
     // go-cqhttp
     // 推送到个人QQ: http://127.0.0.1/send_private_msg
     //          群: http://127.0.0.1/send_group_msg
-    'GOBOT_URL': '',
+    GOBOT_URL: '',
     // GOBOT_URL 设置 /send_private_msg 时填入 user_id=个人QQ
     //           设置 /send_group_msg   时填入 group_id=QQ群
-    'GOBOT_QQ': '',
+    GOBOT_QQ: '',
     // go-cqhttp 的 access_token，可不填
-    'GOBOT_TOKEN': '',
+    GOBOT_TOKEN: '',
 
     // server 酱
     // 兼容旧版和 Turbo 版
-    'PUSH_KEY': '',
+    PUSH_KEY: '',
 
     // push+ 微信推送
-    'PUSH_PLUS_TOKEN': '',
+    PUSH_PLUS_TOKEN: '',
     // 群组编码，不填仅推送自己
-    'PUSH_PLUS_USER': '',
+    PUSH_PLUS_USER: '',
 
     // qmsg 酱
-    'QMSG_KEY': '',
+    QMSG_KEY: '',
     // 推送到群填写 group，默认推送到 QQ
-    'QMSG_TYPE': '',
+    QMSG_TYPE: '',
 
     // 企业微信应用
     // 参考 http://note.youdao.com/s/HMiudGkb
     // 依次填入 corpid, corpsecret, touser(注：多个成员ID使用|隔开), agentid, media_id(选填，不填默认文本消息类型)
-    'QYWX_AM': '',
+    QYWX_AM: '',
 
     // 企业微信机器人
-    'QYWX_KEY': '',
+    QYWX_KEY: '',
 
     // tg 机器人
-    'TG_BOT_TOKEN': '',
-    'TG_USER_ID': '',
+    TG_BOT_TOKEN: '',
+    TG_USER_ID: '',
     // tg api 自建反向代理地址，默认 api.telegram.org，可不填
-    'TG_API_HOST': '',
+    TG_API_HOST: '',
     // tg 代理配置认证参数，可不填
-    'TG_PROXY_AUTH': '',
+    TG_PROXY_AUTH: '',
     // 例：127.0.0.1，可不填
-    'TG_PROXY_HOST': '',
+    TG_PROXY_HOST: '',
     // 例：1080，可不填
-    'TG_PROXY_PORT': '',
+    TG_PROXY_PORT: '',
 }

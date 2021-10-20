@@ -1,6 +1,21 @@
 # Changelog
 
 
+## 20211020-3-120 (2021-10-20)
+
+### Feature
+
+* :sparkles: : 新增 alpine selenium 环境一键搭建脚本. [Oreo]
+
+### Fix
+
+* :bug: : 修复 TG_PROXY_AUTH 和 TG_PROXY_HOST 参数兼容问题. [Oreo]
+
+* :bug: : 修复 apk info 包含匹配错误，使用 grep 命令. [Oreo]
+
+  $(apk info | grep "^$i$") = "$i"
+
+
 ## 20211019-3-200 (2021-10-19)
 
 ### Fix
