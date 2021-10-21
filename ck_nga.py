@@ -36,9 +36,7 @@ class NGA:
             "__lib": "check_in",
             "__output": "12",
         }
-        req = requests.post(
-            self.url, headers=self.headers, data=data, verify=False
-        ).content
+        req = requests.post(self.url, headers=self.headers, data=data).content
         # print(json.loads(req))
         return json.loads(req)
 
@@ -53,9 +51,7 @@ class NGA:
             "__lib": "mission",
             "__output": "11",
         }
-        res = requests.post(
-            self.url, headers=self.headers, data=data, verify=False
-        ).content
+        res = requests.post(self.url, headers=self.headers, data=data).content
         res = json.loads(res)
         data = res["data"][0]
         # print(data)
@@ -79,9 +75,7 @@ class NGA:
             "__lib": "mission",
             "__output": "11",
         }
-        res = requests.post(
-            self.url, headers=self.headers, data=data, verify=False
-        ).content
+        res = requests.post(self.url, headers=self.headers, data=data).content
         res = json.loads(res)
         data = res["data"][0]
         # print(data)
@@ -110,9 +104,7 @@ class NGA:
         failure_msg_all = ""
         for _ in range(4):
             try:
-                res = requests.post(
-                    self.url, headers=self.headers, data=data, verify=False
-                ).content
+                res = requests.post(self.url, headers=self.headers, data=data).content
                 res = json.loads(res)
                 # print(res)
                 time.sleep(30)
@@ -144,9 +136,7 @@ class NGA:
             "__output": "11",
         }
         try:
-            res = requests.post(
-                self.url, headers=self.headers, data=data, verify=False
-            ).content
+            res = requests.post(self.url, headers=self.headers, data=data).content
             res = json.loads(res)
             # print(res)
             time.sleep(30)
@@ -180,9 +170,7 @@ class NGA:
         code = {}
         for i in range(len(ids)):
             try:
-                res = requests.post(
-                    self.url, headers=self.headers, data=data, verify=False
-                ).content
+                res = requests.post(self.url, headers=self.headers, data=data).content
                 res = json.loads(res)
                 time.sleep(30)
                 code[i] = res["data"][1][0][ids[i]]["raw_stat"]["6"]
@@ -213,9 +201,7 @@ class NGA:
             "__lib": "check_in",
             "__output": "14",
         }
-        res = requests.post(
-            self.url, headers=self.headers, data=data, verify=False
-        ).content
+        res = requests.post(self.url, headers=self.headers, data=data).content
         res = json.loads(res)
         result = res["result"][0]
         continued = result["continued"]
@@ -233,9 +219,7 @@ class NGA:
             "__lib": "login",
             "__output": "12",
         }
-        req = requests.post(
-            self.url, headers=self.headers, data=data, verify=False
-        ).content
+        req = requests.post(self.url, headers=self.headers, data=data).content
         req = json.loads(req)["result"]["username"]
         return req
 

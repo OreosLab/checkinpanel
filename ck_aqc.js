@@ -3,12 +3,18 @@
 * @author: wenmoux
 37 0-23/8 * * * ck_aiqicha.js
 */
+
 const axios = require('axios');
+
 const utils = require('./utils');
 const Env = utils.Env;
 const get_data = utils.get_data;
+const sleep = utils.sleep;
+
 const $ = new Env('爱企查');
+const cookieAQCs = get_data().AQC;
 const notify = $.isNode() ? require('./notify') : '';
+
 const headers = {
     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Safari/537.36',
     referer: 'https://aiqicha.baidu.com/m/s?t=3&q=%E5%B0%8F%E7%B1%B3&VNK=e73b55ef',
@@ -16,18 +22,8 @@ const headers = {
     Host: 'aiqicha.baidu.com',
     cookie: '',
 };
-var sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-var desp = '';
-let cookieAQCs = get_data().AQC;
 
-aqc();
-
-function rand() {
-    let key = ['苹果', '华为', '百度', '一个', '暴风', '王者'];
-    let i = Math.floor(Math.random() * key.length);
-    return key[i];
-}
-let oo = {
+const oo = {
     CX10002: '每日签到',
     CX10001: '每日登陆',
     CX11001: '查询企业',
@@ -47,12 +43,62 @@ let oo = {
     CX12008: '高级筛选',
 };
 
+var desp = '';
+
+let ytaskList = [];
+let taskList = [];
+let claimList = [];
+let alltaskList = [];
+
+aqc();
+async function aqc() {
+    let msg = '【爱企查】：';
+    if (cookieAQCs) {
+        Log('爱企查cookie数量：' + cookieAQCs.length);
+        for (let a = 0; a < cookieAQCs.length; a++) {
+            let aqcCookie = cookieAQCs[a].cookie;
+            let exportkey = cookieAQCs[a].exportkey ? cookieAQCs[a].exportkey : '';
+            headers.cookie = aqcCookie;
+            Log('\n========== [Account ' + (a + 1) + '] Start ========== ');
+            let logininfo = await get('m/getuserinfoAjax', 'get');
+            if (logininfo.data.isLogin == 1) {
+                await getaskList();
+                await dotask(taskList, exportkey);
+                await dotask(taskList, exportkey);
+                await sleep(500);
+                claimList = [];
+                await getaskList();
+                for (let task of claimList) {
+                    Log(`领取爱豆：${oo[task]}`);
+                    let clres = await get(`zxcenter/claimUserTaskAjax?taskCode=${task}`, 'get');
+                    if (clres.status == 0) Log(`  领取成功！获得${clres.data.totalScore}爱豆`);
+                }
+                Log('去查询爱豆积分');
+                let userinfo = await get('usercenter/getvipinfoAjax', 'get');
+                msg += `账号${a + 1} 【${logininfo.data.userName}】 共${userinfo.data.consume}爱豆\n`;
+            } else {
+                msg = 'cookie已失效';
+            }
+        }
+    } else {
+        msg += '请填写百度爱企查cookies(同百度贴吧';
+    }
+    Log(msg);
+    notify.sendNotify('爱企查', desp);
+}
+
+function rand() {
+    const key = ['苹果', '华为', '百度', '一个', '暴风', '王者'];
+    let i = Math.floor(Math.random() * key.length);
+    return key[i];
+}
+
 function get(api, method, data) {
     return new Promise(async (resolve) => {
         try {
             let url = `https://aiqicha.baidu.com/${api}`;
             if (method == 'get')
-                res = await axios.get(url, {
+                var res = await axios.get(url, {
                     headers,
                 });
             if (method == 'post')
@@ -87,8 +133,8 @@ async function getaskList() {
     Log(`共 ${alltaskList.length}任务 已完成 ${ytaskList.length} 任务 可做 ${taskList.length}任务 ${claimList.length}任务可领取奖励`);
 }
 
-async function dotask(taskList, exportkey) {
-    for (var o of taskList) {
+async function dotask(tasklist, exportkey) {
+    for (var o of tasklist) {
         switch (o.title) {
             case 'CX10002': //每日签到
                 Log('开始任务：' + oo[o.title]);
@@ -131,7 +177,7 @@ async function dotask(taskList, exportkey) {
                 let jk = await get('zxcenter/monitorDailyReportListAjax?page=1&size=10', 'get');
                 let list = jk.data.list;
                 if (list) {
-                    for (p = 0; p < 2 && p < list.length; p++) {
+                    for (let p = 0; p < 2 && p < list.length; p++) {
                         await get(`zxcenter/monitorDailyReportDetailAjax?reportdate=${list[p].reportDate}`, 'get');
                     }
                 }
@@ -152,7 +198,7 @@ async function dotask(taskList, exportkey) {
                 break;
             case 'CX12001': //添加监控
                 Log('开始任务：' + oo[o.title]);
-                for (id of [29829264524016, 28696417032417, 31370200772422, 31242153386614]) {
+                for (let id of [29829264524016, 28696417032417, 31370200772422, 31242153386614]) {
                     await get(`zxcenter/addMonitorAjax?pid=${id}`, 'get');
                 }
                 await get(`zxcenter/addMonitorAjax?pid=29710155220353`, 'get');
@@ -168,7 +214,7 @@ async function dotask(taskList, exportkey) {
             case 'CX12005': //分享好友
                 Log('开始任务：' + oo[o.title]);
                 let shres = await get(`usercenter/getShareUrlAjax`, 'get');
-                uid = shres.data.match(/uid=(.+)/);
+                let uid = shres.data.match(/uid=(.+)/);
                 if (uid) {
                     uid = uid[1];
                     headers['cookie'] = '';
@@ -197,46 +243,6 @@ async function dotask(taskList, exportkey) {
         let clres = await get(`zxcenter/claimUserTaskAjax?taskCode=${o.title}`, 'get');
         if (clres.status == 0) Log(`  领取成功！获得${clres.data.totalScore}爱豆`);
     }
-}
-
-async function aqc() {
-    msg = '【爱企查】：';
-    if (cookieAQCs) {
-        Log('爱企查cookie数量：' + cookieAQCs.length);
-        for (a = 0; a < cookieAQCs.length; a++) {
-            aqcCookie = cookieAQCs[a].cookie;
-            exportkey = cookieAQCs[a].exportkey ? cookieAQCs[a].exportkey : '';
-            headers.cookie = aqcCookie;
-            ytaskList = [];
-            taskList = [];
-            claimList = [];
-            alltaskList = [];
-            Log('\n========== [Account ' + (a + 1) + '] Start ========== ');
-            let logininfo = await get('m/getuserinfoAjax', 'get');
-            if (logininfo.data.isLogin == 1) {
-                await getaskList();
-                await dotask(taskList, exportkey);
-                await dotask(taskList, exportkey);
-                await sleep(500);
-                claimList = [];
-                await getaskList();
-                for (task of claimList) {
-                    Log(`领取爱豆：${oo[task]}`);
-                    let clres = await get(`zxcenter/claimUserTaskAjax?taskCode=${task}`, 'get');
-                    if (clres.status == 0) Log(`  领取成功！获得${clres.data.totalScore}爱豆`);
-                }
-                Log('去查询爱豆积分');
-                let userinfo = await get('usercenter/getvipinfoAjax', 'get');
-                msg += `账号${a + 1} 【${logininfo.data.userName}】 共${userinfo.data.consume}爱豆\n`;
-            } else {
-                msg = 'cookie已失效';
-            }
-        }
-    } else {
-        msg += '请填写百度爱企查cookies(同百度贴吧';
-    }
-    Log(msg);
-    notify.sendNotify('爱企查', desp);
 }
 
 function Log(info) {

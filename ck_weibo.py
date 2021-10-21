@@ -25,7 +25,6 @@ class WeiBo:
         response = requests.get(
             url=f"https://api.weibo.cn/2/checkin/add?c=iphone&{token}",
             headers=headers,
-            verify=False,
         )
         result = response.json()
         if result.get("status") == 10000:
@@ -44,7 +43,6 @@ class WeiBo:
         response = requests.get(
             url=f"https://api.weibo.cn/2/!/ug/king_act_home?c=iphone&{token}",
             headers=headers,
-            verify=False,
         )
         result = response.json()
         if result.get("status") == 10000:
@@ -71,7 +69,6 @@ class WeiBo:
             url="https://pay.sc.weibo.com/aj/mobile/home/welfare/signin/do",
             headers=headers,
             data=data,
-            verify=False,
         )
         try:
             result = response.json()
