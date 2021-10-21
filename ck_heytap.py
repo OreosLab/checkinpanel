@@ -24,8 +24,8 @@ class Heytap:
         self.login = config["HEYTAP"]
         self.log = ""
         self.config = config
-        self.HT_cookies = "cookie"
-        self.HT_UserAgent = "ua"
+        self.cookies = "cookie"
+        self.user_agent = "ua"
         self.s_channel = "oppostore"
         self.source_type = "505"  # 初始化设置为505，会从cookie获取实际数据
         self.sa_distinct_id = ""
@@ -38,16 +38,14 @@ class Heytap:
     # 获取cookie里的一些参数，部分请求需要使用到————hss修改
     def get_cookie_data(self):
         try:
-            app_param = re.findall("app_param=(.*?)}", self.HT_cookies)[0] + "}"
+            app_param = re.findall("app_param=(.*?)}", self.cookies)[0] + "}"
             app_param = json.loads(app_param)
             self.sa_device_id = app_param["sa_device_id"]
             self.brand = app_param["brand"]
-            self.sa_distinct_id = re.findall("sa_distinct_id=(.*?);", self.HT_cookies)[
-                0
-            ]
-            self.source_type = re.findall("source_type=(.*?);", self.HT_cookies)[0]
-            self.s_version = re.findall("s_version=(.*?);", self.HT_cookies)[0]
-            self.s_channel = re.findall("s_channel=(.*?);", self.HT_cookies)[0]
+            self.sa_distinct_id = re.findall("sa_distinct_id=(.*?);", self.cookies)[0]
+            self.source_type = re.findall("source_type=(.*?);", self.cookies)[0]
+            self.s_version = re.findall("s_version=(.*?);", self.cookies)[0]
+            self.s_channel = re.findall("s_channel=(.*?);", self.cookies)[0]
         except Exception as e:
             print(
                 "获取Cookie部分数据失败，将采用默认设置，请检查Cookie是否包含s_channel，s_version，source_type，sa_distinct_id\n",
@@ -65,10 +63,10 @@ class Heytap:
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
             "Content-Type": "application/x-www-form-urlencoded",
             "Connection": "keep-alive",
-            "User-Agent": self.HT_UserAgent,
+            "User-Agent": self.user_agent,
             "Accept-Language": "zh-cn",
             "Accept-Encoding": "gzip, deflate, br",
-            "cookie": self.HT_cookies,
+            "cookie": self.cookies,
         }
         response = self.session.get(url=url, headers=headers)
         response.encoding = "utf-8"
@@ -109,10 +107,10 @@ class Heytap:
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
             "Content-Type": "application/x-www-form-urlencoded",
             "Connection": "keep-alive",
-            "User-Agent": self.HT_UserAgent,
+            "User-Agent": self.user_agent,
             "Accept-Language": "zh-cn",
             "Accept-Encoding": "gzip, deflate, br",
-            "cookie": self.HT_cookies,
+            "cookie": self.cookies,
             "referer": "https://store.oppo.com/cn/app/taskCenter/index",
         }
         res1 = self.client.get(url=url, headers=headers)
@@ -130,10 +128,10 @@ class Heytap:
                 "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
                 "Content-Type": "application/x-www-form-urlencoded",
                 "Connection": "keep-alive",
-                "User-Agent": self.HT_UserAgent,
+                "User-Agent": self.user_agent,
                 "Accept-Language": "zh-cn",
                 "Accept-Encoding": "gzip, deflate, br",
-                "cookie": self.HT_cookies,
+                "cookie": self.cookies,
                 "referer": "https://store.oppo.com/cn/app/taskCenter/index",
             }
             res = self.taskCenter()
@@ -203,7 +201,7 @@ class Heytap:
                 "Connection": "keep-alive",
                 "User-Agent": "okhttp/3.12.12.200sp1",
                 "Accept-Encoding": "gzip",
-                "cookie": self.HT_cookies,
+                "cookie": self.cookies,
             }
             res = self.taskCenter()
             res = res["data"]["everydayList"]
@@ -283,7 +281,7 @@ class Heytap:
                 "Connection": "keep-alive",
                 "User-Agent": "okhttp/3.12.12.200sp1",
                 "Accept-Encoding": "gzip",
-                "cookie": self.HT_cookies,
+                "cookie": self.cookies,
             }
             daySignList = self.taskCenter()
             res = daySignList
@@ -333,7 +331,7 @@ class Heytap:
                 "Connection": "keep-alive",
                 "User-Agent": "okhttp/3.12.12.200sp1",
                 "Accept-Encoding": "gzip",
-                "cookie": self.HT_cookies,
+                "cookie": self.cookies,
             }
             daySignList = self.taskCenter()
             res = daySignList
@@ -381,10 +379,10 @@ class Heytap:
             "Accept": "application/json, text/plain, */*",
             "Content-Type": "application/x-www-form-urlencoded",
             "Connection": "keep-alive",
-            "User-Agent": self.HT_UserAgent,
+            "User-Agent": self.user_agent,
             "Accept-Language": "zh-cn",
             "Accept-Encoding": "gzip, deflate, br",
-            "cookie": self.HT_cookies,
+            "cookie": self.cookies,
             "Origin": "https://store.oppo.com",
             "X-Requested-With": "com.oppo.store",
             "referer": "https://store.oppo.com/cn/app/taskCenter/index?us=gerenzhongxin&um=hudongleyuan&uc=renwuzhongxin",
@@ -412,8 +410,8 @@ class Heytap:
     def lottery(self, datas, referer="", extra_draw_cookie=""):
         headers = {
             "referer": referer,
-            "User-Agent": self.HT_UserAgent,
-            "cookie": extra_draw_cookie + self.HT_cookies,
+            "User-Agent": self.user_agent,
+            "cookie": extra_draw_cookie + self.cookies,
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
             "Accept": "application/json, text/javascript, */*; q=0.01",
             "Origin": "https://hd.oppo.com",
@@ -430,9 +428,9 @@ class Heytap:
             "Accept": "application/json, text/plain, */*;q=0.01",
             "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
             "Connection": "keep-alive",
-            "User-Agent": self.HT_UserAgent,
+            "User-Agent": self.user_agent,
             "Accept-Encoding": "gzip, deflate",
-            "cookie": self.HT_cookies,
+            "cookie": self.cookies,
             "Origin": "https://hd.oppo.com",
             "X-Requested-With": "XMLHttpRequest",
         }
@@ -449,9 +447,9 @@ class Heytap:
             "Accept": "application/json, text/plain, */*;q=0.01",
             "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
             "Connection": "keep-alive",
-            "User-Agent": self.HT_UserAgent,
+            "User-Agent": self.user_agent,
             "Accept-Encoding": "gzip, deflate",
-            "cookie": self.HT_cookies,
+            "cookie": self.cookies,
             "Origin": "https://hd.oppo.com",
             "X-Requested-With": "XMLHttpRequest",
         }
@@ -474,9 +472,9 @@ class Heytap:
             headers = {
                 "Accept": "application/json, text/javascript, */*; q=0.01",
                 "Connection": "keep-alive",
-                "User-Agent": self.HT_UserAgent,
+                "User-Agent": self.user_agent,
                 "Accept-Encoding": "gzip, deflate",
-                "cookie": self.HT_cookies,
+                "cookie": self.cookies,
                 "X-Requested-With": "XMLHttpRequest",
                 "Referer": referer,
             }
@@ -512,37 +510,33 @@ class Heytap:
                             self.log += f"{title}：{msg}\n"
                             print(f"{title}：{msg}\n")
                             time.sleep(3)
-                if self.if_draw:  # 判断当前用户是否抽奖
-                    if if_draw:  # 判断当前活动是否抽奖
-                        lid = act_list["lid"]
-                        extra_draw_cookie = act_list["extra_draw_cookie"]
-                        draw_times = act_list["draw_times"]
-                        self.log += f"【{act_name}-抽奖】\n"
-                        print(f"【{act_name}-抽奖】\n")
-                        x = 0
-                        while x < draw_times:
-                            data = f"aid={aid}&lid={lid}&mobile=&authcode=&captcha=&isCheck=0&source_type={self.source_type}&s_channel={self.s_channel}&sku=&spu="
-                            res = self.lottery(data, referer, extra_draw_cookie)
-                            msg = res["msg"]
-                            print(res)
-                            if "次数已用完" in msg:
-                                self.log += "  第" + str(x + 1) + "抽奖：抽奖次数已用完\n"
-                                print("  第" + str(x + 1) + "抽奖：抽奖次数已用完\n")
-                                break
-                            goods_name = res["data"]["goods_name"]
-                            if goods_name:
-                                self.log += (
-                                    "  第" + str(x + 1) + "次抽奖：" + str(goods_name) + "\n"
-                                )
-                                print(
-                                    "  第" + str(x + 1) + "次抽奖：" + str(goods_name) + "\n"
-                                )
-                            elif "提交成功" in msg:
-                                # tips_msg = res["data"]["tips_msg"]
-                                self.log += "  第" + str(x + 1) + "次抽奖：未中奖\n"
-                                print("  第" + str(x + 1) + "次抽奖：未中奖\n")
-                            x += 1
-                            time.sleep(5)
+                if self.if_draw and if_draw:  # 判断当前用户是否抽奖 和 判断当前活动是否抽奖
+                    lid = act_list["lid"]
+                    extra_draw_cookie = act_list["extra_draw_cookie"]
+                    draw_times = act_list["draw_times"]
+                    self.log += f"【{act_name}-抽奖】\n"
+                    print(f"【{act_name}-抽奖】\n")
+                    x = 0
+                    while x < draw_times:
+                        data = f"aid={aid}&lid={lid}&mobile=&authcode=&captcha=&isCheck=0&source_type={self.source_type}&s_channel={self.s_channel}&sku=&spu="
+                        res = self.lottery(data, referer, extra_draw_cookie)
+                        msg = res["msg"]
+                        print(res)
+                        if "次数已用完" in msg:
+                            self.log += "  第" + str(x + 1) + "抽奖：抽奖次数已用完\n"
+                            print("  第" + str(x + 1) + "抽奖：抽奖次数已用完\n")
+                            break
+                        goods_name = res["data"]["goods_name"]
+                        if goods_name:
+                            self.log += (
+                                "  第" + str(x + 1) + "次抽奖：" + str(goods_name) + "\n"
+                            )
+                            print("  第" + str(x + 1) + "次抽奖：" + str(goods_name) + "\n")
+                        elif "提交成功" in msg:
+                            self.log += "  第" + str(x + 1) + "次抽奖：未中奖\n"
+                            print("  第" + str(x + 1) + "次抽奖：未中奖\n")
+                        x += 1
+                        time.sleep(5)
             else:
                 self.log += f"【{act_name}】：活动已结束，不再执行\n"
                 print(f"【{act_name}】：活动已结束，不再执行\n")
@@ -580,7 +574,7 @@ class Heytap:
                 "clientPackage": "com.oppo.store",
                 "Cache-Control": "no-cache",
                 "um": "hudongleyuan",
-                "User-Agent": self.HT_UserAgent,
+                "User-Agent": self.user_agent,
                 "ouid": "",
                 "Accept": "application/json, text/plain, */*",
                 "source_type": self.source_type,
@@ -594,7 +588,7 @@ class Heytap:
                 "Referer": "https://store.oppo.com/cn/app/cardingActivities?utm_source=opposhop&utm_medium=task",
                 "Accept-Encoding": "gzip, deflate",
                 "Accept-Language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
-                "cookie": self.HT_cookies,
+                "cookie": self.cookies,
             }
             res = self.client.get(
                 "https://store.oppo.com/cn/oapi/credits/web/clockin/applyOrClockIn",
@@ -653,8 +647,8 @@ class Heytap:
     def main(self):
         i = 1
         for config in self.login:
-            self.HT_cookies = config["cookie"]
-            self.HT_UserAgent = config["useragent"]
+            self.cookies = config["cookie"]
+            self.user_agent = config["useragent"]
             self.if_draw = config["draw"]
             self.client = self.get_user_info()
             if self.client:
@@ -692,8 +686,8 @@ if __name__ == "__main__":
     cf = get_data()
     res = Heytap(cf).main()
     send("欢太商城", res)
-"""
-# 云函数请将上方替换成下方代码，并将 py 改名为 index.py
-if __name__ == "__main__":
+
+    """
+    # 云函数请将上方替换成下方代码，并将 py 改名为 index.py
     main_handler("", "")
-"""
+    """

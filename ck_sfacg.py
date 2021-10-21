@@ -24,7 +24,7 @@ class SFACG:
         self.check_items = check_items
 
     @staticmethod
-    def generateHeader(authorization, cookie, useragent, sfsecurity):
+    def generate_headers(authorization, cookie, useragent, sfsecurity):
         headers = {
             "Host": "api.sfacg.com",
             "accept-charset": "UTF-8",
@@ -56,34 +56,34 @@ class SFACG:
         return requests.put(api, headers=put_headers, data=data).json()
 
     def check_cookie(self, authorization, cookie, useragent, sfsecurity):
-        headers = self.generateHeader(authorization, cookie, useragent, sfsecurity)
+        headers = self.generate_headers(authorization, cookie, useragent, sfsecurity)
         result = requests.get("https://api.sfacg.com/user?", headers=headers).json()
         money = requests.get("https://api.sfacg.com/user/money", headers=headers).json()
         try:
-            nick_Name = result["data"]["nickName"]
-            fireMoneyRemain = money["data"]["fireMoneyRemain"]
-            user_vipLevel = money["data"]["vipLevel"]
+            nickname = result["data"]["nickName"]
+            fire_money_remain = money["data"]["fireMoneyRemain"]
+            vip_level = money["data"]["vipLevel"]
             info = (
                 "账号名称: "
-                + nick_Name
+                + nickname
                 + "\n火卷余额: "
-                + str(fireMoneyRemain)
+                + str(fire_money_remain)
                 + "\nVIP: "
-                + str(user_vipLevel)
+                + str(vip_level)
             )
             print("Cookie 凭证有效！")
-        except BaseException:
+        except Exception:
             info = "Cookie 凭证失效 httpCode: " + str(result["status"]["httpCode"])
             print(info)
         return info
 
     def task(self, authorization, cookie, useragent, sfsecurity):
-        headers = self.generateHeader(authorization, cookie, useragent, sfsecurity)
+        headers = self.generate_headers(authorization, cookie, useragent, sfsecurity)
         print("运行时间:", readingDate)
-        ReadTime = {"seconds": 3605, "readingDate": readingDate, "entityType": 2}
-        ListenTime = {"seconds": 3605, "readingDate": readingDate, "entityType": 3}
-        ReadData = json.dumps(ReadTime)
-        ListenData = json.dumps(ListenTime)
+        read_time = {"seconds": 3605, "readingDate": readingDate, "entityType": 2}
+        listen_time = {"seconds": 3605, "readingDate": readingDate, "entityType": 3}
+        read_data = json.dumps(read_time)
+        listen_data = json.dumps(listen_time)
 
         put_headers = headers
         put_headers["accept-encoding"] = "gzip"
@@ -92,28 +92,28 @@ class SFACG:
 
         print("开始执行任务")
         self.put_re(
-            "https://api.sfacg.com/user/readingtime", put_headers, data=ListenData
+            "https://api.sfacg.com/user/readingtime", put_headers, data=listen_data
         )
-        self.post_re("https://api.sfacg.com/user/tasks/4", headers, data=ListenData)
-        self.post_re("https://api.sfacg.com/user/tasks/5", headers, data=ListenData)
-        self.post_re("https://api.sfacg.com/user/tasks/17", headers, data=ListenData)
-        for i in range(3):
+        self.post_re("https://api.sfacg.com/user/tasks/4", headers, data=listen_data)
+        self.post_re("https://api.sfacg.com/user/tasks/5", headers, data=listen_data)
+        self.post_re("https://api.sfacg.com/user/tasks/17", headers, data=listen_data)
+        for _ in range(3):
             self.put_re(
-                "https://api.sfacg.com/user/readingtime", put_headers, ReadData
+                "https://api.sfacg.com/user/readingtime", put_headers, read_data
             )
             time.sleep(0.5)
             self.put_re(
-                "https://api.sfacg.com/user/tasks/5", put_headers, data=ListenData
+                "https://api.sfacg.com/user/tasks/5", put_headers, data=listen_data
             )
             self.put_re(
-                "https://api.sfacg.com/user/tasks/4", put_headers, data=ListenData
+                "https://api.sfacg.com/user/tasks/4", put_headers, data=listen_data
             )
             self.put_re(
-                "https://api.sfacg.com/user/tasks/17", put_headers, data=ListenData
+                "https://api.sfacg.com/user/tasks/17", put_headers, data=listen_data
             )
 
     def checkin(self, authorization, cookie, useragent, sfsecurity):
-        headers = self.generateHeader(authorization, cookie, useragent, sfsecurity)
+        headers = self.generate_headers(authorization, cookie, useragent, sfsecurity)
         print("运行时间:", readingDate)
         sign_date = "{} 年 {} 月 {} 日"
         for data in self.get_re("https://api.sfacg.com/user/signInfo", headers)["data"]:
@@ -147,11 +147,11 @@ class SFACG:
         return sign_msg
 
     def check_coin(self, authorization, cookie, useragent, sfsecurity):
-        headers = self.generateHeader(authorization, cookie, useragent, sfsecurity)
+        headers = self.generate_headers(authorization, cookie, useragent, sfsecurity)
         response = self.get_re("https://api.sfacg.com/user/welfare/income", headers)
         try:
             coin_info = "金币数量: " + str(response["data"]["coinRemain"])
-        except BaseException:
+        except Exception:
             coin_info = "Cookie 凭证失效 httpCode: " + str(response["status"]["httpCode"])
         return coin_info
 

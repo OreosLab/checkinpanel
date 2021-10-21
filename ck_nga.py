@@ -68,7 +68,7 @@ class NGA:
             silver_coin_get_stat = e
         return silver_coin_get_stat
 
-    def N_coin_get(self, token, uid):
+    def n_coin_get(self, token, uid):
         data = {
             "access_token": token,
             "t": round(time.time()),
@@ -87,12 +87,12 @@ class NGA:
         # print(data)
         try:
             if "已经" in data[4]:
-                N_coin_get_stat = data[4]
+                n_coin_get_stat = data[4]
             else:
-                N_coin_get_stat = data[2]["30"]
+                n_coin_get_stat = data[2]["30"]
         except Exception as e:
-            N_coin_get_stat = str(e)
-        return N_coin_get_stat
+            n_coin_get_stat = str(e)
+        return n_coin_get_stat
 
     def view_video(self, token, uid):
         data = {
@@ -108,7 +108,7 @@ class NGA:
         failure_sum = 0
         failure_msg = ""
         failure_msg_all = ""
-        for i in range(4):
+        for _ in range(4):
             try:
                 res = requests.post(
                     self.url, headers=self.headers, data=data, verify=False
@@ -119,9 +119,7 @@ class NGA:
                 raw_stat = re.search(r"\'raw_stat\':\s*{([^}]+)", str(res)).group(1)
                 task_code = re.search(r"\'6\':\s(\d)", raw_stat).group(1)
                 time_code = re.search(r"\'5\':\s(\d)", raw_stat).group(1)
-                if task_code == "1":
-                    success_sum += 1
-                elif task_code == "0" and time_code == "1":
+                if task_code == "1" or (task_code == "0" and time_code == "1"):
                     success_sum += 1
             except Exception as e:
                 failure_msg = str(e)
@@ -260,14 +258,13 @@ class NGA:
                     )
                 time.sleep(1)
                 silver_coin_get_stat = self.silver_coin_get(token=token, uid=uid)
-                N_coin_get_stat = self.N_coin_get(token=token, uid=uid)
+                n_coin_get_stat = self.n_coin_get(token=token, uid=uid)
                 video_view_stat = self.view_video(token=token, uid=uid)
                 adfree_24h_stat = self.view_video_for_adfree_24h(token=token, uid=uid)
-                # adfree_stat = self.view_video_for_adfree(token=token, uid=uid)
                 msg = (
                     f"{signin_stat}\n"
                     f"------【每日签到得银币】------\n{silver_coin_get_stat}\n"
-                    f"------【每日签到得N币】------\n{N_coin_get_stat}\n"
+                    f"------【每日签到得N币】------\n{n_coin_get_stat}\n"
                     f"------【每天看两次视频】------\n{video_view_stat}\n"
                     f"------【看视频免广告(限时任务)】------\n{adfree_24h_stat}\n"
                 )

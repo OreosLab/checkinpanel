@@ -64,7 +64,6 @@ class OnePlusBBS:
         )
         sum_list = []
         success_count = 0
-        error_count = 0
         for i in range(10):
             try:
                 data = requests.post(
@@ -87,11 +86,9 @@ class OnePlusBBS:
                     else:
                         success_count += 1
                 else:
-                    error_count += 1
                     one_msg = "抽奖失败"
             except Exception as e:
                 one_msg = f"抽奖失败: {e}"
-                error_count += 1
             print(f"第{i + 1}次抽奖结果：" + str(one_msg))
             time.sleep(5)
         msg = f"成功抽奖 {success_count} 次"
@@ -110,7 +107,6 @@ class OnePlusBBS:
                 bbs_uname = parse.unquote(bbs_uname)
             except Exception as e:
                 print(f"bbs_uname 转换失败: {e}")
-                bbs_uname = bbs_uname
             sign_msg = self.sign(cookie=cookie)
             draw_msg = self.draw(cookie=cookie)
             msg = f"帐号信息: {bbs_uname}\n签到信息: {sign_msg}\n{draw_msg}"

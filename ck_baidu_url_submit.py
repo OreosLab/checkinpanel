@@ -23,7 +23,7 @@ class BaiduUrlSubmit:
         remian = 100000
         success_count = 0
         error_count = 0
-        for one in range(times):
+        for _ in range(times):
             try:
                 response = requests.post(url=submit_url, data=urls_data)
                 if response.json().get("success"):

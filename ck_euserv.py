@@ -106,7 +106,7 @@ class EUserv:
                         operator = "*"
                     if operator_pos != -1:
                         left_part = text[:operator_pos]
-                        right_part = text[operator_pos + 1:]
+                        right_part = text[operator_pos + 1 :]
                         if left_part.isdigit() and right_part.isdigit():
                             return eval(
                                 "{left} {operator} {right}".format(
@@ -140,7 +140,7 @@ class EUserv:
         password: str,
         userid: str,
         apikey: str,
-        CHECK_CAPTCHA_SOLVER_USAGE: bool,
+        check_captcha_solver_usage: bool,
     ) -> tuple:
         headers = {"user-agent": self.user_agent, "origin": "https://www.euserv.com"}
         url = "https://support.euserv.com/index.iphp"
@@ -183,7 +183,7 @@ class EUserv:
                 captcha_code = self.handle_captcha_solved_result(solved_result)
                 log("[Captcha Solver] 识别的验证码是: {}".format(captcha_code))
 
-                if CHECK_CAPTCHA_SOLVER_USAGE:
+                if check_captcha_solver_usage:
                     usage = self.get_captcha_solver_usage(userid, apikey)
                     log(
                         "[Captcha Solver] current date {0} api usage count: {1}".format(
@@ -215,7 +215,7 @@ class EUserv:
         else:
             return sess_id, session
 
-    def get_servers(self, sess_id: str, session: requests.session) -> tuple:
+    def get_servers(self, sess_id: str, session: requests.session) -> dict:
         d = {}
         url = "https://support.euserv.com/index.iphp?sess_id=" + sess_id
         headers = {"user-agent": self.user_agent, "origin": "https://www.euserv.com"}
@@ -295,13 +295,13 @@ class EUserv:
         for check_item in self.check_items:
             username = check_item.get("username")
             password = check_item.get("password")
-            CHECK_CAPTCHA_SOLVER_USAGE = check_item.get("captcha")
+            check_captcha_solver_usage = check_item.get("captcha")
             userid = check_item.get("userid")
             apikey = check_item.get("apikey")
             log("*" * 12)
             log("[EUserv] 正在续费第 %d 个账号" % (i + 1))
             sessid, s = self.login(
-                username, password, userid, apikey, CHECK_CAPTCHA_SOLVER_USAGE
+                username, password, userid, apikey, check_captcha_solver_usage
             )
             if sessid == "-1":
                 log("[EUserv] 第 %d 个账号登陆失败，请检查登录信息" % (i + 1))

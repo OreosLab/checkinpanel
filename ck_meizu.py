@@ -55,7 +55,6 @@ class Meizu:
         data = {"mod": "index", "action": "draw", "id": "2"}
         award_list = []
         success_count = 0
-        error_count = 0
         if count:
             for i in range(count):
                 try:
@@ -69,12 +68,10 @@ class Meizu:
                         award_list.append(one_msg)
                         success_count += 1
                     else:
-                        error_count += 1
                         print(data.get("code"), data.get("message"))
                         one_msg = "抽奖失败"
                 except Exception as e:
                     one_msg = f"抽奖失败: {e}"
-                    error_count += 1
                 print(f"第{i + 1}次抽奖结果：" + str(one_msg))
                 time.sleep(5)
             msg = f"成功抽奖 {success_count} 次"

@@ -47,8 +47,6 @@ class HLX:
         status = check_req["status"]
         if status == 0:
             raise Exception("令牌验证失败")
-        elif status == 1:
-            pass
         return status
 
     @staticmethod
