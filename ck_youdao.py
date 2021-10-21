@@ -28,7 +28,7 @@ class YouDao:
                 url="https://note.youdao.com/yws/mapi/user?method=checkin",
                 cookies=cookies,
             )
-            for i in range(3):
+            for _ in range(3):
                 ad_response = requests.post(
                     url="https://note.youdao.com/yws/mapi/user?method=adRandomPrompt",
                     cookies=cookies,

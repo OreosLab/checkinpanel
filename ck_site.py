@@ -30,7 +30,7 @@ class Site:
         self.check_items = check_items
 
     @staticmethod
-    def generateHeader(url):
+    def generate_headers(url):
         header = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36",
             "Accept-Language": "zh-CN,zh;q=0.9",
@@ -39,9 +39,9 @@ class Site:
         return header
 
     @staticmethod
-    def cookieParse(cookiesStr):
+    def cookie_parse(cookie_str):
         cookie_dict = {}
-        cookies = cookiesStr.split(";")
+        cookies = cookie_str.split(";")
         for cookie in cookies:
             cookie = cookie.split("=")
             cookie_dict[cookie[0]] = cookie[1]
@@ -189,16 +189,16 @@ class Site:
         for check_item in self.check_items:
             s = requests.session()
             url = check_item.get("url")
-            type = check_item.get("type")
-            cookie = self.cookieParse(check_item.get("cookie"))
-            header = self.generateHeader(url)
+            site_type = check_item.get("type")
+            cookie = self.cookie_parse(check_item.get("cookie"))
+            header = self.generate_headers(url)
             s.headers.update(header)
             s.cookies.update(cookie)
-            if type == "pt":
+            if site_type == "pt":
                 self.signin(s, url)
-            elif type == "discuz":
+            elif site_type == "discuz":
                 self.signin_discuz_dsu(s, url)
-            elif type == "hifi":
+            elif site_type == "hifi":
                 self.signin_hifi(s, url)
             else:
                 log("请在配置文件中配置网站类型，如 type: 'pt'")

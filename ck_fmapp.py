@@ -34,7 +34,7 @@ class FMAPP:
                 msg = response.get("message")
         except Exception as e:
             print("错误信息", str(e))
-            msg = "未知错误，检查日志"
+            msg = f"未知错误：{str(e)}"
         return msg
 
     @staticmethod

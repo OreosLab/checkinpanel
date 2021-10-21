@@ -129,7 +129,7 @@ class GLaDOS(object):
                     + "GB\n"
                     "--------------------"
                 )
-            except BaseException:
+            except Exception:
                 msg = (
                     "--------------------\n"
                     "GLaDOS \n"

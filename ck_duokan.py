@@ -316,7 +316,7 @@ class DuoKan:
 
     def add_draw(self, cookies):
         success_count = 0
-        for one in range(6):
+        for _ in range(6):
             url = "https://www.duokan.com/store/v0/event/chances/add"
             data = (
                 f"code=8ulcky4bknbe_f&count=1&{self.get_data(cookies=cookies)}&withid=1"
@@ -332,7 +332,7 @@ class DuoKan:
 
     def draw(self, cookies):
         success_count = 0
-        for one in range(6):
+        for _ in range(6):
             url = "https://www.duokan.com/store/v0/event/drawing"
             data = f"code=8ulcky4bknbe_f&{self.get_data(cookies=cookies)}&withid=1"
             response = requests.post(

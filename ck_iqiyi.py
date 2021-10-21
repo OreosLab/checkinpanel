@@ -196,13 +196,13 @@ class IQIYI:
             chance = self.draw(0, p00001=p00001, p00003=p00003)["chance"]
             if chance:
                 draw_msg = ""
-                for i in range(chance):
+                for _ in range(chance):
                     ret = self.draw(1, p00001=p00001, p00003=p00003)
                     draw_msg += ret["msg"] + ";" if ret["status"] else ""
             else:
                 draw_msg = "抽奖机会不足"
             task_msg = ""
-            for one in range(6):
+            for _ in range(6):
                 task_list = self.query_user_task(p00001=p00001)
                 self.join_task(p00001=p00001, task_list=task_list)
                 time.sleep(10)

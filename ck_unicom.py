@@ -34,8 +34,8 @@ class UniCom:
         e_start = 159 * 2
         m_len = 128 * 2
         e_len = 3 * 2
-        modulus = hex_str[m_start: m_start + m_len]
-        exponent = hex_str[e_start: e_start + e_len]
+        modulus = hex_str[m_start : m_start + m_len]
+        exponent = hex_str[e_start : e_start + e_len]
         return modulus, exponent
 
     @staticmethod
@@ -190,7 +190,7 @@ class UniCom:
                 url="https://m.client.10010.com/dailylottery/static/active/findActivityInfo?areaCode=076&groupByType=&mobile="
                 + numjsp
             )
-            for i in range(3):
+            for _ in range(3):
                 luck = session.post(
                     url="https://m.client.10010.com/dailylottery/static/doubleball/choujiang?usernumberofjsp="
                     + numjsp
@@ -248,7 +248,7 @@ class UniCom:
     def daily_integral_100(session):
         data = {
             "from": random.choice("123456789")
-            + "".join(random.choice("0123456789") for i in range(10))
+            + "".join(random.choice("0123456789") for _ in range(10))
         }
         try:
             integral = session.post(
@@ -265,7 +265,7 @@ class UniCom:
     def game_dongao(session):
         data = {
             "from": random.choice("123456789")
-            + "".join(random.choice("0123456789") for i in range(10))
+            + "".join(random.choice("0123456789") for _ in range(10))
         }
         trance = [600, 300, 300, 300, 300, 300, 300]
         try:
@@ -320,7 +320,7 @@ class UniCom:
                         timeout=1,
                     )
                     take_flow.encoding = "utf-8"
-                except BaseException:
+                except Exception:
                     flag = True
                     print("【沃之树-领流量】: 4M流量 x" + str(num))
                 time.sleep(1)

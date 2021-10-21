@@ -27,7 +27,7 @@ class LeetCode:
                 "__typename   }   lastSubmission {     id     __typename   }   date   userStatus   __typename }} ",
             },
         )
-        leetcodeTitle = (
+        leetcode_title = (
             json.loads(response.text)
             .get("data")
             .get("todayRecord")[0]
@@ -36,12 +36,12 @@ class LeetCode:
         )
 
         # 获取今日每日一题的所有信息
-        url = base_url + "/problems/" + leetcodeTitle
+        url = base_url + "/problems/" + leetcode_title
         response = requests.post(
             base_url + "/graphql",
             json={
                 "operationName": "questionData",
-                "variables": {"titleSlug": leetcodeTitle},
+                "variables": {"titleSlug": leetcode_title},
                 "query": "query questionData($titleSlug: String!) {  question(titleSlug: $titleSlug) { "
                 "   questionId    questionFrontendId    boundTopicId    title    titleSlug    "
                 "content    translatedTitle    translatedContent    isPaidOnly    difficulty  "
@@ -59,12 +59,12 @@ class LeetCode:
             },
         )
         # 转化成json格式
-        jsonText = json.loads(response.text).get("data").get("question")
+        json_text = json.loads(response.text).get("data").get("question")
         # 题目题号
         num = jsonText.get("questionFrontendId")
         # 题名（中文）
-        leetcodeTitle = jsonText.get("translatedTitle")
-        msg = num + "." + leetcodeTitle
+        leetcode_title = json_text.get("translatedTitle")
+        msg = num + "." + leetcode_title
         return f"{msg}\n{url}"
 
 
