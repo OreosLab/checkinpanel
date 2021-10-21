@@ -63,8 +63,8 @@ async function aqc() {
             let logininfo = await get('m/getuserinfoAjax', 'get');
             if (logininfo.data.isLogin == 1) {
                 await getaskList();
-                await dotask(taskList, exportkey);
-                await dotask(taskList, exportkey);
+                await dotask(taskList, aqcCookie, exportkey);
+                await dotask(taskList, aqcCookie, exportkey);
                 await sleep(500);
                 claimList = [];
                 await getaskList();
@@ -133,7 +133,7 @@ async function getaskList() {
     Log(`共 ${alltaskList.length}任务 已完成 ${ytaskList.length} 任务 可做 ${taskList.length}任务 ${claimList.length}任务可领取奖励`);
 }
 
-async function dotask(tasklist, exportkey) {
+async function dotask(tasklist, aqcCookie, exportkey) {
     for (var o of tasklist) {
         switch (o.title) {
             case 'CX10002': //每日签到
