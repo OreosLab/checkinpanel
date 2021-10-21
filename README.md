@@ -8,7 +8,7 @@
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000?logo=Python&amp;style=flat-square"/></a>
 <a href="https://t.me/joinchat/muGNhnaZglQ0N2Q1"><img alt="Telegram" src="https://img.shields.io/badge/talk-Telegram-blue?logo=Telegram&amp;style=flat-square"/></a>
 <a href="https://github.com/Oreomeow/checkinpanel/commits"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Oreomeow/checkinpanel?color=success&amp;logo=GitHub&amp;style=flat-square"/></a>
-
+<a href="https://sonarcloud.io/summary/new_code?id=Oreomeow_checkinpanel"><img alt="Reliability Rating" src="https://sonarcloud.io/api/project_badges/measure?project=Oreomeow_checkinpanel&amp;metric=reliability_rating"/></a>
 </div>
 
 ## 简介
@@ -289,10 +289,8 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 * [x] Shell 消息推送、环境检查单列
 * [x] 项目重新初始化，更新日志规范化
 * [x] 依赖安装重构
-* [ ] cron 随机
-* [ ] elecV2P 任务列表自动更新
+* [ ] elecV2P cron 随机
 * [ ] 任务多合一执行
-* [ ] 英文文档编写
 
 ### 测试情况
 

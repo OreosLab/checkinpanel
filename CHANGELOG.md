@@ -1,6 +1,21 @@
 # Changelog
 
 
+## 20211021-3-004 (2021-10-21)
+
+### Fix
+
+* :bug: : 修复 elecV2P JS 运行没有控制台输出的错误. [Oreo]
+
+### Code Style
+
+* :racehorse: : 重构并优化 JS PY. [Oreo]
+
+* :art: : 优化代码. [Oreo]
+
+* :art: : 格式化整体项目. [Oreo]
+
+
 ## 20211020-3-120 (2021-10-20)
 
 ### Feature

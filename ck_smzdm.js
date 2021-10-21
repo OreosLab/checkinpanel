@@ -80,7 +80,7 @@ magicJS.unifiedPushUrl = magicJS.read('smzdm_unified_push_url') || magicJS.read(
                     const clickGoBuyAsync = async () => {
                         let clickGoBuyList = goBuyList.splice(0, clickGoBuyMaxTimes);
                         if (clickGoBuyList.length > 0) {
-                            for (let a = 0; a < clickLikeBuyList.length; a++) {
+                            for (let a = 0; a < clickGoBuyList.length; a++) {
                                 await ClickGoBuyButton(smzdmCookie, clickGoBuyList[a]);
                                 magicJS.logInfo(`完成第${a + 1}次“每日去购买”任务，点击链接：\n${clickGoBuyList[a]}`);
                                 clickGoBuyTimes += 1;
