@@ -58,7 +58,7 @@ class Picacomic:
             sign_headers = self.generate_headers(path="auth/sign-in", data=data)
             sign_response = requests.post(
                 url="https://picaapi.picacomic.com/auth/sign-in",
-                data=json.dumps({"email": "sitoi", "password": "123456st"}),
+                data=json.dumps({"email": email, "password": password}),
                 headers=sign_headers,
                 timeout=60,
             ).json()
