@@ -22,7 +22,9 @@ let result = [];
 
 magicJS.unifiedPushUrl = magicJS.read('smzdm_unified_push_url') || magicJS.read('magicjs_unified_push_url');
 
-(async () => {
+smzdm();
+
+async function smzdm() {
     // 通知信息
     let content = '';
     // 获取Cookie
@@ -202,7 +204,8 @@ magicJS.unifiedPushUrl = magicJS.read('smzdm_unified_push_url') || magicJS.read(
     }
     magicJS.done();
     notify.sendNotify('什么值得买', result.join('\n'));
-})();
+    return '什么值得买' + '\n\n' + result;
+}
 
 // 签到
 function SignIn(cookie) {
@@ -635,3 +638,5 @@ function WebGetCurrentInfo(smzdmCookie) {
         });
     });
 }
+
+module.exports = smzdm;

@@ -12,7 +12,7 @@
 const querystring = require('querystring');
 const utils = require('./utils');
 const Env = utils.Env;
-const $ = new Env();
+const $ = new Env('sendNotify');
 const timeout = 15000; //超时时间(单位毫秒)
 // =======================================go-cqhttp通知设置区域===========================================
 //gobot_url 填写请求地址http://127.0.0.1/send_private_msg

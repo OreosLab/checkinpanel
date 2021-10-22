@@ -51,10 +51,11 @@ let claimList = [];
 let alltaskList = [];
 
 aqc();
+
 async function aqc() {
     let msg = '【爱企查】：';
     if (cookieAQCs) {
-        Log('爱企查cookie数量：' + cookieAQCs.length);
+        Log('cookie 数量：' + cookieAQCs.length);
         for (let a = 0; a < cookieAQCs.length; a++) {
             let aqcCookie = cookieAQCs[a].cookie;
             let exportkey = cookieAQCs[a].exportkey ? cookieAQCs[a].exportkey : '';
@@ -85,6 +86,7 @@ async function aqc() {
     }
     Log(msg);
     notify.sendNotify('爱企查', desp);
+    return '爱企查' + '\n\n' + desp;
 }
 
 function rand() {
@@ -250,3 +252,5 @@ function Log(info) {
     desp = desp + '\n' + info;
     return desp;
 }
+
+module.exports = aqc;
