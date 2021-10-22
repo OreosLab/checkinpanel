@@ -106,6 +106,18 @@
         //     },
     ],
 
+    // 网易蜗牛读书
+    DU163: [
+        {
+            cookie: 'X-Auth-Token=xxxxxx; JSESSIONID-WNYD-WEB=xxxxxx; _cid=xxxxxx; _xsrf=xxxxxx',
+            user_agent: '',
+        },
+        //     {
+        //       cookie: '',      // 网易蜗牛读书 APP 签到后抓取 https://du.163.com/activity/201907/activityCenter/sign.json 下的 cookie
+        //       user_agent: '',
+        //     },
+    ],
+
     // 多看阅读
     DUOKAN: [
         {

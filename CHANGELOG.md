@@ -1,6 +1,19 @@
 # Changelog
 
 
+## 20211022-3-040 (2021-10-22)
+
+### Fix
+
+* :bug: : 修复 acfun 弹幕和投蕉. [Oreo]
+
+* :bug: : 修复 bili ValueError. [Oreo]
+
+* :bug: : 修复 aqc 函数缺少参数 bug. [Oreo]
+
+* :bug: : 修复 smzdm_mission debug 拼写错误. [Oreo]
+
+
 ## 20211021-3-004 (2021-10-21)
 
 ### Fix
