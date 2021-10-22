@@ -19,14 +19,12 @@ class BiliBili(object):
         url = "https://api.bilibili.com/x/web-interface/nav"
         ret = session.get(url=url).json()
         uname = ret.get("data", {}).get("uname")
-        """
         uid = ret.get("data", {}).get("mid")
         is_login = ret.get("data", {}).get("isLogin")
-        """
         coin = ret.get("data", {}).get("money")
         vip_type = ret.get("data", {}).get("vipType")
         current_exp = ret.get("data", {}).get("level_info", {}).get("current_exp")
-        return uname, coin, vip_type, current_exp
+        return uname, uid, is_login, coin, vip_type, current_exp
 
     @staticmethod
     def reward(session) -> dict:
@@ -361,6 +359,8 @@ class BiliBili(object):
                 live_stats = self.live_status(session=session)
                 (
                     uname,
+                    uid,
+                    is_login,
                     new_coin,
                     vip_type,
                     new_current_exp,
