@@ -26,19 +26,19 @@ ignore_regexps = [
 ##
 section_regexps = [
     ('Feature', [
-        r'^:(sparkles|tada):\s*([^\n]*)$',
+        r'^:(racehorse|sparkles|tada):\s*([^\n]*)$',
      ]),
     ('Fix', [
-        r'^:(fire|bug|ambulance|wrench|hankey):\s*([^\n]*)$',
+        r'^:(ambulance|bug|fire|hankey|wrench):\s*([^\n]*)$',
      ]),
     ('Docs', [
-        r'^:(memo|speech_balloon|speaker|mute):\s*([^\n]*)$',
+        r'^:(memo|mute|speaker|speech_balloon):\s*([^\n]*)$',
      ]),
     ('Code Style', [
-        r'^:(art|zap|racehorse|building_construction):\s*([^\n]*)$',
+        r'^:(art|building_construction|zap):\s*([^\n]*)$',
      ]),
     ('Refactor Functions', [
-        r'^:(recycle|hammer):\s*([^\n]*)$',
+        r'^:(hammer|recycle):\s*([^\n]*)$',
      ]),
 
     ('Other', None ## Match all lines

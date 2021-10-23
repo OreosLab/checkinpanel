@@ -268,14 +268,14 @@ class DuoKan:
             for one in result.get("data", {}).get("award"):
                 if one.get("delay") == 1:  # 判断是否有可延迟的豆子
                     self.delay(one.get("expire"), cookies=cookies)
-            else:
-                if self.can:
-                    msg += "，豆子延期: 完成\n"
                 else:
-                    msg += "，豆子延期: 没有\n"
-            return msg
+                    if self.can:
+                        msg += "，豆子延期: 完成\n"
+                    else:
+                        msg += "，豆子延期: 没有\n"
         else:
-            return "账号异常: Cookie 失效"
+            msg = "账号异常: Cookie 失效"
+        return msg
 
     def free(self, cookies):
         url = "https://www.duokan.com/hs/v4/channel/query/2027"
