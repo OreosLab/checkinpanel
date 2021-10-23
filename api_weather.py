@@ -39,22 +39,43 @@ class Weather:
         for city_name in self.check_items:
             city_code = city_map.get(city_name, "101020100")
             weather_url = f"http://t.weather.itboy.net/api/weather/city/{city_code}"
-            today_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             resp = requests.get(url=weather_url)
             if resp.status_code == 200 and resp.json().get("status") == 200:
-                weather_json = resp.json()
-                today_weather = weather_json.get("data").get("forecast")[1]
-                notice = today_weather.get("notice")
-                high = today_weather.get("high")
-                low = today_weather.get("low")
-                temperature = (
-                    f"温度: {low[low.find(' ') + 1:]}/{high[high.find(' ') + 1:]}"
+                d = resp.json()
+                msg = (
+                    "\n城市："
+                    + d["cityInfo"]["parent"]
+                    + " "
+                    + d["cityInfo"]["city"]
+                    + "\n日期："
+                    + d["data"]["forecast"][0]["ymd"]
+                    + " "
+                    + d["data"]["forecast"][0]["week"]
+                    + "\n天气："
+                    + d["data"]["forecast"][0]["type"]
+                    + "\n温度："
+                    + d["data"]["forecast"][0]["high"]
+                    + " "
+                    + d["data"]["forecast"][0]["low"]
+                    + "\n湿度："
+                    + d["data"]["shidu"]
+                    + "\n空气质量："
+                    + d["data"]["quality"]
+                    + "\nPM2.5："
+                    + str(d["data"]["pm25"])
+                    + "\nPM10："
+                    + str(d["data"]["pm10"])
+                    + "\n风力风向："
+                    + d["data"]["forecast"][0]["fx"]
+                    + " "
+                    + d["data"]["forecast"][0]["fl"]
+                    + "\n感冒指数："
+                    + d["data"]["ganmao"]
+                    + "\n温馨提示："
+                    + d["data"]["forecast"][0]["notice"]
+                    + "\n更新时间："
+                    + d["time"]
                 )
-                wind = f"{today_weather.get('fx')}: {today_weather.get('fl')}"
-                aqi = f"空气: {today_weather.get('aqi')}"
-                msg = f"城市: {city_name}\n时间: {today_time}\n{notice}\n{temperature}\n{wind}\n{aqi}\n"
-            else:
-                msg = f"城市: {city_name}\n时间: {today_time}天气情况: 获取失败"
             msg_all += msg + "\n\n"
         return msg_all
 
