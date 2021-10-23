@@ -195,6 +195,16 @@
             "running": true
         },
         {
+            "name": "网易蜗牛读书",
+            "type": "cron",
+            "time": "52 9 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkinjs.js -env JSNAME=ck_du163.js"
+            },
+            "running": true
+        },
+        {
             "name": "多看阅读",
             "type": "cron",
             "time": "30 20 * * *",
@@ -341,6 +351,16 @@
             "job": {
                 "type": "runjs",
                 "target": "checkin.js -env PYNAME=ck_kgqq.py"
+            },
+            "running": true
+        },
+        {
+            "name": "联想商城",
+            "type": "cron",
+            "time": "10 22 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkinjs.js -env JSNAME=ck_lenovo.js"
             },
             "running": true
         },
