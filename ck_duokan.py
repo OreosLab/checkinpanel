@@ -15,6 +15,7 @@ from utils import get_data
 class DuoKan:
     def __init__(self, check_items):
         self.check_items = check_items
+        self.can = False
         self.gift_code_list = [
             "d16ad58199c69518a4afd87b5cf0fe67",
             "828672d6bc39ccd25e1f6ad34e00b86c",
@@ -264,6 +265,14 @@ class DuoKan:
                     for one in result.get("data", {}).get("award")
                 ]
             )
+            for one in result.get("data", {}).get("award"):
+                if one.get("delay") == 1:  # 判断是否有可延迟的豆子
+                    self.delay(one.get("expire"), cookies=cookies)
+            else:
+                if self.can:
+                    msg += "，豆子延期: 完成\n"
+                else:
+                    msg += "，豆子延期: 没有\n"
             return msg
         else:
             return "账号异常: Cookie 失效"
@@ -366,6 +375,14 @@ class DuoKan:
             if result.get("result") == 0:
                 success_count += 1
         return f"其他任务: 完成 {success_count} 个"
+
+    def delay(self, date, cookies):
+        url = "https://www.duokan.com/store/v0/award/coin/delay"
+        data = f"date={date}&{self.get_data(cookies=cookies)}&withid=1"
+        res = requests.post(url=url, data=data, headers=self.headers, cookies=cookies)
+        print(res.json())
+        if res.json().get("result") == 0:
+            self.can = True
 
     def main(self):
         msg_all = ""

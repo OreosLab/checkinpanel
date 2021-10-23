@@ -73,7 +73,7 @@ class AcFun:
 
     @staticmethod
     def danmu(session, cookies):
-        url = "https://www.acfun.cn/rest/pc-direct/new-danmaku/add"
+        url = f"https://www.acfun.cn/v/ac{self.contentid}"
         data = {
             "mode": "1",
             "color": "16777215",
