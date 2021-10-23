@@ -298,6 +298,20 @@
         //     },
     ],
 
+    // 联想商城
+    LENOVO: [
+        {
+            account: '',
+            password: '',
+            baseinfo: '',
+        },
+        //     {
+        //       account: '',
+        //       password: '',
+        //       baseinfo: '',  // 联想智选 APP 抓包
+        //     },
+    ],
+
     // MEIZU 社区
     MEIZU: [
         {
@@ -440,6 +454,16 @@
         },
         //     {
         //       cookie: '',
+        //     },
+    ],
+
+    // 在线工具
+    TOOLU: [
+        {
+            cookie: 'BIDUPSID=xxxxxx; PSTM=xxxxxx; BAIDUID=xxxxxx; BAIDUID_BFESS=xxxxxx; delPer=xxxxxx; PSINO=xxxxxx; H_PS_PSSID=xxxxxx; BA_HECTOR=xxxxxx; BDORZ=xxxxxx; TIEBA_USERTYPE=xxxxxx; st_key_id=xxxxxx; BDUSS=xxxxxx; BDUSS_BFESS=xxxxxx; STOKEN=xxxxxx; TIEBAUID=xxxxxx; ab_sr=xxxxxx; st_data=xxxxxx; st_sign=xxxxxx;',
+        },
+        //     {
+        //       cookie: '',  // https://plus.tool.lu/ 抓包
         //     },
     ],
 

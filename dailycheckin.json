@@ -505,6 +505,16 @@
             "running": true
         },
         {
+            "name": "在线工具",
+            "type": "cron",
+            "time": "0 6 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkin.js -env PYNAME=ck_toolu.py"
+            },
+            "running": true
+        },
+        {
             "name": "联通营业厅",
             "type": "cron",
             "time": "18 16 * * *",
