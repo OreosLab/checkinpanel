@@ -125,6 +125,16 @@
             "running": true
         },
         {
+            "name": "每日新闻",
+            "type": "cron",
+            "time": "40 7 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkin.js -env PYNAME=api_news.py"
+            },
+            "running": true
+        },
+        {
             "name": "AcFun",
             "type": "cron",
             "time": "31 7 * * *",

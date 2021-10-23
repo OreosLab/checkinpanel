@@ -16,6 +16,9 @@
     // 每日一句
     MOTTO: true,
 
+    // 每日新闻
+    NEWS: true,
+
     // AcFun
     ACFUN: [
         {
