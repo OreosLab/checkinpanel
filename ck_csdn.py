@@ -32,9 +32,12 @@ class CSDN:
         url = "https://me.csdn.net/api/LuckyDraw_v2/goodluck"
         response = requests.get(url=url, headers=self.headers, cookies=cookies).json()
         if response.get("code") == 200:
-            msg = response.get("data").get("msg")
+            if response.get("data").get("prize_title") != None:
+                msg = f", {response.get('data').get('prize_title')}"
+            else:
+                msg = f"{response.get('data').get('msg')}"
         else:
-            msg = "抽奖失败"
+            msg = "抽奖失败\n"
         return msg
 
     def main(self):

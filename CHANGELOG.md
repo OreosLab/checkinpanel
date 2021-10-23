@@ -1,6 +1,25 @@
 # Changelog
 
 
+## 20211023-3-420 (2021-10-23)
+
+### Feature
+
+* :racehorse: : 优化新增功能和输出. [Oreo]
+
+* :sparkles: : 新增每日新闻. [Oreo]
+
+* :sparkles: : 新增在线工具. [Oreo]
+
+* :sparkles: : 新增联想商城. [Oreo]
+
+* :sparkles: : 新增网易蜗牛读书. [Oreo]
+
+### Other
+
+* :children_crossing: 更新天气预报. [Oreo]
+
+
 ## 20211022-3-040 (2021-10-22)
 
 ### Fix
@@ -16,13 +35,15 @@
 
 ## 20211021-3-004 (2021-10-21)
 
+### Feature
+
+* :racehorse: : 重构并优化 JS PY. [Oreo]
+
 ### Fix
 
 * :bug: : 修复 elecV2P JS 运行没有控制台输出的错误. [Oreo]
 
 ### Code Style
-
-* :racehorse: : 重构并优化 JS PY. [Oreo]
 
 * :art: : 优化代码. [Oreo]
 
@@ -155,6 +176,8 @@
 
 ### Feature
 
+* :racehorse: : 增加 EUserv 验证码识别方案. [Oreo]
+
 * :sparkles: : 新增 SF 轻小说. [Oreo]
 
 ### Fix
@@ -183,8 +206,6 @@
 ### Code Style
 
 * :art: : 修复联通营业厅和沃邮箱. [Oreo]
-
-* :racehorse: : 增加 EUserv 验证码识别方案. [Oreo]
 
 * :art: : 修改 Site 键名为 SITE，同时优化代码. [Oreo]
 
