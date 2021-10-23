@@ -4,6 +4,8 @@ cron: 18 20 * * *
 new Env('有道云笔记');
 """
 
+import time
+
 import requests
 
 from notify_mtr import send
@@ -15,51 +17,62 @@ class YouDao:
         self.check_items = check_items
 
     @staticmethod
-    def sign(cookies):
-        ad_space = 0
-        refresh_cookies_res = requests.get(
-            "http://note.youdao.com/login/acc/pe/getsess?product=YNOTE", cookies=cookies
+    def get_space(cookie):
+        url = "https://note.youdao.com/yws/mapi/user?method=get"
+        headers = {"Cookie": cookie}
+        res = requests.get(url=url, headers=headers)
+        if res.json().get("q") == None:
+            return 0
+        return res.json().get("q")
+
+    def sign(self, cookie):
+        msg = f"签到前空间: {int(self.get_space(cookie))//1048576}M\n"
+        c = ""
+        ad = 0
+        headers = {"Cookie": cookie}
+        r = requests.get(
+            "http://note.youdao.com/login/acc/pe/getsess?product=YNOTE", headers=headers
         )
-        cookies = dict(refresh_cookies_res.cookies)
-        url = "https://note.youdao.com/yws/api/daupromotion?method=sync"
-        res = requests.post(url=url, cookies=cookies)
-        if "error" not in res.text:
-            checkin_response = requests.post(
-                url="https://note.youdao.com/yws/mapi/user?method=checkin",
-                cookies=cookies,
+        for key, value in r.cookies.items():
+            c += key + "=" + value + ";"
+        headers = {"Cookie": c}
+        re = requests.post(
+            "https://note.youdao.com/yws/api/daupromotion?method=sync", headers=headers
+        )
+        if "error" not in re.text:
+            res = requests.post(
+                "https://note.youdao.com/yws/mapi/user?method=checkin", headers=headers
+            )
+            time.sleep(1)
+            res2 = requests.post(
+                "https://note.youdao.com/yws/mapi/user?method=checkin",
+                headers=headers,
+                data={"device_type": "android"},
             )
             for _ in range(3):
-                ad_response = requests.post(
-                    url="https://note.youdao.com/yws/mapi/user?method=adRandomPrompt",
-                    cookies=cookies,
+                resp = requests.post(
+                    "https://note.youdao.com/yws/mapi/user?method=adRandomPrompt",
+                    headers=headers,
                 )
-                ad_space += ad_response.json().get("space", 0) // 1048576
-            if "reward" in res.text:
-                sync_space = res.json().get("rewardSpace", 0) // 1048576
-                checkin_space = checkin_response.json().get("space", 0) // 1048576
-                space = sync_space + checkin_space + ad_space
-                youdao_message = "+{0}M".format(space)
-            else:
-                youdao_message = "获取失败"
+                ad += resp.json()["space"] // 1048576
+                time.sleep(2)
+            if "reward" in re.text:
+                s = self.get_space(cookie)
+                msg += f"签到后空间: {int(self.get_space(cookie))//1048576}M\n"
+                sync = re.json()["rewardSpace"] // 1048576
+                checkin = res.json()["space"] // 1048576
+                checkin2 = res2.json()["space"] // 1048576
+                space = str(sync + checkin + checkin2 + ad)
+                msg += f"获得空间：{space}M, 总空间：{int(s)//1048576}M"
         else:
-            youdao_message = "Cookie 可能过期"
-        return youdao_message
+            msg += "错误" + re.json()
+        return msg
 
     def main(self):
         msg_all = ""
         for check_item in self.check_items:
-            cookie = {
-                item.split("=")[0]: item.split("=")[1]
-                for item in check_item.get("cookie").split("; ")
-            }
-            try:
-                ynote_pers = cookie.get("YNOTE_PERS", "")
-                uid = ynote_pers.split("||")[-2]
-            except Exception as e:
-                print(f"获取用户信息失败: {e}")
-                uid = "未获取到用户信息"
-            msg = self.sign(cookies=cookie)
-            msg = f"帐号信息: {uid}\n获取空间: {msg}"
+            cookie = check_item.get("cookie")
+            msg = self.sign(cookie)
             msg_all += msg + "\n\n"
         return msg_all
 
