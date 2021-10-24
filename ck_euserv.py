@@ -55,6 +55,7 @@ def log(info: str):
 class EUserv:
     def __init__(self, check_items):
         self.check_items = check_items
+        self.url = "https://support.euserv.com/index.iphp"
         self.user_agent = (
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
             "Chrome/94.0.4606.61 Safari/537.36 "
@@ -143,7 +144,7 @@ class EUserv:
         check_captcha_solver_usage: bool,
     ) -> tuple:
         headers = {"user-agent": self.user_agent, "origin": "https://www.euserv.com"}
-        url = "https://support.euserv.com/index.iphp"
+        url = self.url
         captcha_image_url = "https://support.euserv.com/securimage_show.php"
         session = requests.Session()
 
@@ -242,12 +243,12 @@ class EUserv:
     def renew(
         self, sess_id: str, session: requests.session, password: str, order_id: str
     ) -> bool:
-        url = "https://support.euserv.com/index.iphp"
+        url = self.url
         headers = {
             "user-agent": self.user_agent,
             "Host": "support.euserv.com",
             "origin": "https://support.euserv.com",
-            "Referer": "https://support.euserv.com/index.iphp",
+            "Referer": self.url,
         }
         data = {
             "Submit": "Extend contract",

@@ -24,7 +24,11 @@ class Heytap:
         self.login = config["HEYTAP"]
         self.log = ""
         self.config = config
+        self.accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+        self.accept_encoding = "gzip, deflate, br"
+        self.content_type = "application/x-www-form-urlencoded"
         self.cookies = "cookie"
+        self.host = "store.oppo.com"
         self.user_agent = "ua"
         self.s_channel = "oppostore"
         self.source_type = "505"  # 初始化设置为505，会从cookie获取实际数据
@@ -60,12 +64,12 @@ class Heytap:
         url = "https://www.heytap.com/cn/oapi/users/web/member/info"
         headers = {
             "Host": "www.heytap.com",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": self.accept,
+            "Content-Type": self.content_type,
             "Connection": "keep-alive",
             "User-Agent": self.user_agent,
             "Accept-Language": "zh-cn",
-            "Accept-Encoding": "gzip, deflate, br",
+            "Accept-Encoding": self.accept_encoding,
             "cookie": self.cookies,
         }
         response = self.session.get(url=url, headers=headers)
@@ -103,13 +107,13 @@ class Heytap:
     def taskCenter(self):
         url = "https://store.oppo.com/cn/oapi/credits/web/credits/show"
         headers = {
-            "Host": "store.oppo.com",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-            "Content-Type": "application/x-www-form-urlencoded",
+            "Host": self.host,
+            "Accept": self.accept,
+            "Content-Type": self.content_type,
             "Connection": "keep-alive",
             "User-Agent": self.user_agent,
             "Accept-Language": "zh-cn",
-            "Accept-Encoding": "gzip, deflate, br",
+            "Accept-Encoding": self.accept_encoding,
             "cookie": self.cookies,
             "referer": "https://store.oppo.com/cn/app/taskCenter/index",
         }
@@ -124,13 +128,13 @@ class Heytap:
         try:
             dated = time.strftime("%Y-%m-%d")
             headers = {
-                "Host": "store.oppo.com",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-                "Content-Type": "application/x-www-form-urlencoded",
+                "Host": self.host,
+                "Accept": self.accept,
+                "Content-Type": self.content_type,
                 "Connection": "keep-alive",
                 "User-Agent": self.user_agent,
                 "Accept-Language": "zh-cn",
-                "Accept-Encoding": "gzip, deflate, br",
+                "Accept-Encoding": self.accept_encoding,
                 "cookie": self.cookies,
                 "referer": "https://store.oppo.com/cn/app/taskCenter/index",
             }
@@ -196,8 +200,8 @@ class Heytap:
             headers = {
                 "self.clientPackage": "com.oppo.store",
                 "Host": "msec.opposhop.cn",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-                "Content-Type": "application/x-www-form-urlencoded",
+                "Accept": self.accept,
+                "Content-Type": self.content_type,
                 "Connection": "keep-alive",
                 "User-Agent": "okhttp/3.12.12.200sp1",
                 "Accept-Encoding": "gzip",
@@ -276,8 +280,8 @@ class Heytap:
             headers = {
                 "self.clientPackage": "com.oppo.store",
                 "Host": "msec.opposhop.cn",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-                "Content-Type": "application/x-www-form-urlencoded",
+                "Accept": self.accept,
+                "Content-Type": self.content_type,
                 "Connection": "keep-alive",
                 "User-Agent": "okhttp/3.12.12.200sp1",
                 "Accept-Encoding": "gzip",
@@ -326,8 +330,8 @@ class Heytap:
             headers = {
                 "self.clientPackage": "com.oppo.store",
                 "Host": "msec.opposhop.cn",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-                "Content-Type": "application/x-www-form-urlencoded",
+                "Accept": self.accept,
+                "Content-Type": self.content_type,
                 "Connection": "keep-alive",
                 "User-Agent": "okhttp/3.12.12.200sp1",
                 "Accept-Encoding": "gzip",
@@ -374,14 +378,14 @@ class Heytap:
     # 执行完成任务领取奖励
     def cashingCredits(self, info_marking, info_type, info_credits):
         headers = {
-            "Host": "store.oppo.com",
+            "Host": self.host,
             "self.clientPackage": "com.oppo.store",
             "Accept": "application/json, text/plain, */*",
-            "Content-Type": "application/x-www-form-urlencoded",
+            "Content-Type": self.content_type,
             "Connection": "keep-alive",
             "User-Agent": self.user_agent,
             "Accept-Language": "zh-cn",
-            "Accept-Encoding": "gzip, deflate, br",
+            "Accept-Encoding": self.accept_encoding,
             "cookie": self.cookies,
             "Origin": "https://store.oppo.com",
             "X-Requested-With": "com.oppo.store",
@@ -560,7 +564,7 @@ class Heytap:
     def zaoshui_task(self):
         try:
             headers = {
-                "Host": "store.oppo.com",
+                "Host": self.host,
                 "Connection": "keep-alive",
                 "s_channel": self.s_channel,
                 "utm_term": "direct",

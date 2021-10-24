@@ -28,6 +28,7 @@ def log(info):
 class Site:
     def __init__(self, check_items):
         self.check_items = check_items
+        self.error_tip = "cookie 已过期或网站类型不对"
 
     @staticmethod
     def generate_headers(url):
@@ -47,8 +48,7 @@ class Site:
             cookie_dict[cookie[0]] = cookie[1]
         return cookie_dict
 
-    @staticmethod
-    def signin(session, url):
+    def signin(self, session, url):
         # hdarea签到
         if url == "https://www.hdarea.co":
             attendance_url = url + "/sign_in.php"
@@ -62,7 +62,7 @@ class Site:
                 elif r1.search(res.text):
                     tip = "重复签到"
                 else:
-                    tip = "cookie 已过期或网站类型不对"
+                    tip = self.url
                     print(f"{url} {tip}")
                 log(f"{url} {tip}")
         # 猫站签到
@@ -81,7 +81,7 @@ class Site:
                 elif "重复刷新" in msg:
                     tip = "重复签到"
                 else:
-                    tip = "cookie 已过期或网站类型不对"
+                    tip = self.url
                     print(f"{url} {tip}")
                 log(f"{url} {tip}")
         # 海胆签到
@@ -124,7 +124,7 @@ class Site:
                 elif r1.search(res.text):
                     tip = "重复签到"
                 else:
-                    tip = "cookie 已过期或网站类型不对"
+                    tip = self.url
                     print(f"{url} {tip}")
                 log(f"{url} {tip}")
         else:
@@ -137,7 +137,7 @@ class Site:
                 elif location := r1.search(res.text).span():
                     tip = res.text[location[0], location[1]]
                 else:
-                    tip = "cookie 已过期或网站类型不对"
+                    tip = self.url
                     print(f"{url} {tip}")
                 log(f"{url} {tip}")
 

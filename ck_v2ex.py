@@ -18,11 +18,11 @@ urllib3.disable_warnings()
 class V2ex:
     def __init__(self, check_items):
         self.check_items = check_items
+        self.url = "https://www.v2ex.com/mission/daily"
 
-    @staticmethod
-    def sign(session):
+    def sign(self, session):
         msg = ""
-        response = session.get(url="https://www.v2ex.com/mission/daily", verify=False)
+        response = session.get(url=self.url, verify=False)
         pattern = (
             r"<input type=\"button\" class=\"super normal button\""
             r" value=\".*?\" onclick=\"location\.href = \'(.*?)\';\" />"
@@ -55,7 +55,7 @@ class V2ex:
         )
         username = username[0] if username else "用户名获取失败"
         msg += f"帐号信息: {username}\n今日签到: {today}\n帐号余额: {total}"
-        response = session.get(url="https://www.v2ex.com/mission/daily", verify=False)
+        response = session.get(url=self.url, verify=False)
         data = re.findall(
             pattern=r"<div class=\"cell\">(.*?)天</div>", string=response.text
         )
@@ -82,7 +82,7 @@ class V2ex:
             session.headers.update(
                 {
                     "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36",
-                    "referer": "https://www.v2ex.com/mission/daily",
+                    "referer": self.url,
                     "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
                     "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",
                 }

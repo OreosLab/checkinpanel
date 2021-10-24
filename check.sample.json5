@@ -141,6 +141,16 @@
         //     },
     ],
 
+    // 企鹅电竞
+    EGAME: [
+        {
+            cookie: 'pgv_pvi=xxxxxx; RK=xxxxxx; ptcz=xxxxxx; pgv_pvid=xxxxxx; pac_uid=xxxxxx; iip=x; o_cookie=xxxxxx; sd_userid=xxxxxx; sd_cookie_crttime=xxxxxx; tvfe_boss_uuid=xxxxxx; _tc_unionid=xxxxxx; _ga=xxxxxx; pgg_ssid=xxxxxx; new_device=x; pgv_info=xxxxxx; ts_refer=xxxxxx; ts_uid=xxxxxx; _qpsvr_localtk=xxxxxx; pgg_uid=xxxxxx; pgg_appid=xxxxxx; pgg_openid=xxxxxx; pgg_access_token=xxxxxx; pgg_type=x; pgg_user_type=x; pgg_pvid=xxxxxx; ts_last=xxxxxx; tKeplerToken=xxxxxx',
+        },
+        //     {
+        //       cookie: '',
+        //     },
+    ],
+
     // 恩山论坛
     ENSHAN: [
         {

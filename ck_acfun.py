@@ -19,9 +19,10 @@ class AcFun:
     def __init__(self, check_items):
         self.check_items = check_items
         self.contentid = "27259341"
+        self.content_type = "application/x-www-form-urlencoded"
+        self.user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.70"
 
-    @staticmethod
-    def get_cookies(session, phone, password):
+    def get_cookies(self, session, phone, password):
         url = "https://id.app.acfun.cn/rest/app/login/signin"
         headers = {
             "Host": "id.app.acfun.cn",
@@ -29,7 +30,7 @@ class AcFun:
             "devicetype": "0",
             "accept-language": "zh-Hans-CN;q=1, en-CN;q=0.9, ja-CN;q=0.8, zh-Hant-HK;q=0.7, io-Latn-CN;q=0.6",
             "accept": "application/json",
-            "content-type": "application/x-www-form-urlencoded",
+            "content-type": self.content_type,
         }
         data = f"password={password}&username={phone}"
         response = session.post(url=url, data=data, headers=headers, verify=False)
@@ -41,11 +42,10 @@ class AcFun:
         else:
             return False
 
-    @staticmethod
-    def get_token(session, cookies):
+    def get_token(self, session, cookies):
         url = "https://id.app.acfun.cn/rest/web/token/get"
         data = "sid=acfun.midground.api"
-        headers = {"Content-Type": "application/x-www-form-urlencoded"}
+        headers = {"Content-Type": self.content_type}
         response = session.post(
             url=url, cookies=cookies, data=data, headers=headers, verify=False
         )
@@ -55,19 +55,16 @@ class AcFun:
         url = "https://www.acfun.cn/rest/pc-direct/rank/channel"
         data = "channelId=0&rankPeriod=DAY"
         headers = {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.70",
+            "Content-Type": self.content_type,
+            "User-Agent": self.user_agent,
         }
         response = session.post(url=url, data=data, headers=headers, verify=False)
         self.contentid = response.json().get("rankList")[0].get("contentId")
         return self.contentid
 
-    @staticmethod
-    def sign(session, cookies):
+    def sign(self, session, cookies):
         url = "https://www.acfun.cn/rest/pc-direct/user/signIn"
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.70"
-        }
+        headers = {"User-Agent": self.user_agent}
         response = session.post(url=url, cookies=cookies, headers=headers, verify=False)
         return response.json().get("msg")
 
@@ -88,7 +85,7 @@ class AcFun:
         headers = {
             "cookie": f"acPasstoken={cookies.get('acPasstoken')};auth_key={cookies.get('auth_key')}",
             "referer": "https://www.acfun.cn/",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.70",
+            "User-Agent": self.user_agent,
         }
         res = session.get(
             url=f"https://www.acfun.cn/v/ac{self.contentid}", headers=headers
@@ -114,7 +111,7 @@ class AcFun:
         headers = {
             "cookie": f"acPasstoken={cookies.get('acPasstoken')};auth_key={cookies.get('auth_key')}",
             "referer": "https://www.acfun.cn/",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.70",
+            "User-Agent": self.user_agent,
         }
         response = session.post(url=url, data=data, headers=headers, verify=False)
         if response.json().get("result") == 0:
@@ -127,8 +124,8 @@ class AcFun:
         like_url = "https://api.kuaishouzt.com/rest/zt/interact/add"
         unlike_url = "https://api.kuaishouzt.com/rest/zt/interact/delete"
         headers = {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.70",
+            "Content-Type": self.content_type,
+            "User-Agent": self.user_agent,
         }
         cookies = {"acfun.midground.api_st": token, "kpn": "ACFUN_APP"}
         body = f"interactType=1&objectId={self.contentid}&objectType=2&subBiz=mainApp"
@@ -146,7 +143,7 @@ class AcFun:
 
     def share(self, session, cookies):
         url = "https://api-ipv6.acfunchina.com/rest/app/task/reportTaskAction?taskType=1&market=tencent&product=ACFUN_APP&appMode=0"
-        headers = {"Content-Type": "application/x-www-form-urlencoded"}
+        headers = {"Content-Type": self.content_type}
         response = session.get(url=url, cookies=cookies, headers=headers, verify=False)
         if response.json().get("result") == 0:
             msg = "分享成功"

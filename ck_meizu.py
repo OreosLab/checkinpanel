@@ -15,9 +15,9 @@ from utils import get_data
 class Meizu:
     def __init__(self, check_items):
         self.check_items = check_items
+        self.url = "https://bbs-act.meizu.cn/index.php"
 
-    @staticmethod
-    def sign(cookie):
+    def sign(self, cookie):
         headers = {
             "authority": "bbs-act.meizu.cn",
             "pragma": "no-cache",
@@ -33,14 +33,11 @@ class Meizu:
             ("mod", "signin"),
             ("action", "sign"),
         )
-        response = requests.get(
-            url="https://bbs-act.meizu.cn/index.php", headers=headers, params=params
-        ).json()
+        response = requests.get(url=self.url, headers=headers, params=params).json()
         msg = response.get("message")
         return msg
 
-    @staticmethod
-    def draw(cookie, count: int = 0):
+    def draw(self, cookie, count: int = 0):
         headers = {
             "authority": "bbs-act.meizu.cn",
             "accept": "application/json, text/javascript, */*; q=0.01",
@@ -59,7 +56,7 @@ class Meizu:
             for i in range(count):
                 try:
                     data = requests.post(
-                        url="https://bbs-act.meizu.cn/index.php",
+                        url=self.url,
                         headers=headers,
                         data=data,
                     ).json()
@@ -80,9 +77,7 @@ class Meizu:
         else:
             draw_msg = "抽奖结果: 未开启抽奖"
         data = {"mod": "index", "action": "get_user_count", "id": "2"}
-        user_info = requests.post(
-            "https://bbs-act.meizu.cn/index.php", headers=headers, data=data
-        ).json()
+        user_info = requests.post(self.url, headers=headers, data=data).json()
         uid = user_info.get("data", {}).get("uid")
         return draw_msg, uid
 
