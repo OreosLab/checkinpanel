@@ -123,7 +123,7 @@ class EUserv:
             print(solved)
             raise KeyError("Failed to find parsed results.")
 
-    def get_captcha_solver_usage(self, userid, apikey) -> dict:
+    def get_captcha_solver_usage(self, userid: str, apikey: str) -> dict:
         url = "https://api.apitruecaptcha.org/one/getusage"
 
         params = {

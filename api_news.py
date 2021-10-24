@@ -4,11 +4,12 @@ cron: 40 7 * * *
 new Env('每日新闻');
 """
 
-import re
 import json
+import re
 import traceback
 
 import requests
+
 from notify_mtr import send
 from utils import get_data
 
