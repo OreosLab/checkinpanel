@@ -36,7 +36,6 @@ var desp = '';
 lenovo();
 
 async function lenovo() {
-    desp = '【联想延保每日签到】：';
     if (accountLENOVOS) {
         Log('account 数量：' + accountLENOVOS.length);
         for (let a = 0; a < accountLENOVOS.length; a++) {
@@ -59,7 +58,7 @@ async function lenovo() {
             }
         }
     } else {
-        Log(`${desp}请填写联想商城抓包数据`);
+        Log(`【联想延保每日签到】：请填写联想商城抓包数据`);
     }
     notify.sendNotify('联想商城', desp);
     return '联想商城' + '\n\n' + desp;

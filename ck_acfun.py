@@ -4,7 +4,7 @@ cron: 31 7 * * *
 new Env('AcFun');
 """
 
-import json
+import re
 
 import requests
 import urllib3
@@ -71,9 +71,8 @@ class AcFun:
         response = session.post(url=url, cookies=cookies, headers=headers, verify=False)
         return response.json().get("msg")
 
-    @staticmethod
-    def danmu(session, cookies):
-        url = f"https://www.acfun.cn/v/ac{self.contentid}"
+    def danmu(self, session, cookies):
+        url = "https://www.acfun.cn/rest/pc-direct/new-danmaku/add"
         data = {
             "mode": "1",
             "color": "16777215",
@@ -91,6 +90,17 @@ class AcFun:
             "referer": "https://www.acfun.cn/",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.70",
         }
+        res = session.get(
+            url=f"https://www.acfun.cn/v/ac{self.contentid}", headers=headers
+        )
+        videoId = re.findall('"currentVideoId":(\d+),', res.text)
+        subChannel = re.findall(
+            '{subChannelId:(\d+),subChannelName:"([\u4e00-\u9fa5]+)"}', res.text
+        )
+        if len(videoId) > 0:
+            data["videoId"] = videoId[0]
+            data["subChannelId"] = subChannel[0][0]
+            data["subChannelName"] = subChannel[0][1]
         response = session.post(url=url, data=data, headers=headers, verify=False)
         if response.json().get("result") == 0:
             msg = "弹幕成功"

@@ -153,8 +153,8 @@
         //     {
         //       username: '',
         //       password: '',
-        //       captcha: true,  // 是否开启验证识别
-        //       userid: '',     // 开启验证识别后到 https://apitruecaptcha.org/api 注册账号
+        //       captcha: true,  // 是否开启验证识别次数查询
+        //       userid: '',     // https://apitruecaptcha.org/api 注册账号
         //       apikey: '',     // 每日免费 100 次
         //     },
     ],
