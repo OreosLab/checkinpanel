@@ -87,6 +87,16 @@
         //     },
     ],
 
+    // CCAVA
+    CCAVA: [
+        {
+            cookie: '__vtins__JGU9XP985GXENwEs=xxxxxx; ......cookie_islog=x; cookieVf=xxxxxx; is_mochu_us_load=xxxxxx',
+        },
+        //     {
+        //       cookie: '',  // https://pc.ccava.net/invites/CKIN66 注册后抓包
+        //     },
+    ],
+
     // 天翼云盘
     CLOUD189: [
         {

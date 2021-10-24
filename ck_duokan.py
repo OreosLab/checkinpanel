@@ -270,9 +270,9 @@ class DuoKan:
                     self.delay(one.get("expire"), cookies=cookies)
                 else:
                     if self.can:
-                        msg += "，豆子延期: 完成\n"
+                        msg += "\n豆子延期: 完成"
                     else:
-                        msg += "，豆子延期: 没有\n"
+                        msg += "\n豆子延期: 没有"
         else:
             msg = "账号异常: Cookie 失效"
         return msg

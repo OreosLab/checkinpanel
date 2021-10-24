@@ -185,6 +185,16 @@
             "running": true
         },
         {
+            "name": "CCAVA",
+            "type": "cron",
+            "time": "55 18 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkin.js -env PYNAME=ck_ccava.py"
+            },
+            "running": true
+        },
+        {
             "name": "天翼云盘",
             "type": "cron",
             "time": "30 9 * * *",
