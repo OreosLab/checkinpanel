@@ -16,14 +16,12 @@ from utils import get_data
 class WoMail:
     def __init__(self, check_items):
         self.check_items = check_items
+        self.user_agent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.25 Safari/537.36 Core/1.70.3868.400 QQBrowser/10.8.4394.400"
 
-    @staticmethod
-    def login(womail_url):
+    def login(self, womail_url):
         try:
             url = womail_url
-            headers = {
-                "User-Agent": "User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.25 Safari/537.36 Core/1.70.3868.400 QQBrowser/10.8.4394.400"
-            }
+            headers = {"User-Agent": self.user_agent}
             res = requests.get(url=url, headers=headers, allow_redirects=False)
             set_cookie = res.headers["Set-Cookie"]
             cookies = re.findall("YZKF_SESSION.*?;", set_cookie)[0]
@@ -36,11 +34,10 @@ class WoMail:
             print("沃邮箱错误:", e)
             return None
 
-    @staticmethod
-    def dotask(cookies):
+    def dotask(self, cookies):
         msg = []
         headers = {
-            "User-Agent": "User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.25 Safari/537.36 Core/1.70.3868.400 QQBrowser/10.8.4394.400",
+            "User-Agent": self.user_agent,
             "Cookie": cookies,
         }
         try:
@@ -103,21 +100,18 @@ class WoMail:
             msg.append({"name": "执行任务错误", "value": str(e)})
         return msg
 
-    @staticmethod
-    def dotask2(womail_url):
+    def dotask2(self, womail_url):
         msg = []
         userdata = re.findall("mobile.*", womail_url)[0]
         url = "https://club.mail.wo.cn/clubwebservice/?" + userdata
-        headers = {
-            "User-Agent": "User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.25 Safari/537.36 Core/1.70.3868.400 QQBrowser/10.8.4394.400"
-        }
+        headers = {"User-Agent": self.user_agent}
         try:
             res = requests.get(url=url, headers=headers, allow_redirects=False)
             set_cookie = res.headers["Set-Cookie"]
             cookies = re.findall("SESSION.*?;", set_cookie)[0]
             if "SESSION" in cookies:
                 headers = {
-                    "User-Agent": "User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.25 Safari/537.36 Core/1.70.3868.400 QQBrowser/10.8.4394.400",
+                    "User-Agent": self.user_agent,
                     "Cookie": cookies,
                     "Referer": "https://club.mail.wo.cn/clubwebservice/club-user/user-info/mine-task",
                 }
@@ -246,8 +240,7 @@ class WoMail:
             msg.append({"name": "沃邮箱俱乐部", "value": "获取 COOKIES 失败"})
         return msg
 
-    @staticmethod
-    def dotask3(womail_url):
+    def dotask3(self, womail_url):
         msg = []
         try:
             dated = int(time.time())

@@ -25,14 +25,8 @@ magicJS.unifiedPushUrl = magicJS.read('smzdm_unified_push_url') || magicJS.read(
 smzdm();
 
 async function smzdm() {
-    // 通知信息
     let content = '';
-    // 获取Cookie
-    // let smzdmCookie = magicJS.read(smzdmCookieKey);
-
     if (!!cookieSMZDMs === false) {
-        // magicJS.logWarning("没有读取到什么值得买有效cookie，请访问zhiyou.smzdm.com进行登录");
-        // magicJS.notify('什么值得买', "", "❓没有获取到Web端Cookie，请先进行登录。");
         notify.sendNotify('什么值得买', '没有读取到什么值得买有效cookie，请访问zhiyou.smzdm.com进行登录');
         content += '\n没有读取到什么值得买有效cookie，请访问zhiyou.smzdm.com进行登录';
     } else {
@@ -153,7 +147,6 @@ async function smzdm() {
                         let addPoint = afterPoint - beforePoint;
                         let addExp = afterExp - beforeExp;
                         let addGold = afterGold - beforeGold;
-                        // let addPrestige = afterPrestige - beforePrestige;
                         let addSilver = afterSilver - beforeSilver;
                         content += !!content ? '\n' : '';
                         content +=
@@ -187,14 +180,9 @@ async function smzdm() {
                     } else {
                         content += '没有获取到用户近期的经验变动情况';
                     }
-
-                    // let title = `什么值得买 - ${nickName} V${afterVIPLevel}`;
-                    // magicJS.notify(title, subTitle, content, { "media-url": avatar });
                 }
             } catch (err) {
-                // magicJS.logError(`执行任务出现异常：${err}`);
                 result.push(`执行任务出现异常：${err}`);
-                // magicJS.notify('什么值得买', "", "❌执行任务出现，请查阅日志");
                 notify.sendNotify('什么值得买', `❌执行任务出现，请查阅日志`);
             }
             content += '\n========== [Cookie ' + $.index + ']  End  ========== \n\n\n';
@@ -579,9 +567,6 @@ function WebGetCurrentInfoNewVersion(smzdmCookie) {
                     let points = assetsNumList[0].match(/assets-num[^<]*>(.*)</)[1]; // 积分
                     let experience = assetsNumList[2].match(/assets-num[^<]*>(.*)</)[1]; // 经验
                     let gold = assetsNumList[4].match(/assets-num[^<]*>(.*)</)[1]; // 金币
-
-                    // let prestige = assetsNumList[6].match(/assets-num[^<]*>(.*)</)[1]; // 威望
-
                     let prestige = 0;
                     let silver = assetsNumList[6].match(/assets-num[^<]*>(.*)</)[1]; // 碎银子
                     resolve([userName, userPointList, Number(points), Number(experience), Number(gold), Number(prestige), Number(silver)]);

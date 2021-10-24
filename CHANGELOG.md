@@ -1,6 +1,19 @@
 # Changelog
 
 
+## 20211024-3-030 (2021-10-24)
+
+### Feature
+
+* :sparkles: : 新增 CCAVA. [Oreo]
+
+* :racehorse: : 新增功能，优化输出. [Oreo]
+
+### Fix
+
+* :bug: : 修复 AcFun 弹幕任务错误. [Oreo]
+
+
 ## 20211023-3-420 (2021-10-23)
 
 ### Feature

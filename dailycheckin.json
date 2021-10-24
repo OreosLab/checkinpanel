@@ -235,6 +235,16 @@
             "running": true
         },
         {
+            "name": "企鹅电竞",
+            "type": "cron",
+            "time": "8 8,12,18 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkin.js -env PYNAME=ck_egame.py"
+            },
+            "running": true
+        },
+        {
             "name": "恩山论坛",
             "type": "cron",
             "time": "1 15 * * *",
