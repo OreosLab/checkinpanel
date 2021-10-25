@@ -22,7 +22,6 @@ const headers = {
     Host: 'aiqicha.baidu.com',
     cookie: '',
 };
-
 const oo = {
     CX10002: '每日签到',
     CX10001: '每日登陆',
@@ -46,12 +45,10 @@ const oo = {
 };
 
 var desp = '';
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 1;
-
-let ytaskList = [];
-let taskList = [];
-let claimList = [];
-let alltaskList = [];
+var key = ['苹果', '华为', '百度', '一个', '暴风', '王者'];
+var popularSearchKey = [];
+var claimList = [];
+var taskList = [];
 
 aqc();
 
@@ -64,18 +61,27 @@ async function aqc() {
             let exportkey = cookieAQCs[a].exportkey ? cookieAQCs[a].exportkey : '';
             headers.cookie = aqcCookie;
             Log('\n========== [Account ' + (a + 1) + '] Start ========== ');
+            Log('爱企查每日任务开始');
             let logininfo = await get('m/getuserinfoAjax');
             if (logininfo.data.isLogin == 1) {
+                Log('获取热搜词...');
+                let keyword = await get('m/popularSearcheAjax');
+                if (keyword.data)
+                    popularSearchKey = keyword.data.map((item) => {
+                        return item.words;
+                    });
+                key = [...key, ...popularSearchKey];
                 await getaskList();
                 await dotask(taskList, aqcCookie, exportkey);
                 await dotask(taskList, aqcCookie, exportkey);
-                await sleep(500);
+                await sleep(5000);
                 claimList = [];
                 await getaskList();
                 for (let task of claimList) {
                     Log(`领取爱豆：${oo[task]}`);
                     let clres = await get(`zxcenter/claimUserTaskAjax?taskCode=${task}`, 'get');
-                    if (clres.status == 0) Log(`  领取成功！获得 ${clres.data.totalScore} 爱豆`);
+                    if (clres.status == 0) Log(`  领取成功！获得${clres.data.totalScore}爱豆`);
+                    await sleep(2500);
                 }
                 Log('去查询爱豆积分');
                 let userinfo = await get('usercenter/getvipinfoAjax', 'get');
@@ -93,7 +99,6 @@ async function aqc() {
 }
 
 function rand() {
-    const key = ['苹果', '华为', '百度', '一个', '暴风', '王者'];
     let i = Math.floor(Math.random() * key.length);
     return key[i];
 }
@@ -121,16 +126,18 @@ function get(api, data, method = 'get') {
 }
 
 async function getaskList() {
+    let ytaskList = [];
+    let alltaskList = [];
     let tres = await get('usercenter/checkTaskStatusAjax');
     let obj = tres.data;
     if (tres.status == 0) {
-        Object.keys(obj).forEach(function (key) {
-            if (oo[key]) {
-                let task = obj[key];
-                task.title = key;
+        Object.keys(obj).forEach(function (k) {
+            if (oo[k]) {
+                let task = obj[k];
+                task.title = k;
                 alltaskList.push(task);
                 if (task.count == task.totalcount) ytaskList.push(task);
-                if (task.canClaim != 0) claimList.push(key);
+                if (task.canClaim != 0) claimList.push(k);
                 if (task.count != task.totalcount) taskList.push(task);
             }
         });
@@ -139,8 +146,8 @@ async function getaskList() {
 }
 
 async function dotask(tasklist, aqcCookie, exportkey) {
+    var nid;
     for (var o of tasklist) {
-        var nid;
         switch (o.title) {
             case 'CX10002': //每日签到
                 Log('开始任务：' + oo[o.title]);
@@ -206,8 +213,8 @@ async function dotask(tasklist, aqcCookie, exportkey) {
                 break;
             case 'CX12002': //添加关注
                 Log('开始任务：' + oo[o.title]);
-                await get(`my/addCollectAjax`, 'post', `pid=34527616977197`);
-                await get(`my/delCollectAjax`, 'post', `pid=34527616977197`);
+                await get(`my/addCollectAjax`, `pid=34527616977197`, 'post');
+                await get(`my/delCollectAjax`, `pid=34527616977197`, 'post');
                 break;
             case 'CX12005': //分享好友
                 Log('开始任务：' + oo[o.title]);
