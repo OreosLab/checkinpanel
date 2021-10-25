@@ -1,6 +1,21 @@
 # Changelog
 
 
+## 20211025-3-300 (2021-10-25)
+
+### Feature
+
+* :sparkles: : 更新爱企查功能. [Oreo]
+
+  新增浏览互动和点赞观点任务，任务间增加随机延迟
+
+* :sparkles: : 新增联想乐云和 WPS. [Oreo]
+
+* :sparkles: : 新增企鹅电竞. [Oreo]
+
+  顺便优化代码，reduce code smell
+
+
 ## 20211024-3-030 (2021-10-24)
 
 ### Feature
