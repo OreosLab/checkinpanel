@@ -41,9 +41,12 @@ const oo = {
     CX12006: '邀请任务',
     CX12007: '高级搜索',
     CX12008: '高级筛选',
+    CX12009: '浏览互动',
+    CX12011: '点赞观点',
 };
 
 var desp = '';
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 1;
 
 let ytaskList = [];
 let taskList = [];
@@ -61,7 +64,7 @@ async function aqc() {
             let exportkey = cookieAQCs[a].exportkey ? cookieAQCs[a].exportkey : '';
             headers.cookie = aqcCookie;
             Log('\n========== [Account ' + (a + 1) + '] Start ========== ');
-            let logininfo = await get('m/getuserinfoAjax', 'get');
+            let logininfo = await get('m/getuserinfoAjax');
             if (logininfo.data.isLogin == 1) {
                 await getaskList();
                 await dotask(taskList, aqcCookie, exportkey);
@@ -72,17 +75,17 @@ async function aqc() {
                 for (let task of claimList) {
                     Log(`领取爱豆：${oo[task]}`);
                     let clres = await get(`zxcenter/claimUserTaskAjax?taskCode=${task}`, 'get');
-                    if (clres.status == 0) Log(`  领取成功！获得${clres.data.totalScore}爱豆`);
+                    if (clres.status == 0) Log(`  领取成功！获得 ${clres.data.totalScore} 爱豆`);
                 }
                 Log('去查询爱豆积分');
                 let userinfo = await get('usercenter/getvipinfoAjax', 'get');
-                msg += `账号${a + 1} 【${logininfo.data.userName}】 共${userinfo.data.consume}爱豆\n`;
+                msg += `账号 ${a + 1} 【${logininfo.data.userName}】 共 ${userinfo.data.consume} 爱豆\n`;
             } else {
                 msg = 'cookie已失效';
             }
         }
     } else {
-        msg += '请填写百度爱企查cookies(同百度贴吧';
+        msg += '请填写百度爱企查 cookies (同百度贴吧';
     }
     Log(msg);
     notify.sendNotify('爱企查', desp);
@@ -95,7 +98,7 @@ function rand() {
     return key[i];
 }
 
-function get(api, method, data) {
+function get(api, data, method = 'get') {
     return new Promise(async (resolve) => {
         try {
             let url = `https://aiqicha.baidu.com/${api}`;
@@ -118,7 +121,7 @@ function get(api, method, data) {
 }
 
 async function getaskList() {
-    let tres = await get('usercenter/checkTaskStatusAjax', 'get');
+    let tres = await get('usercenter/checkTaskStatusAjax');
     let obj = tres.data;
     if (tres.status == 0) {
         Object.keys(obj).forEach(function (key) {
@@ -132,68 +135,62 @@ async function getaskList() {
             }
         });
     }
-    Log(`共 ${alltaskList.length}任务 已完成 ${ytaskList.length} 任务 可做 ${taskList.length}任务 ${claimList.length}任务可领取奖励`);
+    Log(`共 ${alltaskList.length} 任务 已完成 ${ytaskList.length} 任务 可做 ${taskList.length} 任务 ${claimList.length} 任务可领取奖励`);
 }
 
 async function dotask(tasklist, aqcCookie, exportkey) {
     for (var o of tasklist) {
+        var nid;
         switch (o.title) {
             case 'CX10002': //每日签到
                 Log('开始任务：' + oo[o.title]);
-                await get(`usercenter/userSignAjax`, 'get');
+                await get(`usercenter/userSignAjax`);
                 break;
             case 'CX10001': //每日登陆
                 Log('开始任务：' + oo[o.title]);
                 break;
             case 'CX11001': //查询企业
                 Log('开始任务：' + oo[o.title]);
-                await get(`s/getHeadBrandAndPersonAjax?q=${encodeURI(rand())}`, 'get');
-                await sleep(500);
+                await get(`s/getHeadBrandAndPersonAjax?q=${encodeURI(rand())}`);
                 break;
             case 'CX11002': //查询老板
                 Log('开始任务：' + oo[o.title]);
-                await get(`person/relevantPersonalAjax?page=1&q=${encodeURI(rand())}&size=10`, 'get');
-                await sleep(500);
+                await get(`person/relevantPersonalAjax?page=1&q=${encodeURI(rand())}&size=10`);
                 break;
             case 'CX11003': //查询老赖
                 Log('开始任务：' + oo[o.title]);
-                await get(`c/dishonestAjax?q=${encodeURI(rand())}&t=8&s=10&p=1&f=%7B%22type%22:%221%22%7D`, 'get');
-                await sleep(500);
+                await get(`c/dishonestAjax?q=${encodeURI(rand())}&t=8&s=10&p=1&f=%7B%22type%22:%221%22%7D`);
                 break;
             case 'CX11004': //查询商标
                 Log('开始任务：' + oo[o.title]);
-                await get(`c/markproAjax?q=${encodeURI(rand())}&p=1&s=10&f=%7B%7D&o=%7B%7D`, 'get');
-                await sleep(500);
+                await get(`c/markproAjax?q=${encodeURI(rand())}&p=1&s=10&f=%7B%7D&o=%7B%7D`);
                 break;
             case 'CX11005': //查询地图
                 Log('开始任务：' + oo[o.title]);
-                await get(`map/getAdvanceFilterListAjax?longitude=113.76343399&latitude=23.04302382&distance=2&page=1`, 'get');
-                await sleep(500);
+                await get(`map/getAdvanceFilterListAjax?longitude=113.76343399&latitude=23.04302382&distance=2&page=1`);
                 break;
             case 'CX11006': //浏览新闻
                 Log('开始任务：' + oo[o.title]);
-                await get('m/getYuqingDetailAjax?yuqingId=993090dcb7574be014599996098459e3', 'get');
+                await get('m/getYuqingDetailAjax?yuqingId=993090dcb7574be014599996098459e3');
                 break;
             case 'CX11007': //浏览监控日报
                 Log('开始任务：' + oo[o.title]);
-                let jk = await get('zxcenter/monitorDailyReportListAjax?page=1&size=10', 'get');
+                let jk = await get('zxcenter/monitorDailyReportListAjax?page=1&size=10');
                 let list = jk.data.list;
                 if (list) {
                     for (let p = 0; p < 2 && p < list.length; p++) {
-                        await get(`zxcenter/monitorDailyReportDetailAjax?reportdate=${list[p].reportDate}`, 'get');
+                        await get(`zxcenter/monitorDailyReportDetailAjax?reportdate=${list[p].reportDate}`);
                     }
                 }
                 break;
             case 'CX11009': //查询关系
                 Log('开始任务：' + oo[o.title]);
-                await get(`relations/findrelationsAjax?from=e07a8ef1409bff3987f1b28d118ff826&to=6f5966de4af2eb29085ffbcc9cc0116a&pathNum=10`, 'get');
-                await sleep(500);
+                await get(`relations/findrelationsAjax?from=e07a8ef1409bff3987f1b28d118ff826&to=6f5966de4af2eb29085ffbcc9cc0116a&pathNum=10`);
                 break;
             case 'CX11010': //批量查询
                 Log('开始任务：' + oo[o.title]);
                 if (exportkey) {
-                    await get(`batchquery/show?exportkey=${exportkey}`, 'get');
-                    await sleep(500);
+                    await get(`batchquery/show?exportkey=${exportkey}`);
                 } else {
                     Log('    配置 exportkey 后可执行批量查询任务！');
                 }
@@ -201,49 +198,68 @@ async function dotask(tasklist, aqcCookie, exportkey) {
             case 'CX12001': //添加监控
                 Log('开始任务：' + oo[o.title]);
                 for (let id of [29829264524016, 28696417032417, 31370200772422, 31242153386614]) {
-                    await get(`zxcenter/addMonitorAjax?pid=${id}`, 'get');
+                    await get(`zxcenter/addMonitorAjax?pid=${id}`);
                 }
-                await get(`zxcenter/addMonitorAjax?pid=29710155220353`, 'get');
-                await get(`zxcenter/cancelMonitorAjax?pid=29710155220353`, 'get');
-                await sleep(500);
+                await get(`zxcenter/addMonitorAjax?pid=29710155220353`);
+                await sleep(1500);
+                await get(`zxcenter/cancelMonitorAjax?pid=29710155220353`);
                 break;
             case 'CX12002': //添加关注
                 Log('开始任务：' + oo[o.title]);
                 await get(`my/addCollectAjax`, 'post', `pid=34527616977197`);
                 await get(`my/delCollectAjax`, 'post', `pid=34527616977197`);
-                await sleep(500);
                 break;
             case 'CX12005': //分享好友
                 Log('开始任务：' + oo[o.title]);
-                let shres = await get(`usercenter/getShareUrlAjax`, 'get');
+                let shres = await get(`usercenter/getShareUrlAjax`);
                 let uid = shres.data.match(/uid=(.+)/);
                 if (uid) {
                     uid = uid[1];
                     headers['cookie'] = '';
-                    let t = Date.now();
-                    headers['referer'] = 'https://' + shres.data + '&VNK=' + t;
-                    headers['Zx-Open-Url'] = 'https://' + shres.data + '&VNK=' + t;
-                    await get(`m/?uid=${uid}`, 'get');
-                    await get(`m/getuserinfoAjax?uid=${uid}`, 'get');
+                    let time = Date.now();
+                    headers['referer'] = 'https://' + shres.data + '&VNK=' + time;
+                    headers['Zx-Open-Url'] = 'https://' + shres.data + '&VNK=' + time;
+                    await get(`m/?uid=${uid}`);
+                    headers['Zx-Open-Url'] = null;
+                    headers['referer'] = 'https://aiqicha.baidu.com';
+                    await get(`m/getuserinfoAjax?uid=${uid}`);
                     headers.cookie = aqcCookie;
-                    await sleep(500);
                 }
                 break;
             case 'CX12007': //高级搜索
                 Log('开始任务：' + oo[o.title]);
-                await get(`search/advanceSearchAjax?q=${encodeURI(rand())}&t=11&p=1&s=10&o=0&f=%7B%22searchtype%22:[%221%22]%7D`, 'get');
+                await get(`search/advanceSearchAjax?q=${encodeURI(rand())}&t=11&p=1&s=10&o=0&f=%7B%22searchtype%22:[%221%22]%7D`);
                 break;
             case 'CX12008': //高级筛选
                 Log('开始任务：' + oo[o.title]);
-                await get(`search/advanceFilterAjax?q=%E7%A6%8F%E5%B7%9E%E6%AF%8F%E6%97%A5&t=0&p=1&s=10&o=0`, 'get');
+                await get(`search/advanceFilterAjax?q=%E7%A6%8F%E5%B7%9E%E6%AF%8F%E6%97%A5&t=0&p=1&s=10&o=0`);
+                break;
+            case 'CX12009': //浏览互动
+                Log('开始任务：' + oo[o.title]);
+                nid = null;
+                let HomeQuestionres = await get('smart/getHomeQuestionListAjax?page=2&size=10&type=recommend');
+                if (HomeQuestionres.status == 0) {
+                    let qdetail = HomeQuestionres.data.list[Math.floor(Math.random() * HomeQuestionres.data.list.length)];
+                    await get(`smart/questionDetailAjax?nid=${qdetail.nid}`);
+                }
+                break;
+            case 'CX12011': //点赞观点
+                Log('开始任务：' + oo[o.title]);
+                nid = nid ? nid : '1851233986328193016';
+                let qCListres = await get(`smart/questionCommentListAjax?nid=${nid}`);
+                if (qCListres.status == 0) {
+                    let pList = qCListres.data.list;
+                    let randomkey = Math.floor(Math.random() * pList.length);
+                    let pid = pList[randomkey].reply_id;
+                    await get(`smart/updownAjax?undoType=0&clientType=app&nid=${nid}&parentId=${pid}`);
+                }
                 break;
             default:
                 break;
         }
-        await sleep(500);
-        Log('  去领取爱豆');
-        let clres = await get(`zxcenter/claimUserTaskAjax?taskCode=${o.title}`, 'get');
-        if (clres.status == 0) Log(`  领取成功！获得${clres.data.totalScore}爱豆`);
+        let t = Math.round(Math.random() * 1000 * (60 - 20) * 2) + 10 * 1000;
+        Log(`随机延迟 ${t / 1000} 秒：`);
+        await sleep(t);
     }
 }
 
