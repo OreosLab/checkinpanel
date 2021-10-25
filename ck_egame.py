@@ -129,7 +129,7 @@ class Egame:
         if res["data"]["key"]["retBody"]["message"] == "成功":  # 奖励已领取
             msg = f"{award_desc} 领取成功\n"
         else:
-            msg = f'res["data"]["key"]["retBody"]["message"]\n'
+            msg = f'{res["data"]["key"]["retBody"]["message"]}\n'
         return msg
 
     # 任务列表

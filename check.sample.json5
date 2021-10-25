@@ -321,6 +321,16 @@
         //     },
     ],
 
+    // 联想乐云
+    LECLOUD: [
+        {
+            cookie: '',
+        },
+        //     {
+        //       cookie: '',
+        //     },
+    ],
+
     // 联想商城
     LENOVO: [
         {
@@ -546,6 +556,16 @@
         },
         //     {
         //       url: '',  // 联通沃邮箱公众号 https://nyan.mail.wo.cn/cn/sign/index/index?mobile 开头的 URL
+        //     },
+    ],
+
+    // WPS
+    WPS: [
+        {
+            cookie: '',
+        },
+        //     {
+        //       cookie: '',  // https://www.kdocs.cn/
         //     },
     ],
 
