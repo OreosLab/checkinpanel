@@ -61,7 +61,7 @@ class LeetCode:
         # 转化成json格式
         json_text = json.loads(response.text).get("data").get("question")
         # 题目题号
-        num = jsonText.get("questionFrontendId")
+        num = json_text.get("questionFrontendId")
         # 题名（中文）
         leetcode_title = json_text.get("translatedTitle")
         msg = num + "." + leetcode_title
