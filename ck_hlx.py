@@ -25,7 +25,7 @@ class HLX:
         password_md5 = m.hexdigest()
         return password_md5
 
-    def login(self, password, username):
+    def login(self, username, password):
         password_md5 = self.md5(password)
         url = "http://floor.huluxia.com/account/login/ANDROID/4.0?device_code=1"
         headers = {
