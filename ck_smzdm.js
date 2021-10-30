@@ -24,7 +24,7 @@ magicJS.unifiedPushUrl = magicJS.read('smzdm_unified_push_url') || magicJS.read(
 smzdm();
 
 async function smzdm() {
-    let result = '';
+    let result = [];
     let content = '';
     if (!!cookieSMZDMs === false) {
         notify.sendNotify('什么值得买', '没有读取到什么值得买有效cookie，请访问zhiyou.smzdm.com进行登录');
