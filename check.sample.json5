@@ -10,6 +10,9 @@
         //     '朝阳区',
     ],
 
+    // 爱企查e卡监控
+    ECARDCHECK: false,
+
     // LeetCode 每日一题
     LEETCODE: false,
 

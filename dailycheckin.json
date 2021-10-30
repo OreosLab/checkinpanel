@@ -95,6 +95,16 @@
             "running": true
         },
         {
+            "name": "爱企查e卡监控",
+            "type": "cron",
+            "time": "18 0-23/6 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkin.js -env PYNAME=api_ecardcheck.py"
+            },
+            "running": true
+        },
+        {
             "name": "LeetCode 每日一题",
             "type": "cron",
             "time": "10 10 * * *",
