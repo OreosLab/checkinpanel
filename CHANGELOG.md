@@ -1,6 +1,26 @@
 # Changelog
 
 
+## 20211028-3-010 (2021-10-27)
+
+### Feature
+
+* :sparkles: : 增加一个新的推送文件。 https://github.com/Oreomeow/checkinpanel/issues/25. [night-raise]
+
+  1. 可以不需要 json5 依赖，那么配置必须符合 json 格式。
+  2. 可以不提供 json 配置，通过环境变量指定推送情况。
+  3. 未使用海象。
+
+
+## 20211027-3-020 (2021-10-27)
+
+### Fix
+
+* :bug: : fix leetcode type error. [lustime]
+
+* :bug: : fix hlx param error. [Oreo]
+
+
 ## 20211026-3-020 (2021-10-25)
 
 ### Fix
