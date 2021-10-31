@@ -3,23 +3,14 @@
 import base64
 import hashlib
 import hmac
+import json
 import os
 import re
 import threading
 import time
 import urllib.parse
+
 import requests
-
-try:
-    import json5 as json
-except ModuleNotFoundError:
-    import json
-
-try:
-    from utils_env import get_file_path
-except ModuleNotFoundError:
-    def get_file_path():
-        return ""
 
 # 原先的 print 函数和主线程的锁
 _print = print
@@ -90,23 +81,6 @@ for k in push_config:
         v = os.getenv(k)
         push_config[k] = v
 
-# 读取配置文件中的变量 (会覆盖环境变量)
-CONFIG_PATH = os.getenv("NOTIFY_CONFIG_PATH") or get_file_path("notify.json5")
-if os.path.exists(CONFIG_PATH):
-    print(f"通知配置文件存在：{CONFIG_PATH}。")
-    try:
-        for k, v in dict(
-                json.load(open(CONFIG_PATH, mode="r", encoding="utf-8"))
-        ).items():
-            if k in push_config:
-                push_config[k] = v
-    except ValueError:
-        print(
-            f"错误：配置文件 {CONFIG_PATH} 格式不对，请在 https://verytoolz.com/json5-validator.html 中检查格式"
-        )
-elif CONFIG_PATH:
-    print(f"{CONFIG_PATH} 配置的通知文件不存在，请检查文件位置或删除对应环境变量！")
-
 
 def bark(title: str, content: str) -> None:
     """
@@ -129,11 +103,11 @@ def bark(title: str, content: str) -> None:
     }
     params = ""
     for pair in filter(
-            lambda pairs: pairs[0].startswith("BARK_")
-                          and pairs[0] != "BARK_PUSH"
-                          and pairs[1]
-                          and bark_params.get(pairs[0]),
-            push_config.items(),
+        lambda pairs: pairs[0].startswith("BARK_")
+        and pairs[0] != "BARK_PUSH"
+        and pairs[1]
+        and bark_params.get(pairs[0]),
+        push_config.items(),
     ):
         params += f"{bark_params.get(pair[0])}={pair[1]}&"
     if params:
@@ -150,7 +124,7 @@ def console(title: str, content: str) -> None:
     """
     使用 控制台 推送消息。
     """
-    print(f"{title}\n\n" f"{content}")
+    print(f"{title}\n\n{content}")
 
 
 def dingding_bot(title: str, content: str) -> None:
@@ -174,7 +148,7 @@ def dingding_bot(title: str, content: str) -> None:
     headers = {"Content-Type": "application/json;charset=utf-8"}
     data = {"msgtype": "text", "text": {"content": f"{title}\n\n{content}"}}
     response = requests.post(
-        url=url, data=json.dumps(data, quote_keys=True), headers=headers, timeout=15
+        url=url, data=json.dumps(data), headers=headers, timeout=15
     ).json()
 
     if not response["errcode"]:
@@ -194,7 +168,7 @@ def feishu_bot(title: str, content: str) -> None:
 
     url = f'https://open.feishu.cn/open-apis/bot/v2/hook/{push_config.get("FSKEY")}'
     data = {"msg_type": "text", "content": {"text": f"{title}\n\n{content}"}}
-    response = requests.post(url, data=json.dumps(data, quote_keys=True)).json()
+    response = requests.post(url, data=json.dumps(data)).json()
 
     if response.get("StatusCode") == 0:
         print("飞书 推送成功！")
@@ -278,7 +252,7 @@ def pushplus_bot(title: str, content: str) -> None:
         "content": content,
         "topic": push_config.get("PUSH_PLUS_USER"),
     }
-    body = json.dumps(data, quote_keys=True).encode(encoding="utf-8")
+    body = json.dumps(data).encode(encoding="utf-8")
     headers = {"Content-Type": "application/json"}
     response = requests.post(url=url, data=body, headers=headers).json()
 
@@ -360,8 +334,8 @@ class WeCom:
 
     def send_text(self, message, touser="@all"):
         send_url = (
-                "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token="
-                + self.get_access_token()
+            "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token="
+            + self.get_access_token()
         )
         send_values = {
             "touser": touser,
@@ -370,15 +344,15 @@ class WeCom:
             "text": {"content": message},
             "safe": "0",
         }
-        send_msges = bytes(json.dumps(send_values, quote_keys=True), "utf-8")
+        send_msges = bytes(json.dumps(send_values), "utf-8")
         respone = requests.post(send_url, send_msges)
         respone = respone.json()
         return respone["errmsg"]
 
     def send_mpnews(self, title, message, media_id, touser="@all"):
         send_url = (
-                "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token="
-                + self.get_access_token()
+            "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token="
+            + self.get_access_token()
         )
         send_values = {
             "touser": touser,
@@ -397,7 +371,7 @@ class WeCom:
                 ]
             },
         }
-        send_msges = bytes(json.dumps(send_values, quote_keys=True), "utf-8")
+        send_msges = bytes(json.dumps(send_values), "utf-8")
         respone = requests.post(send_url, send_msges)
         respone = respone.json()
         return respone["errmsg"]
@@ -416,7 +390,7 @@ def wecom_bot(title: str, content: str) -> None:
     headers = {"Content-Type": "application/json;charset=utf-8"}
     data = {"msgtype": "text", "text": {"content": f"{title}\n\n{content}"}}
     response = requests.post(
-        url=url, data=json.dumps(data, quote_keys=True), headers=headers, timeout=15
+        url=url, data=json.dumps(data), headers=headers, timeout=15
     ).json()
 
     if response["errcode"] == 0:
@@ -449,12 +423,12 @@ def telegram_bot(title: str, content: str) -> None:
     proxies = None
     if push_config.get("TG_PROXY_HOST") and push_config.get("TG_PROXY_PORT"):
         if push_config.get("TG_PROXY_AUTH") is not None and "@" not in push_config.get(
-                "TG_PROXY_HOST"
+            "TG_PROXY_HOST"
         ):
             push_config["TG_PROXY_HOST"] = (
-                    push_config.get("TG_PROXY_AUTH")
-                    + "@"
-                    + push_config.get("TG_PROXY_HOST")
+                push_config.get("TG_PROXY_AUTH")
+                + "@"
+                + push_config.get("TG_PROXY_HOST")
             )
         proxyStr = "http://{}:{}".format(
             push_config.get("TG_PROXY_HOST"), push_config.get("TG_PROXY_PORT")
