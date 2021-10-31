@@ -125,7 +125,9 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 在非容器环境中，通知环境变量使用 系统的环境变量 或者 **你通过 `NOTIFY_CONFIG_PATH` 环境变量指定的配置文件** 进行配置。
 
-特别的，如果你想要创建一个基于 python 的 elecV2P 或者 qinglong 项目，强烈建议你拷贝[此文件](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/notify_mtr.py)，如此可以大幅度降低用户脚本的配置难度和升级难度。
+特别的，如果你想要创建一个基于 python 的 elecV2P 或者 qinglong 项目，并有意愿使用带注释的 `json5` 文件，那么强烈建议你拷贝[此文件](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/notify_mtr.py)，如此可以大幅度降低用户脚本的配置难度和升级难度。
+
+如果只希望使用 `json` 模块，那么可以拷贝 [𝒏𝒐𝒕𝒊𝒇𝒚_𝒎𝒕𝒓_𝒋𝒔𝒐𝒏.𝒑𝒚](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/notify_mtr_json.py)。
 
 ### 5. 检查依赖
 
@@ -270,7 +272,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
 
 ## 计划说明
 
-* [x] 𝑷𝒚𝒕𝒉𝒐𝒏 \| **api** \| LeetCode 每日一题 \| 每日一句 \| 天气预报 \| 每日新闻 \| 爱企查e卡监控 
+* [x] 𝑷𝒚𝒕𝒉𝒐𝒏 \| **api** \| LeetCode 每日一题 \| 每日一句 \| 天气预报 \| 每日新闻 \| 爱企查e卡监控
 * [x] 𝑷𝒚𝒕𝒉𝒐𝒏 \| **多账号** \| AcFun \| 百度搜索资源平台 \| Bilibili \| 天翼云盘 \| CSDN \| 多看阅读 \| 恩山论坛 \| Fa米家 \| 网易云游戏 \| 葫芦侠 \| 爱奇艺 \| 全民K歌 \| MEIZU 社区 \| 芒果 TV \| 小米运动 \| 网易云音乐 \| 一加手机社区官方论坛 \| 哔咔漫画 \| 吾爱破解 \| 什么值得买 \| 百度贴吧 \| V2EX \| 腾讯视频 \| 微博 \| 联通沃邮箱 \| 哔咔网单 \| 王者营地 \| 有道云笔记 \| 智友邦
 * [x] 𝑷𝒚𝒕𝒉𝒐𝒏 \| **多账号** \| 机场签到 \| 欢太商城 \| NGA \| 掘金 \| GLaDOS \| HiFiNi \| 时光相册 \| 联通营业厅 \| 无忧行 \| FreeNom \| EUserv \| Site \| SF 轻小说 \| 在线工具 \| CCAVA \| 企鹅电竞 \| 联想乐云 \| WPS
 * [x] 𝑺𝒉𝒆𝒍𝒍 \| **多账号** \| SSPanel 签到
