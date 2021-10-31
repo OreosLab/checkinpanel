@@ -1,6 +1,19 @@
 # Changelog
 
 
+## 20211031-3-011 (2021-10-31)
+
+### Fix
+
+* :bug: : 修复通知文件 `json` 和 `json5` 不兼容的问题. [Oreo]
+
+  重命名 `notify_mtr_older.py` 为 `notify_mtr_json.py` ，表示使用的模块为 `json`
+
+### Docs
+
+* :memo: : 更新 `README` 关于 `notify_mtr_` 系列通知文件的说明. [Oreo]
+
+
 ## 20211030-3-110 (2021-10-30)
 
 ### Feature
