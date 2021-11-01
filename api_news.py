@@ -4,7 +4,6 @@ cron: 40 7 * * *
 new Env('每日新闻');
 """
 
-import json
 import re
 import traceback
 
