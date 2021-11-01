@@ -1,6 +1,22 @@
 # Changelog
 
 
+## 20211101-3-111 (2021-11-01)
+
+### Feature
+
+* :sparkles: : 更新 HeyTap 新活动. [Oreo]
+
+### Fix
+
+* :fire: : rm unused import. [Oreo]
+
+* :fire: : 移除 `notify_mtr_json.py` 异常捕获代码. [Oreo]
+
+  因为 Python 3.6 不支持......
+  <https://docs.python.org/3/library/threading.html>
+
+
 ## 20211031-3-011 (2021-10-31)
 
 ### Fix

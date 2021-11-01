@@ -333,4 +333,5 @@ notify.json5
 
 # Others
 magic.json
-ss*
+ss_*
+*.txt
