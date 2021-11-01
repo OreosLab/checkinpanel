@@ -6,7 +6,6 @@ new Env('天气预报');
 
 import json
 import os
-from datetime import datetime
 
 import requests
 
