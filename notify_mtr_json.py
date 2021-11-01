@@ -480,20 +480,6 @@ if push_config.get("TG_BOT_TOKEN") and push_config.get("TG_USER_ID"):
     notify_function.append(telegram_bot)
 
 
-def excepthook(args, /):
-    if issubclass(args.exc_type, requests.exceptions.RequestException):
-        print(
-            f"网络异常，请检查你的网络连接、推送服务器和代理配置，该错误和账号配置无关。信息：{str(args.exc_type)}, {args.thread.name}"
-        )
-    else:
-        global default_hook
-        default_hook(args)
-
-
-default_hook = threading.excepthook
-threading.excepthook = excepthook
-
-
 def send(title: str, content: str) -> None:
     if not content:
         print(f"{title} 推送内容为空！")
