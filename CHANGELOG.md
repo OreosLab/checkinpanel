@@ -1,6 +1,13 @@
 # Changelog
 
 
+## 20211103-3-100 (2021-11-03)
+
+### Feature
+
+* :rocket: : 兼容 <http://pushplus.hxtrip.com/send> 推送. [Oreo]
+
+
 ## 20211102-3-001 (2021-11-01)
 
 ### Other
