@@ -1,6 +1,13 @@
 # Changelog
 
 
+## 20211102-3-001 (2021-11-01)
+
+### Other
+
+* :see_no_evil: Update .gitignore. [Oreo]
+
+
 ## 20211101-3-111 (2021-11-01)
 
 ### Feature

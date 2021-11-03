@@ -745,7 +745,26 @@ function pushPlusNotify(text, desp) {
                         if (data.code === 200) {
                             console.log(`push+发送${PUSH_PLUS_USER ? '一对多' : '一对一'}通知消息完成。\n`);
                         } else {
-                            console.log(`push+发送${PUSH_PLUS_USER ? '一对多' : '一对一'}通知消息失败：${data.msg}\n`);
+                            options['url'] = 'http://pushplus.hxtrip.com/send';
+                            $.post(options, (e, r, d) => {
+                                try {
+                                    if (e) {
+                                        console.log(`push+发送${PUSH_PLUS_USER ? '一对多' : '一对一'}通知消息失败！！\n`);
+                                        console.log(e);
+                                    } else {
+                                        data = JSON.parse(d);
+                                        if (data.code === 200) {
+                                            console.log(`push+(hxtrip)发送${PUSH_PLUS_USER ? '一对多' : '一对一'}通知消息完成。\n`);
+                                        } else {
+                                            console.log(`push+发送${PUSH_PLUS_USER ? '一对多' : '一对一'}通知消息失败：${data.msg}\n`);
+                                        }
+                                    }
+                                } catch (error) {
+                                    $.logErr(error, r);
+                                } finally {
+                                    resolve(data);
+                                }
+                            });
                         }
                     }
                 } catch (e) {

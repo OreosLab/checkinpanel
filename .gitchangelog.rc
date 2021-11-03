@@ -26,7 +26,7 @@ ignore_regexps = [
 ##
 section_regexps = [
     ('Feature', [
-        r'^:(racehorse|sparkles|tada):\s*([^\n]*)$',
+        r'^:(racehorse|rocket|sparkles|tada):\s*([^\n]*)$',
      ]),
     ('Fix', [
         r'^:(ambulance|bug|fire|hankey|wrench):\s*([^\n]*)$',

@@ -91,12 +91,18 @@ send_message() {
     # PushPlus 通知
     if [ "${PUSH_PLUS_TOKEN}" ]; then
         echo -e "token=${PUSH_PLUS_TOKEN}&title=${TITLE}&content=${log_text}" >"${PUSH_TMP_PATH}"
-        push=$(curl -k -s --data-binary @"${PUSH_TMP_PATH}" "http://pushplus.hxtrip.com/send")
+        push=$(curl -k -s --data-binary @"${PUSH_TMP_PATH}" "http://www.pushplus.plus/send")
         push_code=$(echo "${push}" | jq -r ".code" 2>&1)
         if [ "${push_code}" -eq 200 ]; then
             echo -e "PushPlus 推送结果：成功"
         else
-            echo -e "PushPlus 推送结果：失败"
+            push=$(curl -k -s --data-binary @"${PUSH_TMP_PATH}" "http://pushplus.hxtrip.com/send")
+            push_code=$(echo "${push}" | jq -r ".code" 2>&1)
+            if [ "${push_code}" -eq 200 ]; then
+                echo -e "PushPlus(hxtrip) 推送结果：成功"
+            else
+                echo -e "PushPlus 推送结果：失败"
+            fi
         fi
     fi
 

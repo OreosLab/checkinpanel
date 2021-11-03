@@ -276,8 +276,17 @@ def pushplus_bot(title: str, content: str) -> None:
 
     if response["code"] == 200:
         print("PUSHPLUS 推送成功！")
+
     else:
-        print("PUSHPLUS 推送失败！")
+
+        url_old = "http://pushplus.hxtrip.com/send"
+        response = requests.post(url=url_old, data=body, headers=headers).json()
+
+        if response["code"] == 200:
+            print("PUSHPLUS(hxtrip) 推送成功！")
+
+        else:
+            print("PUSHPLUS 推送失败！")
 
 
 def qmsg_bot(title: str, content: str) -> None:
