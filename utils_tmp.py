@@ -182,6 +182,18 @@ act_list = [
         "end_time": "2022-8-18 23:59:59",  # 活动8-5结束，实际还能玩
         "text": "每次扣取0积分",
     },
+    {
+        "act_name": "双十一活动",
+        "aid": 1768,
+        "if_task": True,
+        "referer": "https://hd.oppo.com/act/m/2021/choumiandan/index.html?us=shouye&um=youshangjiao&uc=2021oppowin",
+        "if_draw": False,  # 已修复抽奖，如不需要抽奖请自行修改为False
+        "extra_draw_cookie": 'app_innerutm={"uc":"direct","um":"direct","ut":"direct","us":"direct"};',
+        "lid": 1586,
+        "draw_times": 1,
+        "end_time": "2021-11-13 23:59:59",  # 长期任务
+        "text": "每次扣取5积分",
+    },
 ]
 
 budget_list = [
