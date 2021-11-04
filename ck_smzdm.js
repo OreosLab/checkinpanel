@@ -11,24 +11,22 @@ const MagicJS = utils.MagicJS;
 const $ = new Env('什么值得买');
 const cookieSMZDMs = get_data().SMZDM;
 const notify = $.isNode() ? require('./notify') : '';
+const magicJS = MagicJS('什么值得买', 'INFO');
 
 const clickGoBuyMaxTimes = 12; // 好价点击去购买的次数
 const clickLikeProductMaxTimes = 7; // 好价点值次数
 const clickLikeArticleMaxTimes = 7; // 好文点赞次数
 const clickFavArticleMaxTimes = 7; // 好文收藏次数
 
-let magicJS = MagicJS('什么值得买', 'INFO');
-
-magicJS.unifiedPushUrl = magicJS.read('smzdm_unified_push_url') || magicJS.read('magicjs_unified_push_url');
-
 smzdm();
 
 async function smzdm() {
-    let result = [];
     let content = '';
+    let result = [];
+
     if (!!cookieSMZDMs === false) {
-        notify.sendNotify('什么值得买', '没有读取到什么值得买有效cookie，请访问zhiyou.smzdm.com进行登录');
         content += '\n没有读取到什么值得买有效cookie，请访问zhiyou.smzdm.com进行登录';
+        result.push(content);
     } else {
         for (var i = 0; i < cookieSMZDMs.length; i++) {
             try {
@@ -54,12 +52,6 @@ async function smzdm() {
                     magicJS.logInfo(
                         `昵称：${nickName}\nWeb端签到状态：${beforeHasCheckin}\n签到前等级${beforeVIPLevel}，积分${beforePoint}，经验${beforeExp}，金币${beforeGold}，碎银子${beforeSilver}， 未读消息${beforeNotice}`
                     );
-
-                    // web签到
-                    if (!beforeHasCheckin) {
-                        content += '签到！';
-                        await SignIn(smzdmCookie);
-                    }
 
                     // 每日抽奖
                     let activeId = await GetLotteryActiveId(smzdmCookie);
@@ -163,7 +155,6 @@ async function smzdm() {
                             '碎银子' +
                             afterSilver +
                             (addSilver > 0 ? '(+' + addSilver + ')' : '') +
-                            // ' 威望' + afterPrestige + (addPrestige > 0 ? '(+' + addPrestige + ')' : '') +
                             ' 未读消息' +
                             afterNotice;
                     }
@@ -182,17 +173,17 @@ async function smzdm() {
                     }
                 }
             } catch (err) {
-                result.push(`执行任务出现异常：${err}`);
-                notify.sendNotify('什么值得买', `❌执行任务出现，请查阅日志`);
+                magicJS.logError(`执行任务出现异常：${err}`);
+                content += '❌执行任务出现，请查阅日志';
             }
-            content += '\n========== [Cookie ' + $.index + ']  End  ========== \n\n\n';
-            magicJS.log('\n========== [Cookie ' + $.index + ']  End  ========== \n\n\n');
+            content += '\n========== [Cookie ' + $.index + '] End  ========== \n\n\n';
+            magicJS.log('\n========== [Cookie ' + $.index + '] End  ========== \n\n\n');
             result.push(content);
         }
     }
     magicJS.done();
     notify.sendNotify('什么值得买', result.join('\n'));
-    return '什么值得买' + '\n\n' + result;
+    return '什么值得买' + '\n\n' + result.join('\n');
 }
 
 // 签到
@@ -288,13 +279,13 @@ function GetDataArticleIdList() {
             body: '',
         };
         magicJS.get(getArticleOptions, (err, resp, data) => {
-            let result = [];
             if (err) {
                 magicJS.logWarning(`获取好文列表失败，请求异常：${err}`);
                 reject('GetArticleListErr');
             } else {
                 try {
                     let articleList = data.match(/data-article=".*" data-type="zan"/gi);
+                    let result = [];
                     articleList.forEach((element) => {
                         result.push(element.match(/data-article="(.*)" data-type="zan"/)[1]);
                     });
@@ -557,7 +548,7 @@ function WebGetCurrentInfoNewVersion(smzdmCookie) {
                     let pointDetailList = data.match(/<div class=['"]scoreRight ellipsis['"]>(.*)<\/div>/gi);
                     let minLength = pointTimeList.length > pointDetailList.length ? pointDetailList.length : pointTimeList.length;
                     let userPointList = [];
-                    for (var i = 0; i < minLength; i++) {
+                    for (let i = 0; i < minLength; i++) {
                         userPointList.push({
                             time: pointTimeList[i].match(/\<div class=['"]scoreLeft['"]\>(.*)\<\/div\>/)[1],
                             detail: pointDetailList[i].match(/\<div class=['"]scoreRight ellipsis['"]\>(.*)\<\/div\>/)[1],
