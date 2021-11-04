@@ -46,9 +46,12 @@ const oo = {
 
 var desp = '';
 var key = ['苹果', '华为', '百度', '一个', '暴风', '王者'];
+var nid = null;
 var popularSearchKey = [];
-var claimList = [];
+var ytaskList = [];
 var taskList = [];
+var claimList = [];
+var alltaskList = [];
 
 aqc();
 
@@ -75,7 +78,6 @@ async function aqc() {
                 await dotask(taskList, aqcCookie, exportkey);
                 await dotask(taskList, aqcCookie, exportkey);
                 await sleep(5000);
-                claimList = [];
                 await getaskList();
                 for (let task of claimList) {
                     Log(`领取爱豆：${oo[task]}`);
@@ -126,8 +128,10 @@ function get(api, data, method = 'get') {
 }
 
 async function getaskList() {
-    let ytaskList = [];
-    let alltaskList = [];
+    ytaskList = [];
+    taskList = [];
+    claimList = [];
+    alltaskList = [];
     let tres = await get('usercenter/checkTaskStatusAjax');
     let obj = tres.data;
     if (tres.status == 0) {
@@ -146,7 +150,6 @@ async function getaskList() {
 }
 
 async function dotask(tasklist, aqcCookie, exportkey) {
-    var nid;
     for (var o of tasklist) {
         switch (o.title) {
             case 'CX10002': //每日签到
@@ -243,11 +246,11 @@ async function dotask(tasklist, aqcCookie, exportkey) {
                 break;
             case 'CX12009': //浏览互动
                 Log('开始任务：' + oo[o.title]);
-                nid = null;
                 let HomeQuestionres = await get('smart/getHomeQuestionListAjax?page=2&size=10&type=recommend');
                 if (HomeQuestionres.status == 0) {
                     let qdetail = HomeQuestionres.data.list[Math.floor(Math.random() * HomeQuestionres.data.list.length)];
-                    await get(`smart/questionDetailAjax?nid=${qdetail.nid}`);
+                    nid = qdetail.nid;
+                    await get(`smart/questionDetailAjax?nid=${nid}`);
                 }
                 break;
             case 'CX12011': //点赞观点
