@@ -4,8 +4,8 @@ cron: 36 13 * * *
 new Env('联通沃邮箱');
 """
 
+import json
 import re
-import time
 
 import requests
 
@@ -34,7 +34,7 @@ class WoMail:
             print("沃邮箱错误:", e)
             return None
 
-    def dotask(self, cookies):
+    def nyan_task(self, cookies, pause21days=True):
         msg = []
         headers = {
             "User-Agent": self.user_agent,
@@ -57,7 +57,7 @@ class WoMail:
             keep_sign = 0
             msg.append({"name": "帐号信息", "value": str(e)})
         try:
-            if keep_sign >= 21:
+            if pause21days and keep_sign >= 21:
                 msg.append({"name": "每日签到", "value": f"昨日为打卡{keep_sign}天，今日暂停打卡"})
             else:
                 url = "https://nyan.mail.wo.cn/cn/sign/user/checkin.do?rand=0.913524814493383"
@@ -100,7 +100,7 @@ class WoMail:
             msg.append({"name": "执行任务错误", "value": str(e)})
         return msg
 
-    def dotask2(self, womail_url):
+    def club_task(self, womail_url, pause21days=True):
         msg = []
         userdata = re.findall("mobile.*", womail_url)[0]
         url = "https://club.mail.wo.cn/clubwebservice/?" + userdata
@@ -183,7 +183,6 @@ class WoMail:
                             "show": True,
                         },
                     ]
-                    # 执行积分任务
                     for task_item in task_data:
                         resource_name = task_item["resourceName"]
                         try:
@@ -192,10 +191,13 @@ class WoMail:
                                 record_res = requests.get(
                                     url=record_url, headers=headers
                                 ).json()
-                                new_continuous_day = record_res[0].get(
-                                    "newContinuousDay"
-                                )
-                                if new_continuous_day >= 21:
+                                if len(record_res):
+                                    new_continuous_day = record_res[0].get(
+                                        "newContinuousDay"
+                                    )
+                                else:
+                                    new_continuous_day = 0
+                                if pause21days and new_continuous_day >= 21:
                                     msg.append(
                                         {
                                             "name": resource_name,
@@ -207,17 +209,27 @@ class WoMail:
                                     res = requests.get(url=url, headers=headers).json()
                                     result = res.get("description")
                                     if "success" in result:
-                                        continuous_day = res["data"]["continuousDay"]
+                                        continuous_day = json.loads(res["data"])[
+                                            "continuousDay"
+                                        ]
                                         msg.append(
                                             {
                                                 "name": resource_name,
-                                                "value": f"签到成功~已连续签到{str(continuous_day)}天！",
+                                                "value": f"签到成功~已连续签到{continuous_day}天！",
                                             }
                                         )
                                     else:
-                                        msg.append(
-                                            {"name": resource_name, "value": result}
-                                        )
+                                        if "您今天已签到" in result:
+                                            msg.append(
+                                                {
+                                                    "name": resource_name,
+                                                    "value": f"签到成功~已连续签到{new_continuous_day}天！",
+                                                }
+                                            )
+                                        else:
+                                            msg.append(
+                                                {"name": resource_name, "value": result}
+                                            )
                             else:
                                 resource_flag = task_item["resourceFlag"]
                                 resource_flag = resource_flag.replace("+", "%2B")
@@ -240,69 +252,218 @@ class WoMail:
             msg.append({"name": "沃邮箱俱乐部", "value": "获取 COOKIES 失败"})
         return msg
 
-    def dotask3(self, womail_url):
+    def core_task(self, phone, password):
         msg = []
         try:
-            dated = int(time.time())
-            end_time = time.mktime(
-                time.strptime("2021-10-31 23:59:59", "%Y-%m-%d %H:%M:%S")
-            )  # 设置活动结束日期
-            if dated < end_time:
-                # 登录账户
-                userdata = re.findall("mobile.*", womail_url)[0]
-                session = requests.session()
-                session.headers = {
-                    "User-Agent": "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.25 Safari/537.36 Core/1.70.3868.400 QQBrowser/10.8.4394.400"
-                }
-                # 做任务
-                url = f"https://nyan.mail.wo.cn/cn/puzzle2/index/index?{userdata}"
-                session.get(url)
-                task_list = ["checkin", "viewclub", "loginmail"]
-                for taskName in task_list:
-                    url = f"https://nyan.mail.wo.cn/cn/puzzle2/user/doTask.do?taskName={taskName}"
-                    res = session.get(url).json()
-                    if res["success"] and res["result"] == 1:
-                        msg.append({"name": taskName, "value": "做任务成功"})
-                    elif res["success"] and res["result"] == -1:
-                        msg.append({"name": taskName, "value": "任务已完成"})
-                    else:
-                        msg.append({"name": taskName, "value": "做任务失败"})
-                    time.sleep(2)
-                # 获取拼图个数
-                timestamp = int(round(time.time() * 1000))
-                url = f"https://nyan.mail.wo.cn/cn/puzzle2/index/userinfo.do?time={timestamp}"
-                res = session.post(url).json()
-                if res["success"]:
-                    puzzle = res["result"]["puzzle"]
-                    if puzzle >= 6:
-                        url = "https://nyan.mail.wo.cn/cn/puzzle2/draw/draw"
-                        res = session.get(url).json()
-                        if res["success"]:
-                            prize_title = res["result"]["prizeTitle"]
-                            msg.append({"name": "抽奖结果", "value": prize_title})
-                        else:
-                            msg.append({"name": "抽奖结果", "value": res["msg"]})
-                    else:
-                        msg.append({"name": "抽奖结果", "value": f"当前拼图{puzzle}块，未集齐"})
-                else:
-                    msg.append({"name": "抽奖结果", "value": "获取拼图个数失败"})
-            else:
-                msg.append({"name": "抽奖结果", "value": "活动已结束，不再执行"})
+            url = "https://mail.wo.cn/coremail/s/json?func=user:login"
+            headers = {"User-Agent": "okhttp/${project.version}"}
+            data_json = {"uid": str(phone), "password": str(password)}
+            response = requests.post(
+                url=url, headers=headers, data=json.dumps(data_json)
+            )
+            sid = re.findall('"sid":"(.*?)"', response.text)[0]
+            set_cookie = response.headers["Set-Cookie"]
+            cookie = re.findall("Coremail.*?;", set_cookie)[0]
+            cookie = cookie + "Coremail.sid=" + str(sid) + ";"
+            if "Coremail" not in cookie:
+                msg.append({"name": "Coremail", "value": "沃邮箱获取 sid,Coremail 失败"})
+                return msg
+            cookies = cookie + "domain=mail.wo.cn;"
+            headers = {
+                "User-Agent": self.user_agent,
+                "Cookie": cookies,
+                "Accept": "text/x-json",
+                "Content-Type": "text/x-json",
+                "X-CM-SERVICE": "PHONE",
+                "Origin": "https://mail.wo.cn",
+                "X-Requested-With": "com.asiainfo.android",
+                "Sec-Fetch-Site": "same-origin",
+                "Sec-Fetch-Mode": "cors",
+                "Sec-Fetch-Dest": "empty",
+            }
+            # 增加积分
+            integral_data = {
+                "每日登录": "login",
+                "发送邮件": "sendMail",
+                "查看邮件": "listMail",
+                "登录百度网盘": "baiduCloud",
+                "新建日程": "createCal",
+            }
+            for key, userAction in integral_data.items():
+                try:
+                    url = (
+                        "https://mail.wo.cn/coremail/s/?func=club:addClubInfo&sid="
+                        + str(sid)
+                    )
+                    data_json = {
+                        "uid": str(phone),
+                        "userAction": "" + str(userAction),
+                        "userType": "integral",
+                    }
+                    response = requests.post(
+                        url=url, headers=headers, data=json.dumps(data_json)
+                    )
+                    code = json.loads(response.text).get("code")
+                    msg.append({"name": key, "value": "app积分结果:" + str(code)})
+                except Exception as e:
+                    msg.append({"name": key, "value": f"app沃邮箱执行任务错误:{e}"})
+            # 增加成长值
+            growth_data = {
+                "每日登录": "login",
+                "发送邮件": "sendMail",
+                "查看邮件": "listMail",
+                "登录百度网盘": "baiduCloud",
+                "新建日程": "createCal",
+            }
+            for key, userAction in growth_data.items():
+                try:
+                    url = (
+                        "https://mail.wo.cn/coremail/s/?func=club:addClubInfo&sid="
+                        + str(sid)
+                    )
+                    data_json = {
+                        "uid": str(phone),
+                        "userAction": str(userAction),
+                        "userType": "growth",
+                    }
+                    response = requests.post(
+                        url=url, headers=headers, data=json.dumps(data_json)
+                    )
+                    code = response.json().get("code")
+                    msg.append({"name": key, "value": "app成长值结果:" + str(code)})
+                except Exception as e:
+                    msg.append({"name": key, "value": f"app沃邮箱执行任务错误:{e}"})
+            # 网页
+            cookies = (
+                cookie
+                + "CoremailReferer=https%3A%2F%2Fmail.wo.cn%2Fcoremail%2Fhxphone%2F;"
+            )
+            headers = {
+                "User-Agent": self.user_agent,
+                "Cookie": cookies,
+                "Accept": "text/x-json",
+                "Content-Type": "text/x-json",
+                "Origin": "https://mail.wo.cn",
+                "X-Requested-With": "com.tencent.mm",
+                "Sec-Fetch-Site": "same-origin",
+                "Sec-Fetch-Mode": "cors",
+                "Sec-Fetch-Dest": "empty",
+            }
+            # 增加积分
+            integral_data = {
+                "每日登录": "login",
+                "发送邮件": "sendMail",
+                "查看邮件": "listMail",
+                "登录百度网盘": "baiduCloud",
+                "新建日程": "createCal",
+                "上传文件到中转站": "uploadFile",
+            }
+            for key, userAction in dict.items(integral_data):
+                try:
+                    url = (
+                        "https://mail.wo.cn/coremail/s/?func=club:addClubInfo&sid="
+                        + str(sid)
+                    )
+                    data_json = {
+                        "uid": str(phone),
+                        "userAction": str(userAction),
+                        "userType": "integral",
+                    }
+                    response = requests.post(
+                        url=url, headers=headers, data=json.dumps(data_json)
+                    )
+                    code = response.json().get("code")
+                    msg.append({"name": key, "value": "网页端积分结果:" + str(code)})
+                except Exception as e:
+                    msg.append({"name": key, "value": "网页端沃邮箱执行任务错误:" + str(e)})
+            # 增加成长值
+            growth_data = {
+                "每日登录": "login",
+                "发送邮件": "sendMail",
+                "查看邮件": "listMail",
+                "登录百度网盘": "baiduCloud",
+                "新建日程": "createCal",
+                "上传文件到中转站": "uploadFile",
+            }
+            for key, userAction in growth_data.items():
+                try:
+                    url = (
+                        "https://mail.wo.cn/coremail/s/?func=club:addClubInfo&sid="
+                        + str(sid)
+                    )
+                    data_json = {
+                        "uid": str(phone),
+                        "userAction": str(userAction),
+                        "userType": "growth",
+                    }
+                    response = requests.post(
+                        url=url, headers=headers, data=json.dumps(data_json)
+                    )
+                    code = response.json().get("code")
+                    msg.append({"name": key, "value": "网页端成长值结果:" + str(code)})
+                except Exception as e:
+                    msg.append({"name": key, "value": f"网页端沃邮箱执行任务错误:{e}"})
+            # 电脑
+            cookies = (
+                cookie
+                + "domain=;CoremailReferer=https%3A%2F%2Fmail.wo.cn%2Fcoremail%2Findex.jsp%3Fcus%3D1;"
+            )
+            headers = {
+                "User-Agent": self.user_agent,
+                "Cookie": cookies,
+                "Accept": "text/x-json",
+                "Content-Type": "text/x-json",
+                "Origin": "https://mail.wo.cn",
+                "X-Requested-With": "XMLHttpRequest",
+                "Sec-Fetch-Site": "same-origin",
+                "Sec-Fetch-Mode": "cors",
+                "Sec-Fetch-Dest": "empty",
+            }
+            # 增加积分
+            integral_data = {
+                "每日登录": "login",
+                "发送邮件": "sendMail",
+                "查看邮件": "listMail",
+                "登录百度网盘": "baiduCloud",
+                "新建日程": "createCal",
+                "上传文件到中转站": "uploadFile",
+            }
+            for key, userAction in integral_data.items():
+                try:
+                    url = (
+                        "https://mail.wo.cn/coremail/s/?func=club:addClubInfo&sid="
+                        + str(sid)
+                    )
+                    data_json = {"userAction": "" + str(userAction) + ""}
+                    response = requests.post(
+                        url=url, headers=headers, data=json.dumps(data_json)
+                    )
+                    code = response.json().get("code")
+                    msg.append({"name": key, "value": "电脑端积分结果:" + str(code)})
+                except Exception as e:
+                    msg.append({"name": key, "value": "电脑端沃邮箱执行任务错误:" + str(e)})
         except Exception as e:
-            msg.append({"name": "抽奖结果", "value": str(e)})
+            msg.append({"name": "web沃邮箱错误", "value": str(e)})
         return msg
 
     def main(self):
         msg_all = ""
         for check_item in self.check_items:
             url = check_item.get("url")
+            phone = check_item.get("phone")
+            password = check_item.get("password")
+            pause21days = check_item.get("pause21days", True)
             try:
                 cookies = self.login(womail_url=url)
                 if cookies:
-                    msg = self.dotask(cookies=cookies)
-                    msg1 = self.dotask2(womail_url=url)
-                    msg2 = self.dotask3(womail_url=url)
-                    msg = msg + msg1 + msg2
+                    nyan_task_msg = self.nyan_task(
+                        cookies=cookies, pause21days=pause21days
+                    )
+                    club_task_msg = self.club_task(
+                        womail_url=url, pause21days=pause21days
+                    )
+                    core_task_msg = self.core_task(phone=phone, password=password)
+                    msg = nyan_task_msg + club_task_msg + core_task_msg
                 else:
                     msg = [{"name": "账号信息", "value": "登录失败"}]
             except Exception as e:
