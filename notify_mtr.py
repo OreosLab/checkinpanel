@@ -8,6 +8,7 @@ import re
 import threading
 import time
 import urllib.parse
+from json import JSONDecodeError
 
 import json5 as json
 import requests
@@ -511,6 +512,10 @@ def excepthook(args, /):
     if issubclass(args.exc_type, requests.exceptions.RequestException):
         print(
             f"网络异常，请检查你的网络连接、推送服务器和代理配置，该错误和账号配置无关。信息：{str(args.exc_type)}, {args.thread.name}"
+        )
+    elif issubclass(args.exc_type, JSONDecodeError):
+        print(
+            f"推送返回值非 json 格式，请检查网址和账号是否填写正确。信息：{str(args.exc_type)}, {args.thread.name}"
         )
     else:
         global default_hook
