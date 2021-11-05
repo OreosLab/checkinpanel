@@ -30,6 +30,7 @@ def change_db():
                         i.find("motto") != -1
                         or i.find("leetcode") != -1
                         or i.find("weather") != -1
+                        or i.find("news") != -1
                     ):
                         record["schedule"] = change_time(record["schedule"], True)
                     else:
