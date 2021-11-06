@@ -92,7 +92,7 @@ def bark(title: str, content: str) -> None:
     print("bark 服务启动")
 
     if push_config.get("BARK_PUSH").startswith("http"):
-        url = f'{push_config.get("BARK_PUSH")}/{urllib.parse.quote_plus(title)}/{urllib.parse.quote_plus(content)}'
+        url = f'{push_config.get("BARK_PUSH").lstrip("/")}/{urllib.parse.quote_plus(title)}/{urllib.parse.quote_plus(content)}'
     else:
         url = f'https://api.day.app/{push_config.get("BARK_PUSH")}/{urllib.parse.quote_plus(title)}/{urllib.parse.quote_plus(content)}'
 
@@ -458,9 +458,12 @@ def one() -> str:
     获取一条一言。
     :return:
     """
-    url = "https://v1.hitokoto.cn/"
-    res = requests.get(url).json()
-    return res["hitokoto"] + "    ----" + res["from"]
+    try:
+        url = "https://v1.hitokoto.cn/"
+        res = requests.get(url).json()
+        return res["hitokoto"] + "    ----" + res["from"]
+    except requests.exceptions.RequestException:
+        return ""
 
 
 if push_config.get("BARK_PUSH"):
