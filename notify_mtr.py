@@ -139,7 +139,7 @@ def bark(title: str, content: str) -> None:
     elif datas.get("code") == 400:
         print("bark 推送失败！找不到 Key 对应的 DeviceToken。")
     else:
-        print(f"bark 推送失败！错误信息：\n{response.text}")
+        print(f"bark 推送失败！响应数据：{response.text}")
 
 
 def console(title: str, content: str) -> None:
@@ -177,7 +177,7 @@ def dingding_bot(title: str, content: str) -> None:
     if datas.get("errcode") is None:
         print("钉钉机器人 推送成功！")
     else:
-        print(f"钉钉机器人 推送失败！错误信息：\n{response.text}")
+        print(f"钉钉机器人 推送失败！响应数据：{response.text}")
 
 
 def feishu_bot(title: str, content: str) -> None:
@@ -197,7 +197,7 @@ def feishu_bot(title: str, content: str) -> None:
     if datas.get("StatusCode") == 0:
         print("飞书 推送成功！")
     else:
-        print(f"飞书 推送失败！错误信息：\n{response.text}")
+        print(f"飞书 推送失败！响应数据：{response.text}")
 
 
 def go_cqhttp(title: str, content: str) -> None:
@@ -216,7 +216,7 @@ def go_cqhttp(title: str, content: str) -> None:
     if datas.get("status") == "ok":
         print("go-cqhttp 推送成功！")
     else:
-        print("go-cqhttp 推送失败！错误信息：\n{response.text}")
+        print("go-cqhttp 推送失败！响应数据：{response.text}")
 
 
 def iGot(title: str, content: str) -> None:
@@ -237,7 +237,7 @@ def iGot(title: str, content: str) -> None:
     if datas.get("ret") == 0:
         print("iGot 推送成功！")
     else:
-        print(f'iGot 推送失败！错误信息：\n{datas.get("errMsg")}')
+        print(f'iGot 推送失败！错误信息：{datas.get("errMsg")}')
 
 
 def serverJ(title: str, content: str) -> None:
@@ -297,9 +297,9 @@ def pushplus_bot(title: str, content: str) -> None:
         elif datas2.get("code") == 600:
             print("PUSHPLUS 推送失败！PUSH_PLUS_TOKEN 错误。")
         else:
-            print(f"PUSHPLUS(hxtrip) 推送失败！错误信息：\n{response2.text}")
+            print(f"PUSHPLUS(hxtrip) 推送失败！响应数据：{response2.text}")
     else:
-        print(f"PUSHPLUS 推送失败！错误信息：\n{response.text}")
+        print(f"PUSHPLUS 推送失败！响应数据：{response.text}")
 
 
 def qmsg_bot(title: str, content: str) -> None:
@@ -353,7 +353,7 @@ def wecom_app(title: str, content: str) -> None:
     if datas == "ok":
         print("企业微信推送成功！")
     else:
-        print(f"企业微信推送失败！错误信息：\n{datas}")
+        print(f"企业微信推送失败！错误信息：{datas}")
 
 
 class WeCom:
@@ -437,7 +437,7 @@ def wecom_bot(title: str, content: str) -> None:
     if datas.get("errcode") == 0:
         print("企业微信机器人 推送成功！")
     else:
-        print(f"企业微信机器人 推送失败！错误信息：\n{response.text}")
+        print(f"企业微信机器人 推送失败！响应数据：{response.text}")
 
 
 def telegram_bot(title: str, content: str) -> None:
@@ -487,7 +487,7 @@ def telegram_bot(title: str, content: str) -> None:
     elif datas.get("error_code") == 401:
         print("tg 推送失败！TG_BOT_TOKEN 填写错误。")
     else:
-        print(f"tg 推送失败！错误信息：\n{response.text}")
+        print(f"tg 推送失败！响应数据：{response.text}")
 
 
 def one() -> str:
