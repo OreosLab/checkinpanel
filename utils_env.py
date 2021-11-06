@@ -11,7 +11,7 @@ def get_env_str() -> str:
     """
     尝试获取当前系统的环境，返回字符。
 
-    :return: Windows / Linux / Mac / github / v2p / ql / 空
+    :return: Windows / Linux / Darwin / github / v2p / ql / 空
     """
     global ENV
     if ENV:
@@ -32,7 +32,7 @@ def get_env_str() -> str:
         env = "ql"
 
     # 面板判断优先于系统判断
-    elif (e := platform.system()) == "Windows" or "Linux" or "Mac":
+    elif (e := platform.system()) == "Windows" or "Linux" or "Darwin":
         print(f"成功，当前环境为 {e}。")
         env = e
     else:
@@ -48,14 +48,14 @@ def get_env_int() -> int:
     """
     尝试获取当前系统的环境，返回数字。
 
-    :return: 空: -1 / Windows: 0 / Linux: 1 / Mac: 2 / github: 3 / v2p: 4 / ql: 5
+    :return: 空: -1 / Windows: 0 / Linux: 1 / Darwin: 2 / github: 3 / v2p: 4 / ql: 5
     """
     env = get_env_str()
     if env == "Windows":
         return 0
     if env == "Linux":
         return 1
-    if env == "Mac":
+    if env == "Darwin":
         return 2
     if env == "github":
         return 3
