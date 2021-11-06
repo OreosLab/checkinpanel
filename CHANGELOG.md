@@ -1,6 +1,55 @@
 # Changelog
 
 
+## 20211106-3-020 (2021-11-06)
+
+### Fix
+
+* :bug: : 推送逻辑优化. [night-raise]
+
+  1. 修复自定义 bark 链接中 / 重复的 bug 。
+  2. 修复一言失败导致无法发送推送的 bug 。
+
+### Refactor Functions
+
+* :hammer: : 修复一言异常类型。 [night-raise]
+
+
+## 20211105-3-020 (2021-11-05)
+
+### Feature
+
+* :sparkles: : 增加推送中 json 解码错误的全局捕获. [night-raise]
+
+### Refactor Functions
+
+* :hammer: : 修复每日新闻随机可能被移除 8-12 点的问题。 [night-raise]
+
+
+## 20211104-3-150 (2021-11-04)
+
+### Feature
+
+* :sparkles: : 更新 HeyTap 任务. [Oreo]
+
+* :sparkles: : 更新 womail 任务. [Oreo]
+
+* :sparkles: : 新增通知方式 SRE24.com. [Oreo]
+
+  - [官网](https://push.jwks123.cn/)
+  - 暂仅支持 SH，PY 后续增加
+
+### Fix
+
+* :wrench: : 修改和更新配置文件. [Oreo]
+
+* :bug: : 修复 aqc bug. [Oreo]
+
+### Other
+
+* :construction: : 尝试修复 smzdm 任务版报错. [Oreo]
+
+
 ## 20211103-3-100 (2021-11-03)
 
 ### Feature
