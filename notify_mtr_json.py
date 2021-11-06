@@ -462,7 +462,7 @@ def one() -> str:
         url = "https://v1.hitokoto.cn/"
         res = requests.get(url).json()
         return res["hitokoto"] + "    ----" + res["from"]
-    except requests.exceptions.RequestException:
+    except requests.exceptions.ConnectionError:
         return ""
 
 
