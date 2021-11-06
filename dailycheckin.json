@@ -605,6 +605,16 @@
             "running": true
         },
         {
+            "name": "WPS",
+            "type": "cron",
+            "time": "12 6 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkin.js -env PYNAME=ck_wps.py"
+            },
+            "running": true
+        },
+        {
             "name": "咔叽网单",
             "type": "cron",
             "time": "12 13 * * *",
