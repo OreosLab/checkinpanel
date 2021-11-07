@@ -42,9 +42,9 @@
             password: 'xxxxxxxx',
         },
         //{
-        //    url: '', // 链接，删除 /auth/login
-        //    email: '', // 邮箱
-        //    password: '', // 密码
+        //    url: '',       // 链接，删除 /auth/login
+        //    email: '',     // 邮箱
+        //    password: '',  // 密码
         //},
     ],
 
@@ -256,10 +256,20 @@
             draw: false,
         },
         // {
-        //     cookie: '',      // 用户环境变量 cookie，建议全部粘贴，且顺序不可乱
+        //     cookie: '',     // 欢太商城 APP 用户环境变量 cookie，建议全部粘贴，且顺序不可乱
         //     useragent: '',
-        //     draw: false,  // 抽奖总开关，设置为 false 将不参与任何抽奖，应对一些抽奖黑号
+        //     draw: false,    // 抽奖总开关，设置为 false 将不参与任何抽奖，应对一些抽奖黑号
         // },
+    ],
+
+    // HiFiNi
+    HIFINI: [
+        {
+            cookie: 'bbs_sid=xxxxxx; bbs_token=xxxxxx',
+        },
+        //{
+        //    cookie: '',
+        //},
     ],
 
     // 葫芦侠
@@ -284,23 +294,13 @@
         //},
     ],
 
-    // HiFiNi
-    HIFINI: [
-        {
-            cookie: 'bbs_sid=xxxxxx; bbs_token=xxxxxx',
-        },
-        //{
-        //    cookie: '',
-        //},
-    ],
-
     // 无忧行
     JEGOTRIP: [
         {
             user_id: '',
         },
         //{
-        //    user_id: '',  // 利用 stream 通过 mitm 在无忧行 app 抓包，获取 payload 中的 user_id
+        //    user_id: '',  // 无忧行 APP 利用 stream 通过 mitm 抓包，获取 payload 中的 user_id
         //},
     ],
 
@@ -513,7 +513,7 @@
         //{
         //    mobile: '',
         //    password: '',
-        //    app_id: '',    // 抓包 APP 中域名为 https://m.client.10010.com/mobileService/login.htm 请求内容的 appId
+        //    app_id: '',    // 联通营业厅 APP 抓包域名为 https://m.client.10010.com/mobileService/login.htm 请求内容的 appId
         //},
     ],
 
@@ -548,7 +548,7 @@
             url: 'https://api.weibo.cn/2/users/show?wm=xxxxxx&launchid=xxxxxx&b=xxxxxx&from=xxxxxx&c=xxxxxx&networktype=xxxxxx&v_p=xxxxxx&skin=xxxxxx&v_f=xxxxxx&lang=xxxxxx&sflag=xxxxxx&ua=xxxxxx&ft=xxxxxx&aid=xxxxxx&has_extend=xxxxxx&uid=xxxxxx&gsid=xxxxxx&sourcetype=&get_teenager=xxxxxx&s=xxxxxx&has_profile=xxxxxx',
         },
         //{
-        //    url: '',  // 抓取开头为 https://api.weibo.cn/2/users/show? 的整个 url 填入即可
+        //    url: '',  // 微博 APP 抓取开头为 https://api.weibo.cn/2/users/show? 的整个 url 填入即可
         //},
     ],
 
@@ -594,7 +594,7 @@
             data: 'areaId=xxxxxx&roleId=xxxxxx&gameId=xxxxxx&serverId=xxxxxx&gameOpenid=xxxxxx&userId=xxxxxx&appVersion=xxxxxx&cClientVersionName=xxxxxx&platid=xxxxxx&source=xxxxxx&algorithm=xxxxxx&version=xxxxxx×tamp=xxxxxx&appid=xxxxxx&openid=xxxxxx&sig=xxxxxx&encode=2&msdkEncodeParam=xxxxxx&cSystem=xxxxxx&h5Get=xxxxxx&msdkToken=&appOpenid=xxxxxx',
         },
         //{
-        //    data: '',  // 请求体中的 data，抓包 APP 中域名为 https://ssl.kohsocial.qq.com 请求内容的全部参数
+        //    data: '',  // 王者营地 APP 请求体中的 data，抓包域名为 https://ssl.kohsocial.qq.com 请求内容的全部参数
         //},
     ],
 
