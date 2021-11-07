@@ -1,6 +1,30 @@
 # Changelog
 
 
+## 20211107-3-031 (2021-11-07)
+
+### Fix
+
+* :bug: : 修复 bark lstrip() 使用错误，应为 rstrip() [Oreo]
+
+* :bug: : 修复 platform.system() 返回值错误. [Oreo]
+
+  返回系统平台/OS的名称，例如 'Linux', 'Darwin', 'Java', 'Windows'。如果该值无法确定则将返回一个空字符串。
+
+### Code Style
+
+* :art: : 修饰异常捕获打印. [Oreo]
+
+### Other
+
+* :children_crossing: [DEV] 测试通知文件异常捕获. [Oreo]
+
+  1. 改用字典 get() 方法来减少报错
+  2. 增加 JSON 版通知文件（Python3.6+）几个异常捕获
+  3. 丰富返回值判断
+  4. 增加 requests 超时参数
+
+
 ## 20211106-3-020 (2021-11-06)
 
 ### Fix
