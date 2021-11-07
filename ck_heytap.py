@@ -83,7 +83,7 @@ class Heytap:
     def get_user_info(self):
         flag = False
         headers = {
-            "Host": "www.heytap.com",
+            "Host": "store.oppo.com",
             "Accept": self.accept,
             "Content-Type": self.content_type1,
             "Connection": "keep-alive",
@@ -93,16 +93,16 @@ class Heytap:
             "cookie": self.cookies,
         }
         response = self.session.get(
-            "https://www.heytap.com/cn/oapi/users/web/member/info", headers=headers
+            "https://store.oppo.com/cn/oapi/users/web/member/info", headers=headers
         )
         response.encoding = "utf-8"
         try:
             result = response.json()
             if result["code"] == 200:
-                self.log += f'======== {result["data"]["realName"]} ========\n'
+                self.log += f'======== {result["data"]["userName"]} ========\n'
                 self.log += (
                     "【登录成功】："
-                    + result["data"]["realName"]
+                    + result["data"]["userName"]
                     + f"\n【抽奖开关】：{self.if_draw}\n"
                 )
                 flag = True
