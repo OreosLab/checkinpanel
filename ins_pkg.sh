@@ -9,7 +9,7 @@ COMMENT
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 alpine_pkgs="bash curl gcc git jq libffi-dev musl-dev openssl-dev python3 python3-dev py3-pip"
-py_reqs="bs4 cryptography==3.2.1 json5 requests rsa"
+py_reqs="bs4 cryptography==3.2.1 json5 pyaes requests rsa"
 js_pkgs="axios crypto-js got json5 request"
 
 install() {
