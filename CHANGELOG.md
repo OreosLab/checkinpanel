@@ -1,6 +1,24 @@
 # Changelog
 
 
+## 20211108-3-111 (2021-11-08)
+
+### Feature
+
+* :sparkles: : 新增 hostloc. [Oreo]
+
+  需安装新的 Python 依赖
+  * `pip3 install pyaes` 或运行 `签到依赖` shell 任务
+
+### Fix
+
+* :wrench: : 补充配置文件注释说明（APP 类抓包） [Oreo]
+
+### Refactor Functions
+
+* :hammer: : 实现 heytap 国外访问. [Oreo]
+
+
 ## 20211107-3-031 (2021-11-07)
 
 ### Fix
