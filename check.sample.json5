@@ -284,6 +284,18 @@
         //},
     ],
 
+    // HOSTLOC
+    HOSTLOC: [
+        {
+            username: '',
+            password: '',
+        },
+        //{
+        //    username: '',
+        //    password: '',
+        //},
+    ],
+
     // 爱奇艺
     IQIYI: [
         {

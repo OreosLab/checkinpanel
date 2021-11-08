@@ -355,6 +355,16 @@
             "running": true
         },
         {
+            "name": "HOSTLOC",
+            "type": "cron",
+            "time": "48 0-23/12 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkin.js -env PYNAME=ck_hostloc.py"
+            },
+            "running": true
+        },
+        {
             "name": "爱奇艺",
             "type": "cron",
             "time": "55 23 * * *",
