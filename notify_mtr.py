@@ -174,7 +174,7 @@ def dingding_bot(title: str, content: str) -> None:
         url=url, data=json.dumps(data, quote_keys=True), headers=headers, timeout=15
     )
     datas = response.json()
-    if datas.get("errcode") is None:
+    if datas.get("errcode") == 0:
         print("钉钉机器人 推送成功！")
     else:
         print(f"钉钉机器人 推送失败！响应数据：{response.text}")
