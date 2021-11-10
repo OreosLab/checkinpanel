@@ -1,6 +1,21 @@
 # Changelog
 
 
+## 20211110-3-120 (2021-11-10)
+
+### Fix
+
+* :bug: : 修复 str 与其他类型连接 bug. [Oreo]
+
+* :bug: : 修复钉钉推送成功，反馈结果失败 bug. [Oreo]
+
+### Refactor Functions
+
+* :recycle: : JS 支持 notify.json5 单独配置. [Oreo]
+
+  同时对 JS 变量和函数命名尽量采用驼峰命名法
+
+
 ## 20211109-3-100 (2021-11-08)
 
 ### Refactor Functions
