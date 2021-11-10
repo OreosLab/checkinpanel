@@ -8,11 +8,11 @@ const axios = require('axios');
 
 const utils = require('./utils');
 const Env = utils.Env;
-const get_data = utils.get_data;
+const GetData = utils.GetData;
 const sleep = utils.sleep;
 
 const $ = new Env('爱企查');
-const cookieAQCs = get_data().AQC;
+const cookieAQCs = GetData().AQC;
 const notify = $.isNode() ? require('./notify') : '';
 
 const headers = {

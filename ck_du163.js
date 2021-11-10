@@ -6,10 +6,10 @@ const axios = require('axios');
 
 const utils = require('./utils');
 const Env = utils.Env;
-const get_data = utils.get_data;
+const GetData = utils.GetData;
 
 const $ = new Env('网易蜗牛读书');
-const cookieDU163s = get_data().DU163;
+const cookieDU163s = GetData().DU163;
 const notify = $.isNode() ? require('./notify') : '';
 
 var desp = '';

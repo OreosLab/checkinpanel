@@ -34,6 +34,9 @@
     // go-cqhttp 的 access_token，可不填
     GOBOT_TOKEN: '',
 
+    // iGot 聚合推送
+    IGOT_PUSH_KEY: '',
+
     // server 酱
     // 兼容旧版和 Turbo 版
     PUSH_KEY: '',
