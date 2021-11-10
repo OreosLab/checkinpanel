@@ -1,6 +1,13 @@
 # Changelog
 
 
+## 20211109-3-100 (2021-11-08)
+
+### Refactor Functions
+
+* :hammer: : 启动 notify.js 重构. [Oreo]
+
+
 ## 20211108-3-111 (2021-11-08)
 
 ### Feature
