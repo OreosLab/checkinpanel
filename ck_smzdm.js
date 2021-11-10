@@ -5,11 +5,11 @@
 
 const utils = require('./utils');
 const Env = utils.Env;
-const get_data = utils.get_data;
+const GetData = utils.GetData;
 const MagicJS = utils.MagicJS;
 
 const $ = new Env('什么值得买');
-const cookieSMZDMs = get_data().SMZDM;
+const cookieSMZDMs = GetData().SMZDM;
 const notify = $.isNode() ? require('./notify') : '';
 const magicJS = MagicJS('什么值得买', 'INFO');
 
