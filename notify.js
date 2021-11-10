@@ -87,7 +87,7 @@ const PushConfig = {
 
 // ================================云端环境变量的判断与接收====================================
 for (var i in PushConfig) {
-    PushConfig[i] = process.env.i ? process.env.i : PushConfig[i];
+    PushConfig[i] = process.env[i] ? process.env[i] : PushConfig[i];
 }
 // ================================云端环境变量的判断与接收====================================
 
