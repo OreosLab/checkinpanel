@@ -14,7 +14,7 @@ const querystring = require('querystring');
 const utils = require('./utils');
 const Env = utils.Env;
 const $ = new Env('sendNotify');
-const GetNotifyData = utils.GetNotifyData;
+const getNotifyData = utils.getNotifyData;
 const timeout = 15000; // 超时时间(单位毫秒)
 
 const PushConfig = {
@@ -92,10 +92,10 @@ for (var i in PushConfig) {
 // ================================云端环境变量的判断与接收====================================
 
 // ================================notify.json5 变量再覆盖====================================
-if (GetNotifyData()) {
+if (getNotifyData()) {
     console.log('您使用的是自己的通知配置文件。');
     for (var a in PushConfig) {
-        PushConfig[a] = GetNotifyData()[a];
+        PushConfig[a] = getNotifyData()[a];
     }
 }
 // ================================notify.json5 变量再覆盖====================================

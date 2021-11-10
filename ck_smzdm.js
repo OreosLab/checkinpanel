@@ -5,13 +5,13 @@
 
 const utils = require('./utils');
 const Env = utils.Env;
-const GetData = utils.GetData;
 const MagicJS = utils.MagicJS;
+const getData = utils.getData;
 
 const $ = new Env('什么值得买');
-const cookieSMZDMs = GetData().SMZDM;
 const notify = $.isNode() ? require('./notify') : '';
 const magicJS = MagicJS('什么值得买', 'INFO');
+const COOKIES_SMZDM = getData().SMZDM;
 
 const clickGoBuyMaxTimes = 12; // 好价点击去购买的次数
 const clickLikeProductMaxTimes = 7; // 好价点值次数
@@ -24,16 +24,16 @@ async function smzdm() {
     let content = '';
     let result = [];
 
-    if (!!cookieSMZDMs === false) {
+    if (!!COOKIES_SMZDM === false) {
         content += '\n没有读取到什么值得买有效cookie，请访问zhiyou.smzdm.com进行登录';
         result.push(content);
     } else {
-        for (var i = 0; i < cookieSMZDMs.length; i++) {
+        for (var i = 0; i < COOKIES_SMZDM.length; i++) {
             try {
                 $.index = i + 1;
                 content += '\n========== [Cookie ' + $.index + '] Start ========== \n';
                 magicJS.log('\n========== [Cookie ' + $.index + '] Start ========== ');
-                let smzdmCookie = cookieSMZDMs[i].cookie;
+                let smzdmCookie = COOKIES_SMZDM[i].cookie;
                 // 任务完成情况
                 let clickGoBuyTimes = 0;
                 let clickLikePrductTimes = 0;

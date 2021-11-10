@@ -6,11 +6,11 @@ const axios = require('axios');
 
 const utils = require('./utils');
 const Env = utils.Env;
-const GetData = utils.GetData;
+const getData = utils.getData;
 
 const $ = new Env('网易蜗牛读书');
-const cookieDU163s = GetData().DU163;
 const notify = $.isNode() ? require('./notify') : '';
+const COOKIES_DU163 = getData().DU163;
 
 var desp = '';
 
@@ -19,12 +19,12 @@ du163();
 function du163() {
     return new Promise(async (resolve) => {
         let result = '【网易蜗牛读书】: ';
-        if (cookieDU163s) {
-            Log('cookie 数量：' + cookieDU163s.length);
-            for (let a = 0; a < cookieDU163s.length; a++) {
-                let cookie = cookieDU163s[a].cookie;
+        if (COOKIES_DU163) {
+            Log('cookie 数量：' + COOKIES_DU163.length);
+            for (let a = 0; a < COOKIES_DU163.length; a++) {
+                let cookie = COOKIES_DU163[a].cookie;
                 let _xsrf = cookie.match(/_xsrf=(\S*);*/)[1];
-                let user_agent = cookieDU163s[a].user_agent;
+                let user_agent = COOKIES_DU163[a].user_agent;
                 Log('\n========== [Cookie ' + (a + 1) + '] Start ========== ');
                 try {
                     const headers = {
