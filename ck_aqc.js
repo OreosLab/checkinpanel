@@ -8,12 +8,12 @@ const axios = require('axios');
 
 const utils = require('./utils');
 const Env = utils.Env;
-const GetData = utils.GetData;
 const sleep = utils.sleep;
+const getData = utils.getData;
 
 const $ = new Env('爱企查');
-const cookieAQCs = GetData().AQC;
 const notify = $.isNode() ? require('./notify') : '';
+const COOKIES_AQC = getData().AQC;
 
 const headers = {
     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Safari/537.36',
@@ -57,11 +57,11 @@ aqc();
 
 async function aqc() {
     let msg = '【爱企查】：';
-    if (cookieAQCs) {
-        Log('cookie 数量：' + cookieAQCs.length);
-        for (let a = 0; a < cookieAQCs.length; a++) {
-            let aqcCookie = cookieAQCs[a].cookie;
-            let exportkey = cookieAQCs[a].exportkey ? cookieAQCs[a].exportkey : '';
+    if (COOKIES_AQC) {
+        Log('cookie 数量：' + COOKIES_AQC.length);
+        for (let a = 0; a < COOKIES_AQC.length; a++) {
+            let aqcCookie = COOKIES_AQC[a].cookie;
+            let exportkey = COOKIES_AQC[a].exportkey ? COOKIES_AQC[a].exportkey : '';
             headers.cookie = aqcCookie;
             Log('\n========== [Account ' + (a + 1) + '] Start ========== ');
             Log('爱企查每日任务开始');
