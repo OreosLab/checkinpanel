@@ -9,11 +9,11 @@ const CryptoJS = require('crypto-js');
 
 const utils = require('./utils');
 const Env = utils.Env;
-const get_data = utils.get_data;
+const getData = utils.getData;
 
 const $ = new Env('联想商城');
-const accountLENOVOS = get_data().LENOVO;
 const notify = $.isNode() ? require('./notify') : '';
+const ACCOUNTS_LENOVO = getData().LENOVO;
 
 const url = {
     login: '',
@@ -36,13 +36,13 @@ var desp = '';
 lenovo();
 
 async function lenovo() {
-    if (accountLENOVOS) {
-        Log('account 数量：' + accountLENOVOS.length);
-        for (let a = 0; a < accountLENOVOS.length; a++) {
-            let account = accountLENOVOS[a].account;
-            let password = accountLENOVOS[a].password;
-            let baseinfo = accountLENOVOS[a].baseinfo
-                ? accountLENOVOS[a].baseinfo
+    if (ACCOUNTS_LENOVO) {
+        Log('account 数量：' + ACCOUNTS_LENOVO.length);
+        for (let a = 0; a < ACCOUNTS_LENOVO.length; a++) {
+            let account = ACCOUNTS_LENOVO[a].account;
+            let password = ACCOUNTS_LENOVO[a].password;
+            let baseinfo = ACCOUNTS_LENOVO[a].baseinfo
+                ? ACCOUNTS_LENOVO[a].baseinfo
                 : 'eyJpbWVpIjoiODY1MzE1MDMxOTg1ODc4IiwicGhvbmVicmFuZCI6Imhvbm9yIiwicGhvbmVNb2RlbCI6IkZSRC1BTDEwIiwiYXBwVmVyc2lvbiI6IlY0LjIuNSIsInBob25laW5jcmVtZW50YWwiOiI1NTYoQzAwKSIsIlBhZ2VJbmZvIjoiTXlJbmZvcm1hdGlvbkFjdGlvbkltcGwiLCJwaG9uZWRpc3BsYXkiOiJGUkQtQUwxMCA4LjAuMC41NTYoQzAwKSIsInBob25lTWFudWZhY3R1cmVyIjoiSFVBV0VJIiwibGVub3ZvQ2x1YkNoYW5uZWwiOiJ5aW5neW9uZ2JhbyIsImxvZ2luTmFtZSI6IjE3NjQwNDA4NTM3IiwicGhvbmVwcm9kdWN0IjoiRlJELUFMMTAiLCJzeXN0ZW1WZXJzaW9uIjoiOC4wLjAiLCJhbmRyb2lkc2RrdmVyc2lvbiI6IjI2In0=';
             let parsedWordArray = CryptoJS.enc.Base64.parse(baseinfo);
             let info = JSON.parse(parsedWordArray.toString(CryptoJS.enc.Utf8));
