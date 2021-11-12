@@ -10,7 +10,7 @@ PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 alpine_pkgs="bash curl gcc git jq libffi-dev musl-dev openssl-dev python3 python3-dev py3-pip"
 py_reqs="bs4 cryptography==3.2.1 json5 pyaes requests rsa"
-js_pkgs="axios crypto-js got json5 package-merge request"
+js_pkgs="package-merge axios crypto-js got json5 request"
 
 install() {
     count=0
@@ -60,34 +60,47 @@ install_py_reqs() {
     done
 }
 
-install_js_pkgs() {
+install_js_pkgs_initial() {
     if [ -d "/ql/scripts" ]; then
-        cd /ql/scripts && npm install --save package-merge
+        install_js_pkgs_force "package-merge"
         mv /ql/scripts/package.json /ql/scripts/package.bak.json
         node -e "const merge = require('package-merge');
                  const fs = require('fs');
                  const dst = fs.readFileSync('/ql/repo/Oreomeow_checkinpanel_master/package.json');
                  const src = fs.readFileSync('/ql/scripts/package.bak.json');
-                 fs.writeFile(\"/ql/scripts/package.json\", merge(dst,src), function(err) { 
+                 fs.writeFile('/ql/scripts/package.json', merge(dst,src), function(err) { 
                      if(err) { 
                          console.log(err); 
                      } 
-                     console.log(\"package.json merged successfully!\");
+                     console.log('package.json merged successfully!');
                  });"
     fi
-    npm install
+}
+install_js_pkgs_force() {
+    if [[ "$(npm ls "$1")" =~ $1 && $(npm ls "$1" | grep ERR) == '' ]]; then
+        echo "$1 已正确安装"
+    elif [[ "$(npm ls "$1")" =~ $1 && $(npm ls "$1" | grep ERR) != '' ]]; then
+        uninstall_js_pkgs "$1"
+        install "npm install $1" "$(npm install "$1" --force)" "$(npm ls "$1") =~ $1 $(npm ls "$1" | grep ERR) == ''" "npm install $1"
+    else
+        install "npm install $1" "$(npm install "$1" --save)" "$(npm ls "$1") =~ $1 $(npm ls "$1" | grep ERR) == ''" "npm install $1"
+    fi
+}
+uninstall_js_pkgs() {
+    npm uninstall "$1"
+    [[ -d "/ql/scripts" ]] && rm -rf /ql/scripts/node_modules/"$1" || rm -rf /usr/local/app/script/Shell/Checkinpanel/node_modules/"$1"
+    rm -rf /usr/local/lib/node_modules/lodash/*
+}
+install_js_pkgs_all() {
     for i in $js_pkgs; do
-        if [[ "$(npm ls "$i")" =~ $i && $(npm ls "$i" | grep ERR) == '' ]]; then
-            echo "$i 已正确安装"
-        else
-            npm uninstall "$i"
-            [[ -d "/ql/scripts" ]] && rm -rf /usr/local/app/script/Shell/Checkinpanel/node_modules/"$i" || rm -rf /ql/scripts/node_modules/"$i"
-            rm -rf /usr/local/lib/node_modules/lodash/*
-            install "npm install $i" "$(npm install "$i" --force)" "$(npm ls "$i") =~ $i $(npm ls "$i" | grep ERR) == ''" "npm install $i"
+        if [ ! -f "/ql/scripts/package.bak.json" ]; then
+            install_js_pkgs_initial
         fi
+        npm install
+        install_js_pkgs_force "$i"
     done
 }
 
 install_alpine_pkgs
 install_py_reqs
-install_js_pkgs
+install_js_pkgs_all
