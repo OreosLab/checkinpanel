@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC2015,2034,2188
+# shellcheck disable=SC2034,2188
 <<'COMMENT'
 cron: 16 */2 * * *
 new Env('签到依赖');
@@ -62,9 +62,10 @@ install_py_reqs() {
 
 install_js_pkgs_initial() {
     if [ -d "/ql/scripts/Oreomeow_checkinpanel_master" ]; then
-        cp /ql/repo/Oreomeow_checkinpanel_master/package.json /ql/scripts/Oreomeow_checkinpanel/package.json
+        cd /ql/scripts/Oreomeow_checkinpanel_master && cp /ql/repo/Oreomeow_checkinpanel_master/package.json /ql/scripts/Oreomeow_checkinpanel/package.json
     elif [ -d "/ql/scripts" ]; then
-        mv /ql/scripts/package.json /ql/scripts/package.bak.json &&
+        cd /ql/scripts &&
+            mv /ql/scripts/package.json /ql/scripts/package.bak.json &&
             install "npm install -g package-merge" "$(npm install -g package-merge)" "$(npm ls -g package-merge) =~ package-merge && $(npm ls -g package-merge | grep ERR) == ''" "npm install -g package-merge" &&
             export NODE_PATH="/usr/local/lib/node_modules" &&
             node -e \
@@ -93,7 +94,7 @@ install_js_pkgs_force() {
 }
 uninstall_js_pkgs() {
     npm uninstall "$1"
-    [[ -d "/ql/scripts" ]] && rm -rf /ql/scripts/node_modules/"$1" || rm -rf /usr/local/app/script/Shell/Checkinpanel/node_modules/"$1"
+    rm -rf "$(pwd)"/node_modules/"$1"
     rm -rf /usr/local/lib/node_modules/lodash/*
 }
 install_js_pkgs_all() {
@@ -103,6 +104,7 @@ install_js_pkgs_all() {
         fi
         install_js_pkgs_force "$i"
     done
+    npm ls --depth 0
 }
 
 install_alpine_pkgs
