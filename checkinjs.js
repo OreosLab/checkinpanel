@@ -6,6 +6,7 @@ $exec(`node ${jsname}`, {
     timeout: 0,
     // prettier-ignore
     env: {
+        NODE_PATH: "/usr/local/lib/node_modules",                                 // Node.js 全局依赖路径
         ENV_PATH: $store.get('ENV_PATH', 'string'),                               // 自定义配置文件路径，如 /usr/local/app/script/Lists/.env
         NOTIFY_CONFIG_PATH: $store.get('NOTIFY_CONFIG_PATH', 'string'),           // 自定义通知配置文件路径，如 /usr/locallocal/app/script/Lists/notify.json5
         HITOKOTO: $store.get('HITOKOTO', 'boolean'),                              // 一言，true 为开启，false 为关闭，默认关闭

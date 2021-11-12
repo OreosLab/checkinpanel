@@ -165,7 +165,7 @@ pip3 install bs4 cryptography~=3.2.1 json5 pyaes requests rsa
 JavaScript 依赖
 
 ```sh
-cd /ql/scripts && npm install axios crypto-js got json5 request
+cd /ql/scripts && npm install axios crypto-js got json5 package-merge request
 ```
 
 依赖持久化配置
