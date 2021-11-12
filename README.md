@@ -198,7 +198,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/check.sample.json5 /ql/config/check.jso
 *通知配置文件（可选）*
 
 ```sh
-cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
+cp /ql/repo/Oreomeow_checkinpanel_master/notify.sample.json5 /ql/config/notify.json5
 ```
 
 ### 5. 配置通知
