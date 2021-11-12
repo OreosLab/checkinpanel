@@ -148,31 +148,14 @@ docker exec -it qinglong bash
 
 修改 `qinglong` 为你的青龙容器名称
 
-### 2. 安装依赖
+### 2. 拉取仓库
 
-Alpine 依赖
-
-```sh
-apk add gcc libffi-dev musl-dev openssl-dev python3-dev
-```
-
-Python 依赖
+**解决 Shell 脚本无法拉取问题**：将以下代码在 `config.sh` 相应位置替换
 
 ```sh
-pip3 install bs4 cryptography~=3.2.1 json5 pyaes requests rsa
+## ql repo命令拉取脚本时需要拉取的文件后缀，直接写文件后缀名即可
+RepoFileExtensions="js py sh ts"
 ```
-
-JavaScript 依赖
-
-```sh
-cd /ql/scripts && npm install axios crypto-js got json5 package-merge request
-```
-
-依赖持久化配置
-
-> `签到依赖` 任务保持定时运行即可
-
-### 3. 拉取仓库
 
 可添加定时任务，名称、时间自定
 
@@ -180,14 +163,13 @@ cd /ql/scripts && npm install axios crypto-js got json5 package-merge request
 ql repo https://github.com/Oreomeow/checkinpanel.git "api_|ck_|ins_" "^checkin" "^notify|^utils" "master"
 ```
 
-**解决 Shell 脚本无法拉取问题**
+### 3. 安装依赖
 
-```sh
-## ql repo命令拉取脚本时需要拉取的文件后缀，直接写文件后缀名即可
-RepoFileExtensions="js py sh ts"
-```
+**运行 `签到依赖` 任务**
 
-将以上代码在 `config.sh` 相应位置替换
+依赖持久化配置
+
+* `签到依赖` 任务保持定时运行即可
 
 ### 4. 拷贝文件
 
@@ -198,7 +180,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/check.sample.json5 /ql/config/check.jso
 *通知配置文件（可选）*
 
 ```sh
-cp /ql/repo/Oreomeow_checkinpanel_master/notify.json5 /ql/config/notify.json5
+cp /ql/repo/Oreomeow_checkinpanel_master/notify.sample.json5 /ql/config/notify.json5
 ```
 
 ### 5. 配置通知

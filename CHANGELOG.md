@@ -1,6 +1,19 @@
 # Changelog
 
 
+## 20211112-3-210 (2021-11-12)
+
+### Fix
+
+* :bug: : 继续修复依赖安装代码. [Oreo]
+
+### Refactor Functions
+
+* :hammer: : 重构 npm 依赖安装方法 shell 函数. [Oreo]
+
+* :recycle: : 重构 npm 依赖安装方法. [Oreo]
+
+
 ## 20211111-3-021 (2021-11-11)
 
 ### Fix
