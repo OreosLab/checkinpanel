@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC2015,2188
+# shellcheck disable=SC2015,2034,2188
 <<'COMMENT'
 cron: 16 */2 * * *
 new Env('签到依赖');
@@ -62,8 +62,7 @@ install_py_reqs() {
 
 install_js_pkgs_initial() {
     if [ -d "/ql/scripts" ]; then
-        install_js_pkgs_force "package-merge"
-        mv /ql/scripts/package.json /ql/scripts/package.bak.json
+        package_merged_cmd="$(install_js_pkgs_force "package-merge" && mv /ql/scripts/package.json /ql/scripts/package.bak.json)"
         node -e "const merge = require('package-merge');
                  const fs = require('fs');
                  const dst = fs.readFileSync('/ql/repo/Oreomeow_checkinpanel_master/package.json');
@@ -75,15 +74,16 @@ install_js_pkgs_initial() {
                      console.log('package.json merged successfully!');
                  });"
     fi
+    npm install
 }
 install_js_pkgs_force() {
     if [[ "$(npm ls "$1")" =~ $1 && $(npm ls "$1" | grep ERR) == '' ]]; then
         echo "$1 已正确安装"
     elif [[ "$(npm ls "$1")" =~ $1 && $(npm ls "$1" | grep ERR) != '' ]]; then
         uninstall_js_pkgs "$1"
-        install "npm install $1" "$(npm install "$1" --force)" "$(npm ls "$1") =~ $1 $(npm ls "$1" | grep ERR) == ''" "npm install $1"
+        install "npm install $1" "$(npm install "$1" --force)" "$(npm ls "$1") =~ $1 $(npm ls "$1" | grep ERR) == ''" "npm install $1 --force"
     else
-        install "npm install $1" "$(npm install "$1" --save)" "$(npm ls "$1") =~ $1 $(npm ls "$1" | grep ERR) == ''" "npm install $1"
+        install "npm install $1" "$(npm install "$1" --force)" "$(npm ls "$1") =~ $1 $(npm ls "$1" | grep ERR) == ''" "npm install $1 --force"
     fi
 }
 uninstall_js_pkgs() {
@@ -96,7 +96,6 @@ install_js_pkgs_all() {
         if [ ! -f "/ql/scripts/package.bak.json" ]; then
             install_js_pkgs_initial
         fi
-        npm install
         install_js_pkgs_force "$i"
     done
 }
