@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC2188
+# shellcheck disable=SC2015,2188
 <<'COMMENT'
 cron: 16 */2 * * *
 new Env('签到依赖');
@@ -10,7 +10,7 @@ PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 alpine_pkgs="bash curl gcc git jq libffi-dev musl-dev openssl-dev python3 python3-dev py3-pip"
 py_reqs="bs4 cryptography==3.2.1 json5 pyaes requests rsa"
-js_pkgs="axios crypto-js got json5 request"
+js_pkgs="axios crypto-js got json5 package-merge request"
 
 install() {
     count=0
@@ -61,16 +61,29 @@ install_py_reqs() {
 }
 
 install_js_pkgs() {
+    if [ -d "/ql/scripts" ]; then
+        cd /ql/scripts && npm install --save package-merge
+        mv /ql/scripts/package.json /ql/scripts/package.bak.json
+        node -e "const merge = require('package-merge');
+                 const fs = require('fs');
+                 const dst = fs.readFileSync('/ql/repo/Oreomeow_checkinpanel_master/package.json');
+                 const src = fs.readFileSync('/ql/scripts/package.bak.json');
+                 fs.writeFile(\"/ql/scripts/package.json\", merge(dst,src), function(err) { 
+                     if(err) { 
+                         console.log(err); 
+                     } 
+                     console.log(\"package.json merged successfully!\");
+                 });"
+    fi
+    npm install
     for i in $js_pkgs; do
-        if [[ "$(npm ls "$i")" =~ $i ]]; then
-            echo "$i 已安装"
+        if [[ "$(npm ls "$i")" =~ $i && $(npm ls "$i" | grep ERR) == '' ]]; then
+            echo "$i 已正确安装"
         else
-            if [ -d "/ql/scripts" ]; then
-                install "npm install $i" "$(npm install "$i" --force)" "$(npm ls "$i") =~ $i" "cd /ql/scripts && npm install $i"
-            else
-                npm install
-                break
-            fi
+            npm uninstall "$i"
+            [[ -d "/ql/scripts" ]] && rm -rf /usr/local/app/script/Shell/Checkinpanel/node_modules/"$i" || rm -rf /ql/scripts/node_modules/"$i"
+            rm -rf /usr/local/lib/node_modules/lodash/*
+            install "npm install $i" "$(npm install "$i" --force)" "$(npm ls "$i") =~ $i $(npm ls "$i" | grep ERR) == ''" "npm install $i"
         fi
     done
 }
