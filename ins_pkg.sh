@@ -62,8 +62,11 @@ install_py_reqs() {
 
 install_js_pkgs_initial() {
     if [ -d "/ql/scripts" ]; then
-        package_merged_cmd="$(install_js_pkgs_force "package-merge" && mv /ql/scripts/package.json /ql/scripts/package.bak.json)"
-        node -e "const merge = require('package-merge');
+        install_js_pkgs_force "package-merge" &&
+            install_js_pkgs_force "package-merge" &&
+            mv /ql/scripts/package.json /ql/scripts/package.bak.json &&
+            node -e \
+                "const merge = require('package-merge');
                  const fs = require('fs');
                  const dst = fs.readFileSync('/ql/repo/Oreomeow_checkinpanel_master/package.json');
                  const src = fs.readFileSync('/ql/scripts/package.bak.json');
@@ -81,9 +84,9 @@ install_js_pkgs_force() {
         echo "$1 已正确安装"
     elif [[ "$(npm ls "$1")" =~ $1 && $(npm ls "$1" | grep ERR) != '' ]]; then
         uninstall_js_pkgs "$1"
-        install "npm install $1" "$(npm install "$1" --force)" "$(npm ls "$1") =~ $1 $(npm ls "$1" | grep ERR) == ''" "npm install $1 --force"
+        install "npm install $1" "$(npm install "$1" --force)" "$(npm ls "$1") =~ $1 && $(npm ls "$1" | grep ERR) == ''" "npm install $1 --force"
     else
-        install "npm install $1" "$(npm install "$1" --force)" "$(npm ls "$1") =~ $1 $(npm ls "$1" | grep ERR) == ''" "npm install $1 --force"
+        install "npm install $1" "$(npm install "$1" --force)" "$(npm ls "$1") =~ $1 && $(npm ls "$1" | grep ERR) == ''" "npm install $1 --force"
     fi
 }
 uninstall_js_pkgs() {
