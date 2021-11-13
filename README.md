@@ -165,11 +165,13 @@ ql repo https://github.com/Oreomeow/checkinpanel.git "api_|ck_|ins_" "^checkin" 
 
 ### 3. 安装依赖
 
-**运行 `签到依赖` 任务**
+* **运行 `签到依赖` 任务**
 
-依赖持久化配置
+  * [截图](https://github.com/Oreomeow/checkinpanel/issues/43)
 
-* `签到依赖` 任务保持定时运行即可
+* 依赖持久化配置
+
+  * `签到依赖` 任务保持定时运行即可
 
 ### 4. 拷贝文件
 

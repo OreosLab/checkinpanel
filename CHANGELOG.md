@@ -1,6 +1,23 @@
 # Changelog
 
 
+## 20211113-3-230 (2021-11-13)
+
+### Refactor Functions
+
+* :hammer: : 通过测试：依赖安装 shell. [Oreo]
+
+* :hammer: : Update finally for npm. [Oreo]
+
+* :hammer: : 继续测试 npm install. [Oreo]
+
+* :hammer: : 修复 npm 依赖安装（最后一次. [Oreo]
+
+* :hammer: : 修复和更新 npm 安装函数. [Oreo]
+
+  npm install package-merge 改为全局安装，同时适配新版青龙
+
+
 ## 20211112-3-210 (2021-11-12)
 
 ### Fix
