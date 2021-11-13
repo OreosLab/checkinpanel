@@ -11,22 +11,23 @@ alpine_pkgs="$alpine_pkgs $chromium_pkgs $chromedriver_pkgs $xvfb_pkgs"
 
 install() {
     count=0
-    flag=0
+    flag=$1
     while true; do
-        echo ".......... $1 begin .........."
-        result=$2
-        if [[ $3 ]]; then
+        echo ".......... $2 begin .........."
+        run=$3
+        result=$4
+        if ((result > 0)); then
             flag=0
         else
             flag=1
         fi
-        if [ $flag -eq 0 ]; then
-            echo "---------- $1 succeed ----------"
+        if ((flag == $1)); then
+            echo "---------- $2 succeed ----------"
             break
         else
             count=$((count + 1))
-            if [ ${count} -eq 6 ]; then
-                echo "!! 自动安装失败，请尝试进入容器后执行 $4 !!"
+            if ((count == 6)); then
+                echo "!! 自动安装失败，请尝试进入容器后执行 $2 !!"
                 break
             fi
             echo ".......... retry in 5 seconds .........."
@@ -41,7 +42,7 @@ install_alpine_pkgs() {
         if [[ $(apk info | grep "^$i$") = "$i" ]]; then
             echo "$i 已安装"
         else
-            install "apk add $i" "$(apk add --no-cache "$i")" "$result =~ OK" "apk add $i"
+            install 0 "apk add $i" "$(apk add --no-cache "$i")" "$(echo "$run" | grep -c 'OK')"
         fi
     done
 }
@@ -52,7 +53,7 @@ install_py_reqs() {
         if [[ "$(pip3 freeze)" =~ $i ]]; then
             echo "$i 已安装"
         else
-            install "pip3 install $i" "$(pip3 install "$i")" "$result =~ Successfully" "pip3 install $i"
+            install 0 "pip3 install $i" "$(pip3 install "$i")" "$(echo "$run" | grep -c 'Successfully')"
         fi
     done
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC2034,2188
+# shellcheck disable=SC2188
 <<'COMMENT'
 cron: 16 */2 * * *
 new Env('签到依赖');
@@ -14,22 +14,23 @@ js_pkgs="axios crypto-js got json5 request"
 
 install() {
     count=0
-    flag=0
+    flag=$1
     while true; do
-        echo ".......... $1 begin .........."
-        result=$2
-        if [[ $3 ]]; then
+        echo ".......... $2 begin .........."
+        run=$3
+        result=$4
+        if ((result > 0)); then
             flag=0
         else
             flag=1
         fi
-        if [ $flag -eq 0 ]; then
-            echo "---------- $1 succeed ----------"
+        if ((flag == $1)); then
+            echo "---------- $2 succeed ----------"
             break
         else
             count=$((count + 1))
-            if [ ${count} -eq 6 ]; then
-                echo "!! 自动安装失败，请尝试进入容器后执行 $4 !!"
+            if ((count == 6)); then
+                echo "!! 自动安装失败，请尝试进入容器后执行 $2 !!"
                 break
             fi
             echo ".......... retry in 5 seconds .........."
@@ -44,7 +45,7 @@ install_alpine_pkgs() {
         if [[ $(apk info | grep "^$i$") = "$i" ]]; then
             echo "$i 已安装"
         else
-            install "apk add $i" "$(apk add --no-cache "$i")" "$result =~ OK" "apk add $i"
+            install 0 "apk add $i" "$(apk add --no-cache "$i")" "$(echo "$run" | grep -c 'OK')"
         fi
     done
 }
@@ -55,7 +56,7 @@ install_py_reqs() {
         if [[ "$(pip3 freeze)" =~ $i ]]; then
             echo "$i 已安装"
         else
-            install "pip3 install $i" "$(pip3 install "$i")" "$result =~ Successfully" "pip3 install $i"
+            install 0 "pip3 install $i" "$(pip3 install "$i")" "$(echo "$run" | grep -c 'Successfully')"
         fi
     done
 }
@@ -63,28 +64,46 @@ install_py_reqs() {
 install_js_pkgs_initial() {
     if [ -d "/ql/scripts/Oreomeow_checkinpanel_master" ]; then
         cd /ql/scripts/Oreomeow_checkinpanel_master &&
-            cp /ql/repo/Oreomeow_checkinpanel_master/package.json /ql/scripts/Oreomeow_checkinpanel/package.json &&
-            npm install
-    elif [ -d "/ql/scripts" ]; then
+            cp /ql/repo/Oreomeow_checkinpanel_master/package.json /ql/scripts/Oreomeow_checkinpanel_master/package.json
+    elif [[ -d "/ql/scripts" && ! -f "/ql/scripts/package.bak.json" ]]; then
         cd /ql/scripts || exit
-    else
-        npm install
+        rm -rf node_modules
+        rm -rf .pnpm-store
+        mv package-lock.json package-lock.bak.json
+        mv package.json package.bak.json
+        mv pnpm-lock.yaml pnpm-lock.bak.yaml
+        install 1 "npm install -g package-merge" "$(npm install -g package-merge)" "$(npm ls -g package-merge | grep -cE '(empty)|ERR')" &&
+            export NODE_PATH="/usr/local/lib/node_modules" &&
+            node -e \
+                "const merge = require('package-merge');
+                 const fs = require('fs');
+                 const dst = fs.readFileSync('/ql/repo/Oreomeow_checkinpanel_master/package.json');
+                 const src = fs.readFileSync('/ql/scripts/package.bak.json');
+                 fs.writeFile('/ql/scripts/package.json', merge(dst,src), function(err) { 
+                     if(err) { 
+                         console.log(err); 
+                     } 
+                     console.log('package.json merged successfully!');
+                 });"
     fi
-
+    npm install
 }
 install_js_pkgs() {
-    if [[ "$(npm ls "$1")" =~ $1 && $(npm ls "$1" | grep ERR) == '' ]]; then
+    npm_info="$(npm ls "$1")"
+    has_err=$(echo "$npm_info" | grep ERR)
+    if [[ $npm_info =~ $1 && $has_err == "" ]]; then
         echo "$1 已正确安装"
-    elif [[ "$(npm ls "$1")" =~ $1 && $(npm ls "$1" | grep ERR) != '' ]]; then
+    elif [[ $npm_info =~ $1 && $has_err != "" ]]; then
         uninstall_js_pkgs "$1"
-    elif [[ "$(npm ls "$i" -g)" =~ (empty) ]]; then
-        install "npm install $1" "$(npm install "$1" --save)" "$(npm ls "$1") =~ $1 && $(npm ls "$1" | grep ERR) == ''" "npm install $1 --force"
+    elif [[ $npm_info =~ (empty) ]]; then
+        install 1 "npm install $1" "$(npm install --force "$1")" "$(npm ls "$1" | grep -cE '(empty)|ERR')"
     fi
 }
 uninstall_js_pkgs() {
     npm uninstall "$1"
     rm -rf "$(pwd)"/node_modules/"$1"
     rm -rf /usr/local/lib/node_modules/lodash/*
+    npm cache clear --force
 }
 install_js_pkgs_all() {
     install_js_pkgs_initial
