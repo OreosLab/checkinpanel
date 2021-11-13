@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC2188
+# shellcheck disable=SC2005,2188
 <<'COMMENT'
 cron: 16 */2 * * *
 new Env('签到依赖');
@@ -17,8 +17,7 @@ install() {
     flag=$1
     while true; do
         echo ".......... $2 begin .........."
-        run=$3
-        result=$4
+        result=$3
         if ((result > 0)); then
             flag=0
         else
@@ -45,7 +44,7 @@ install_alpine_pkgs() {
         if [[ $(apk info | grep "^$i$") = "$i" ]]; then
             echo "$i 已安装"
         else
-            install 0 "apk add $i" "$(apk add --no-cache "$i")" "$(echo "$run" | grep -c 'OK')"
+            install 0 "apk add $i" "$(apk add --no-cache "$i" | grep -c 'OK')"
         fi
     done
 }
@@ -53,10 +52,10 @@ install_alpine_pkgs() {
 install_py_reqs() {
     pip3 install --upgrade pip
     for i in $py_reqs; do
-        if [[ "$(pip3 freeze)" =~ $i ]]; then
+        if [[ $(pip3 freeze) =~ $i ]]; then
             echo "$i 已安装"
         else
-            install 0 "pip3 install $i" "$(pip3 install "$i")" "$(echo "$run" | grep -c 'Successfully')"
+            install 0 "pip3 install $i" "$(pip3 install "$i" | grep -c 'Successfully')"
         fi
     done
 }
@@ -72,7 +71,7 @@ install_js_pkgs_initial() {
         mv package-lock.json package-lock.bak.json
         mv package.json package.bak.json
         mv pnpm-lock.yaml pnpm-lock.bak.yaml
-        install 1 "npm install -g package-merge" "$(npm install -g package-merge)" "$(npm ls -g package-merge | grep -cE '(empty)|ERR')" &&
+        install 1 "npm install -g package-merge" "$(echo "$(npm install -g package-merge && npm ls -g package-merge)" | grep -cE '(empty)|ERR')" &&
             export NODE_PATH="/usr/local/lib/node_modules" &&
             node -e \
                 "const merge = require('package-merge');
@@ -88,15 +87,15 @@ install_js_pkgs_initial() {
     fi
     npm install
 }
-install_js_pkgs() {
-    npm_info="$(npm ls "$1")"
-    has_err=$(echo "$npm_info" | grep ERR)
-    if [[ $npm_info =~ $1 && $has_err == "" ]]; then
+install_js_pkgs_each() {
+    npm_ls="$(npm ls "$1")"
+    has_err=$(echo "$npm_ls" | grep ERR)
+    if [[ $npm_ls =~ $1 && $has_err == "" ]]; then
         echo "$1 已正确安装"
-    elif [[ $npm_info =~ $1 && $has_err != "" ]]; then
+    elif [[ $npm_ls =~ $1 && $has_err != "" ]]; then
         uninstall_js_pkgs "$1"
-    elif [[ $npm_info =~ (empty) ]]; then
-        install 1 "npm install $1" "$(npm install --force "$1")" "$(npm ls "$1" | grep -cE '(empty)|ERR')"
+    elif [[ $npm_ls =~ (empty) ]]; then
+        install 1 "npm install $1" "$(echo "$(npm install --force "$1" && npm ls --force "$1")" | grep -cE '(empty)|ERR')"
     fi
 }
 uninstall_js_pkgs() {
@@ -108,7 +107,7 @@ uninstall_js_pkgs() {
 install_js_pkgs_all() {
     install_js_pkgs_initial
     for i in $js_pkgs; do
-        install_js_pkgs "$i"
+        install_js_pkgs_each "$i"
     done
     npm ls --depth 0
 }
