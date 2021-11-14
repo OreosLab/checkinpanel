@@ -41,7 +41,7 @@ class SspanelQd(object):
             msg = url + "\n" + "未知错误"
             return msg
 
-        login_url = url + "/auth/login"
+        login_url = url.rstrip("/") + "/auth/login"
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36",
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -49,22 +49,33 @@ class SspanelQd(object):
 
         post_data = "email=" + email + "&passwd=" + password + "&code="
         post_data = post_data.encode()
-        session.post(login_url, post_data, headers=headers, verify=False)
+
+        try:
+            session.post(login_url, post_data, headers=headers, verify=False)
+        except Exception as e:
+            msg = url + "\n" + "登录失败，请查看日志"
+            print(f"登录失败，错误信息：\n{e}")
+            return msg
 
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36",
             "Referer": url + "/user",
         }
 
-        response = session.post(url + "/user/checkin", headers=headers, verify=False)
-
         try:
-            datas = response.json()
-            message = str(datas.get("msg"))
+            response = session.post(
+                url + "/user/checkin", headers=headers, verify=False
+            )
+            try:
+                datas = response.json()
+                message = str(datas.get("msg"))
+            except Exception as e:
+                message = "签到出错，请查看日志"
+                print(f"签到出错，错误信息：\n{e}")
+                print(f"接口返回信息：\n{response.text}")
         except Exception as e:
             message = "签到出错，请查看日志"
             print(f"签到出错，错误信息：\n{e}")
-            print(f"接口返回信息：\n{response.text}")
         msg = url + "\n" + message
 
         info_url = url + "/user"
