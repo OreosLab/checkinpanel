@@ -5,6 +5,7 @@ cron: 20 10 * * *
 new Env('机场签到');
 """
 
+import json
 import re
 import traceback
 
@@ -23,6 +24,7 @@ class SspanelQd(object):
 
     @staticmethod
     def checkin(url, email, password):
+        url = url.rstrip("/")
         email = email.split("@")
         email = email[0] + "%40" + email[1]
         session = requests.session()
@@ -43,7 +45,7 @@ class SspanelQd(object):
             print(f"未知错误，错误信息：\n{traceback.format_exc()}")
             return msg
 
-        login_url = url.rstrip("/") + "/auth/login"
+        login_url = url + "/auth/login"
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36",
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -53,7 +55,13 @@ class SspanelQd(object):
         post_data = post_data.encode()
 
         try:
-            session.post(login_url, post_data, headers=headers, verify=False)
+            res = session.post(login_url, post_data, headers=headers, verify=False)
+            res_str = res.text.encode("utf-8").decode("unicode_escape")
+            print(f"{url} 接口登录返回信息：{res_str}")
+            res_dict = json.loads(res_str)
+            if "错误" in res_dict.get("msg"):
+                msg = url + "\n" + str(res_dict.get("msg"))
+                return msg
         except Exception:
             msg = url + "\n" + "登录失败，请查看日志"
             print(f"登录失败，错误信息：\n{traceback.format_exc()}")
@@ -68,19 +76,17 @@ class SspanelQd(object):
             response = session.post(
                 url + "/user/checkin", headers=headers, verify=False
             )
-            try:
-                datas = response.json()
-                check_msg = datas.get("msg")
-                if check_msg:
-                    msg = url + "\n" + str(check_msg)
-                else:
-                    msg = url + "\n" + str(datas)
-            except Exception:
-                msg = url + "\n" + "签到数据处理失败，请查看日志"
-                print(f"签到数据处理失败，错误信息：\n{traceback.format_exc()}")
+            res_str = response.text.encode("utf-8").decode("unicode_escape")
+            print(f"{url} 接口签到返回信息：{res_str}")
+            res_dict = json.loads(res_str)
+            check_msg = res_dict.get("msg")
+            if check_msg:
+                msg = url + "\n" + str(check_msg)
+            else:
+                msg = url + "\n" + str(res_dict)
         except Exception:
-            msg = url + "\n" + "签到 POST 请求失败，请查看日志"
-            print(f"签到 POST 请求失败，错误信息：\n{traceback.format_exc()}")
+            msg = url + "\n" + "签到失败，请查看日志"
+            print(f"签到失败，错误信息：\n{traceback.format_exc()}")
 
         info_url = url + "/user"
         response = session.get(info_url, verify=False)
