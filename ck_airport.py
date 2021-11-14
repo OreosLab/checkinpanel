@@ -59,7 +59,7 @@ class SspanelQd(object):
             res_str = res.text.encode("utf-8").decode("unicode_escape")
             print(f"{url} 接口登录返回信息：{res_str}")
             res_dict = json.loads(res_str)
-            if "错误" in res_dict.get("msg"):
+            if res_dict.get("ret") == 0:
                 msg = url + "\n" + str(res_dict.get("msg"))
                 return msg
         except Exception:
