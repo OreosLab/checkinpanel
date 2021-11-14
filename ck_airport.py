@@ -25,9 +25,11 @@ class SspanelQd(object):
         email = email.split("@")
         email = email[0] + "%40" + email[1]
         session = requests.session()
+        """
+        以下 except 都是用来捕获当 requests 请求出现异常时，
+        通过捕获然后等待网络情况的变化，以此来保护程序的不间断运行
+        """
         try:
-            # 以下 except 都是用来捕获当 requests 请求出现异常时，
-            # 通过捕获然后等待网络情况的变化，以此来保护程序的不间断运行
             session.get(url, verify=False)
         except requests.exceptions.ConnectionError:
             msg = url + "\n" + "网络不通"
@@ -55,8 +57,15 @@ class SspanelQd(object):
         }
 
         response = session.post(url + "/user/checkin", headers=headers, verify=False)
-        # print(response.text)
-        msg = url + "\n" + str(response.json().get("msg"))
+
+        try:
+            datas = response.json()
+            message = str(datas.get("msg"))
+        except Exception as e:
+            message = "签到出错，请查看日志"
+            print(f"签到出错，错误信息：\n{e}")
+            print(f"接口返回信息：\n{response.text}")
+        msg = url + "\n" + message
 
         info_url = url + "/user"
         response = session.get(info_url, verify=False)
@@ -78,9 +87,9 @@ class SspanelQd(object):
                 + "\n- 剩余流量："
                 + str(rest)
             )
-            return msg
         except Exception:
-            return msg
+            pass
+        return msg
 
     def main(self):
         msg_all = ""
