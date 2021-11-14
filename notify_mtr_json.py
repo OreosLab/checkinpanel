@@ -8,6 +8,7 @@ import os
 import re
 import threading
 import time
+import traceback
 import urllib.parse
 
 import requests
@@ -125,10 +126,10 @@ def bark(title: str, content: str) -> None:
                 print(f"bark 推送失败！响应数据：{datas}")
         except json.JSONDecodeError:
             print(f"推送返回值非 json 格式，请检查网址和账号是否填写正确。\n{response.text}")
-    except requests.exceptions.RequestException as e:
-        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{e}")
-    except Exception as e:
-        print(f"其他错误信息：\n{e}")
+    except requests.exceptions.RequestException:
+        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{traceback.format_exc()}")
+    except Exception:
+        print(f"其他错误信息：\n{traceback.format_exc()}")
 
 
 def console(title: str, content: str) -> None:
@@ -171,10 +172,10 @@ def dingding_bot(title: str, content: str) -> None:
                 print(f"钉钉机器人 推送失败！响应数据：{datas}")
         except json.JSONDecodeError:
             print(f"推送返回值非 json 格式，请检查网址和账号是否填写正确。\n{response.text}")
-    except requests.exceptions.RequestException as e:
-        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{e}")
-    except Exception as e:
-        print(f"其他错误信息：\n{e}")
+    except requests.exceptions.RequestException:
+        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{traceback.format_exc()}")
+    except Exception:
+        print(f"其他错误信息：\n{traceback.format_exc()}")
 
 
 def feishu_bot(title: str, content: str) -> None:
@@ -198,10 +199,10 @@ def feishu_bot(title: str, content: str) -> None:
                 print(f"飞书 推送失败！响应数据：{datas}")
         except json.JSONDecodeError:
             print(f"推送返回值非 json 格式，请检查网址和账号是否填写正确。\n{response.text}")
-    except requests.exceptions.RequestException as e:
-        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{e}")
-    except Exception as e:
-        print(f"其他错误信息：\n{e}")
+    except requests.exceptions.RequestException:
+        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{traceback.format_exc()}")
+    except Exception:
+        print(f"其他错误信息：\n{traceback.format_exc()}")
 
 
 def go_cqhttp(title: str, content: str) -> None:
@@ -225,10 +226,10 @@ def go_cqhttp(title: str, content: str) -> None:
                 print(f"go-cqhttp 推送失败！响应数据：{datas}")
         except json.JSONDecodeError:
             print(f"推送返回值非 json 格式，请检查网址和账号是否填写正确。\n{response.text}")
-    except requests.exceptions.RequestException as e:
-        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{e}")
-    except Exception as e:
-        print(f"其他错误信息：\n{e}")
+    except requests.exceptions.RequestException:
+        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{traceback.format_exc()}")
+    except Exception:
+        print(f"其他错误信息：\n{traceback.format_exc()}")
 
 
 def iGot(title: str, content: str) -> None:
@@ -254,10 +255,10 @@ def iGot(title: str, content: str) -> None:
                 print(f'iGot 推送失败！错误信息：{datas.get("errMsg")}')
         except json.JSONDecodeError:
             print(f"推送返回值非 json 格式，请检查网址和账号是否填写正确。\n{response.text}")
-    except requests.exceptions.RequestException as e:
-        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{e}")
-    except Exception as e:
-        print(f"其他错误信息：\n{e}")
+    except requests.exceptions.RequestException:
+        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{traceback.format_exc()}")
+    except Exception:
+        print(f"其他错误信息：\n{traceback.format_exc()}")
 
 
 def serverJ(title: str, content: str) -> None:
@@ -287,10 +288,10 @@ def serverJ(title: str, content: str) -> None:
                 print(f'serverJ 推送失败！错误码：{datas.get("message")}')
         except json.JSONDecodeError:
             print(f"推送返回值非 json 格式，请检查网址和账号是否填写正确。\n{response.text}")
-    except requests.exceptions.RequestException as e:
-        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{e}")
-    except Exception as e:
-        print(f"其他错误信息：\n{e}")
+    except requests.exceptions.RequestException:
+        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{traceback.format_exc()}")
+    except Exception:
+        print(f"其他错误信息：\n{traceback.format_exc()}")
 
 
 def pushplus_bot(title: str, content: str) -> None:
@@ -337,10 +338,10 @@ def pushplus_bot(title: str, content: str) -> None:
                 print(f"PUSHPLUS 推送失败！响应数据：{datas}")
         except json.JSONDecodeError:
             print(f"推送返回值非 json 格式，请检查网址和账号是否填写正确。\n{response.text}")
-    except requests.exceptions.RequestException as e:
-        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{e}")
-    except Exception as e:
-        print(f"其他错误信息：\n{e}")
+    except requests.exceptions.RequestException:
+        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{traceback.format_exc()}")
+    except Exception:
+        print(f"其他错误信息：\n{traceback.format_exc()}")
 
 
 def qmsg_bot(title: str, content: str) -> None:
@@ -365,10 +366,10 @@ def qmsg_bot(title: str, content: str) -> None:
                 print(f'qmsg 推送失败！错误信息：{datas.get("reason")}')
         except json.JSONDecodeError:
             print(f"推送返回值非 json 格式，请检查网址和账号是否填写正确。\n{response.text}")
-    except requests.exceptions.RequestException as e:
-        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{e}")
-    except Exception as e:
-        print(f"其他错误信息：\n{e}")
+    except requests.exceptions.RequestException:
+        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{traceback.format_exc()}")
+    except Exception:
+        print(f"其他错误信息：\n{traceback.format_exc()}")
 
 
 def wecom_app(title: str, content: str) -> None:
@@ -404,10 +405,10 @@ def wecom_app(title: str, content: str) -> None:
             print("企业微信推送成功！")
         else:
             print(f"企业微信推送失败！错误信息：{datas}")
-    except requests.exceptions.RequestException as e:
-        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{e}")
-    except Exception as e:
-        print(f"其他错误信息：\n{e}")
+    except requests.exceptions.RequestException:
+        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{traceback.format_exc()}")
+    except Exception:
+        print(f"其他错误信息：\n{traceback.format_exc()}")
 
 
 class WeCom:
@@ -504,10 +505,10 @@ def wecom_bot(title: str, content: str) -> None:
                 print(f"企业微信机器人 推送失败！响应数据：{datas}")
         except json.JSONDecodeError:
             print(f"推送返回值非 json 格式，请检查网址和账号是否填写正确。\n{response.text}")
-    except requests.exceptions.RequestException as e:
-        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{e}")
-    except Exception as e:
-        print(f"其他错误信息：\n{e}")
+    except requests.exceptions.RequestException:
+        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{traceback.format_exc()}")
+    except Exception:
+        print(f"其他错误信息：\n{traceback.format_exc()}")
 
 
 def telegram_bot(title: str, content: str) -> None:
@@ -562,10 +563,10 @@ def telegram_bot(title: str, content: str) -> None:
                 print(f"tg 推送失败！响应数据：{datas}")
         except json.JSONDecodeError:
             print(f"推送返回值非 json 格式，请检查网址和账号是否填写正确。\n{response.text}")
-    except requests.exceptions.RequestException as e:
-        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{e}")
-    except Exception as e:
-        print(f"其他错误信息：\n{e}")
+    except requests.exceptions.RequestException:
+        print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{traceback.format_exc()}")
+    except Exception:
+        print(f"其他错误信息：\n{traceback.format_exc()}")
 
 
 def one() -> str:
