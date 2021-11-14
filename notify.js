@@ -105,7 +105,7 @@ if (PushConfig.BARK_PUSH && PushConfig.BARK_PUSH.indexOf('https') === -1 && Push
     // 兼容 Bark 本地用户只填写设备码的情况
     PushConfig.BARK_PUSH = `https://api.day.app/${PushConfig.BARK_PUSH}`;
 }
-if (PushConfig.TG_PROXY_HOST.indexOf('@') !== -1) {
+if (PushConfig.TG_PROXY_HOST && PushConfig.TG_PROXY_HOST.indexOf('@') !== -1) {
     PushConfig.TG_PROXY_AUTH = PushConfig.TG_PROXY_HOST.split('@')[0];
     PushConfig.TG_PROXY_HOST = PushConfig.TG_PROXY_HOST.split('@')[1];
 }
