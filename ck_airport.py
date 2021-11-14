@@ -6,6 +6,7 @@ new Env('机场签到');
 """
 
 import re
+import traceback
 
 import requests
 import urllib3
@@ -38,7 +39,8 @@ class SspanelQd(object):
             msg = url + "\n" + "分块编码错误"
             return msg
         except Exception:
-            msg = url + "\n" + "未知错误"
+            msg = url + "\n" + "未知错误，请查看日志"
+            print(f"未知错误，错误信息：\n{traceback.format_exc()}")
             return msg
 
         login_url = url.rstrip("/") + "/auth/login"
@@ -52,9 +54,9 @@ class SspanelQd(object):
 
         try:
             session.post(login_url, post_data, headers=headers, verify=False)
-        except Exception as e:
+        except Exception:
             msg = url + "\n" + "登录失败，请查看日志"
-            print(f"登录失败，错误信息：\n{e}")
+            print(f"登录失败，错误信息：\n{traceback.format_exc()}")
             return msg
 
         headers = {
@@ -68,15 +70,17 @@ class SspanelQd(object):
             )
             try:
                 datas = response.json()
-                message = str(datas.get("msg"))
-            except Exception as e:
-                message = "签到出错，请查看日志"
-                print(f"签到出错，错误信息：\n{e}")
-                print(f"接口返回信息：\n{response.text}")
-        except Exception as e:
-            message = "签到出错，请查看日志"
-            print(f"签到出错，错误信息：\n{e}")
-        msg = url + "\n" + message
+                check_msg = datas.get("msg")
+                if check_msg:
+                    msg = url + "\n" + str(check_msg)
+                else:
+                    msg = url + "\n" + str(datas)
+            except Exception:
+                msg = url + "\n" + "签到数据处理失败，请查看日志"
+                print(f"签到数据处理失败，错误信息：\n{traceback.format_exc()}")
+        except Exception:
+            msg = url + "\n" + "签到 POST 请求失败，请查看日志"
+            print(f"签到 POST 请求失败，错误信息：\n{traceback.format_exc()}")
 
         info_url = url + "/user"
         response = session.get(info_url, verify=False)
