@@ -109,6 +109,9 @@ if (PushConfig.TG_PROXY_HOST && PushConfig.TG_PROXY_HOST.indexOf('@') !== -1) {
     PushConfig.TG_PROXY_AUTH = PushConfig.TG_PROXY_HOST.split('@')[0];
     PushConfig.TG_PROXY_HOST = PushConfig.TG_PROXY_HOST.split('@')[1];
 }
+if (!PushConfig.TG_API_HOST) {
+    PushConfig.TG_API_HOST = 'api.telegram.org';
+}
 // ================================某些变量本地最终处理====================================
 
 /**
