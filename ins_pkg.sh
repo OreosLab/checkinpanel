@@ -78,10 +78,10 @@ install_js_pkgs_initial() {
                  const fs = require('fs');
                  const dst = fs.readFileSync('/ql/repo/Oreomeow_checkinpanel_master/package.json');
                  const src = fs.readFileSync('/ql/scripts/package.bak.json');
-                 fs.writeFile('/ql/scripts/package.json', merge(dst,src), function(err) { 
-                     if(err) { 
-                         console.log(err); 
-                     } 
+                 fs.writeFile('/ql/scripts/package.json', merge(dst, src), function (err) {
+                     if (err) {
+                         console.log(err);
+                     }
                      console.log('package.json merged successfully!');
                  });"
     fi
