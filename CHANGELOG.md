@@ -1,6 +1,45 @@
 # Changelog
 
 
+## 20211114-3-192 (2021-11-14)
+
+### Feature
+
+* :racehorse: : 改善登录接口返回信息判断：airport. [Oreo]
+
+* :sparkles: : 同步更新 HeyTap. [Oreo]
+
+* :racehorse: : 增加登录失败或签到失败返回值打印. [Oreo]
+
+### Fix
+
+* :fire: : rm useless code. [Oreo]
+
+* :bug: : 修复 JS tg 推送错误. [Oreo]
+
+* :bug: : 修复 notify.js indexOf 错误. [Oreo]
+
+### Docs
+
+* :memo: : 更新青龙依赖安装截图. [Oreo]
+
+### Code Style
+
+* :art: : 格式化 Shell 中 JS 代码. [Oreo]
+
+### Refactor Functions
+
+* :hammer: : 新增 traceback 异常捕获：notify_mtr_json.py. [Oreo]
+
+* :hammer: : 最终异常处理：airport. [Oreo]
+
+* :hammer: : 继续增加异常捕获：airport. [Oreo]
+
+* :hammer: : 增加异常捕获：airport. [Oreo]
+
+* :hammer: : 重构通知文件异常捕获. [Oreo]
+
+
 ## 20211113-3-230 (2021-11-13)
 
 ### Refactor Functions
