@@ -37,8 +37,9 @@ install() {
 
 install_alpine_pkgs() {
     apk update
+    apk_info="$(apk info)"
     for i in $alpine_pkgs; do
-        if [[ $(apk info | grep "^$i$") = "$i" ]]; then
+        if [[ $apk_info == *[[:space:]]${i}[[:space:]]* ]] || [[ $apk_info == ${i}[[:space:]]* ]] || [[ $apk_info == *[[:space:]]${i} ]]; then
             echo "$i 已安装"
         else
             install 0 "apk add $i" "$(apk add --no-cache "$i" | grep -c 'OK')"
@@ -48,8 +49,9 @@ install_alpine_pkgs() {
 
 install_py_reqs() {
     pip3 install --upgrade pip
+    pip3_freeze=$(pip3 freeze)
     for i in $py_reqs; do
-        if [[ $(pip3 freeze) =~ $i ]]; then
+        if [[ $pip3_freeze =~ $i ]]; then
             echo "$i 已安装"
         else
             install 0 "pip3 install $i" "$(pip3 install "$i" | grep -c 'Successfully')"
