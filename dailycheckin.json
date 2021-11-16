@@ -50,7 +50,7 @@
             "time": "10",
             "job": {
                 "type": "exec",
-                "target": "chmod +x ins_pkg.sh && bash ins_pkg.sh -cwd script/Shell/checkinpanel -timeout 600000"
+                "target": "chmod +x ins_pkg.sh && bash ins_pkg.sh -cwd script/Shell/checkinpanel -timeout 0"
             },
             "running": true
         },
@@ -60,7 +60,7 @@
             "time": "10 16 * * *",
             "job": {
                 "type": "exec",
-                "target": "chmod +x ins_pkg.sh && bash ins_pkg.sh -cwd script/Shell/checkinpanel -timeout 600000"
+                "target": "chmod +x ins_pkg.sh && bash ins_pkg.sh -cwd script/Shell/checkinpanel -timeout 0"
             },
             "running": true
         },

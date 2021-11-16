@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use File::Slurp;
-
 use JSON5;
 use TOML::Tiny qw(from_toml to_toml);
 
