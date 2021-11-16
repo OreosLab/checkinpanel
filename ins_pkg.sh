@@ -8,17 +8,17 @@ COMMENT
 
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
-alpine_pkgs="bash curl gcc git jq libffi-dev musl-dev openssl-dev perl perl-dev python3 python3-dev py3-pip"
+alpine_pkgs="bash curl gcc git jq libffi-dev make musl-dev openssl-dev perl perl-app-cpanminus perl-dev python3 python3-dev py3-pip wget"
 py_reqs="bs4 cryptography==3.2.1 json5 pyaes requests rsa"
 js_pkgs="axios crypto-js got json5 request"
-pl_mods="JSON5 TOML::Tiny"
+pl_mods="File::Slurp JSON5 TOML::Tiny"
 
 install() {
     count=0
     flag=$1
     while true; do
-        echo ".......... $2 begin .........."
-        result=$3
+        echo ".......... $2 begin .........." &&
+            result=$3
         if ((result > 0)); then
             flag=0
         else
@@ -116,11 +116,13 @@ install_js_pkgs_all() {
 }
 
 install_pl_mods() {
+    apk add wget
+    cpanm App::cpm
     for i in $pl_mods; do
         if [[ -f $(perldoc -l "$i") ]]; then
             echo "$i 已安装"
         else
-            install 0 "cpan install $i" "$(cpan install "$i" 2>&1 && perldoc -l "$i" | grep -c "/usr/share/perl")"
+            install 1 "cpm install -g $i" "$(cpm install -g "$i" | grep -c "FAIL")"
         fi
     done
 }
