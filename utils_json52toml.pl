@@ -14,7 +14,7 @@ sub json52toml {
     my $toml        = to_toml($perl_scalar);
 
     ( my $new_file ) = @_;
-    $new_file =~ s/\.json5$/\.toml/;
+    $new_file =~ s/\.json5?$/\.toml/;
 
     open( OUT, ">:encoding(UTF-8)", $new_file );
     print OUT "$toml";
@@ -46,7 +46,7 @@ if ( @ARGV == 0 ) {
         if ( $file and -e $file ) {
             print "\t[Info] $file 存在\n";
             my $new_file = $file;
-            $new_file =~ s/\.json5$/\.toml/;
+            $new_file =~ s/\.json5?$/\.toml/;
             if ( -e $new_file ) {
                 print "\t\t[Info.Quit] $new_file 已存在，放弃转换\n";
             }
@@ -61,7 +61,6 @@ if ( @ARGV == 0 ) {
 elsif ( @ARGV == 1 ) { json52toml $ARGV[0] }
 
 else {
-    print
-"\t<用法> perl $0 待转换的全路径文件名\n\t<示例> perl $0 /usr/local/app/script/Lists/check.json5\n";
-    die "\t[Error] 用法错误，已退出!!!";
+    die
+"\tUsage: perl $0 <待转换的全路径文件名>\n\te.g. perl $0 /usr/local/app/script/Lists/check.json5\n\t[Error] 用法错误，已退出!!!";
 }
