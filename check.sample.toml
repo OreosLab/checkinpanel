@@ -1,0 +1,356 @@
+# 配置文件
+# cookie 以实际获取为准
+
+# 爱企查e卡监控
+ECARDCHECK = false
+
+# LeetCode 每日一题
+LEETCODE = false
+
+# 每日一句
+MOTTO = true
+
+# 每日新闻
+NEWS = true
+
+# 青龙随机定时
+QL_RANDOM_TIME = false
+
+# 天气预报
+CITY = ["上海","朝阳区"]
+
+# AcFun
+# https://www.acfun.cn
+######### 多账号示例 #########
+[[ACFUN]]
+password = "Sitoi"
+phone = "188xxxxxxxx"
+[[ACFUN]]
+password = "123456"
+phone = "135xxxxxxxx"
+######### 多账号示例 #########
+
+# 机场签到
+# 邮箱
+# 密码
+# 链接，只支持 SSPanel 类型。删除 /auth/login
+[[AIRPORT]]
+email = "xxxxxxxx@qq.com"
+password = "xxxxxxxx"
+url = "https://xxxxxxxx.xxx"
+
+# 爱企查【WEB】
+# https://www.baidu.com，同百度贴吧 cookie 一样
+# 批量查询任务需手动抓包查询之后的 exportkey，可不填
+[[AQC]]
+cookie = "log_guid=xxxxxx; BDPPN=xxxxxx;..."
+exportkey = ""
+
+# 百度搜索资源平台
+# 提交网站的 URL 链接
+# https://ziyuan.baidu.com/site/index# 提交百度网站的目标 URL
+# 每日对同个网站提交次数
+[[BAIDU]]
+data_url = "https://cdn.jsdelivr.net/gh/Sitoi/Sitoi.github.io/baidu_urls.txt"
+submit_url = "http://data.zz.baidu.com/urls?site=https://sitoi.cn&token=xxxxxx"
+times = 10
+
+# Bilibili【WEB】
+# 每日投币数量
+# 投币方式：1-关注用户列表，0-随机；若关注用户视频不足，则其余随机
+# https://www.bilibili.com cookie
+# 是否开启银币兑换硬币
+[[BILIBILI]]
+coin_num = 0
+coin_type = 1
+cookie = "_uuid=xxxxxx; rpdid=xxx'xxx; LIVE_BUVID=xxxxxx; PVID=xxxxxx; blackside_state=xxxxxx; CURRENT_FNVAL=xxxxxx; buvid3=xxxxxx; fingerprint3=xxxxxx; fingerprint=xxxxxx; buivd_fp=xxxxxx; buvid_fp_plain=xxxxxx; DedeUserID=xxxxxx; DedeUserID__ckMd5=xxxxxx; SESSDATA=xxxxxx; bili_jct=xxxxxx; bsource=xxxxxx; finger=xxxxxx; fingerprint_s=xxxxxx;"
+silver2coin = true
+
+# CCAVA【WEB】
+# https://pc.ccava.net/invites/CKIN66 cookie
+[[CCAVA]]
+cookie = "__vtins__JGU9XP985GXENwEs=xxxxxx; ......cookie_islog=x; cookieVf=xxxxxx; is_mochu_us_load=xxxxxx"
+
+# 天翼云盘
+# https://cloud.189.cn/web/login.html
+[[CLOUD189]]
+password = "Sitoi"
+phone = "18888xxxxxx"
+
+# CSDN【WEB】
+# https://www.csdn.net cookie
+[[CSDN]]
+cookie = "uuid_tt_dd=xxxxxx; _ga=xxxxxx; UserName=xxxxxx; UserInfo=xxxxxx; UserToken=xxxxxx; UserNick=xxxxxx; AU=768; UN=xxxxxx; BT=xxxxxx; p_uid=xxxxxx; Hm_up_6bcd52f51e9b3dce32bec4a3997715ac=xxxxxx; Hm_ct_6bcd52f51e9b3dce32bec4a3997715ac=xxxxxx; Hm_lvt_6bcd52f51e9b3dce32bec4a3997715ac=xxxxxx dc_sid=xxxxxx; c_segment=xxxxxx; dc_session_id=xxxxxx; csrfToken=xxxxxx; c_first_ref=xxxxxx; c_first_page=xxxxxx; c_page_id=xxxxxx; announcement-new=xxxxxx; log_Id_click=xxxxxx; c_pref=xxxxxx; c_ref=xxxxxx; dc_tos=xxxxxx; log_Id_pv=xxxxxx; log_Id_view=xxxxxx"
+
+# 网易蜗牛读书【APP】
+# 网易蜗牛读书 APP 签到后抓取 https://du.163.com/activity/201907/activityCenter/sign.json 下的 cookie
+# 自备 UA
+[[DU163]]
+cookie = "X-Auth-Token=xxxxxx; JSESSIONID-WNYD-WEB=xxxxxx; _cid=xxxxxx; _xsrf=xxxxxx"
+user_agent = ""
+
+# 多看阅读【APP】
+# 多看阅读 APP 抓取开头为 https://www.duokan.com 下的 cookie
+[[DUOKAN]]
+cookie = "user_id=xxxxxx; token=xxxxxx; user_gender=xxxxxx; device_id=xxxxxx; app_id=xxxxxx; build=xxxxxx; short_version=xxxxxx"
+
+# 企鹅电竞【WEB】
+# https://egame.qq.com cookie
+[[EGAME]]
+cookie = "pgv_pvi=xxxxxx; RK=xxxxxx; ptcz=xxxxxx; pgv_pvid=xxxxxx; pac_uid=xxxxxx; iip=x; o_cookie=xxxxxx; sd_userid=xxxxxx; sd_cookie_crttime=xxxxxx; tvfe_boss_uuid=xxxxxx; _tc_unionid=xxxxxx; _ga=xxxxxx; pgg_ssid=xxxxxx; new_device=x; pgv_info=xxxxxx; ts_refer=xxxxxx; ts_uid=xxxxxx; _qpsvr_localtk=xxxxxx; pgg_uid=xxxxxx; pgg_appid=xxxxxx; pgg_openid=xxxxxx; pgg_access_token=xxxxxx; pgg_type=x; pgg_user_type=x; pgg_pvid=xxxxxx; ts_last=xxxxxx; tKeplerToken=xxxxxx"
+
+# 恩山论坛【WEB】
+# https://www.right.com.cn/forum/forum.php cookie
+[[ENSHAN]]
+cookie = "DJyZ_2132_saltkey=xxxxxx; DJyZ_2132_lastvisit=xxxxxx; DJyZ_2132_onlineusernum=xxxx; DJyZ_2132_sendmail=1; DJyZ_2132_ulastactivity=xxxxxx; DJyZ_2132_auth=xxxxxxxx; DJyZ_2132_sid=0; DJyZ_2132_connect_is_bind=0; DJyZ_2132_nofavfid=1; DJyZ_2132_checkpm=1; DJyZ_2132_noticeTitle=1; DJyZ_2132_lastact=xxxxxx"
+
+# EUserv
+# https://apitruecaptcha.org/api 的 apikey
+# 教程：https://github.com/a-beam-of-light/eu_ex#readme
+# https://support.euserv.com 密码
+# https://apitruecaptcha.org/api 的 userid
+# https://support.euserv.com 邮箱
+[[EUSERV]]
+apikey = "xxxxxx"
+mailparser_dl_url_id = "xxxxxx"
+password = "xxxxxx"
+userid = "xxxxxx"
+username = "xxxxxx@xxx.com"
+
+# 时光相册【WEB】
+# https://web.everphoto.cn/#signin 请求 URL https://web.everphoto.cn/api/auth 最下方表单数据，带区号
+# 同上，不是原始密码
+[[EVERPHOTO]]
+mobile = "+86188xxxxxxxx"
+password = "c63xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# Fa米家【APP】
+# Fa米家 APP headers 中寻找
+[[FMAPP]]
+blackbox = "eyJlcnJxxxxxx"
+cookie = "sensorsdata2015jssdkcross=xxxxxx"
+device_id = "xxxxxx-xxxx-xxxx-xxxx-xxxxxx"
+fmversion = "xxxxxx"
+os = "xxxxxx"
+token = "xxxxxx.xxxxxx-xxxxxx-xxxxxx.xxxxxx-xxxxxx"
+useragent = "xxxxxx"
+
+# Freenom
+# https://www.freenom.com
+[[FREENOM]]
+password = ""
+username = ""
+
+# 网易云游戏【WEB】
+# 网易云游戏官网 https://cg.163.com/#/mobile cookie
+[[GAME163]]
+authorization = ""
+
+# GLaDOS【WEB】
+# https://glados.network cookie
+[[GLADOS]]
+cookie = "koa:sess=xxxxxx; koa:sess.sig=xxxxxx"
+
+# 欢太商城【APP】
+# 欢太商城 APP cookie，建议全部粘贴
+# 抽奖总开关，设置为 false 将不参与任何抽奖，应对一些抽奖黑号
+# 欢太商城 APP UA
+[[HEYTAP]]
+cookie = "source_type=xxx;TOKENSID=TOKEN_xxxx;app_param=xxxx"
+draw = false
+useragent = ""
+
+# HiFiNi【WEB】
+# https://www.hifini.com cookie
+[[HIFINI]]
+cookie = "bbs_sid=xxxxxx; bbs_token=xxxxxx"
+
+# 葫芦侠【APP】
+[[HLX]]
+password = ""
+username = ""
+
+# HOSTLOC
+# https://hostloc.com
+[[HOSTLOC]]
+password = ""
+username = ""
+
+# 爱奇艺【WEB】
+# https://www.iqiyi.com cookie
+[[IQIYI]]
+cookie = "__dfp=xxxxxx; QP0013=xxxxxx; QP0022=xxxxxx; QYABEX=xxxxxx; P00001=xxxxxx; P00002=xxxxxx; P00003=xxxxxx; P00007=xxxxxx; QC163=xxxxxx; QC175=xxxxxx; QC179=xxxxxx; QC170=xxxxxx; P00010=xxxxxx; P00PRU=xxxxxx; P01010=xxxxxx; QC173=xxxxxx; QC180=xxxxxx; P00004=xxxxxx; QP0030=xxxxxx; QC006=xxxxxx; QC007=xxxxxx; QC008=xxxxxx; QC010=xxxxxx; nu=xxxxxx; __uuid=xxxxxx; QC005=xxxxxx;"
+
+# 无忧行【APP】
+# 无忧行 APP 利用 stream 通过 mitm 抓包，获取 payload 中的 user_id
+[[JEGOTRIP]]
+user_id = ""
+
+# 掘金【WEB】
+# https://juejin.cn cookie
+[[JUEJIN]]
+cookie = "ttcid=xxxxxx; MONITOR_WEB_ID=xxxxxx; passport_csrf_token_default=xxxxxx; passport_csrf_token=xxxxxx; s_v_web_id=xxxxxx; MONITOR_DEVICE_ID=xxxxxx; n_mh=xxxxxx; passport_auth_status=xxxxxx; passport_auth_status_ss=xxxxxx; sid_guard=xxxxxx; uid_tt=xxxxxx; uid_tt_ss=xxxxxx; sid_tt=xxxxxx; sessionid=xxxxxx; sessionid_ss=xxxxxx; sid_ucp_v1=xxxxxx; ssid_ucp_v1=xxxxxx; odin_tt=xxxxxx; tt_scid=xxxxxx"
+
+# 全民K歌【WEB】
+# https://kg.qq.com/index-pc.html cookie
+[[KGQQ]]
+cookie = "muid=xxxxxx; uid=xxxxxx; userlevel=xxxxxx; openid=xxxxxx; openkey=xxxxxx; opentype=xxxxxx; qrsig=xxxxxx; pgv_pvid=xxxxxx;"
+
+# 联想乐云【WEB】
+# https://lecloud.lenovo.com/index cookie
+[[LECLOUD]]
+cookie = ""
+
+# 联想商城【APP】
+# 联想智选 APP 账户
+# 联想智选 APP 抓包
+# 联想智选 APP 密码
+[[LENOVO]]
+account = ""
+baseinfo = ""
+password = ""
+
+# MEIZU 社区【WEB】
+# https://bbs.meizu.cn cookie
+# 抽奖次数
+[[MEIZU]]
+cookie = "aliyungf_tc=xxxxxx; logined_uid=xxxxxx; acw_tc=xxxxxx; LT=xxxxxx; MZBBS_2132_saltkey=xxxxxx; MZBBS_2132_lastvisit=xxxxxx; MZBBSUC_2132_auth=xxxxxx; MZBBSUC_2132_loginmember=xxxxxx; MZBBSUC_2132_ticket=xxxxxx; MZBBS_2132_sid=xxxxxx; MZBBS_2132_ulastactivity=xxxxxx; MZBBS_2132_auth=xxxxxx; MZBBS_2132_loginmember=xxxxxx; MZBBS_2132_lastcheckfeed=xxxxxx; MZBBS_2132_checkfollow=xxxxxx; MZBBS_2132_lastact=xxxxxx;"
+draw_count = "1"
+
+# 芒果 TV【WEB】
+# https://www.mgtv.com 请求参数
+[[MGTV]]
+params = "uuid=xxxxxx&uid=xxxxxx&ticket=xxxxxx&token=xxxxxx&device=iPhone&did=xxxxxx&deviceId=xxxxxx&appVersion=6.8.2&osType=ios&platform=iphone&abroad=0&aid=xxxxxx&nonce=xxxxxx×tamp=xxxxxx&appid=xxxxxx&type=1&sign=xxxxxx&callback=xxxxxx"
+
+# 小米运动【APP】
+# 最大步数
+# 最小步数
+# 小米运动 APP 密码
+# 小米运动 APP 手机号
+[[MIMOTION]]
+max_step = "20000"
+min_step = "10000"
+password = "Sitoi"
+phone = "18888xxxxxx"
+
+# 网易云音乐
+[[MUSIC163]]
+password = "Sitoi"
+phone = "18888xxxxxx"
+
+# NGA【APP】
+# https://ngabbs.com/nuke.php POST 请求主体 access_token
+# https://ngabbs.com/nuke.php POST 请求主体 access_uid，纯数字
+[[NGA]]
+token = "X8xxxxghxxxxxxxxujxxxxxxxv9xxxxxxxxccxxx"
+uid = "xxxxx391"
+
+# 一加手机社区官方论坛【WEB】
+# http://www.oneplusbbs.com cookie
+[[ONEPLUSBBS]]
+cookie = "acw_tc=xxxxxx; qKc3_0e8d_saltkey=xxxxxx; qKc3_0e8d_lastvisit=xxxxxx; bbs_avatar=xxxxxx; qKc3_0e8d_sendmail=xxxxxx; opcid=xxxxxx; opcct=xxxxxx; oppt=xxxxxx; opsid=xxxxxx; opsct=xxxxxx; opbct=xxxxxx; UM_distinctid=xxxxxx; CNZZDATA1277373783=xxxxxx; www_clear=xxxxxx; ONEPLUSID=xxxxxx; qKc3_0e8d_sid=xxxxxx; bbs_uid=xxxxxx; bbs_uname=xxxxxx; bbs_grouptitle=xxxxxx; opuserid=xxxxxx; bbs_sign=xxxxxx; bbs_formhash=xxxxxx; qKc3_0e8d_ulastactivity=xxxxxx; opsertime=xxxxxx; qKc3_0e8d_lastact=xxxxxx; qKc3_0e8d_checkpm=xxxxxx; qKc3_0e8d_noticeTitle=xxxxxx; optime_browser=xxxxxx; opnt=xxxxxx; opstep=xxxxxx; opstep_event=xxxxxx; fp=xxxxxx;"
+
+# 哔咔漫画【APP】
+[[PICACOMIC]]
+email = "Sitoi"
+password = "xxxxxx"
+
+# 吾爱破解【WEB】
+# https://www.52pojie.cn cookie
+[[POJIE]]
+cookie = "htVD_2132_client_token=xxxxxx; htVD_2132_connect_is_bind=xxxxxx; htVD_2132_connect_uin=xxxxxx; htVD_2132_nofavfid=xxxxxx; htVD_2132_smile=xxxxxx; Hm_lvt_46d556462595ed05e05f009cdafff31a=xxxxxx; htVD_2132_saltkey=xxxxxx; htVD_2132_lastvisit=xxxxxx; htVD_2132_client_created=xxxxxx; htVD_2132_auth=xxxxxx; htVD_2132_connect_login=xxxxxx; htVD_2132_home_diymode=xxxxxx; htVD_2132_visitedfid=xxxxxx; htVD_2132_viewid=xxxxxx; KF4=xxxxxx; htVD_2132_st_p=xxxxxx; htVD_2132_lastcheckfeed=xxxxxx; htVD_2132_sid=xxxxxx; htVD_2132_ulastactivity=xxxxxx; htVD_2132_noticeTitle=xxxxxx;"
+
+# SF 轻小说【APP】
+[[SFACG]]
+authorization = "Basic xxxxxx=="
+cookie = ".SFCommunity=xxxxxx; session_APP=xxxxxx"
+sfsecurity = "nonce=xxxxxx&timestamp=xxxxxx&devicetoken=xxxxxx&sign=xxxxxx"
+useragent = "boluobao/xxxxxx"
+
+# Site【WEB】
+# cookie
+# 三种类型，pt discuz hifi
+# 已测试支持站点：pterclub, btschool, pthome
+[[SITE]]
+cookie = ""
+type = "pt"
+url = "https://www.haidan.video"
+
+# 什么值得买
+# https://www.smzdm.com cookie
+[[SMZDM]]
+cookie = "sess=xxxxxx;"
+
+# 百度贴吧
+# https://tieba.baidu.com/index.html cookie
+[[TIEBA]]
+cookie = "BIDUPSID=xxxxxx; PSTM=xxxxxx; BAIDUID=xxxxxx; BAIDUID_BFESS=xxxxxx; delPer=xxxxxx; PSINO=xxxxxx; H_PS_PSSID=xxxxxx; BA_HECTOR=xxxxxx; BDORZ=xxxxxx; TIEBA_USERTYPE=xxxxxx; st_key_id=xxxxxx; BDUSS=xxxxxx; BDUSS_BFESS=xxxxxx; STOKEN=xxxxxx; TIEBAUID=xxxxxx; ab_sr=xxxxxx; st_data=xxxxxx; st_sign=xxxxxx;"
+
+# 在线工具【WEB】
+# https://plus.tool.lu cookie
+[[TOOLU]]
+cookie = "uuid=xxxxxx; _access=xxxxxx; XSRF-TOKEN=xxxxxx;"
+
+# 联通营业厅【APP】
+# 联通营业厅 APP 抓包域名为 https://m.client.10010.com/mobileService/login.htm 请求内容的 appId
+# 联通营业厅 APP 手机号
+# 联通营业厅 APP 密码
+[[UNICOM]]
+app_id = ""
+mobile = "18888xxxxxx"
+password = ""
+
+# V2EX【WEB】
+# https://v2ex.com，注意要抓签到那次的 ck（相当于需要先手动浏览器签到一次），不然可能签到无效
+# 使用代理信息，无密码示例：http://127.0.0.1:1080 有密码示例：http://username:password@127.0.0.1:1080
+[[V2EX]]
+cookie = "_ga=xxxxxx; __cfduid=xxxxxx; PB3_SESSION=xxxxxx; A2=xxxxxx; V2EXSETTINGS=xxxxxx; V2EX_REFERRER=xxxxxx; V2EX_LANG=xxxxxx; _gid=xxxxxx; V2EX_TAB=xxxxxx;"
+proxy = ""
+
+# 腾讯视频【WEB】
+# https://v.qq.com 搜索带有 auth_refresh 的 url，填写其完整的 URL
+# https://v.qq.com 搜索带有 auth_refresh 的 url，填写其完整的 URL
+[[VQQ]]
+auth_refresh = "https://access.video.qq.com/user/auth_refresh?vappid=xxxxxx&vsecret=xxxxxx&type=qq&g_tk=&g_vstk=xxxxxx&g_actk=xxxxxx&callback=xxxxxx&_=xxxxxx"
+cookie = "pgv_pvid=xxxxxx; pac_uid=xxxxxx; RK=xxxxxx; ptcz=xxxxxx; tvfe_boss_uuid=xxxxxx; video_guid=xxxxxx; video_platform=xxxxxx; pgv_info=xxxxxx; main_login=xxxxxx; vqq_access_token=xxxxxx; vqq_appid=xxxxxx; vqq_openid=xxxxxx; vqq_vuserid=xxxxxx; vqq_refresh_token=xxxxxx; login_time_init=xxxxxx; uid=xxxxxx; vqq_vusession=xxxxxx; vqq_next_refresh_time=xxxxxx; vqq_login_time_init=xxxxxx; login_time_last=xxxxxx;"
+
+# 微博【APP】
+# 微博 APP 抓取开头为 https://api.weibo.cn/2/users/show? 的整个 url 填入即可
+[[WEIBO]]
+url = "https://api.weibo.cn/2/users/show?wm=xxxxxx&launchid=xxxxxx&b=xxxxxx&from=xxxxxx&c=xxxxxx&networktype=xxxxxx&v_p=xxxxxx&skin=xxxxxx&v_f=xxxxxx&lang=xxxxxx&sflag=xxxxxx&ua=xxxxxx&ft=xxxxxx&aid=xxxxxx&has_extend=xxxxxx&uid=xxxxxx&gsid=xxxxxx&sourcetype=&get_teenager=xxxxxx&s=xxxxxx&has_profile=xxxxxx"
+
+# 联通沃邮箱【公众号】
+# 密码
+# true 为开启21天自动暂停，false 为关闭自动暂停、每天都签到，默认开启自动暂停
+# 手机号
+# 联通沃邮箱公众号 https://nyan.mail.wo.cn/cn/sign/index/index?mobile 开头的 URL
+[[WOMAIL]]
+password = "Sitoi"
+pause21days = true
+phone = "18888xxxxxx"
+url = "https://nyan.mail.wo.cn/cn/sign/index/index?mobile=xxxxxx&userName=&openId=xxxxxx"
+
+# WPS【WEB】
+# https://www.kdocs.cn cookie
+[[WPS]]
+cookie = ""
+
+# 咔叽网单【WEB】
+# http://www.2nzz.com cookie
+[[WWW2NZZ]]
+cookie = "YPx9_2132_saltkey=xxxxxx; YPx9_2132_lastvisit=xxxxxx; YPx9_2132_sendmail=xxxxxx; YPx9_2132_con_request_uri=xxxxxx; YPx9_2132_sid=xxxxxx; YPx9_2132_client_created=xxxxxx; YPx9_2132_client_token=xxxxxx; YPx9_2132_ulastactivity=xxxxxx; YPx9_2132_auth=xxxxxx; YPx9_2132_connect_login=xxxxxx; YPx9_2132_connect_is_bind=xxxxxx; YPx9_2132_connect_uin=xxxxxx; YPx9_2132_stats_qc_login=xxxxxx; YPx9_2132_checkpm=xxxxxx; YPx9_2132_noticeTitle=xxxxxx; YPx9_2132_nofavfid=xxxxxx; YPx9_2132_lastact=xxxxxx;"
+
+# 王者营地【APP】
+# 王者营地 APP 请求体中的 data，抓包域名为 https://ssl.kohsocial.qq.com 请求内容的全部参数
+[[WZYD]]
+data = "areaId=xxxxxx&roleId=xxxxxx&gameId=xxxxxx&serverId=xxxxxx&gameOpenid=xxxxxx&userId=xxxxxx&appVersion=xxxxxx&cClientVersionName=xxxxxx&platid=xxxxxx&source=xxxxxx&algorithm=xxxxxx&version=xxxxxx×tamp=xxxxxx&appid=xxxxxx&openid=xxxxxx&sig=xxxxxx&encode=2&msdkEncodeParam=xxxxxx&cSystem=xxxxxx&h5Get=xxxxxx&msdkToken=&appOpenid=xxxxxx"
+
+# 有道云笔记
+# https://note.youdao.com cookie
+[[YOUDAO]]
+cookie = "JSESSIONID=xxxxxx; __yadk_uid=xxxxxx; OUTFOX_SEARCH_USER_ID_NCOO=xxxxxx; YNOTE_SESS=xxxxxx; YNOTE_PERS=xxxxxx; YNOTE_LOGIN=xxxxxx; YNOTE_CSTK=xxxxxx; _ga=xxxxxx; _gid=xxxxxx; _gat=xxxxxx; PUBLIC_SHARE_18a9dde3de846b6a69e24431764270c4=xxxxxx;"
+
+# 智友邦【WEB】
+# http://bbs.zhiyoo.net cookie
+[[ZHIYOO]]
+cookie = "ikdQ_9242_saltkey=xxxxxx; ikdQ_9242_lastvisit=xxxxxx; ikdQ_9242_onlineusernum=xxxxxx; ikdQ_9242_sendmail=1; ikdQ_9242_seccode=xxxxxx; ikdQ_9242_ulastactivity=xxxxxx; ikdQ_9242_auth=xxxxxx; ikdQ_9242_connect_is_bind=xxxxxx; ikdQ_9242_nofavfid=xxxxxx; ikdQ_9242_checkpm=xxxxxx; ikdQ_9242_noticeTitle=1; ikdQ_9242_sid=xxxxxx; ikdQ_9242_lip=xxxxxx; ikdQ_9242_lastact=xxxxxx"
