@@ -330,6 +330,8 @@ fabric.properties
 # Config
 check.json5
 notify.json5
+check.toml
+notify.toml
 
 # Others
 magic.json
