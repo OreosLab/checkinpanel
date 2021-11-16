@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """
+:author @ZetaoYang
 cron: 0 10 */7 * *
 new Env('EUserv');
 """
@@ -29,8 +30,13 @@ euserv auto-renew script
 * Email notification
 * Add login failure retry mechanism
 * reformat log info
+       v2021.11.06
+* Receive renew PIN(6-digits) using mailparser parsed data download url
+  workflow: auto-forward your EUserv PIN email to your mailparser inbox 
+  -> parsing PIN via mailparser 
+  -> get PIN from mailparser
+* Update kc2_security_password_get_token request
 """
-
 
 # default value is TrueCaptcha demo credential,
 # you can use your own credential via set environment variables:
@@ -55,11 +61,14 @@ def log(info: str):
 class EUserv:
     def __init__(self, check_items):
         self.check_items = check_items
-        self.url = "https://support.euserv.com/index.iphp"
-        self.user_agent = (
+        self.BASE_URL = "https://support.euserv.com/index.iphp"
+        self.UA = (
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
             "Chrome/94.0.4606.61 Safari/537.36 "
         )
+        self.CHECK_CAPTCHA_SOLVER_USAGE = True
+        self.MAILPARSER_DOWNLOAD_BASE_URL = "https://files.mailparser.io/d/"
+        self.WAITING_TIME_OF_PIN = 15
 
     def captcha_solver(
         self, captcha_image_url: str, session: requests.session, userid, apikey
@@ -135,16 +144,35 @@ class EUserv:
         j = json.loads(r.text)
         return j
 
+    def get_pin_from_mailparser(self, url_id: str) -> str:
+        """
+        response format:
+        [
+        {
+            "id": "83b95f50f6202fb03950afbe00975eab",
+            "received_at": "2021-11-06 02:30:07",  ==> up to mailparser account timezone setting, here is UTC 0000.
+            "processed_at": "2021-11-06 02:30:07",
+            "pin": "123456"
+        }
+        ]
+        """
+        response = requests.get(
+            f"{self.MAILPARSER_DOWNLOAD_BASE_URL}{url_id}",
+            # Mailparser parsed data download using Basic Authentication.
+            # auth=("<your mailparser username>", "<your mailparser password>")
+        )
+        pin = response.json()[0]["pin"]
+        return pin
+
     def login(
         self,
         username: str,
         password: str,
         userid: str,
         apikey: str,
-        check_captcha_solver_usage: bool,
     ) -> tuple:
-        headers = {"user-agent": self.user_agent, "origin": "https://www.euserv.com"}
-        url = self.url
+        headers = {"user-agent": self.UA, "origin": "https://www.euserv.com"}
+        url = self.BASE_URL
         captcha_image_url = "https://support.euserv.com/securimage_show.php"
         session = requests.Session()
 
@@ -184,7 +212,7 @@ class EUserv:
                 captcha_code = self.handle_captcha_solved_result(solved_result)
                 log("[Captcha Solver] 识别的验证码是: {}".format(captcha_code))
 
-                if check_captcha_solver_usage:
+                if self.CHECK_CAPTCHA_SOLVER_USAGE:
                     usage = self.get_captcha_solver_usage(userid, apikey)
                     log(
                         "[Captcha Solver] current date {0} api usage count: {1}".format(
@@ -218,8 +246,8 @@ class EUserv:
 
     def get_servers(self, sess_id: str, session: requests.session) -> dict:
         d = {}
-        url = "https://support.euserv.com/index.iphp?sess_id=" + sess_id
-        headers = {"user-agent": self.user_agent, "origin": "https://www.euserv.com"}
+        url = f"{self.BASE_URL}?sess_id=" + sess_id
+        headers = {"user-agent": self.UA, "origin": "https://www.euserv.com"}
         f = session.get(url=url, headers=headers)
         f.raise_for_status()
         soup = BeautifulSoup(f.text, "html.parser")
@@ -241,14 +269,18 @@ class EUserv:
         return d
 
     def renew(
-        self, sess_id: str, session: requests.session, password: str, order_id: str
+        self,
+        sess_id: str,
+        session: requests.session,
+        order_id: str,
+        mailparser_dl_url_id: str,
     ) -> bool:
-        url = self.url
+        url = self.BASE_URL
         headers = {
-            "user-agent": self.user_agent,
+            "user-agent": self.UA,
             "Host": "support.euserv.com",
             "origin": "https://support.euserv.com",
-            "Referer": self.url,
+            "Referer": self.BASE_URL,
         }
         data = {
             "Submit": "Extend contract",
@@ -258,11 +290,42 @@ class EUserv:
             "choose_order_subaction": "show_contract_details",
         }
         session.post(url, headers=headers, data=data)
+
+        # pop up 'Security Check' window, it will trigger 'send PIN' automatically.
+        session.post(
+            url,
+            headers=headers,
+            data={
+                "sess_id": sess_id,
+                "subaction": "show_kc2_security_password_dialog",
+                "prefix": "kc2_customer_contract_details_extend_contract_",
+                "type": "1",
+            },
+        )
+
+        # # trigger 'Send new PIN to your Email-Address' (optional),
+        # new_pin = session.post(url, headers=headers, data={
+        #     "sess_id": sess_id,
+        #     "subaction": "kc2_security_password_send_pin",
+        #     "ident": f"kc2_customer_contract_details_extend_contract_{order_id}"
+        # })
+        # if not json.loads(new_pin.text)["rc"] == "100":
+        #     print("new PIN Not Sended")
+        #     return False
+
+        # sleep WAITING_TIME_OF_PIN seconds waiting for mailparser email parsed PIN
+        time.sleep(self.WAITING_TIME_OF_PIN)
+        pin = self.get_pin_from_mailparser(mailparser_dl_url_id)
+        log(f"[MailParser] PIN: {pin}")
+
+        # using PIN instead of password to get token
         data = {
+            "auth": pin,
             "sess_id": sess_id,
             "subaction": "kc2_security_password_get_token",
             "prefix": "kc2_customer_contract_details_extend_contract_",
-            "password": password,
+            "type": 1,
+            "ident": f"kc2_customer_contract_details_extend_contract_{order_id}",
         }
         f = session.post(url, headers=headers, data=data)
         f.raise_for_status()
@@ -296,14 +359,12 @@ class EUserv:
         for check_item in self.check_items:
             username = check_item.get("username")
             password = check_item.get("password")
-            check_captcha_solver_usage = check_item.get("captcha")
             userid = check_item.get("userid")
             apikey = check_item.get("apikey")
+            mailparser_dl_url_id = check_item.get("mailparser_dl_url_id")
             log("*" * 12)
             log("[EUserv] 正在续费第 %d 个账号" % (i + 1))
-            sessid, s = self.login(
-                username, password, userid, apikey, check_captcha_solver_usage
-            )
+            sessid, s = self.login(username, password, userid, apikey)
             if sessid == "-1":
                 log("[EUserv] 第 %d 个账号登陆失败，请检查登录信息" % (i + 1))
                 continue
@@ -311,7 +372,7 @@ class EUserv:
             log("[EUserv] 检测到第 {} 个账号有 {} 台 VPS，正在尝试续期".format(i + 1, len(SERVERS)))
             for k, v in SERVERS.items():
                 if v:
-                    if not self.renew(sessid, s, password, k):
+                    if not self.renew(sessid, s, k, mailparser_dl_url_id):
                         log("[EUserv] ServerID: %s Renew Error!" % k)
                     else:
                         log("[EUserv] ServerID: %s has been successfully renewed!" % k)
