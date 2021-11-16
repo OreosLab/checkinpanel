@@ -8,9 +8,10 @@ COMMENT
 
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
-alpine_pkgs="bash curl gcc git jq libffi-dev musl-dev openssl-dev python3 python3-dev py3-pip"
+alpine_pkgs="bash curl gcc git jq libffi-dev musl-dev openssl-dev perl perl-dev python3 python3-dev py3-pip"
 py_reqs="bs4 cryptography==3.2.1 json5 pyaes requests rsa"
 js_pkgs="axios crypto-js got json5 request"
+pl_mods="JSON5 TOML::Tiny"
 
 install() {
     count=0
@@ -40,8 +41,9 @@ install() {
 
 install_alpine_pkgs() {
     apk update
+    apk_info="$(apk info)"
     for i in $alpine_pkgs; do
-        if [[ $(apk info | grep "^$i$") = "$i" ]]; then
+        if [[ $apk_info == *[[:space:]]${i}[[:space:]]* ]] || [[ $apk_info == ${i}[[:space:]]* ]] || [[ $apk_info == *[[:space:]]${i} ]]; then
             echo "$i 已安装"
         else
             install 0 "apk add $i" "$(apk add --no-cache "$i" | grep -c 'OK')"
@@ -51,8 +53,9 @@ install_alpine_pkgs() {
 
 install_py_reqs() {
     pip3 install --upgrade pip
+    pip3_freeze=$(pip3 freeze)
     for i in $py_reqs; do
-        if [[ $(pip3 freeze) =~ $i ]]; then
+        if [[ $pip3_freeze =~ $i ]]; then
             echo "$i 已安装"
         else
             install 0 "pip3 install $i" "$(pip3 install "$i" | grep -c 'Successfully')"
@@ -112,6 +115,17 @@ install_js_pkgs_all() {
     npm ls --depth 0
 }
 
+install_pl_mods() {
+    for i in $pl_mods; do
+        if [[ -f $(perldoc -l "$i") ]]; then
+            echo "$i 已安装"
+        else
+            install 0 "cpan install $i" "$(cpan install "$i" 2>&1 && perldoc -l "$i" | grep -c "/usr/share/perl")"
+        fi
+    done
+}
+
 install_alpine_pkgs
 install_py_reqs
 install_js_pkgs_all
+install_pl_mods
