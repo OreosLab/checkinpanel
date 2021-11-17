@@ -210,7 +210,6 @@ class IQIYI:
             try:
                 user_info = json.loads(unquote(p00002, encoding="utf-8"))
                 user_name = user_info.get("user_name")
-                user_name = user_name.replace(user_name[3:7], "****")
                 nickname = user_info.get("nickname")
             except Exception as e:
                 print(f"获取用户信息失败，错误信息: {e}")
@@ -218,7 +217,7 @@ class IQIYI:
                 user_name = "未获取到，请检查 Cookie 中 P00002 字段"
             user_msg = self.user_information(p00001=p00001)
             msg = (
-                f"用户账号: {user_name}\n用户昵称: {nickname}\n{user_msg}\n"
+                f"用户账号: *******{user_name[-4:]}\n用户昵称: {nickname}\n{user_msg}\n"
                 f"签到奖励: {sign_msg}\n任务奖励: {task_msg}\n抽奖奖励: {draw_msg}"
             )
             msg_all += msg + "\n\n"
