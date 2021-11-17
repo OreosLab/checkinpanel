@@ -94,7 +94,7 @@ if os.path.exists(CONFIG_PATH):
                 push_config[k] = v
     except tomli.TOMLDecodeError:
         print(
-            f"错误：配置文件 {check_config} 格式不对，请学习 https://github.com/LongTengDao/TOML/wiki\n错误信息：\n{traceback.format_exc()}"
+            f"错误：配置文件 {check_config} 格式不对，请学习 https://toml.io/cn/v1.0.0\n错误信息：\n{traceback.format_exc()}"
         )
 elif CONFIG_PATH:
     print(f"{CONFIG_PATH} 配置的通知文件不存在，请检查文件位置或删除对应环境变量！")
