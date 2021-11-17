@@ -1,11 +1,11 @@
 # 通知配置文件
 
 # bark 服务
-## bark IP 或设备码，例：DxHcxxxxxRxxxxxxcm 或 https://api.example.com/DxHcxxxxxRxxxxxxcm
-BARK_ARCHIVE = ""
 ## bark 推送是否存档，可不填
-BARK_GROUP = ""
+BARK_ARCHIVE = ""
 ## bark 推送分组，可不填
+BARK_GROUP = ""
+## bark IP 或设备码，例：DxHcxxxxxRxxxxxxcm 或 https://api.example.com/DxHcxxxxxRxxxxxxcm
 BARK_PUSH = ""
 ## bark 推送声音，可不填
 BARK_SOUND = ""
