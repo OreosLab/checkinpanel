@@ -1,6 +1,69 @@
 # Changelog
 
 
+## 20211117-3-6c5 (2021-11-17)
+
+### Feature
+
+* :sparkles: : 拉库命令更新，新增 cpm 依赖. [Oreo]
+
+* :racehorse: : 改善 cpm 安装逻辑. [Oreo]
+
+* :racehorse: : 分离 JSON5 to TOML 和签到依赖代码. [Oreo]
+
+* :racehorse: : 增加 tomli 解析错误信息打印. [Oreo]
+
+* :rocket: : 新增 Perl cpan install 并提高效率. [Oreo]
+
+* :sparkles: : 添加新配置文件 .toml. [Oreo]
+
+### Fix
+
+* :ambulance: : 重命名应对青龙拉库命令. [Oreo]
+
+* :bug: : 继续修复轮子的缺陷. [Oreo]
+
+* :ambulance: : 使用新轮子，修复旧 bug. [Oreo]
+
+* :fire: : 放弃兼容云函数：HeyTap. [Oreo]
+
+* :wrench: : 移动配置文件引号位置防止误解. [Oreo]
+
+* :bug: : 修复 Perl 转换路径错误. [Oreo]
+
+* :wrench: : 调大必要任务倒计时秒数. [Oreo]
+
+* :bug: : 修复 cpm 安装 bug. [Oreo]
+
+### Docs
+
+* :speech_balloon: 更新可执行路径注释. [Oreo]
+
+* :memo: : 更新 TOML 配置说明文档. [Oreo]
+
+### Code Style
+
+* :zap: : 改善 cpm 安装逻辑. [Oreo]
+
+* :zap: : 修改异常捕获打印学习网址. [Oreo]
+
+* :zap: : 自动拷贝配置文件模板到青龙 config 文件夹. [Oreo]
+
+* :zap: : 脱敏手机号信息：iqiyi. [Oreo]
+
+* :art: : 优化 Perl 转换代码. [Oreo]
+
+### Refactor Functions
+
+* :recycle: : 重大重构：JSON5 配置改为 TOML 配置. [Oreo]
+
+  更新方法：更新仓库后运行 `签到依赖` 任务
+
+### Other
+
+* :see_no_evil: Update .gitignore. [Oreo]
+
+
 ## 20211116-3-220 (2021-11-16)
 
 ### Feature
