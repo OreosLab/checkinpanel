@@ -116,8 +116,11 @@ install_js_pkgs_all() {
 }
 
 install_pl_mods() {
-    apk add wget
-    cpanm App::cpm
+    if command -v cpm >/dev/null 2>&1; then
+        echo "App::cpm 已安装"
+    else
+        install 1 "cpanm -fn App::cpm" "$(cpanm -fn App::cpm | grep -c "FAIL")"
+    fi
     for i in $pl_mods; do
         if [[ -f $(perldoc -l "$i") ]]; then
             echo "$i 已安装"
