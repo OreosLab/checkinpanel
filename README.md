@@ -160,7 +160,7 @@ RepoFileExtensions="js pl py sh ts"
 可添加定时任务，名称、时间自定
 
 ```sh
-ql repo https://github.com/Oreomeow/checkinpanel.git "api_|ck_|ins_" "^checkin" "^notify|^utils" "master"
+ql repo https://github.com/Oreomeow/checkinpanel.git "api_|ck_|ins_" "^checkin" "^notify|^utils|cpm" "master"
 ```
 
 ### 3. 安装依赖
