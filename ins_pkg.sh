@@ -120,6 +120,11 @@ install_pl_mods() {
         echo "App::cpm 已安装"
     else
         install 1 "cpanm -fn App::cpm" "$(cpanm -fn App::cpm | grep -c "FAIL")"
+        if ! command -v cpm >/dev/null 2>&1; then
+            curl -fsSL --compressed https://ghproxy.com/https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/cpm.pl >cpm &&
+                chmod +x cpm &&
+                ./cpm --version
+        fi
     fi
     for i in $pl_mods; do
         if [[ -f $(perldoc -l "$i") ]]; then
