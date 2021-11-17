@@ -15,11 +15,11 @@
 
 > 一个主要运行在 [𝐞𝐥𝐞𝐜𝐕𝟐𝐏](https://github.com/elecV2/elecV2P.git) 或 [𝐪𝐢𝐧𝐠𝐥𝐨𝐧𝐠](https://github.com/whyour/qinglong.git) 等定时面板，同时支持系统运行环境的签到项目
 >
-> 环境：𝑷𝒚𝒕𝒉𝒐𝒏 3.8+ / 𝑵𝒐𝒅𝒆.𝒋𝒔 / 𝑩𝒂𝒔𝒉 4+ / 𝑶𝒑𝒆𝒏𝑱𝑫𝑲8
+> 环境：𝑷𝒚𝒕𝒉𝒐𝒏 3.8+ / 𝑵𝒐𝒅𝒆.𝒋𝒔 10+ / 𝑩𝒂𝒔𝒉 4+ / 𝑶𝒑𝒆𝒏𝑱𝑫𝑲8 / 𝑷𝒆𝒓𝒍5
 
 ## 注意
 
-不回答任何关于依赖安装失败的问题，包括且不限于 pip 无法找到 json5 依赖等，请仔细阅读项目 README
+不回答任何关于依赖安装失败的问题，包括且不限于 pip 无法找到 tomli 依赖等，请仔细阅读项目 README
 
 ## 特别声明
 
@@ -59,13 +59,13 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 ### 2. 抓包配置
 
-下载 [check.sample.json5](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/check.sample.json5)，根据 [Sitoi](https://github.com/Sitoi/dailycheckin) 的[配置说明](https://sitoi.gitee.io/dailycheckin/settings/)进行抓包并配置
+下载 [check.sample.toml](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/check.sample.toml)，根据注释说明进行抓包并配置
 
 ### 3. 上传配置
 
-将 `check.sample.json5` 重命名为 `check.json5` 后放入 `script/Lists` 文件夹
+将 `check.sample.toml` 重命名为 `check.toml` 后放入 `script/Lists` 文件夹
 
-* OVERVIEW -> EFSS 文件管理界面 -> 是否开启 EFSS 功能：开启 -> 目录：`./script/Lists` -> 选择文件：`check.json5` -> 开始上传
+* OVERVIEW -> EFSS 文件管理界面 -> 是否开启 EFSS 功能：开启 -> 目录：`./script/Lists` -> 选择文件：`check.toml` -> 开始上传
 
 * elecV2P 3.4.6 已支持在线编辑，右键文件即可
 
@@ -76,7 +76,7 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 | 变量 / key      | 描述                        | 支持语言 | 参考 / value                                                                                                                                                                                                                                     |
 | --------------- | --------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | HITOKOTO        | 一言                        | PY       | true 为开启，false 为关闭，默认关闭                                                                                                                                                                                                              |
-| BARK_PUSH       | bark 设备码                 | JS PY    | BARK 推送[使用](https://github.com/Sitoi/dailycheckin/issues/29)，填写 URL 即可，例如： `https://api.day.app/DxHcxxxxxRxxxxxxcm`                                                                                                                 |
+| BARK_PUSH       | bark 设备码                 | JS PY    | BARK 推送使用，填写 URL 即可，例如： `https://api.day.app/DxHcxxxxxRxxxxxxcm`                                                                                                                                                                    |
 | BARK_ARCHIVE    | * bark 存档                 | PY       | 是否存档                                                                                                                                                                                                                                         |
 | BARK_GROUP      | * bark 消息分组             | JS PY    | 消息分组                                                                                                                                                                                                                                         |
 | BARK_SOUND      | * bark 声音                 | JS PY    | 例如： `choo` ，具体值 bark-推送铃声-查看所有铃声                                                                                                                                                                                                |
@@ -108,17 +108,17 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 #### 4.2 另一种通知配置方式（当和 4.1 中值重复时，以 4.1 值为准）
 
-下载项目中的[推送配置文件](https://github.com/Oreomeow/checkinpanel/blob/master/notify.sample.json5)到**配置文件夹**，按照上述说明修改配置文件中的值并改名为 `notify.json5` ，你可以**自由地删除**该文件中某些不需要的值（注意语法）。
+下载项目中的[推送配置文件](https://github.com/Oreomeow/checkinpanel/blob/master/notify.sample.toml)到**配置文件夹**，按照上述说明修改配置文件中的值并改名为 `notify.toml` ，你可以**自由地删除**该文件中某些不需要的值（注意语法）。
 
 使用了配置文件后，你可以将配置文件放在持久化位置，不受脚本更新、重置容器的影响。
 
-如果想自定义配置文件的位置和文件名，请设置通知环境变量 `NOTIFY_CONFIG_PATH` ， 例如 `/usr/local/app/script/notify.json5` 。建议保持 `json5` 的后缀，防止编辑器的误解。
+如果想自定义配置文件的位置和文件名，请设置通知环境变量 `NOTIFY_CONFIG_PATH` ， 例如 `/usr/local/app/script/notify.toml` 。建议保持 `toml` 的后缀，防止编辑器的误解。
 
-关于 json5 的语法参考：
+关于 toml 的语法参考：
 
-* [官方说明](https://json5.org/)
-* [中文网友博客说明](https://zhuanlan.zhihu.com/p/108119490)
-* [json5语法验证](https://verytoolz.com/json5-validator.html)
+* [toml-lang/toml](https://github.com/toml-lang/toml)
+* [中文知乎介绍](https://zhuanlan.zhihu.com/p/50412485)
+* [TOML 教程中文版](https://toml.io/cn/v1.0.0)
 
 #### 4.3 通知说明
 
@@ -126,7 +126,7 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 在非容器环境中，通知环境变量使用 系统的环境变量 或者 **你通过 `NOTIFY_CONFIG_PATH` 环境变量指定的配置文件** 进行配置。
 
-特别的，如果你想要创建一个基于 python 的 elecV2P 或者 qinglong 项目，并有意愿使用带注释的 `json5` 文件，那么强烈建议你拷贝[此文件](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/notify_mtr.py)，如此可以大幅度降低用户脚本的配置难度和升级难度。
+特别的，如果你想要创建一个基于 python 的 elecV2P 或者 qinglong 项目，并有意愿使用 `toml` 文件，那么强烈建议你拷贝[此文件](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/notify_mtr.py)，如此可以大幅度降低用户脚本的配置难度和升级难度。
 
 如果只希望使用 `json` 模块，那么可以拷贝 [𝒏𝒐𝒕𝒊𝒇𝒚_𝒎𝒕𝒓_𝒋𝒔𝒐𝒏.𝒑𝒚](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/notify_mtr_json.py)。
 
@@ -154,7 +154,7 @@ docker exec -it qinglong bash
 
 ```sh
 ## ql repo命令拉取脚本时需要拉取的文件后缀，直接写文件后缀名即可
-RepoFileExtensions="js py sh ts"
+RepoFileExtensions="js pl py sh ts"
 ```
 
 可添加定时任务，名称、时间自定
@@ -176,13 +176,13 @@ ql repo https://github.com/Oreomeow/checkinpanel.git "api_|ck_|ins_" "^checkin" 
 ### 4. 拷贝文件
 
 ```sh
-cp /ql/repo/Oreomeow_checkinpanel_master/check.sample.json5 /ql/config/check.json5
+cp /ql/repo/Oreomeow_checkinpanel_master/check.sample.toml /ql/config/check.toml
 ```
 
 *通知配置文件（可选）*
 
 ```sh
-cp /ql/repo/Oreomeow_checkinpanel_master/notify.sample.json5 /ql/config/notify.json5
+cp /ql/repo/Oreomeow_checkinpanel_master/notify.sample.toml /ql/config/notify.toml
 ```
 
 ### 5. 配置通知
@@ -193,12 +193,12 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.sample.json5 /ql/config/notify.j
 
 * **如果你已经配置了 `config.sh`， 那么你可以不需要做任何改变。**
 * 如果使用环境变量，请在 qinglong 面板中配置。
-* 如果使用配置文件，请修改 `/ql/config/notify.json5` 文件。
+* 如果使用配置文件，请修改 `/ql/config/notify.toml` 文件。
 * 当然你也可以在 qinglong 面板中配置 `NOTIFY_CONFIG_PATH` 环境变量为配置文件指定其他位置。
 
 ### 6. 抓包配置
 
-不出意外的话可以在青龙面板的配置文件下找到 `check.json5` 文件
+不出意外的话可以在青龙面板的配置文件下找到 `check.toml` 文件
 
 根据 [Sitoi](https://github.com/Sitoi/dailycheckin) 的[配置说明](https://sitoi.gitee.io/dailycheckin/settings/)进行抓包并配置
 
@@ -228,7 +228,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.sample.json5 /ql/config/notify.j
 ### 4. **添加了欢太商城的签到配置**
 
 * [欢太商城 HttpCanary 抓包教程](https://github.com/hwkxk/HeytapTask/wiki/%E6%AC%A2%E5%A4%AA%E5%95%86%E5%9F%8EHttpCanary%E6%8A%93%E5%8C%85%E6%95%99%E7%A8%8B)
-* 部分域名屏蔽境外 IP 访问，所以本项目不适于在 非中国 IP 代理网络下 / Github Actions / 境外 VPS 上运行!
+* 部分域名屏蔽境外 IP 访问，所以本项目不适于在 非中国 IP 代理网络下 / Github Actions / 境外 VPS 上运行！
 * 从未在欢太商城做过任务，请先手动进入任务中心完成一下任务再使用，否则可能无法获取到任务列表数据导致出错！@YYplus
 
 ### 5. **添加了时光相册的签到配置**
@@ -255,6 +255,8 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.sample.json5 /ql/config/notify.j
 
 5. 2021 年 9 月 23 日起重新初始化项目，原本文件移到[这里](https://github.com/Oreomeow/ck_bak)，上述仓库不再进行更新，期望稳定的用户可以切换到上述仓库。
 
+6. 2021 年 11 月 17 日起由 `JSON5` 配置转为更为友好的 `TOML` 配置。
+
 ## 计划说明
 
 * [x] 𝑷𝒚𝒕𝒉𝒐𝒏 \| **api** \| LeetCode 每日一题 \| 每日一句 \| 天气预报 \| 每日新闻 \| 爱企查e卡监控
@@ -263,11 +265,12 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.sample.json5 /ql/config/notify.j
 * [x] 𝑺𝒉𝒆𝒍𝒍 \| **多账号** \| SSPanel 签到
 * [x] 𝑱𝒂𝒗𝒂𝑺𝒄𝒓𝒊𝒑𝒕 \| **多账号** \| 什么值得买任务版 \| 爱企查 \| 网易蜗牛读书 \| 联想商城
 * [x] 𝑱𝒂𝒗𝒂 \| BILIBILI-HELPER
+* [x] 𝑷𝒆𝒓𝒍 \| JSON5toTOML 工具
 
 ### 项目完成情况
 
 * [x] 多账号补全
-* [x] 配置文件由严格的 `.json` 向支持注释的 `.json5` 过渡
+* [x] 配置文件由严格的 `.json` 向支持注释的 `.json5` 过渡，再向更友好的 `.toml` 过渡
 * [x] 更多环境适配
 * [x] 配置文件支持自定义路径
 * [x] 通知多线程
