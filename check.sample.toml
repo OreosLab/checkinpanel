@@ -46,7 +46,7 @@ url = "https://xxxxxxxx.xxx"
 # https://www.baidu.com，同百度贴吧 cookie 一样
 # 批量查询任务需手动抓包查询之后的 exportkey，可不填
 [[AQC]]
-cookie = 'log_guid=xxxxxx; BDPPN=xxxxxx;..."'
+cookie = 'log_guid=xxxxxx; BDPPN=xxx"xxx;...'
 exportkey = ""
 
 # 百度搜索资源平台
