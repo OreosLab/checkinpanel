@@ -5,12 +5,12 @@ use warnings;
 
 use File::Slurp;
 use JSON5;
-use TOML::Tiny qw(from_toml to_toml);
+use TOML::Dumper;
 
 sub json52toml {
     my $json5       = read_file(@_) or die "[Error] JSON5 文件读取错误，请检查路径是否完全和正确";
     my $perl_scalar = decode_json5 $json5;
-    my $toml        = to_toml($perl_scalar);
+    my $toml        = TOML::Dumper->new->dump($perl_scalar);
 
     ( my $new_file ) = @_;
     $new_file =~ s/\.json5?$/\.toml/;
