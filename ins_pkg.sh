@@ -11,7 +11,7 @@ PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 alpine_pkgs="bash curl gcc git jq libffi-dev make musl-dev openssl-dev perl perl-app-cpanminus perl-dev python3 python3-dev py3-pip wget"
 py_reqs="bs4 cryptography==3.2.1 pyaes requests rsa tomli"
 js_pkgs="axios crypto-js got request toml"
-pl_mods="File::Slurp JSON5 TOML::Tiny"
+pl_mods="File::Slurp JSON5 TOML::Dumper"
 
 install() {
     count=0
