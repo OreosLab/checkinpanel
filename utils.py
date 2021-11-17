@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import traceback
 
 import tomli
 
@@ -37,6 +38,6 @@ def get_data() -> dict:
         return DATA
     except tomli.TOMLDecodeError:
         print(
-            f"错误：配置文件 {check_config} 格式不对，请学习 https://github.com/LongTengDao/TOML/wiki"
+            f"错误：配置文件 {check_config} 格式不对，请学习 https://github.com/LongTengDao/TOML/wiki\n错误信息：\n{traceback.format_exc()}"
         )
         exit(1)
