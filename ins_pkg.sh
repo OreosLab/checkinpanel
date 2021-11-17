@@ -9,8 +9,8 @@ COMMENT
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 alpine_pkgs="bash curl gcc git jq libffi-dev make musl-dev openssl-dev perl perl-app-cpanminus perl-dev python3 python3-dev py3-pip wget"
-py_reqs="bs4 cryptography==3.2.1 json5 pyaes requests rsa"
-js_pkgs="axios crypto-js got json5 request"
+py_reqs="bs4 cryptography==3.2.1 pyaes requests rsa tomli"
+js_pkgs="axios crypto-js got request toml"
 pl_mods="File::Slurp JSON5 TOML::Tiny"
 
 install() {
@@ -127,7 +127,16 @@ install_pl_mods() {
     done
 }
 
+json52toml() {
+    if [[ -f /ql/config/config.sh ]]; then
+        sed -i '/^RepoFileExtensions/c RepoFileExtensions="js pl py sh ts"' /ql/config/config.sh
+        ql repo https://github.com/Oreomeow/checkinpanel.git "api_|ck_|ins_" "^checkin" "^notify|^utils" "master"
+    fi
+    find . -type f -name '*utils_json52toml.pl' -exec perl {} \;
+}
+
 install_alpine_pkgs
 install_py_reqs
 install_js_pkgs_all
 install_pl_mods
+json52toml
