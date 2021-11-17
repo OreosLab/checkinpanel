@@ -13,17 +13,8 @@ import time
 import requests
 
 import utils_tmp
-
-try:
-    from notify_mtr import send
-except ModuleNotFoundError:
-    import notify_mtr_json
-
-    send = notify_mtr_json.send
-try:
-    from utils import get_data
-except ModuleNotFoundError:
-    pass
+from notify_mtr import send
+from utils import get_data
 
 
 class Heytap:
@@ -586,20 +577,8 @@ class Heytap:
         return self.log
 
 
-# 腾讯云函数入口
-def main_handler(event, context):
-    try:
-        cf = get_data()
-    except Exception:
-        # 读取 src 目录下 check.json 配置文件
-        with open(
-            os.path.join(os.path.dirname(__file__), "check.json"), "r", encoding="utf-8"
-        ) as f:
-            cf = json.loads(f.read())
-    res = Heytap(cf).main()
-    send("欢太商城", res)
-
-
-# 主函数入口
 if __name__ == "__main__":
-    main_handler("", "")
+    data = get_data()
+    _check_items = data.get("HEYTAP", [])
+    res = Heytap(check_items=_check_items).main()
+    send("欢太商城", res)
