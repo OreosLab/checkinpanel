@@ -3,15 +3,15 @@
 import base64
 import hashlib
 import hmac
+import json
 import os
 import re
 import threading
 import time
 import urllib.parse
-from json import JSONDecodeError
 
-import json5 as json
 import requests
+import tomli
 
 from utils_env import get_file_path
 
@@ -84,18 +84,16 @@ for k in push_config:
         push_config[k] = v
 
 # 读取配置文件中的变量 (会覆盖环境变量)
-CONFIG_PATH = os.getenv("NOTIFY_CONFIG_PATH") or get_file_path("notify.json5")
+CONFIG_PATH = os.getenv("NOTIFY_CONFIG_PATH") or get_file_path("notify.toml")
 if os.path.exists(CONFIG_PATH):
     print(f"通知配置文件存在：{CONFIG_PATH}。")
     try:
-        for k, v in dict(
-            json.load(open(CONFIG_PATH, mode="r", encoding="utf-8"))
-        ).items():
+        for k, v in dict(tomli.load(open(CONFIG_PATH, "rb"))).items():
             if k in push_config:
                 push_config[k] = v
-    except ValueError:
+    except tomli.TOMLDecodeError:
         print(
-            f"错误：配置文件 {CONFIG_PATH} 格式不对，请在 https://verytoolz.com/json5-validator.html 中检查格式"
+            f"错误：配置文件 {CONFIG_PATH} 格式不对，请学习 https://github.com/LongTengDao/TOML/wiki"
         )
 elif CONFIG_PATH:
     print(f"{CONFIG_PATH} 配置的通知文件不存在，请检查文件位置或删除对应环境变量！")
@@ -170,7 +168,7 @@ def dingding_bot(title: str, content: str) -> None:
     data = {"msgtype": "text", "text": {"content": f"{title}\n\n{content}"}}
 
     datas = requests.post(
-        url=url, data=json.dumps(data, quote_keys=True), headers=headers, timeout=15
+        url=url, data=json.dumps(data), headers=headers, timeout=15
     ).json()
     if datas.get("errcode") == 0:
         print("钉钉机器人 推送成功！")
@@ -190,7 +188,7 @@ def feishu_bot(title: str, content: str) -> None:
     url = f'https://open.feishu.cn/open-apis/bot/v2/hook/{push_config.get("FSKEY")}'
     data = {"msg_type": "text", "content": {"text": f"{title}\n\n{content}"}}
 
-    datas = requests.post(url, data=json.dumps(data, quote_keys=True), timeout=15)
+    datas = requests.post(url, data=json.dumps(data), timeout=15)
     datas = datas.json
     if datas.get("StatusCode") == 0:
         print("飞书 推送成功！")
@@ -276,7 +274,7 @@ def pushplus_bot(title: str, content: str) -> None:
         "content": content,
         "topic": push_config.get("PUSH_PLUS_USER"),
     }
-    body = json.dumps(data, quote_keys=True).encode(encoding="utf-8")
+    body = json.dumps(data).encode(encoding="utf-8")
     headers = {"Content-Type": "application/json"}
 
     datas = requests.post(url=url, data=body, headers=headers, timeout=15).json()
@@ -376,7 +374,7 @@ class WeCom:
             "text": {"content": message},
             "safe": "0",
         }
-        send_msges = bytes(json.dumps(send_values, quote_keys=True), "utf-8")
+        send_msges = bytes(json.dumps(send_values), "utf-8")
         datas = requests.post(send_url, send_msges, timeout=15).json()
         return datas.get("errmsg")
 
@@ -402,7 +400,7 @@ class WeCom:
                 ]
             },
         }
-        send_msges = bytes(json.dumps(send_values, quote_keys=True), "utf-8")
+        send_msges = bytes(json.dumps(send_values), "utf-8")
         datas = requests.post(send_url, send_msges, timeout=15).json()
         return datas.get("errmsg")
 
@@ -421,7 +419,7 @@ def wecom_bot(title: str, content: str) -> None:
     data = {"msgtype": "text", "text": {"content": f"{title}\n\n{content}"}}
 
     datas = requests.post(
-        url=url, data=json.dumps(data, quote_keys=True), headers=headers, timeout=15
+        url=url, data=json.dumps(data), headers=headers, timeout=15
     ).json()
     if datas.get("errcode") == 0:
         print("企业微信机器人 推送成功！")
@@ -522,7 +520,7 @@ def excepthook(args, /):
         print(
             f"网络异常，请检查你的网络连接、推送服务器和代理配置，该错误和账号配置无关。信息：{str(args.exc_type)}, {args.thread.name}"
         )
-    elif issubclass(args.exc_type, JSONDecodeError):
+    elif issubclass(args.exc_type, json.JSONDecodeError):
         print(
             f"推送返回值非 json 格式，请检查网址和账号是否填写正确。信息：{str(args.exc_type)}, {args.thread.name}"
         )

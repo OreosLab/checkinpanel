@@ -1,5 +1,8 @@
 # 配置文件
-# cookie 以实际获取为准
+# cookie 以实际获取为准，如遇到带双引号的需用 \ 转义，或改为单引号，或将最外层双引号改为单引号
+# e.g.1 cookie = "xxx; app_param={\"brand\":\"iPhone\"}"
+# e.g.2 cookie = "xxx; app_param={'brand':'iPhone'}"
+# e.g.3 cookie = 'xxx; app_param={"brand":"iPhone"}'
 
 # 爱企查e卡监控
 ECARDCHECK = false
@@ -43,7 +46,7 @@ url = "https://xxxxxxxx.xxx"
 # https://www.baidu.com，同百度贴吧 cookie 一样
 # 批量查询任务需手动抓包查询之后的 exportkey，可不填
 [[AQC]]
-cookie = "log_guid=xxxxxx; BDPPN=xxxxxx;..."
+cookie = 'log_guid=xxxxxx; BDPPN=xxxxxx;..."'
 exportkey = ""
 
 # 百度搜索资源平台
@@ -156,7 +159,7 @@ cookie = "koa:sess=xxxxxx; koa:sess.sig=xxxxxx"
 # 抽奖总开关，设置为 false 将不参与任何抽奖，应对一些抽奖黑号
 # 欢太商城 APP UA
 [[HEYTAP]]
-cookie = "source_type=xxx;TOKENSID=TOKEN_xxxx;app_param=xxxx"
+cookie = 'source_type=xxx;TOKENSID=TOKEN_xxxx;app_param=xx"xx'
 draw = false
 useragent = ""
 
