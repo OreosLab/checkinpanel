@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=SC2188
+<<'COMMENT'
+cron: 59 17 * * *
+new Env('Bilibili 助手');
+COMMENT
+
 if [ -f "$(dirname "$0")/utils_env.sh" ]; then
     source "$(dirname "$0")/utils_env.sh"
 else
