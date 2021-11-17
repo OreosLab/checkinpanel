@@ -11,6 +11,7 @@ sub json52toml {
     my $json5       = read_file(@_) or die "[Error] JSON5 文件读取错误，请检查路径是否完全和正确";
     my $perl_scalar = decode_json5 $json5;
     my $toml        = TOML::Dumper->new->dump($perl_scalar);
+    $toml =~ s!\\/!/!g;
 
     ( my $new_file ) = @_;
     $new_file =~ s/\.json5?$/\.toml/;
