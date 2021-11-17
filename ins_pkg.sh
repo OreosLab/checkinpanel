@@ -121,9 +121,14 @@ install_pl_mods() {
     else
         install 1 "cpanm -fn App::cpm" "$(cpanm -fn App::cpm | grep -c "FAIL")"
         if ! command -v cpm >/dev/null 2>&1; then
-            curl -fsSL --compressed https://ghproxy.com/https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/cpm.pl >cpm &&
-                chmod +x cpm &&
-                ./cpm --version
+            if [ -f ./cpm ]; then
+                chmod +x cpm && ./cpm --version
+            else
+                cp -f /ql/repo/Oreomeow_checkinpanel_master/cpm ./ && chmod +x cpm && ./cpm --version
+                if [ ! -f ./cpm ]; then
+                    curl -fsSL https://cdn.jsdelivr.net/gh/Oreomeow/checkinpanel/cpm >cpm && chmod +x cpm && ./cpm --version
+                fi
+            fi
         fi
     fi
     for i in $pl_mods; do
