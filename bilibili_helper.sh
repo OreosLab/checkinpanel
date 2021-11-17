@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#new Env('BILIBILI-HELPER');
 
 if [ -f "$(dirname "$0")/utils_env.sh" ]; then
     source "$(dirname "$0")/utils_env.sh"

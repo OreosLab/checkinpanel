@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/usr/bin/env python3
 """
 :author @night-raise  from github
 cron: 0 0 */7 * *
