@@ -18,12 +18,11 @@ from utils import get_data
 
 
 class Heytap:
-    def __init__(self, config):
+    def __init__(self, check_items):
+        self.check_items = check_items
         self.client = None
         self.session = requests.session()
-        self.login = config["HEYTAP"]
         self.log = ""
-        self.config = config
         self.cookies = "cookie"
         self.user_agent = "ua"
         self.s_channel = "oppostore"
@@ -556,10 +555,10 @@ class Heytap:
     # 主程序
     def main(self):
         i = 1
-        for config in self.login:
-            self.cookies = config["cookie"]
-            self.user_agent = config["useragent"]
-            self.if_draw = config["draw"]
+        for check_item in self.check_items:
+            self.cookies = check_item.get("cookie")
+            self.user_agent = check_item.get("useragent")
+            self.if_draw = check_item.get("draw")
             self.client = self.get_user_info()
             if self.client:
                 try:
