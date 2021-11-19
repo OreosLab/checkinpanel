@@ -1,6 +1,21 @@
 # Changelog
 
 
+## 20211118-4-211 (2021-11-18)
+
+### Feature
+
+* :racehorse: : 更新 alpine 基础安装包. [Oreo]
+
+* :racehorse: : 更换 JS 更好的的 TOML 轮子——@iarna/toml. [Oreo]
+
+### Fix
+
+* :bug: : 修复 HeyTap 传参报错. [Oreo]
+
+* :wrench: : 修复通知配置文件注释与变量错位问题. [Oreo]
+
+
 ## 20211117-3-6c5 (2021-11-17)
 
 ### Feature
