@@ -128,7 +128,7 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 特别的，如果你想要创建一个基于 python 的 elecV2P 或者 qinglong 项目，并有意愿使用 `toml` 文件，那么强烈建议你拷贝[此文件](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/notify_mtr.py)，如此可以大幅度降低用户脚本的配置难度和升级难度。
 
-如果只希望使用 `json` 模块，那么可以拷贝 [𝒏𝒐𝒕𝒊𝒇𝒚_𝒎𝒕𝒓_𝒋𝒔𝒐𝒏.𝒑𝒚](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/notify_mtr_json.py)。
+如果只希望使用 `json` 模块和单纯获取环境变量方法，那么可以拷贝 [𝒏𝒐𝒕𝒊𝒇𝒚_𝒎𝒕𝒓_𝒆𝒏𝒗.𝒑𝒚](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/notify_mtr_env.py)。
 
 ### 5. 检查依赖
 
@@ -200,7 +200,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.sample.toml /ql/config/notify.to
 
 不出意外的话可以在青龙面板的配置文件下找到 `check.toml` 文件
 
-根据 [Sitoi](https://github.com/Sitoi/dailycheckin) 的[配置说明](https://sitoi.gitee.io/dailycheckin/settings/)进行抓包并配置
+根据[注释说明](https://github.com/Oreomeow/checkinpanel/blob/master/check.sample.toml)进行抓包并配置
 
 ## 补充说明
 
