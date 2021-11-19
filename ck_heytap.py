@@ -419,56 +419,57 @@ class Heytap:
                     time.strptime(end_time, "%Y-%m-%d %H:%M:%S")
                 )  # 设置活动结束日期
 
-                if dated < end_time and if_task:
-                    res = self.client.get(
-                        f"https://hd.oppo.com/task/list?aid={aid}", headers=headers
-                    )
-                    tasklist = res.json()
-                    self.log += f"【{act_name}-任务】\n"
-                    for _, jobs in enumerate(tasklist["data"]):
-                        title = jobs["title"]
-                        t_index = jobs["t_index"]
-                        aid = t_index[: t_index.index("i")]
-                        if jobs["t_status"] == 0:
-                            finishmsg = self.task_finish(aid, t_index)
-                            if finishmsg["no"] == "200":
-                                time.sleep(1)
+                if dated < end_time:
+                    if if_task:
+                        res = self.client.get(
+                            f"https://hd.oppo.com/task/list?aid={aid}", headers=headers
+                        )
+                        tasklist = res.json()
+                        self.log += f"【{act_name}-任务】\n"
+                        for _, jobs in enumerate(tasklist["data"]):
+                            title = jobs["title"]
+                            t_index = jobs["t_index"]
+                            aid = t_index[: t_index.index("i")]
+                            if jobs["t_status"] == 0:
+                                finishmsg = self.task_finish(aid, t_index)
+                                if finishmsg["no"] == "200":
+                                    time.sleep(1)
+                                    awardmsg = self.task_award(aid, t_index)
+                                    msg = awardmsg["msg"]
+                                    self.log += f"{title}：{msg}\n"
+                                    time.sleep(3)
+                            elif jobs["t_status"] == 1:
                                 awardmsg = self.task_award(aid, t_index)
                                 msg = awardmsg["msg"]
                                 self.log += f"{title}：{msg}\n"
                                 time.sleep(3)
-                        elif jobs["t_status"] == 1:
-                            awardmsg = self.task_award(aid, t_index)
-                            msg = awardmsg["msg"]
-                            self.log += f"{title}：{msg}\n"
-                            time.sleep(3)
-                        else:
-                            self.log += f"{title}：任务已完成\n"
-                if self.if_draw and if_draw:  # 判断当前用户是否抽奖 和 判断当前活动是否抽奖
-                    lid = act_list["lid"]
-                    extra_draw_cookie = act_list["extra_draw_cookie"]
-                    draw_times = act_list["draw_times"]
-                    self.log += f"【{act_name}-抽奖】："
-                    x = 0
-                    while x < draw_times:
-                        data = f"aid={aid}&lid={lid}&mobile=&authcode=&captcha=&isCheck=0&source_type={self.source_type}&s_channel={self.s_channel}&sku=&spu="
-                        res = self.lottery(data, referer, extra_draw_cookie)
-                        msg = res["msg"]
-                        if "次数已用完" in msg:
-                            self.log += "  第" + str(x + 1) + "抽奖：抽奖次数已用完\n"
-                            break
-                        if "活动已结束" in msg:
-                            self.log += "  第" + str(x + 1) + "抽奖：活动已结束，终止抽奖\n"
-                            break
-                        goods_name = res["data"]["goods_name"]
-                        if goods_name:
-                            self.log += (
-                                "  第" + str(x + 1) + "次抽奖：" + str(goods_name) + "\n"
-                            )
-                        elif "提交成功" in msg:
-                            self.log += "  第" + str(x + 1) + "次抽奖：未中奖\n"
-                        x += 1
-                        time.sleep(5)
+                            else:
+                                self.log += f"{title}：任务已完成\n"
+                    if self.if_draw and if_draw:  # 判断当前用户是否抽奖 和 判断当前活动是否抽奖
+                        lid = act_list["lid"]
+                        extra_draw_cookie = act_list["extra_draw_cookie"]
+                        draw_times = act_list["draw_times"]
+                        self.log += f"【{act_name}-抽奖】："
+                        x = 0
+                        while x < draw_times:
+                            data = f"aid={aid}&lid={lid}&mobile=&authcode=&captcha=&isCheck=0&source_type={self.source_type}&s_channel={self.s_channel}&sku=&spu="
+                            res = self.lottery(data, referer, extra_draw_cookie)
+                            msg = res["msg"]
+                            if "次数已用完" in msg:
+                                self.log += "  第" + str(x + 1) + "抽奖：抽奖次数已用完\n"
+                                break
+                            if "活动已结束" in msg:
+                                self.log += "  第" + str(x + 1) + "抽奖：活动已结束，终止抽奖\n"
+                                break
+                            goods_name = res["data"]["goods_name"]
+                            if goods_name:
+                                self.log += (
+                                    "  第" + str(x + 1) + "次抽奖：" + str(goods_name) + "\n"
+                                )
+                            elif "提交成功" in msg:
+                                self.log += "  第" + str(x + 1) + "次抽奖：未中奖\n"
+                            x += 1
+                            time.sleep(5)
                 else:
                     self.log += f"【{act_name}】：活动已结束，不再执行\n"
         except Exception as e:
