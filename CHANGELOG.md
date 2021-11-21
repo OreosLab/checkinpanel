@@ -1,6 +1,15 @@
 # Changelog
 
 
+## 20211121-4-020 (2021-11-21)
+
+### Other
+
+* :pushpin: : 固定依赖. [Oreo]
+
+* :heavy_minus_sign: 删减无用的 request 依赖. [Oreo]
+
+
 ## 20211120-4-010 (2021-11-20)
 
 ### Fix
