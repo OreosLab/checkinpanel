@@ -134,7 +134,7 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 * 运行 `签到依赖` 任务后的日志
 
-    [![5BMl7D.png](https://z3.ax1x.com/2021/10/20/5BMl7D.png)](https://imgtu.com/i/5BMl7D)
+    [![oSs9xK.png](https://z3.ax1x.com/2021/11/23/oSs9xK.png)](https://imgtu.com/i/oSs9xK)
 
 * 如果任务列表安装不成功，参考 [#12](https://github.com/Oreomeow/checkinpanel/issues/12)
 
