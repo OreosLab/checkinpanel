@@ -67,7 +67,7 @@ install_js_pkgs_initial() {
     if [ -d "/ql/scripts/Oreomeow_checkinpanel_master" ]; then
         cd /ql/scripts/Oreomeow_checkinpanel_master &&
             cp /ql/repo/Oreomeow_checkinpanel_master/package.json /ql/scripts/Oreomeow_checkinpanel_master/package.json
-    elif [ -d "/ql/scripts" ] && [ -f "/ql/scripts/package.bak.json" ]; then
+    elif [ -d "/ql/scripts" ] && [ ! -f "/ql/scripts/package.bak.json" ]; then
         cd /ql/scripts || exit
         rm -rf node_modules
         rm -rf .pnpm-store
