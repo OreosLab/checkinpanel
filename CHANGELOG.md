@@ -1,6 +1,17 @@
 # Changelog
 
 
+## 20211122-4-110 (2021-11-22)
+
+### Code Style
+
+* :zap: : 提高 Shell 兼容性. [Oreo]
+
+### Refactor Functions
+
+* :hammer: : 改用 BeautifulSoup 方案进行 pojie 签到. [Oreo]
+
+
 ## 20211121-4-020 (2021-11-21)
 
 ### Other
