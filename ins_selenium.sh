@@ -3,7 +3,7 @@
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 alpine_pkgs="bash curl gcc git jq libffi-dev make musl-dev openssl-dev py3-pip python3 python3-dev wget"
-py_reqs="cryptography==3.2.1 selenium PyVirtualDisplay"
+py_reqs="cryptography selenium PyVirtualDisplay"
 chromium_pkgs="chromium libexif eudev"
 chromedriver_pkgs="chromium-chromedriver"
 xvfb_pkgs="xvfb"
@@ -51,7 +51,7 @@ install_py_reqs() {
     pip3 install --upgrade pip
     pip3_freeze="$(pip3 freeze)"
     for i in $py_reqs; do
-        if expr "$pip3_freeze" : ".*${i}==" >/dev/null; then
+        if expr "$pip3_freeze" : ".*${i}" >/dev/null; then
             echo "$i 已安装"
         else
             install 0 "pip3 install $i" "$(pip3 install "$i" | grep -c 'Successfully')"
