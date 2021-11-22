@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
@@ -15,17 +15,17 @@ install() {
     while true; do
         echo ".......... $2 begin .........."
         result=$3
-        if ((result > 0)); then
+        if [ "$result" -gt 0 ]; then
             flag=0
         else
             flag=1
         fi
-        if ((flag == $1)); then
+        if [ $flag -eq "$1" ]; then
             echo "---------- $2 succeed ----------"
             break
         else
             count=$((count + 1))
-            if ((count == 6)); then
+            if [ $count -eq 6 ]; then
                 echo "!! 自动安装失败，请尝试进入容器后执行 $2 !!"
                 break
             fi
@@ -37,9 +37,9 @@ install() {
 
 install_alpine_pkgs() {
     apk update
-    apk_info="$(apk info)"
+    apk_info=" $(apk info) "
     for i in $alpine_pkgs; do
-        if [[ $apk_info == *[[:space:]]${i}[[:space:]]* ]] || [[ $apk_info == ${i}[[:space:]]* ]] || [[ $apk_info == *[[:space:]]${i} ]]; then
+        if expr "$apk_info" : ".*\s${i}\s.*" >/dev/null; then
             echo "$i 已安装"
         else
             install 0 "apk add $i" "$(apk add --no-cache "$i" | grep -c 'OK')"
@@ -49,9 +49,9 @@ install_alpine_pkgs() {
 
 install_py_reqs() {
     pip3 install --upgrade pip
-    pip3_freeze=$(pip3 freeze)
+    pip3_freeze="$(pip3 freeze)"
     for i in $py_reqs; do
-        if [[ $pip3_freeze =~ $i ]]; then
+        if expr "$pip3_freeze" : ".*${i}==" >/dev/null; then
             echo "$i 已安装"
         else
             install 0 "pip3 install $i" "$(pip3 install "$i" | grep -c 'Successfully')"

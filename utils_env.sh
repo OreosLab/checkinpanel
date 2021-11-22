@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
@@ -10,25 +10,25 @@ IS_DISPLAY_CONTEXT=1
 
 # 检查环境：面板先于系统
 check_env() {
-    if [[ -f "${V2P_FILE}" ]]; then
+    if [ -f "${V2P_FILE}" ]; then
         pannel="elecv2p"
-    elif [[ -f "${QL_FILE}" ]]; then
+    elif [ -f "${QL_FILE}" ]; then
         pannel="qinglong"
-    elif [[ -f /etc/redhat-release ]]; then
+    elif [ -f "/etc/redhat-release" ]; then
         release="centos"
     elif [ "${IS_MACOS}" -eq 1 ]; then
         release="macos"
-    elif grep </etc/issue -q -E -i "debian"; then
+    elif grep </etc/issue -iqE "debian"; then
         release="debian"
-    elif grep </etc/issue -q -E -i "ubuntu"; then
+    elif grep </etc/issue -iqE "ubuntu"; then
         release="ubuntu"
-    elif grep </etc/issue -q -E -i "centos|red hat|redhat"; then
+    elif grep </etc/issue -iqE "centos|red hat|redhat"; then
         release="centos"
-    elif grep </proc/version -q -E -i "debian"; then
+    elif grep </proc/version -iqE "debian"; then
         release="debian"
-    elif grep </proc/version -q -E -i "ubuntu"; then
+    elif grep </proc/version -iqE "ubuntu"; then
         release="ubuntu"
-    elif grep </proc/version -q -E -i "centos|red hat|redhat"; then
+    elif grep </proc/version -iqE "centos|red hat|redhat"; then
         release="centos"
     fi
 }
@@ -38,47 +38,47 @@ check_env() {
 source_config() {
     check_env
     if [ "${ENV_PATH}" ]; then
-        source "${ENV_PATH}"
-    elif [ "${pannel}" == "elecv2p" ]; then
-        source "/usr/local/app/script/Lists/.env"
-    elif [ "${pannel}" == "qinglong" ]; then
-        source "/ql/config/.env"
+        . "$ENV_PATH"
+    elif [ "${pannel}" = "elecv2p" ]; then
+        . "/usr/local/app/script/Lists/.env"
+    elif [ "${pannel}" = "qinglong" ]; then
+        . "/ql/config/.env"
     else
-        source "$(dirname "$0")/.env"
+        . env
     fi
     # 是否显示上下文 默认是
-    if [ "${DISPLAY_CONTEXT}" == "0" ]; then
+    if [ "${DISPLAY_CONTEXT}" -eq 0 ]; then
         IS_DISPLAY_CONTEXT=0
     fi
 }
 
 # 检查账户权限
 check_root() {
-    if [ 0 == $UID ]; then
-        echo -e "当前用户是 ROOT 用户，可以继续操作" && sleep 1
+    if [ "$(id -u)" -eq 0 ]; then
+        printf "当前用户是 ROOT 用户，可以继续操作" && sleep 1
     else
-        echo -e "当前非 ROOT 账号(或没有 ROOT 权限)，无法继续操作，请更换 ROOT 账号或使用 su 命令获取临时 ROOT 权限" && exit 1
+        printf "当前非 ROOT 账号(或没有 ROOT 权限)，无法继续操作，请更换 ROOT 账号或使用 su 命令获取临时 ROOT 权限" && exit 1
     fi
 }
 
 # 检查 jq 依赖
 check_jq_installed_status() {
     if [ -z "$(command -v jq)" ]; then
-        echo -e "jq 依赖没有安装，开始安装..."
+        printf "jq 依赖没有安装，开始安装..."
         check_root
-        if [ ${pannel} ]; then
+        if [ "${pannel}" ]; then
             apk add --no-cache jq
-        elif [[ ${release} == "centos" ]]; then
+        elif [ "${release}" = "centos" ]; then
             yum update && yum install jq -y
-        elif [[ ${release} == "macos" ]]; then
+        elif [ "${release}" = "macos" ]; then
             brew install jq
         else
             apt-get update && apt-get install jq -y
         fi
         if [ -z "$(command -v jq)" ]; then
-            echo -e "jq 依赖安装失败，请检查！" && exit 1
+            printf "jq 依赖安装失败，请检查！" && exit 1
         else
-            echo -e "jq 依赖安装成功！"
+            printf "jq 依赖安装成功！"
         fi
     fi
 }
@@ -86,15 +86,15 @@ check_jq_installed_status() {
 # 检查 Java 依赖
 check_java_installed_status() {
     if [ -z "$(command -v java)" ]; then
-        echo -e "Java 依赖没有安装，开始安装..."
+        printf "Java 依赖没有安装，开始安装..."
         check_root
         if [ "${pannel}" ]; then
             apk add --no-cache openjdk8
         fi
         if [ -z "$(command -v java)" ]; then
-            echo -e "Java 依赖安装失败，请检查！" && exit 1
+            printf "Java 依赖安装失败，请检查！" && exit 1
         else
-            echo -e "Java 依赖安装成功！"
+            printf "Java 依赖安装成功！"
         fi
     fi
 }

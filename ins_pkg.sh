@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # shellcheck disable=SC2005,2188
 <<'COMMENT'
@@ -17,19 +17,19 @@ install() {
     count=0
     flag=$1
     while true; do
-        echo ".......... $2 begin .........." &&
-            result=$3
-        if ((result > 0)); then
+        echo ".......... $2 begin .........."
+        result=$3
+        if [ "$result" -gt 0 ]; then
             flag=0
         else
             flag=1
         fi
-        if ((flag == $1)); then
+        if [ $flag -eq "$1" ]; then
             echo "---------- $2 succeed ----------"
             break
         else
             count=$((count + 1))
-            if ((count == 6)); then
+            if [ $count -eq 6 ]; then
                 echo "!! 自动安装失败，请尝试进入容器后执行 $2 !!"
                 break
             fi
@@ -41,9 +41,9 @@ install() {
 
 install_alpine_pkgs() {
     apk update
-    apk_info="$(apk info)"
+    apk_info=" $(apk info) "
     for i in $alpine_pkgs; do
-        if [[ $apk_info == *[[:space:]]${i}[[:space:]]* ]] || [[ $apk_info == ${i}[[:space:]]* ]] || [[ $apk_info == *[[:space:]]${i} ]]; then
+        if expr "$apk_info" : ".*\s${i}\s.*" >/dev/null; then
             echo "$i 已安装"
         else
             install 0 "apk add $i" "$(apk add --no-cache "$i" | grep -c 'OK')"
@@ -53,9 +53,9 @@ install_alpine_pkgs() {
 
 install_py_reqs() {
     pip3 install --upgrade pip
-    pip3_freeze=$(pip3 freeze)
+    pip3_freeze="$(pip3 freeze)"
     for i in $py_reqs; do
-        if [[ $pip3_freeze =~ $i ]]; then
+        if expr "$pip3_freeze" : ".*${i}==" >/dev/null; then
             echo "$i 已安装"
         else
             install 0 "pip3 install $i" "$(pip3 install "$i" | grep -c 'Successfully')"
@@ -67,7 +67,7 @@ install_js_pkgs_initial() {
     if [ -d "/ql/scripts/Oreomeow_checkinpanel_master" ]; then
         cd /ql/scripts/Oreomeow_checkinpanel_master &&
             cp /ql/repo/Oreomeow_checkinpanel_master/package.json /ql/scripts/Oreomeow_checkinpanel_master/package.json
-    elif [[ -d "/ql/scripts" && ! -f "/ql/scripts/package.bak.json" ]]; then
+    elif [ -d "/ql/scripts" ] && [ -f "/ql/scripts/package.bak.json" ]; then
         cd /ql/scripts || exit
         rm -rf node_modules
         rm -rf .pnpm-store
@@ -91,13 +91,13 @@ install_js_pkgs_initial() {
     npm install
 }
 install_js_pkgs_each() {
-    npm_ls="$(npm ls "$1")"
-    has_err=$(echo "$npm_ls" | grep ERR)
-    if [[ $npm_ls =~ $1 && $has_err == "" ]]; then
+    is_empty=$(npm ls "$1" | grep empty)
+    has_err=$(npm ls "$1" | grep ERR)
+    if [ "$is_empty" = "" ] && [ "$has_err" = "" ]; then
         echo "$1 已正确安装"
-    elif [[ $npm_ls =~ $1 && $has_err != "" ]]; then
+    elif [ "$has_err" != "" ]; then
         uninstall_js_pkgs "$1"
-    elif [[ $npm_ls =~ (empty) ]]; then
+    else
         install 1 "npm install $1" "$(echo "$(npm install --force "$1" && npm ls --force "$1")" | grep -cE '(empty)|ERR')"
     fi
 }
@@ -132,7 +132,7 @@ install_pl_mods() {
         fi
     fi
     for i in $pl_mods; do
-        if [[ -f $(perldoc -l "$i") ]]; then
+        if [ -f "$(perldoc -l "$i")" ]; then
             echo "$i 已安装"
         else
             install 1 "cpm install -g $i" "$(cpm install -g "$i" | grep -c "FAIL")"
