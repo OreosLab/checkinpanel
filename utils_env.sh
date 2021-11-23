@@ -1,35 +1,50 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # 初始化变量
 V2P_FILE='/usr/local/app/script/Lists/task.list'
 QL_FILE='/ql/config/env.sh'
-IS_MACOS=$(uname | grep -c 'Darwin')
 IS_DISPLAY_CONTEXT=1
 
 # 检查环境：面板先于系统
+# shellcheck disable=SC2034
 check_env() {
     if [ -f "${V2P_FILE}" ]; then
         pannel="elecv2p"
     elif [ -f "${QL_FILE}" ]; then
         pannel="qinglong"
-    elif [ -f "/etc/redhat-release" ]; then
-        release="centos"
-    elif [ "${IS_MACOS}" -eq 1 ]; then
-        release="macos"
-    elif grep </etc/issue -iqE "debian"; then
-        release="debian"
-    elif grep </etc/issue -iqE "ubuntu"; then
-        release="ubuntu"
-    elif grep </etc/issue -iqE "centos|red hat|redhat"; then
-        release="centos"
-    elif grep </proc/version -iqE "debian"; then
-        release="debian"
-    elif grep </proc/version -iqE "ubuntu"; then
-        release="ubuntu"
-    elif grep </proc/version -iqE "centos|red hat|redhat"; then
-        release="centos"
+    else
+        CMD=(
+            "$(grep -i pretty_name /etc/os-release 2>/dev/null | cut -d \" -f2)"
+            "$(hostnamectl 2>/dev/null | grep -i system | cut -d : -f2)"
+            "$(lsb_release -ds 2>/dev/null)"
+            "$(grep -i description /etc/lsb-release 2>/dev/null | cut -d \" -f2)"
+            "$(grep . /etc/redhat-release 2>/dev/null)"
+            "$(grep . /etc/issue 2>/dev/null | cut -d \\ -f1 | sed '/^[ ]*$/d')"
+            "$(uname 2>/dev/null | grep -i darwin)"
+            "$(uname -a 2>/dev/null | grep NAS)"
+        )
+
+        REGEX=(
+            "debian"
+            "ubuntu"
+            "centos|kernel|'oracle linux'|alma|rocky"
+            "'amazon linux'"
+            "alpine"
+            "darwin"
+            "nas"
+        )
+        RELEASE=("debian" "ubuntu" "centos" "centos" "alpine" "macos" "nas")
+        CO=("" "" "" "amazon" "" "" "")
+
+        for i in "${CMD[@]}"; do
+            sys="$i" && [[ -n $sys ]] && break
+        done
+
+        for ((i = 0; i < ${#REGEX[@]}; i++)); do
+            echo "$sys" | grep -Eiq "${REGEX[i]}" && system="${RELEASE[i]}" && COMPANY="${CO[i]}" && [[ -n $system ]] && break
+        done
     fi
 }
 
@@ -68,9 +83,9 @@ check_jq_installed_status() {
         check_root
         if [ "${pannel}" ]; then
             apk add --no-cache jq
-        elif [ "${release}" = "centos" ]; then
+        elif [ "${system}" = "centos" ]; then
             yum update && yum install jq -y
-        elif [ "${release}" = "macos" ]; then
+        elif [ "${system}" = "macos" ]; then
             brew install jq
         else
             apt-get update && apt-get install jq -y
