@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
@@ -15,36 +15,39 @@ check_env() {
     elif [ -f "${QL_FILE}" ]; then
         pannel="qinglong"
     else
-        CMD=(
-            "$(grep -i pretty_name /etc/os-release 2>/dev/null | cut -d \" -f2)"
-            "$(hostnamectl 2>/dev/null | grep -i system | cut -d : -f2)"
-            "$(lsb_release -ds 2>/dev/null)"
-            "$(grep -i description /etc/lsb-release 2>/dev/null | cut -d \" -f2)"
-            "$(grep . /etc/redhat-release 2>/dev/null)"
-            "$(grep . /etc/issue 2>/dev/null | cut -d \\ -f1 | sed '/^[ ]*$/d')"
-            "$(uname 2>/dev/null | grep -i darwin)"
-            "$(uname -a 2>/dev/null | grep NAS)"
-        )
+        CMD="$(grep -i pretty_name /etc/os-release 2>/dev/null | cut -d \" -f2)
+        $(hostnamectl 2>/dev/null | grep -i system | cut -d : -f2)
+        $(lsb_release -ds 2>/dev/null)
+        $(grep -i description /etc/lsb-release 2>/dev/null | cut -d \" -f2)
+        $(grep . /etc/redhat-release 2>/dev/null)
+        $(grep . /etc/issue 2>/dev/null | cut -d \\ -f1 | sed '/^[ ]*$/d')
+        $(uname 2>/dev/null | grep -i darwin)
+        $(uname -a 2>/dev/null | grep NAS)"
 
-        REGEX=(
-            "debian"
-            "ubuntu"
-            "centos|kernel|'oracle linux'|alma|rocky"
-            "'amazon linux'"
-            "alpine"
-            "darwin"
-            "nas"
-        )
-        RELEASE=("debian" "ubuntu" "centos" "centos" "alpine" "macos" "nas")
-        CO=("" "" "" "amazon" "" "" "")
+        REGEX="debian ubuntu centos|kernel|oracle[[:space:]]*linux|alma|rocky amazon[[:space:]]*linux alpine darwin nas"
+        RELEASE="debian ubuntu centos centos alpine macos nas"
+        CO="0 0 0 amazon 0 0 0"
 
-        for i in "${CMD[@]}"; do
-            sys="$i" && [[ -n $sys ]] && break
+        for i in $(echo "$CMD" | tr -d ' ' | tr '\n' ' '); do
+            sys="$i" && [ -n "$sys" ] && break
         done
 
-        for ((i = 0; i < ${#REGEX[@]}; i++)); do
-            echo "$sys" | grep -Eiq "${REGEX[i]}" && system="${RELEASE[i]}" && COMPANY="${CO[i]}" && [[ -n $system ]] && break
+        count1=0
+        for a in $REGEX; do
+            count1=$((count1 + 1))
+            count2=0
+            for b in $RELEASE; do
+                count2=$((count2 + 1))
+                [ $count2 -eq $count1 ] || continue
+                count3=0
+                for c in $CO; do
+                    count3=$((count3 + 1))
+                    [ $count3 -eq $count2 ] || continue
+                    echo "$sys" | grep -Eiq "$a" && system="$b" && company="$c" && [ -n "$system" ] || break 2 && break 3
+                done
+            done
         done
+
     fi
 }
 
