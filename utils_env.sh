@@ -21,8 +21,7 @@ check_env() {
         $(grep -i description /etc/lsb-release 2>/dev/null | cut -d \" -f2)
         $(grep . /etc/redhat-release 2>/dev/null)
         $(grep . /etc/issue 2>/dev/null | cut -d \\ -f1 | sed '/^[ ]*$/d')
-        $(uname 2>/dev/null | grep -i darwin)
-        $(uname -a 2>/dev/null | grep NAS)"
+        $(uname -a 2>/dev/null)"
 
         REGEX="debian ubuntu centos|kernel|oracle[[:space:]]*linux|alma|rocky amazon[[:space:]]*linux alpine darwin nas"
         RELEASE="debian ubuntu centos centos alpine macos nas"
