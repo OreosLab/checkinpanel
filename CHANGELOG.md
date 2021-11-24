@@ -1,6 +1,27 @@
 # Changelog
 
 
+## 20211123-4-131 (2021-11-23)
+
+### Feature
+
+* :sparkles: : 新增系统及面板检测函数：Bash utils_env.sh. [Oreo]
+
+### Fix
+
+* :bug: : 修复 pip3 包安装判定方式. [Oreo]
+
+* :bug: : 修复 Shell 判断错误. [Oreo]
+
+### Docs
+
+* :memo: : 更新 elecV2P 依赖安装日志图. [Oreo]
+
+### Code Style
+
+* :zap: : 提高 Shell 兼容性，适配 dash. [Oreo]
+
+
 ## 20211122-4-110 (2021-11-22)
 
 ### Code Style
