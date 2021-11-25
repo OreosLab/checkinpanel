@@ -1,8 +1,8 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # shellcheck disable=SC2154
 send_message() {
-    printf "\n通知结果："
+    echo -e "\n通知结果："
 
     # 钉钉群机器人通知
     if [ "${DD_BOT_TOKEN}" ]; then
@@ -17,27 +17,27 @@ send_message() {
         }")
         push_code=$(echo "${push}" | jq -r ".errcode" 2>&1)
         if [ "${push_code}" -eq 0 ]; then
-            printf "钉钉机器人推送结果：成功"
+            echo -e "钉钉机器人推送结果：成功"
         else
-            printf "钉钉机器人推送结果：失败"
+            echo -e "钉钉机器人推送结果：失败"
         fi
     fi
 
     # Server 酱通知
     if [ "${PUSH_KEY}" ]; then
-        printf "text=%s&desp=%s" "${TITLE}" "${log_text}" >"${PUSH_TMP_PATH}"
+        echo -e "text=${TITLE}&desp=${log_text}" >"${PUSH_TMP_PATH}"
         push=$(curl -k -s --data-binary @"${PUSH_TMP_PATH}" "https://sc.ftqq.com/${PUSH_KEY}.send")
         push_code=$(echo "${push}" | jq -r ".errno" 2>&1)
         if [ "${push_code}" -eq 0 ]; then
-            printf "Server 酱推送结果：成功"
+            echo -e "Server 酱推送结果：成功"
         else
-            printf "Server 酱推送结果：失败"
+            echo -e "Server 酱推送结果：失败"
         fi
     fi
 
     # Server 酱 Turbo 通知
     if [ "${PUSH_TURBO_KEY}" ]; then
-        printf "text=%s&desp=%s" "${TITLE}" "${log_text}" >"${PUSH_TMP_PATH}"
+        echo -e "text=${TITLE}&desp=${log_text}" >"${PUSH_TMP_PATH}"
         push=$(curl -k -s -X POST --data-binary @"${PUSH_TMP_PATH}" "https://sctapi.ftqq.com/${PUSH_TURBO_KEY}.send")
         ###############################
         # push 成功后，获取相关查询参数
@@ -53,7 +53,7 @@ send_message() {
         ########################################################
 
         if [ "${push_code}" -eq 0 ]; then
-            printf "Server 酱 Turbo 队列结果：成功"
+            echo -e "Server 酱 Turbo 队列结果：成功"
 
             ############################################
             # 推送结果需要异步查询
@@ -67,41 +67,41 @@ send_message() {
                 if [ "${wx_result}" ]; then
                     wx_errcode=$(echo "${wx_result}" | jq -r ".errcode" 2>&1)
                     if [ "${wx_errcode}" -eq 0 ]; then
-                        printf "Server 酱 Turbo 推送结果：成功"
+                        echo -e "Server 酱 Turbo 推送结果：成功"
                     else
-                        printf "Server 酱 Turbo 推送结果：失败，错误码:%s, more info at https://open.work.weixin.qq.com/devtool" "${wx_errcode}"
+                        echo -e "Server 酱 Turbo 推送结果：失败，错误码:${wx_errcode}, more info at https:\\open.work.weixin.qq.com\devtool"
                     fi
                     break
                 else
                     if [ $i -lt 10 ]; then
-                        i=$((i + 1))
+                        ((i++)) || true
                         Sleep 2s
                     else
-                        printf "Server 酱Turbo 推送结果：检查超时，请自行确认结果"
+                        echo -e "Server 酱Turbo 推送结果：检查超时，请自行确认结果"
                     fi
 
                 fi
 
             done
         else
-            printf "Server 酱Turbo 队列结果：失败"
+            echo -e "Server 酱Turbo 队列结果：失败"
         fi
     fi
 
     # PushPlus 通知
     if [ "${PUSH_PLUS_TOKEN}" ]; then
-        printf "token=%s&title=%s&content=%s" "${PUSH_PLUS_TOKEN}" "${TITLE}" "${log_text}" >"${PUSH_TMP_PATH}"
+        echo -e "token=${PUSH_PLUS_TOKEN}&title=${TITLE}&content=${log_text}" >"${PUSH_TMP_PATH}"
         push=$(curl -k -s --data-binary @"${PUSH_TMP_PATH}" "http://www.pushplus.plus/send")
         push_code=$(echo "${push}" | jq -r ".code" 2>&1)
         if [ "${push_code}" -eq 200 ]; then
-            printf "PushPlus 推送结果：成功"
+            echo -e "PushPlus 推送结果：成功"
         else
             push=$(curl -k -s --data-binary @"${PUSH_TMP_PATH}" "http://pushplus.hxtrip.com/send")
             push_code=$(echo "${push}" | jq -r ".code" 2>&1)
             if [ "${push_code}" -eq 200 ]; then
-                printf "PushPlus(hxtrip) 推送结果：成功"
+                echo -e "PushPlus(hxtrip) 推送结果：成功"
             else
-                printf "PushPlus 推送结果：失败"
+                echo -e "PushPlus 推送结果：失败"
             fi
         fi
     fi
@@ -109,13 +109,13 @@ send_message() {
     # Qmsg 酱通知
     if [ "${QMSG_KEY}" ]; then
         result_qmsg_log_text="${TITLE}${log_text}"
-        printf "msg=%s" "${result_qmsg_log_text}" >"${PUSH_TMP_PATH}"
+        echo -e "msg=${result_qmsg_log_text}" >"${PUSH_TMP_PATH}"
         push=$(curl -k -s --data-binary @"${PUSH_TMP_PATH}" "https://qmsg.zendee.cn/send/${QMSG_KEY}")
         push_code=$(echo "${push}" | jq -r ".success" 2>&1)
         if [ "${push_code}" = "true" ]; then
-            printf "Qmsg 酱推送结果：成功"
+            echo -e "Qmsg 酱推送结果：成功"
         else
-            printf "Qmsg 酱推送结果：失败"
+            echo -e "Qmsg 酱推送结果：失败"
         fi
     fi
 
@@ -139,12 +139,12 @@ send_message() {
             }")
             push_code=$(echo "${push}" | jq -r ".errcode" 2>&1)
             if [ "${push_code}" -eq 0 ]; then
-                printf "企业微信推送结果：成功"
+                echo -e "企业微信推送结果：成功"
             else
-                printf "企业微信推送结果：失败"
+                echo -e "企业微信推送结果：失败"
             fi
         else
-            printf "企业微信推送结果：失败 原因：token 获取失败"
+            echo -e "企业微信推送结果：失败 原因：token 获取失败"
         fi
     fi
 
@@ -155,22 +155,22 @@ send_message() {
             -d "{\"token\":\"${token}\",\"msg\":\"${result_sre24_log_text}\"}")
         push_code=$(echo "${push}" | jq -r ".code" 2>&1)
         if [ "${push_code}" -eq 202 ]; then
-            printf "SRE24.com 推送结果：成功"
+            echo -e "SRE24.com 推送结果：成功"
         else
-            printf "SRE24.com 推送结果：失败"
+            echo -e "SRE24.com 推送结果：失败"
         fi
     fi
 
     # TelegramBot 通知
     if [ "${TG_BOT_TOKEN}" ] && [ "${TG_USER_ID}" ]; then
         result_tgbot_log_text="${TITLE}${log_text}"
-        printf "chat_id=%s&parse_mode=Markdown&text=%s" "${TG_USER_ID}" "${result_tgbot_log_text}" >"${PUSH_TMP_PATH}"
+        echo -e "chat_id=${TG_USER_ID}&parse_mode=Markdown&text=${result_tgbot_log_text}" >"${PUSH_TMP_PATH}"
         push=$(curl -k -s --data-binary @"${PUSH_TMP_PATH}" "https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage")
         push_code=$(echo "${push}" | grep -o '"ok":true')
         if [ "${push_code}" ]; then
-            printf "TelegramBot 推送结果：成功"
+            echo -e "TelegramBot 推送结果：成功"
         else
-            printf "TelegramBot 推送结果：失败"
+            echo -e "TelegramBot 推送结果：失败"
         fi
     fi
 }
