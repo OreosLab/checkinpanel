@@ -283,6 +283,7 @@ def pushplus_bot(title: str, content: str) -> None:
         print("PUSHPLUS 推送成功！")
     elif datas.get("code") == 600:
         url2 = "http://pushplus.hxtrip.com/send"
+        headers["Accept"] = "application/json"
         datas2 = requests.post(url=url2, data=body, headers=headers, timeout=15).json()
         if datas2.get("code") == 200:
             print("PUSHPLUS(hxtrip) 推送成功！")
