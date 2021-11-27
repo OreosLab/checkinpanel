@@ -25,17 +25,24 @@ from utils import get_data
 
 """
 euserv auto-renew script
-       v2021.09.30
-* Captcha automatic recognition using TrueCaptcha API
-* Email notification
-* Add login failure retry mechanism
-* reformat log info
-       v2021.11.06
-* Receive renew PIN(6-digits) using mailparser parsed data download url
+
+ChangeLog
+
+v2021.09.30
+- Captcha automatic recognition using TrueCaptcha API
+- Email notification
+- Add login failure retry mechanism
+- reformat log info
+
+v2021.11.06
+- Receive renew PIN(6-digits) using mailparser parsed data download url
   workflow: auto-forward your EUserv PIN email to your mailparser inbox 
-  -> parsing PIN via mailparser 
-  -> get PIN from mailparser
-* Update kc2_security_password_get_token request
+  -> parsing PIN via mailparser -> get PIN from mailparser
+- Update kc2_security_password_get_token request
+
+v2021.11.26
+- Adjust TrueCaptcha constraint parameters for high availability.
+  Plus, the CAPTCHA of EUserv is currently case-insensitive, so the above adjustment works.
 """
 
 # default value is TrueCaptcha demo credential,
@@ -76,16 +83,30 @@ class EUserv:
         """
         TrueCaptcha API doc: https://apitruecaptcha.org/api
         Free to use 100 requests per day.
+        -- response::
+        {
+            "result": "", ==> Or "result": 0
+            "conf": 0.85,
+            "usage": 0,
+            "requestId": "ed0006e5-69f0-4617-b698-97dc054f9022",
+            "version": "dev2"
+        }
         """
         response = session.get(captcha_image_url)
         encoded_string = base64.b64encode(response.content)
         url = "https://api.apitruecaptcha.org/one/gettext"
 
+        # Since "case": "mixed", "mode": "human"
+        # can sometimes cause internal errors in the truecaptcha server.
+        # So a more relaxed constraint(lower/upper & default) is used here.
+        # Plus, the CAPTCHA of EUserv is currently case-insensitive, so the below adjustment works.
         data = {
             "userid": userid,
             "apikey": apikey,
-            "case": "mixed",
-            "mode": "human",
+            # case sensitivity of text (upper | lower| mixed)
+            "case": "lower",
+            # use human or AI (human | default)
+            "mode": "default",
             "data": str(encoded_string)[2:-1],
         }
         r = requests.post(url=url, json=data)
@@ -98,40 +119,50 @@ class EUserv:
         that's what this function is for.
         """
         if "result" in solved:
-            solved_text = solved["result"]
-            if "RESULT  IS" in solved_text:
-                log("[Captcha Solver] You are using the demo apikey.")
-                print("There is no guarantee that demo apikey will work in the future!")
-                # because using demo apikey
-                text = re.findall(r"RESULT  IS . (.*) .", solved_text)[0]
-            else:
-                # using your own apikey
-                log("[Captcha Solver] You are using your own apikey.")
-                text = solved_text
-            operators = ["X", "x", "+", "-"]
-            if any(x in text for x in operators):
-                for operator in operators:
-                    operator_pos = text.find(operator)
-                    if operator == "x" or operator == "X":
-                        operator = "*"
-                    if operator_pos != -1:
-                        left_part = text[:operator_pos]
-                        right_part = text[operator_pos + 1 :]
-                        if left_part.isdigit() and right_part.isdigit():
-                            return eval(
-                                "{left} {operator} {right}".format(
-                                    left=left_part, operator=operator, right=right_part
+            solved_result = solved["result"]
+            if isinstance(solved_result, str):
+                if "RESULT  IS" in solved_result:
+                    log("[Captcha Solver] You are using the demo apikey.")
+                    print(
+                        "There is no guarantee that demo apikey will work in the future!"
+                    )
+                    # because using demo apikey
+                    text = re.findall(r"RESULT  IS . (.*) .", solved_result)[0]
+                else:
+                    # using your own apikey
+                    log("[Captcha Solver] You are using your own apikey.")
+                    text = solved_result
+                operators = ["X", "x", "+", "-"]
+                if any(x in text for x in operators):
+                    for operator in operators:
+                        operator_pos = text.find(operator)
+                        if operator == "x" or operator == "X":
+                            operator = "*"
+                        if operator_pos != -1:
+                            left_part = text[:operator_pos]
+                            right_part = text[operator_pos + 1 :]
+                            if left_part.isdigit() and right_part.isdigit():
+                                return eval(
+                                    "{left} {operator} {right}".format(
+                                        left=left_part,
+                                        operator=operator,
+                                        right=right_part,
+                                    )
                                 )
-                            )
-                        else:
-                            # Because these symbols("X", "x", "+", "-") do not appear at the same time,
-                            # it just contains an arithmetic symbol.
-                            return text
+                            else:
+                                # Because these symbols("X", "x", "+", "-") do not appear at the same time,
+                                # it just contains an arithmetic symbol.
+                                return text
+                else:
+                    return text
             else:
-                return text
+                print(f"[Captcha Solver] Returned JSON: {solved}")
+                log("[Captcha Solver] Service Exception!")
+                raise ValueError("[Captcha Solver] Service Exception!")
         else:
-            print(solved)
-            raise KeyError("Failed to find parsed results.")
+            print(f"[Captcha Solver] Returned JSON: {solved}")
+            log("[Captcha Solver] Failed to find parsed results!")
+            raise KeyError("[Captcha Solver] Failed to find parsed results!")
 
     def get_captcha_solver_usage(self, userid: str, apikey: str) -> dict:
         url = "https://api.apitruecaptcha.org/one/getusage"
