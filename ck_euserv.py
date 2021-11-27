@@ -62,7 +62,7 @@ desp = ""  # 空值
 
 def log(info: str):
     global desp
-    desp = desp + info + "\n\n"
+    desp = desp + info + "\n"
 
 
 class EUserv:
