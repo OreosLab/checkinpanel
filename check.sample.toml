@@ -20,7 +20,7 @@ NEWS = true
 QL_RANDOM_TIME = false
 
 # 天气预报
-CITY = ["上海","朝阳区"]
+CITY = ["上海", "朝阳区"]
 
 # AcFun
 # https://www.acfun.cn
@@ -106,6 +106,12 @@ cookie = "pgv_pvi=xxxxxx; RK=xxxxxx; ptcz=xxxxxx; pgv_pvid=xxxxxx; pac_uid=xxxxx
 # https://www.right.com.cn/forum/forum.php cookie
 [[ENSHAN]]
 cookie = "DJyZ_2132_saltkey=xxxxxx; DJyZ_2132_lastvisit=xxxxxx; DJyZ_2132_onlineusernum=xxxx; DJyZ_2132_sendmail=1; DJyZ_2132_ulastactivity=xxxxxx; DJyZ_2132_auth=xxxxxxxx; DJyZ_2132_sid=0; DJyZ_2132_connect_is_bind=0; DJyZ_2132_nofavfid=1; DJyZ_2132_checkpm=1; DJyZ_2132_noticeTitle=1; DJyZ_2132_lastact=xxxxxx"
+
+# Epic【WEB】
+# https://www.epicgames.com/store/zh-CN
+[[EPIC]]
+email = ""
+password = ""
 
 # EUserv
 # https://apitruecaptcha.org/api 的 apikey

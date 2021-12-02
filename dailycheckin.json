@@ -2,7 +2,7 @@
     "name": "签到项目",
     "author": "Leon",
     "desc": "该订阅适用于 elecV2P，与其他软件并不兼容。相关说明参考：https://github.com/elecV2/elecV2P-dei/tree/master/docs/06-task.md",
-    "date": "2021-11-17 11:20:00",
+    "date": "2021-12-02 13:00:00",
     "list": [
         {
             "name": "Bash & Git",
@@ -261,6 +261,16 @@
             "job": {
                 "type": "runjs",
                 "target": "checkin.js -env PYNAME=ck_enshan.py"
+            },
+            "running": true
+        },
+        {
+            "name": "Epic",
+            "type": "cron",
+            "time": "50 1 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkin.js -env PYNAME=ck_epic.py"
             },
             "running": true
         },
