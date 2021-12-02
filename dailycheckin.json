@@ -65,6 +65,16 @@
             "running": true
         },
         {
+            "name": "ins_selenium",
+            "type": "cron",
+            "time": "32 16 * * *",
+            "job": {
+                "type": "exec",
+                "target": "chmod +x ins_selenium.sh && bash ins_selenium.sh -cwd script/Shell/checkinpanel -timeout 0"
+            },
+            "running": true
+        },
+        {
             "name": "JS-JS",
             "type": "schedule",
             "time": "0",
