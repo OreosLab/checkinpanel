@@ -104,7 +104,7 @@ class Music163:
                 next_login_count,
             )
         else:
-            return False, ret.get("message"), 0, 0, 0
+            return False, ret.get("message"), 0, 0, 0, 0, 0
 
     def sign(self, session):
         sign_url = "https://music.163.com/weapi/point/dailyTask"

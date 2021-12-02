@@ -6,7 +6,6 @@ new Env('欢太商城');
 """
 
 import json
-import os
 import re
 import time
 
