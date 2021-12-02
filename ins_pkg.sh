@@ -9,7 +9,7 @@ COMMENT
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 alpine_pkgs="bash curl gcc git jq libffi-dev make musl-dev openssl-dev perl perl-app-cpanminus perl-dev py3-pip python3 python3-dev wget"
-py_reqs="bs4 cryptography pyaes requests rsa tomli"
+py_reqs="bs4 cryptography pyaes pyppeteer requests rsa schedule tomli"
 js_pkgs="@iarna/toml axios crypto-js got"
 pl_mods="File::Slurp JSON5 TOML::Dumper"
 
