@@ -21,7 +21,7 @@ class YouDao:
         url = "https://note.youdao.com/yws/mapi/user?method=get"
         headers = {"Cookie": cookie}
         res = requests.get(url=url, headers=headers)
-        if res.json().get("q") == None:
+        if res.json().get("q") is None:
             return 0
         return res.json().get("q")
 

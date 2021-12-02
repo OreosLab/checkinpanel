@@ -5,10 +5,10 @@
 <a href="https://github.com/Oreomeow/checkinpanel/network/members"><img alt="GitHub forks" src="https://img.shields.io/github/forks/Oreomeow/checkinpanel?color=orange&amp;style=flat-square"/></a>
 <a href="https://github.com/Oreomeow/checkinpanel/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/Oreomeow/checkinpanel?color=red&amp;style=flat-square"/></a>
 <a href="https://github.com/Oreomeow/checkinpanel/search?l=python"><img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/Oreomeow/checkinpanel?color=blueviolet&amp;logoColor=informational&amp;style=flat-square"/></a>
-<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000?logo=Python&amp;style=flat-square"/></a>
 <a href="https://t.me/joinchat/muGNhnaZglQ0N2Q1"><img alt="Telegram" src="https://img.shields.io/badge/talk-Telegram-blue?logo=Telegram&amp;style=flat-square"/></a>
+<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000?logo=Python&amp;style=flat-square"/></a>
+<a href="https://sonarcloud.io/summary/new_code?id=Oreomeow_checkinpanel"><img alt="Quality Gate Status" src="https://sonarcloud.io/api/project_badges/measure?project=Oreomeow_checkinpanel&metric=alert_status"/></a>
 <a href="https://github.com/Oreomeow/checkinpanel/commits"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Oreomeow/checkinpanel?color=success&amp;logo=GitHub&amp;style=flat-square"/></a>
-<a href="https://lgtm.com/projects/g/Oreomeow/checkinpanel/context:python"><img alt="Language grade: Python" src="https://img.shields.io/lgtm/grade/python/g/Oreomeow/checkinpanel.svg?color=success&amp;logo=lgtm&logoWidth=18&amp;style=flat-square"/></a>
 </div>
 
 ## 简介
