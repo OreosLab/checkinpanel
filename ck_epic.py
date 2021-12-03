@@ -25,6 +25,7 @@ import requests
 import schedule
 from pyppeteer import launch, launcher
 from pyppeteer.element_handle import ElementHandle
+from pyppeteer.frame_manager import Frame
 from pyppeteer.network_manager import Request
 
 from notify_mtr import send
@@ -401,11 +402,11 @@ class EpicgamesClaimer:
                 await self._headless_stealth_async()
             self.browser_opened = True
             if self.cookies:
-                await self.load_cookies_async(self.cookies)
+                await self._load_cookies_async(self.cookies)
             if self.data_dir != None:
                 cookies_path = os.path.join(self.data_dir, "cookies.json")
                 if os.path.exists(cookies_path):
-                    await self.load_cookies_async(cookies_path)
+                    await self._load_cookies_async(cookies_path)
                     os.remove(cookies_path)
         # await self._refresh_cookies_async()
 
@@ -420,6 +421,8 @@ class EpicgamesClaimer:
 
     async def _close_browser_async(self):
         if self.browser_opened:
+            if self.cookies:
+                await self._save_cookies_async(self.cookies)
             await self.browser.close()
             self.browser_opened = False
 
@@ -494,13 +497,15 @@ class EpicgamesClaimer:
         return links
 
     async def _find_async(
-        self, selectors: Union[str, List[str]], timeout: int = None
+        self, selectors: Union[str, List[str]], timeout: int = None, frame: Frame = None
     ) -> Union[bool, int]:
+        if frame == None:
+            frame = self.page
         if type(selectors) == str:
             try:
                 if timeout == None:
                     timeout = 1000
-                await self.page.waitForSelector(selectors, options={"timeout": timeout})
+                await frame.waitForSelector(selectors, options={"timeout": timeout})
                 return True
             except:
                 return False
@@ -509,22 +514,11 @@ class EpicgamesClaimer:
                 timeout = 300000
             for _ in range(int(timeout / 1000 / len(selectors))):
                 for i in range(len(selectors)):
-                    if await self._find_async(selectors[i], timeout=1000):
+                    if await self._find_async(selectors[i], timeout=1000, frame=frame):
                         return i
             return -1
         else:
             raise ValueError
-
-    async def _find_and_not_find_async(
-        self, find_selectors: List[str], not_find_selector: str, timeout: int = 180000
-    ) -> int:
-        for _ in range(int(timeout / 1000 / (len(find_selectors) + 1))):
-            for i in range(0, len(find_selectors)):
-                if await self._find_async(find_selectors[i], timeout=1000):
-                    return i
-            if not await self._find_async(not_find_selector, timeout=1000):
-                return len(find_selectors)
-        return -1
 
     async def _try_click_async(
         self, selector: str, sleep: Union[int, float] = 2
@@ -632,7 +626,7 @@ class EpicgamesClaimer:
                 await self._type_async("input[name=code-input-0]", verifacation_code)
             await self._click_async("#continue[tabindex='0']", timeout=self.timeout)
             verify_result = await self._find_async(
-                ["#modal-content div[role*=alert]", "#user"]
+                ["#modal-content div[role*=alert]", "#user"], timeout=self.timeout
             )
             if verify_result == -1:
                 raise TimeoutError("Chcek login result timeout.")
@@ -888,6 +882,27 @@ class EpicgamesClaimer:
         return free_games
 
     async def _claim_async(self, item: Item) -> None:
+        async def findx_async(
+            items: List[Dict[str, Union[str, bool, int]]], timeout: int
+        ) -> int:
+            for _ in range(int(timeout / 1000 / (len(items)))):
+                for i in range(0, len(items)):
+                    if items[i]["exist"]:
+                        if await self._find_async(
+                            items[i]["selector"],
+                            timeout=1000,
+                            frame=self.page.frames[items[i]["frame"]],
+                        ):
+                            return i
+                    else:
+                        if not await self._find_async(
+                            items[i]["selector"],
+                            timeout=1000,
+                            frame=self.page.frames[items[i]["frame"]],
+                        ):
+                            return i
+            return -1
+
         await self._navigate_async(item.purchase_url, timeout=self.timeout)
         await self._click_async(
             "#purchase-app button[class*=confirm]:not([disabled])", timeout=self.timeout
@@ -895,9 +910,16 @@ class EpicgamesClaimer:
         await self._try_click_async(
             "#purchaseAppContainer div.payment-overlay button.payment-btn--primary"
         )
-        result = await self._find_and_not_find_async(
-            ["#purchase-app div[class*=alert]", "div.MuiDialog-root"],
-            "#purchase-app > div",
+        result = await findx_async(
+            [
+                {
+                    "selector": "#purchase-app div[class*=alert]",
+                    "exist": True,
+                    "frame": 0,
+                },
+                {"selector": "div.MuiDialog-root", "exist": True, "frame": 1},
+                {"selector": "#purchase-app > div", "exist": False, "frame": 0},
+            ],
             timeout=self.timeout,
         )
         if result == 0:
@@ -1089,11 +1111,20 @@ class EpicgamesClaimer:
             pass
         return claimed_item_titles
 
-    async def load_cookies_async(self, path: str) -> None:
+    async def _load_cookies_async(self, path: str) -> None:
         with open(path, "r") as cookies_file:
             cookies = cookies_file.read()
             for cookie in json.loads(cookies):
                 await self.page.setCookie(cookie)
+
+    async def _save_cookies_async(self, path: str) -> None:
+        dir = os.path.dirname(path)
+        if not dir == "" and not os.path.exists(dir):
+            os.mkdir(dir)
+        with open(path, "w") as cookies_file:
+            await self.page.cookies()
+            cookies = await self.page.cookies()
+            cookies_file.write(json.dumps(cookies, separators=(",", ": "), indent=4))
 
     def open_browser(self) -> None:
         return self._loop.run_until_complete(self._open_browser_async())
@@ -1153,23 +1184,20 @@ class EpicgamesClaimer:
             schedule.run_pending()
             time.sleep(1)
 
+    def load_cookies(self, path: str) -> None:
+        return self._loop.run_until_complete(self._load_cookies_async(path))
+
     def save_cookies(self, path: str) -> None:
-        dir = os.path.dirname(path)
-        if not os.path.exists(dir):
-            os.mkdir(os.path.dirname(path))
-        with open(path, "w") as cookies_file:
-            self._loop.run_until_complete(self.page.cookies())
-            cookies = self._loop.run_until_complete(self.page.cookies())
-            cookies_file.write(json.dumps(cookies, separators=(",", ": "), indent=4))
+        return self._loop.run_until_complete(self._save_cookies_async(path))
 
     def navigate(self, url: str, timeout: int = 30000, reload: bool = True) -> None:
         return self._loop.run_until_complete(self._navigate_async(url, timeout, reload))
 
-    def wait(self, selector: str, timeout: int = 30000) -> None:
-        return self._loop.run_until_complete(self._find_async(selector, timeout))
+    def find(self, selector: str, timeout: int = None, frame: Frame = None) -> bool:
+        return self._loop.run_until_complete(self._find_async(selector, timeout, frame))
 
 
-def login() -> None:
+def login(cookies_path: str) -> None:
     claimer = EpicgamesClaimer(
         headless=False,
         sandbox=True,
@@ -1177,8 +1205,8 @@ def login() -> None:
     )
     claimer.log("Creating user data, please log in in the browser ...")
     claimer.navigate("https://www.epicgames.com/store", timeout=0)
-    claimer.wait("#user[data-component=SignedIn]", timeout=0)
-    claimer.save_cookies("User_Data/Default/cookies.json")
+    claimer.find("#user[data-component=SignedIn]", timeout=0)
+    claimer.save_cookies(cookies_path)
     claimer.log("Login successful")
     claimer.close_browser()
 
@@ -1333,7 +1361,7 @@ def get_args(run_by_main_script: bool = False) -> argparse.Namespace:
         print(args)
         exit()
     if args.login:
-        login()
+        login("User_Data/Default/cookies.json")
         exit()
     return args
 
@@ -1417,6 +1445,7 @@ def start() -> None:
         os.chdir("/tmp")
     args = get_args()
     args.chromium_path = "chromium-browser"
+    args.cookies = "User_Data/Default/cookies.json"
     args.interactive = False
     args.once = True
     data = get_data()

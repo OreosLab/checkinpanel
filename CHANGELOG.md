@@ -1,6 +1,31 @@
 # Changelog
 
 
+## 20211203-4-141 (2021-12-03)
+
+### Feature
+
+* :rocket: : 新增获取 config/script 目录路径函数：utils_env.sh. [Oreo]
+
+### Fix
+
+* :bug: : 尝试修复 tg 推送错误：notify.sh. [Oreo]
+
+  `&parse_mode=Markdown&text=` 改为 `&parse_mode=HTML&text=`
+
+* :bug: : 修复打印错误：utils_env.sh. [Oreo]
+
+* :bug: : 修复 shell 变量名 panel 拼写错误. [Oreo]
+
+### Docs
+
+* :memo: : 更新 README badges. [Oreo]
+
+### Code Style
+
+* :zap: : 改进代码错误. [Oreo]
+
+
 ## 20211202-4-101 (2021-12-02)
 
 ### Feature
