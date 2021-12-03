@@ -134,6 +134,7 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 * 运行 `签到依赖` 任务后的日志
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6b85c2a4bf954036885b61c2b935cb1c)](https://app.codacy.com/gh/Oreomeow/checkinpanel?utm_source=github.com&utm_medium=referral&utm_content=Oreomeow/checkinpanel&utm_campaign=Badge_Grade_Settings)
     [![oSs9xK.png](https://z3.ax1x.com/2021/11/23/oSs9xK.png)](https://imgtu.com/i/oSs9xK)
 
 * 如果任务列表安装不成功，参考 [#12](https://github.com/Oreomeow/checkinpanel/issues/12)
