@@ -63,7 +63,13 @@ source_config() {
     else
         ENV_FILE="./env"
     fi
-    . "${ENV_FILE}" || printf "%s 不存在，请检查，若配置过环境变量的可以忽略。" "${ENV_FILE}"
+
+    if [ -f "${ENV_FILE}" ]; then
+        . "${ENV_FILE}"
+    else
+        printf "%s 不存在，请检查，若配置过环境变量的可以忽略\n" "${ENV_FILE}" && return 1
+    fi
+
     # 是否显示上下文 默认是
     if [ "${DISPLAY_CONTEXT}" -eq 0 ]; then
         IS_DISPLAY_CONTEXT=0
@@ -74,10 +80,10 @@ source_config() {
 # shellcheck disable=SC2034
 get_some_path() {
     check_env
-    if [ "$panel" = "elecv2p" ]; then
+    if [ "${panel}" = "elecv2p" ]; then
         SCR_PATH="/usr/local/app/script/Shell"
         CONF_PATH="/usr/local/app/script/Lists"
-    elif [ "$panel" = "ql" ]; then
+    elif [ "${panel}" = "qinglong" ]; then
         SCR_PATH="/ql/scripts"
         CONF_PATH="/ql/config"
     else
@@ -89,16 +95,16 @@ get_some_path() {
 # 检查账户权限
 check_root() {
     if [ "$(id -u)" -eq 0 ]; then
-        printf "当前用户是 ROOT 用户，可以继续操作" && sleep 1
+        printf "当前用户是 ROOT 用户，可以继续操作\n" && sleep 1
     else
-        printf "当前非 ROOT 账号(或没有 ROOT 权限)，无法继续操作，请更换 ROOT 账号或使用 su 命令获取临时 ROOT 权限" && exit 1
+        printf "当前非 ROOT 账号(或没有 ROOT 权限)，无法继续操作，请更换 ROOT 账号或使用 su 命令获取临时 ROOT 权限\n" && exit 1
     fi
 }
 
 # 检查 jq 依赖
 check_jq_installed_status() {
     if [ -z "$(command -v jq)" ]; then
-        printf "jq 依赖没有安装，开始安装..."
+        printf "jq 依赖没有安装，开始安装...\n"
         check_root
         if [ "${panel}" ]; then
             apk add --no-cache jq
@@ -110,9 +116,9 @@ check_jq_installed_status() {
             apt-get update && apt-get install jq -y
         fi
         if [ -z "$(command -v jq)" ]; then
-            printf "jq 依赖安装失败，请检查！" && exit 1
+            printf "jq 依赖安装失败，请检查！\n" && exit 1
         else
-            printf "jq 依赖安装成功！"
+            printf "jq 依赖安装成功！\n"
         fi
     fi
 }
@@ -120,15 +126,15 @@ check_jq_installed_status() {
 # 检查 Java 依赖
 check_java_installed_status() {
     if [ -z "$(command -v java)" ]; then
-        printf "Java 依赖没有安装，开始安装..."
+        printf "Java 依赖没有安装，开始安装...\n"
         check_root
         if [ "${panel}" ]; then
             apk add --no-cache openjdk8
         fi
         if [ -z "$(command -v java)" ]; then
-            printf "Java 依赖安装失败，请检查！" && exit 1
+            printf "Java 依赖安装失败，请检查！\n" && exit 1
         else
-            printf "Java 依赖安装成功！"
+            printf "Java 依赖安装成功！\n"
         fi
     fi
 }
