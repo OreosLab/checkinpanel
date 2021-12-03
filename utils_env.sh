@@ -11,9 +11,9 @@ IS_DISPLAY_CONTEXT=1
 # shellcheck disable=SC2034
 check_env() {
     if [ -f "${V2P_FILE}" ]; then
-        pannel="elecv2p"
+        panel="elecv2p"
     elif [ -f "${QL_FILE}" ]; then
-        pannel="qinglong"
+        panel="qinglong"
     else
         CMD="$(grep -i pretty_name /etc/os-release 2>/dev/null | cut -d \" -f2)
         $(hostnamectl 2>/dev/null | grep -i system | cut -d : -f2)
@@ -55,14 +55,15 @@ check_env() {
 source_config() {
     check_env
     if [ "${ENV_PATH}" ]; then
-        . "$ENV_PATH"
-    elif [ "${pannel}" = "elecv2p" ]; then
-        . "/usr/local/app/script/Lists/.env"
-    elif [ "${pannel}" = "qinglong" ]; then
-        . "/ql/config/.env"
+        ENV_FILE=$ENV_PATH
+    elif [ "${panel}" = "elecv2p" ]; then
+        ENV_FILE="/usr/local/app/script/Lists/.env"
+    elif [ "${panel}" = "qinglong" ]; then
+        ENV_FILE="/ql/config/.env"
     else
-        . env
+        ENV_FILE="./env"
     fi
+    . "${ENV_FILE}" || printf "%s 不存在，请检查，若配置过环境变量的可以忽略。" "${ENV_FILE}"
     # 是否显示上下文 默认是
     if [ "${DISPLAY_CONTEXT}" -eq 0 ]; then
         IS_DISPLAY_CONTEXT=0
@@ -83,7 +84,7 @@ check_jq_installed_status() {
     if [ -z "$(command -v jq)" ]; then
         printf "jq 依赖没有安装，开始安装..."
         check_root
-        if [ "${pannel}" ]; then
+        if [ "${panel}" ]; then
             apk add --no-cache jq
         elif [ "${system}" = "centos" ]; then
             yum update && yum install jq -y
@@ -105,7 +106,7 @@ check_java_installed_status() {
     if [ -z "$(command -v java)" ]; then
         printf "Java 依赖没有安装，开始安装..."
         check_root
-        if [ "${pannel}" ]; then
+        if [ "${panel}" ]; then
             apk add --no-cache openjdk8
         fi
         if [ -z "$(command -v java)" ]; then
