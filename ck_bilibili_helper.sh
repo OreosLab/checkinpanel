@@ -17,10 +17,10 @@ check_jq_installed_status
 check_java_installed_status
 
 # shellcheck disable=SC2154
-if [ "${pannel}" == "qinglong" ]; then
+if [ "${panel}" == "qinglong" ]; then
     bili_path="/ql/scripts/bilibili"
     conf_file="/ql/config/java_conf.json"
-elif [ "${pannel}" == "elecv2p" ]; then
+elif [ "${panel}" == "elecv2p" ]; then
     bili_path="/usr/local/app/script/Shell/checkinpanel/bilibili"
     conf_file="/usr/local/app/script/Lists/java_conf.json"
 fi
