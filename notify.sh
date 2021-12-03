@@ -164,7 +164,7 @@ send_message() {
     # TelegramBot 通知
     if [ "${TG_BOT_TOKEN}" ] && [ "${TG_USER_ID}" ]; then
         result_tgbot_log_text="${TITLE}${log_text}"
-        echo -e "chat_id=${TG_USER_ID}&parse_mode=Markdown&text=${result_tgbot_log_text}" >"${PUSH_TMP_PATH}"
+        echo -e "chat_id=${TG_USER_ID}&parse_mode=HTML&text=${result_tgbot_log_text}" >"${PUSH_TMP_PATH}"
         push=$(curl -k -s --data-binary @"${PUSH_TMP_PATH}" "https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage")
         push_code=$(echo "${push}" | grep -o '"ok":true')
         if [ "${push_code}" ]; then
