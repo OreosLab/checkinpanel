@@ -328,12 +328,16 @@ crashlytics-build.properties
 fabric.properties
 
 # Config
+User_Data
 check.json5
-notify.json5
 check.toml
+device_auths.json
+cookies.json
+notify.json5
 notify.toml
 
 # Others
+*.exe
+*.txt
 magic.json
 ss_*
-*.txt
