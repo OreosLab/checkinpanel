@@ -70,6 +70,22 @@ source_config() {
     fi
 }
 
+# 获取 config/script 目录路径
+# shellcheck disable=SC2034
+get_some_path() {
+    check_env
+    if [ "$panel" = "elecv2p" ]; then
+        SCR_PATH="/usr/local/app/script/Shell"
+        CONF_PATH="/usr/local/app/script/Lists"
+    elif [ "$panel" = "ql" ]; then
+        SCR_PATH="/ql/scripts"
+        CONF_PATH="/ql/config"
+    else
+        SCR_PATH="."
+        CONF_PATH="."
+    fi
+}
+
 # 检查账户权限
 check_root() {
     if [ "$(id -u)" -eq 0 ]; then
