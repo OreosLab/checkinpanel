@@ -357,32 +357,36 @@ class EpicgamesClaimer:
                 print("[{} DEBUG] {}".format(localtime, text))
 
     async def _headless_stealth_async(self):
+        original_user_agent = await self.page.evaluate("navigator.userAgent")
+        user_agent = original_user_agent.replace("Headless", "")
         await self.page.evaluateOnNewDocument(
-            "() => {"
-            "Object.defineProperty(navigator, 'appVersion', {get: () => '5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3542.0 Safari/537.36',});"
-            "Object.defineProperty(navigator, 'plugins', {get: () => [{'description': 'Portable Document Format', 'filename': 'internal-pdf-viewer', 'length': 1, 'name': 'Chrome PDF Plugin'}]});"
-            "Object.defineProperty(navigator, 'languages', {get: () => ['zh-CN', 'zh', 'en'],});"
-            "const originalQuery = window.navigator.permissions.query;"
-            "window.navigator.permissions.query = (parameters) => (parameters.name === 'notifications' ? Promise.resolve({ state: Notification.permission }) : originalQuery(parameters));"
-            "window.chrome = {}; window.chrome.app = {'InstallState':'a', 'RunningState':'b', 'getDetails':'c', 'getIsInstalled':'d'}; window.chrome.csi = function(){}; window.chrome.loadTimes = function(){}; window.chrome.runtime = function(){};"
-            "const newProto = navigator.__proto__; delete newProto.webdriver; navigator.__proto__ = newProto;"
-            "Reflect.defineProperty(navigator.connection,'rtt', {get: () => 150, enumerable:true});"
-            "const getParameter = WebGLRenderingContext.getParameter; WebGLRenderingContext.prototype.getParameter = function(parameter) {if (parameter === 37445) {return 'Intel Open Source Technology Center';}; if (parameter === 37446) {return 'Mesa DRI Intel(R) Ivybridge Mobile ';}; return getParameter(parameter);};"
-            "['height', 'width'].forEach(property => {const imageDescriptor = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, property); Object.defineProperty(HTMLImageElement.prototype, property, {...imageDescriptor, get: function() {if (this.complete && this.naturalHeight == 0) {return 16;}; return imageDescriptor.get.apply(this);},});});"
-            "}"
+            "() => {Object.defineProperty(navigator, 'webdriver', {get: () => false})}"
         )
         await self.page.evaluateOnNewDocument(
-            "window.navigator.chrome = {runtime: {}, loadTimes: function() {}, csi: function() {}, app: {}};"
+            "window.chrome = {'loadTimes': {}, 'csi': {}, 'app': {'isInstalled': false, 'getDetails': {}, 'getIsInstalled': {}, 'installState': {}, 'runningState': {}, 'InstallState': {'DISABLED': 'disabled', 'INSTALLED': 'installed', 'NOT_INSTALLED': 'not_installed'}, 'RunningState': {'CANNOT_RUN': 'cannot_run', 'READY_TO_RUN': 'ready_to_run', 'RUNNING': 'running'}}, 'webstore': {'onDownloadProgress': {'addListener': {}, 'removeListener': {}, 'hasListener': {}, 'hasListeners': {}, 'dispatch': {}}, 'onInstallStageChanged': {'addListener': {}, 'removeListener': {}, 'hasListener': {}, 'hasListeners': {}, 'dispatch': {}}, 'install': {}, 'ErrorCode': {'ABORTED': 'aborted', 'BLACKLISTED': 'blacklisted', 'BLOCKED_BY_POLICY': 'blockedByPolicy', 'ICON_ERROR': 'iconError', 'INSTALL_IN_PROGRESS': 'installInProgress', 'INVALID_ID': 'invalidId', 'INVALID_MANIFEST': 'invalidManifest', 'INVALID_WEBSTORE_RESPONSE': 'invalidWebstoreResponse', 'LAUNCH_FEATURE_DISABLED': 'launchFeatureDisabled', 'LAUNCH_IN_PROGRESS': 'launchInProgress', 'LAUNCH_UNSUPPORTED_EXTENSION_TYPE': 'launchUnsupportedExtensionType', 'MISSING_DEPENDENCIES': 'missingDependencies', 'NOT_PERMITTED': 'notPermitted', 'OTHER_ERROR': 'otherError', 'REQUIREMENT_VIOLATIONS': 'requirementViolations', 'USER_CANCELED': 'userCanceled', 'WEBSTORE_REQUEST_ERROR': 'webstoreRequestError'}, 'InstallStage': {'DOWNLOADING': 'downloading', 'INSTALLING': 'installing'}}}"
         )
         await self.page.evaluateOnNewDocument(
-            "window.navigator.language = {runtime: {}, loadTimes: function() {}, csi: function() {}, app: {}};"
+            "() => {Reflect.defineProperty(navigator.connection,'rtt', {get: () => 200, enumerable: true})}"
+        )
+        await self.page.evaluateOnNewDocument(
+            "() => {Object.defineProperty(navigator, 'plugins', {get: () => [{'description': 'Portable Document Format', 'filename': 'internal-pdf-viewer', 'length': 1, 'name': 'Chrome PDF Plugin'}, {'description': '', 'filename': 'mhjfbmdgcfjbbpaeojofohoefgiehjai', 'length': 1, 'name': 'Chromium PDF Viewer'}, {'description': '', 'filename': 'internal-nacl-plugin', 'length': 2, 'name': 'Native Client'}]})}"
+        )
+        await self.page.evaluateOnNewDocument(
+            "() => {const newProto = navigator.__proto__; delete newProto.webdriver; navigator.__proto__ = newProto}"
+        )
+        await self.page.evaluateOnNewDocument(
+            "const getParameter = WebGLRenderingContext.getParameter; WebGLRenderingContext.prototype.getParameter = function(parameter) {if (parameter === 37445) {return 'Intel Open Source Technology Center';}; if (parameter === 37446) {return 'Mesa DRI Intel(R) Ivybridge Mobile ';}; return getParameter(parameter);}"
+        )
+        await self.page.evaluateOnNewDocument(
+            "() => {Reflect.defineProperty(navigator, 'mimeTypes', {get: () => [{type: 'application/pdf', suffixes: 'pdf', description: '', enabledPlugin: Plugin}, {type: 'application/x-google-chrome-pdf', suffixes: 'pdf', description: 'Portable Document Format', enabledPlugin: Plugin}, {type: 'application/x-nacl', suffixes: '', description: 'Native Client Executable', enabledPlugin: Plugin}, {type: 'application/x-pnacl', suffixes: '', description: 'Portable Native Client Executable', enabledPlugin: Plugin}]})}"
+        )
+        await self.page.evaluateOnNewDocument(
+            "() => {const p = {'defaultRequest': null, 'receiver': null}; Reflect.defineProperty(navigator, 'presentation', {get: () => p})}"
         )
         await self.page.setExtraHTTPHeaders(
             {"Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8"}
         )
-        await self.page.setUserAgent(
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3542.0 Safari/537.36"
-        )
+        await self.page.setUserAgent(user_agent)
 
     async def _open_browser_async(self) -> None:
         if not self.browser_opened:
@@ -922,17 +926,21 @@ class EpicgamesClaimer:
             ],
             timeout=self.timeout,
         )
-        if result == 0:
+        if result == -1:
+            raise TimeoutError("Timeout when claiming")
+        elif result == 0:
             message = await self._get_text_async(
                 "#purchase-app div[class*=alert]:not([disabled])"
             )
             raise PermissionError(message)
         elif result == 1:
             raise PermissionError("CAPTCHA is required for unknown reasons")
-        elif result == -1:
-            raise TimeoutError("Timeout when claiming")
         else:
-            await asyncio.sleep(2)
+            owned = await self._is_owned_async(item.offer_id, item.namespace)
+            if not owned:
+                raise RuntimeError(
+                    "An item was mistakenly considered to have been claimed"
+                )
 
     async def _screenshot_async(self, path: str) -> None:
         await self.page.screenshot({"path": path})
@@ -1196,6 +1204,23 @@ class EpicgamesClaimer:
     def find(self, selector: str, timeout: int = None, frame: Frame = None) -> bool:
         return self._loop.run_until_complete(self._find_async(selector, timeout, frame))
 
+    def virtual_console(self) -> None:
+        print(
+            "You can input JavaScript commands here for testing. Type exit and press Enter to quit."
+        )
+        while True:
+            try:
+                command = input("> ")
+            except EOFError:
+                break
+            if command == "exit":
+                break
+            try:
+                result = self._loop.run_until_complete(self.page.evaluate(command))
+                print(result)
+            except Exception as e:
+                print(f"{e}")
+
 
 def login(cookies_path: str) -> None:
     claimer = EpicgamesClaimer(
@@ -1204,7 +1229,10 @@ def login(cookies_path: str) -> None:
         browser_args=["--disable-infobars", "--no-first-run"],
     )
     claimer.log("Creating user data, please log in in the browser ...")
-    claimer.navigate("https://www.epicgames.com/store", timeout=0)
+    claimer.navigate(
+        "https://www.epicgames.com/id/login?redirectUrl=https%3A%2F%2Fwww.epicgames.com%2Fstore",
+        timeout=0,
+    )
     claimer.find("#user[data-component=SignedIn]", timeout=0)
     claimer.save_cookies(cookies_path)
     claimer.log("Login successful")
@@ -1433,7 +1461,53 @@ def main(
         )
 
 
+# Entry function of SCF
+def main_handler(event: Dict[str, str] = None, context: Dict[str, str] = None) -> str:
+    cwd = os.getcwd()
+    sys.path.append(cwd)
+    os.chdir("/tmp")
+    args = get_args()
+    args.chromium_path = cwd + "/chrome-linux/chrome"
+    args.once = True
+    claimed_item_titles = main(args, raise_error=True)
+    result_message = (
+        f"{NOTIFICATION_CONTENT_CLAIM_SUCCEED}{claimed_item_titles}"
+        if len(claimed_item_titles)
+        else NOTIFICATION_CONTENT_OWNED_ALL
+    )
+    return result_message
+
+
+def run(args: argparse.Namespace, check_items: dict) -> str or None:
+    args.chromium_path = "chromium-browser"
+    args.interactive = False
+    args.once = True
+
+    msg_all = ""
+    for check_item in check_items:
+        args.email = check_item.get("email")
+        args.password = check_item.get("password")
+        args.data_dir = "User_Data/{}".format(args.email)
+        if not os.path.exists("User_Data"):
+            log(
+                f"未发现 User_Data 文件夹，判断为初次使用。若遇到人机验证，请在能手动登录浏览器页面的环境（如 Win10）使用 get_cookies.exe/py 获取 cookies.json 并放入 {args.data_dir} 文件夹，然后再尝试",
+                level="warning",
+            )
+        claimed_item_titles = main(args, raise_error=True)
+        msg = (
+            f"{NOTIFICATION_CONTENT_CLAIM_SUCCEED}{claimed_item_titles}"
+            if len(claimed_item_titles)
+            else NOTIFICATION_CONTENT_OWNED_ALL
+        )
+        msg_all += msg + "\n\n"
+    return msg_all
+
+
 def start() -> None:
+    args = get_args()
+    if args.email and args.password:
+        main()
+        return
     cwd = os.getcwd()
     sys.path.append(cwd)
     ENV = get_env_str()
@@ -1442,23 +1516,12 @@ def start() -> None:
     elif ENV == "ql":
         os.chdir("/ql/config")
     else:
-        os.chdir("/tmp")
-    args = get_args()
-    args.chromium_path = "chromium-browser"
-    args.cookies = "User_Data/Default/cookies.json"
-    args.interactive = False
-    args.once = True
+        main()
+        return
     data = get_data()
-    check_item = data.get("EPIC", [])[0]
-    args.email = check_item.get("email")
-    args.password = check_item.get("password")
-    claimed_item_titles = main(args, raise_error=True)
-    result_message = (
-        f"{NOTIFICATION_CONTENT_CLAIM_SUCCEED}{claimed_item_titles}"
-        if len(claimed_item_titles)
-        else NOTIFICATION_CONTENT_OWNED_ALL
-    )
-    send("Epicgames", result_message)
+    _check_items = data.get("EPIC", [])
+    res = run(args, check_items=_check_items)
+    send("Epicgames", res)
 
 
 if __name__ == "__main__":
