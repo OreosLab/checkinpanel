@@ -2,11 +2,11 @@
 let pyname = $env.PYNAME;
 console.log(`⏳ 开始执行 ${pyname}`);
 $exec(`python3 ${pyname}`, {
-    cwd: './script/Shell/checkinpanel',
+    cwd: 'script/Shell/checkinpanel',
     timeout: 0,
     // prettier-ignore
     env: {
-        ENV_PATH: $store.get('ENV_PATH', 'string'),                               // 自定义配置文件路径，如 /usr/local/app/script/Lists/.env
+        CHECK_CONFIG: $store.get('CHECK_CONFIG', 'string'),                       // 自定义 toml 配置文件路径，如 /usr/local/app/script/Lists/config.toml     
         NOTIFY_CONFIG_PATH: $store.get('NOTIFY_CONFIG_PATH', 'string'),           // 自定义通知配置文件路径，如 /usr/locallocal/app/script/Lists/notify.json5
         HITOKOTO: $store.get('HITOKOTO', 'boolean'),                              // 一言，true 为开启，false 为关闭，默认关闭
         BARK_PUSH: $store.get('BARK_PUSH', 'string'),                             // bark IP 或设备码，例：https://api.day.app/xxxxxx
@@ -28,7 +28,6 @@ $exec(`python3 ${pyname}`, {
         QMSG_TYPE: $store.get('QMSG_TYPE', 'string'),                             // qmsg 酱的 QMSG_TYPE，推送到群填写 group，默认推送到 QQ
         QYWX_AM: $store.get('QYWX_AM', 'string'),                                 // 企业微信应用的 QYWX_AM，参考 http://note.youdao.com/s/HMiudGkb，依次填入 corpid, corpsecret, touser(注：多个成员ID使用 | 隔开), agentid, media_id(选填，不填默认文本消息类型)
         QYWX_KEY: $store.get('QYWX_KEY', 'string'),                               // 企业微信机器人的 QYWX_KEY
-        SRE_TOKEN: $store.get('SRE_TOKEN', 'string'),                             // SRE24.com 的 SRE_TOKEN，https://push.jwks123.cn 关注公众号后再次点击获取令牌
         TG_BOT_TOKEN: $store.get('TG_BOT_TOKEN', 'string'),                       // tg 机器人的 TG_BOT_TOKEN
         TG_USER_ID: $store.get('TG_USER_ID', 'string'),                           // tg 机器人的 TG_USER_ID
         TG_API_HOST: $store.get('TG_API_HOST', 'string'),                         // tg api 自建反向代理地址，默认 api.telegram.org，可不填
