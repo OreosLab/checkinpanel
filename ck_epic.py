@@ -1493,6 +1493,10 @@ def run(args: argparse.Namespace, check_items: dict) -> str or None:
                 f"未发现 User_Data 文件夹，判断为初次使用。若遇到人机验证，请在能手动登录浏览器页面的环境（如 Win10）使用 get_cookies.exe/py 获取 cookies.json 并放入 {args.data_dir} 文件夹，然后再尝试",
                 level="warning",
             )
+        else:
+            args.cookies = (
+                c if os.path.exists(c := args.data_dir + "/cookies.json") else None
+            )
         claimed_item_titles = main(args, raise_error=True)
         msg = (
             f"{NOTIFICATION_CONTENT_CLAIM_SUCCEED}{claimed_item_titles}"
@@ -1508,8 +1512,6 @@ def start() -> None:
     if args.email and args.password:
         main()
         return
-    cwd = os.getcwd()
-    sys.path.append(cwd)
     ENV = get_env_str()
     if ENV == "v2p":
         os.chdir("/usr/local/app/script/Lists")
