@@ -1,6 +1,25 @@
 # Changelog
 
 
+## 20211206-4-220 (2021-12-06)
+
+### Feature
+
+* :sparkles: : 新增开机自动安装依赖文件：checkins_pkg.js. [Oreo]
+
+### Fix
+
+* :bug: : 修复 epic 会被删除 cookies.json 的 bug. [Oreo]
+
+  其实不算 bug......
+
+* :bug: : 修复 freenom 多账号打印 bug. [Oreo]
+
+### Refactor Functions
+
+* :recycle: : 重构入口文件：checkin*.js 系列. [Oreo]
+
+
 ## 20211205-4-100 (2021-12-05)
 
 ### Feature
