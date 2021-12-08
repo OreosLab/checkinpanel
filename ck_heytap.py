@@ -566,7 +566,7 @@ class Heytap:
                     self.daily_viewgoods()  # 执行每日商品浏览任务
                     self.daily_sharegoods()  # 执行每日商品分享任务
                     self.do_task_and_draw()  # 自己修改的接口，针对活动任务及抽奖，新增及删除活动请修改act_list.py
-                    self.zaoshui_task()  # 早睡报名 由于自己不能及时更新cookie，就关闭了打卡
+                    # self.zaoshui_task()  # 早睡报名 由于自己不能及时更新cookie，就关闭了打卡
                 except Exception as e:
                     self.log += f"账号{i}执行出错：{e}\n"
             else:
