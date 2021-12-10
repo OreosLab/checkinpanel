@@ -32,7 +32,7 @@ from notify_mtr import send
 from utils import get_data
 from utils_env import get_env_str
 
-__version__ = "1.6.7"
+__version__ = "1.6.8"
 
 
 NOTIFICATION_TITLE_START = "Epicgames Claimer：启动成功"
@@ -320,6 +320,7 @@ class EpicgamesClaimer:
             "--no-first-run",
             "--disable-gpu",
         ],
+        push_when_owned_all=False,
     ) -> None:
         self.data_dir = data_dir
         self.headless = headless
@@ -341,6 +342,7 @@ class EpicgamesClaimer:
         self.timeout = timeout
         self.debug = debug
         self.cookies = cookies
+        self.push_when_owned_all = push_when_owned_all
         self.page = None
         self.open_browser()
 
@@ -1088,6 +1090,10 @@ class EpicgamesClaimer:
                     await retried_claim(dlc)
             if len(owned_item_titles) == item_amount:
                 self.log("All available free games are already in your library")
+                if self.push_when_owned_all:
+                    self.claimer_notifications.notify(
+                        NOTIFICATION_TITLE_CLAIM_SUCCEED, NOTIFICATION_CONTENT_OWNED_ALL
+                    )
             if len(claimed_item_titles) != 0:
                 claimed_item_titles_string = ""
                 for title in claimed_item_titles:
@@ -1356,6 +1362,11 @@ def get_args(run_by_main_script: bool = False) -> argparse.Namespace:
         help="disable pushing a notification at startup",
     )
     parser.add_argument(
+        "--push-when-owned-all",
+        action="store_true",
+        help="push a notification when all available weekly free games are already in the library",
+    )
+    parser.add_argument(
         "-v",
         "--version",
         action="version",
@@ -1410,13 +1421,14 @@ def main(
         dingtalk_secret=args.push_dingtalk_secret,
     )
     claimer = EpicgamesClaimer(
-        args.data_dir,
+        data_dir=args.data_dir,
         headless=not args.no_headless,
         chromium_path=args.chromium_path,
         claimer_notifications=claimer_notifications,
         timeout=args.debug_timeout,
         debug=args.debug,
         cookies=args.cookies,
+        push_when_owned_all=args.push_when_owned_all,
     )
     if args.once:
         return claimer.run_once(
@@ -1490,12 +1502,14 @@ def run(args: argparse.Namespace, check_items: dict) -> str or None:
         args.data_dir = "User_Data/{}".format(args.email)
         if not os.path.exists("User_Data"):
             log(
-                f"未发现 User_Data 文件夹，判断为初次使用。若遇到人机验证，请在能手动登录浏览器页面的环境（如 Win10）使用 get_cookies.exe/py 获取 cookies.json 并放入 {args.data_dir} 文件夹，然后再尝试",
+                f"未发现 User_Data 文件夹，判断为初次使用。若遇到人机验证，请在能手动登录浏览器页面的环境（如 Win10）使用 get_cookies.exe/py 获取 cookies.json 并放入 {os.path.join(os.getcwd(), args.data_dir)} 文件夹，然后再尝试",
                 level="warning",
             )
         else:
             args.cookies = (
-                c if os.path.exists(c := args.data_dir + "/cookies.json") else None
+                c
+                if os.path.exists(c := os.path.join(args.data_dir, "cookies.json"))
+                else None
             )
         claimed_item_titles = main(args, raise_error=True)
         msg = (
