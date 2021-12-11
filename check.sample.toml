@@ -163,6 +163,12 @@ authorization = ""
 [[GLADOS]]
 cookie = "koa:sess=xxxxxx; koa:sess.sig=xxxxxx"
 
+# Hax 续期提醒【WEB】
+# # GLaDOS【WEB】
+# https://hax.co.id/vps-info cookie
+[[HAXCLOCK]]
+cookie = "PHPSESSID=xxxxxx; PHPSESSID=xxxxxx"
+
 # 欢太商城【APP】
 # 欢太商城 APP cookie，建议全部粘贴
 # 抽奖总开关，设置为 false 将不参与任何抽奖，应对一些抽奖黑号
