@@ -365,6 +365,16 @@
             "running": true
         },
         {
+            "name": "Hax 续期提醒",
+            "type": "cron",
+            "time": "27 8,22 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkin.js -env PYNAME=ck_haxclock.py"
+            },
+            "running": true
+        },
+        {
             "name": "欢太商城",
             "type": "cron",
             "time": "19 5,21 * * *",
