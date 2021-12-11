@@ -7,6 +7,9 @@
 # 爱企查e卡监控
 ECARDCHECK = false
 
+# Hax 监控
+HAX = false
+
 # LeetCode 每日一题
 LEETCODE = false
 
