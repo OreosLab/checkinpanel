@@ -1,6 +1,28 @@
 # Changelog
 
 
+## 20211211-4-201 (2021-12-11)
+
+### Feature
+
+* :sparkles: : 新增 Hax 续期提醒. [Oreo]
+
+* :sparkles: : 更新 Hax 监控. [Oreo]
+
+* :sparkles: : 跟随上游更新并优化. [Oreo]
+
+### Fix
+
+* :fire: : 关闭  heytap 早睡打卡. [Oreo]
+
+### Docs
+
+* :memo: : 调整 CHANGELOG 和 tag. [Oreo]
+
+  以大版本号为界打 tag
+  当前版本以周为界，周一或每周第一次更新时打 tag
+
+
 ## 20211206-4-220 (2021-12-06)
 
 ### Feature
