@@ -56,8 +56,8 @@ class Hax:
         )
         eu_mid1 = (
             "[♨Special Focus / 特别关注]\nEU Middle Specs (KVM + SSD) are NOT available now.\t暂时没有库存。"
-            if "EU Middle Specs" not in center_list
-            else "CHECK https://hax.co.id/create-vps NOW!!! EU Middle Specs (KVM + SSD) are available now.\t有库存！。"
+            if "EU Middle Specs" not in center_str
+            else "CHECK https://hax.co.id/create-vps NOW!!! EU Middle Specs (KVM + SSD) are available now.\t有库存！"
         )
         msg = srv_stat + data_center + eu_mid1
         return msg
