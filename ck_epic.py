@@ -32,7 +32,7 @@ from notify_mtr import send
 from utils import get_data
 from utils_env import get_env_str
 
-__version__ = "1.6.11"
+__version__ = "1.6.12"
 
 
 NOTIFICATION_TITLE_START = "Epicgames Claimer：启动成功"
@@ -1001,6 +1001,9 @@ class EpicgamesClaimer:
             )
         else:
             await self._navigate_async(item.store_url, timeout=self.timeout)
+            await self._try_click_async(
+                "div[data-component=PDPAgeGate] Button", sleep=8
+            )
             await self._wait_for_text_change_async(
                 "div[data-component=DesktopSticky] button[data-testid=purchase-cta-button]",
                 "Loading",
