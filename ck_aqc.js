@@ -45,7 +45,7 @@ const oo = {
 };
 
 var desp = '';
-var key = ['苹果', '华为', '百度', '一个', '暴风', '王者'];
+var key = ['苹果', '华为', '百度', '一个', '百事', '厚墨'];
 var nid = null;
 var popularSearchKey = [];
 var ytaskList = [];
@@ -161,7 +161,8 @@ async function dotask(tasklist, aqcCookie, exportkey) {
                 break;
             case 'CX11001': //查询企业
                 Log('开始任务：' + oo[o.title]);
-                await get(`s/getHeadBrandAndPersonAjax?q=${encodeURI(rand())}`);
+                let qys = ['苹果', '华为', '百度', '一个', '百事', '厚墨'];
+                await get(`s/getHeadBrandAndPersonAjax?q=${encodeURI(qys[Math.floor(Math.random() * key.length)])}`);
                 break;
             case 'CX11002': //查询老板
                 Log('开始任务：' + oo[o.title]);
@@ -186,7 +187,7 @@ async function dotask(tasklist, aqcCookie, exportkey) {
             case 'CX11007': //浏览监控日报
                 Log('开始任务：' + oo[o.title]);
                 let jk = await get('zxcenter/monitorDailyReportListAjax?page=1&size=10');
-                let list = jk.data.list;
+                let list = jk.data.list ?? [];
                 if (list) {
                     for (let p = 0; p < 2 && p < list.length; p++) {
                         await get(`zxcenter/monitorDailyReportDetailAjax?reportdate=${list[p].reportDate}`);
@@ -249,13 +250,13 @@ async function dotask(tasklist, aqcCookie, exportkey) {
                 let HomeQuestionres = await get('smart/getHomeQuestionListAjax?page=2&size=10&type=recommend');
                 if (HomeQuestionres.status == 0) {
                     let qdetail = HomeQuestionres.data.list[Math.floor(Math.random() * HomeQuestionres.data.list.length)];
-                    nid = qdetail.nid;
+                    nid = qdetail.nid ?? '1851233986328193016';
                     await get(`smart/questionDetailAjax?nid=${nid}`);
                 }
                 break;
             case 'CX12011': //点赞观点
                 Log('开始任务：' + oo[o.title]);
-                nid = nid ? nid : '1851233986328193016';
+                nid = nid ?? '1851233986328193016';
                 let qCListres = await get(`smart/questionCommentListAjax?nid=${nid}`);
                 if (qCListres.status == 0) {
                     let pList = qCListres.data.list;
