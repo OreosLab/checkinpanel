@@ -45,6 +45,16 @@
             "running": true
         },
         {
+            "name": "国内加速",
+            "type": "schedule",
+            "time": "0",
+            "job": {
+                "type": "exec",
+                "target": "chmod +x api_fast_cn.sh && bash api_fast_cn.sh -cwd script/Shell/checkinpanel -timeout 0"
+            },
+            "running": false
+        },
+        {
             "name": "签到依赖",
             "type": "schedule",
             "time": "20",
