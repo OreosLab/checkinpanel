@@ -127,8 +127,8 @@ class Site:
                     tip = self.url
                     print(f"{url} {tip}")
                 log(f"{url} {tip}")
-        # hdtime
-        elif url == "https://hdtime.org":
+        # hdtime and pttime
+        elif url == "https://hdtime.org" or url == "https://www.pttime.org":
             attendance_url = url + "/attendance.php"
             with session.get(attendance_url) as res:
                 r = re.compile(r"签到成功")
