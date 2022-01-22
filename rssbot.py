@@ -4,7 +4,6 @@ cron: */15 6-22 * * *
 new Env('RSS 订阅推送');
 """
 
-import dateparser
 import feedparser
 
 from datetime import datetime, timedelta
