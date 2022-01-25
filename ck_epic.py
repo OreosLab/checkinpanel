@@ -32,22 +32,65 @@ from notify_mtr import send
 from utils import get_data
 from utils_env import get_env_str
 
-__version__ = "1.6.12"
+__version__ = "1.6.15"
 
 
-NOTIFICATION_TITLE_START = "Epicgames Claimer：启动成功"
-NOTIFICATION_TITLE_NEED_LOGIN = "Epicgames Claimer：需要登录"
-NOTIFICATION_TITLE_CLAIM_SUCCEED = "Epicgames Claimer：领取成功"
-NOTIFICATION_TITLE_ERROR = "EpicGames Claimer：错误"
-NOTIFICATION_TITLE_TEST = "EpicGames Claimer：测试"
-NOTIFICATION_CONTENT_START = "如果你收到了此消息，表示你可以正常接收来自Epicgames Claimer的通知推送"
-NOTIFICATION_CONTENT_NEED_LOGIN = "未登录或登录信息已失效，请检查并尝试重新登录"
-NOTIFICATION_CONTENT_CLAIM_SUCCEED = "成功领取到游戏："
-NOTIFICATION_CONTENT_OPEN_BROWSER_FAILED = "打开浏览器失败："
-NOTIFICATION_CONTENT_LOGIN_FAILED = "登录失败："
-NOTIFICATION_CONTENT_CLAIM_FAILED = "领取失败："
-NOTIFICATION_CONTENT_TEST = "测试是否通知推送已被正确设置"
-NOTIFICATION_CONTENT_OWNED_ALL = "所有可领取的每周免费游戏已全部在库中"
+class texts:
+    class zh:
+        NOTIFICATION_TITLE_START = "Epicgames Claimer：启动成功"
+        NOTIFICATION_TITLE_NEED_LOGIN = "Epicgames Claimer：需要登录"
+        NOTIFICATION_TITLE_CLAIM_SUCCEED = "Epicgames Claimer：领取成功"
+        NOTIFICATION_TITLE_ERROR = "EpicGames Claimer：错误"
+        NOTIFICATION_TITLE_TEST = "EpicGames Claimer：测试"
+        NOTIFICATION_CONTENT_START = "如果你收到了此消息，表示你可以正常接收来自Epicgames Claimer的通知推送"
+        NOTIFICATION_CONTENT_NEED_LOGIN = "未登录或登录信息已失效，请检查并尝试重新登录"
+        NOTIFICATION_CONTENT_CLAIM_SUCCEED = "成功领取到游戏："
+        NOTIFICATION_CONTENT_OPEN_BROWSER_FAILED = "打开浏览器失败："
+        NOTIFICATION_CONTENT_LOGIN_FAILED = "登录失败："
+        NOTIFICATION_CONTENT_CLAIM_FAILED = "领取失败："
+        NOTIFICATION_CONTENT_TEST = "测试是否通知推送已被正确设置"
+        NOTIFICATION_CONTENT_OWNED_ALL = "所有可领取的每周免费游戏已全部在库中"
+
+    class en:
+        NOTIFICATION_TITLE_START = "Epicgames Claimer: Startup success"
+        NOTIFICATION_TITLE_NEED_LOGIN = "Epicgames Claimer: Login required"
+        NOTIFICATION_TITLE_CLAIM_SUCCEED = "Epicgames Claimer: Successfully claimed"
+        NOTIFICATION_TITLE_ERROR = "EpicGames Claimer: Error"
+        NOTIFICATION_TITLE_TEST = "EpicGames Claimer: Test"
+        NOTIFICATION_CONTENT_START = "If you receive this message, it means that you can be notified from the Epicgames Claimer"
+        NOTIFICATION_CONTENT_NEED_LOGIN = (
+            "Login information lost or expired, please try to re-login"
+        )
+        NOTIFICATION_CONTENT_CLAIM_SUCCEED = "Successfully claimed the game: "
+        NOTIFICATION_CONTENT_OPEN_BROWSER_FAILED = "Error when opening the browser: "
+        NOTIFICATION_CONTENT_LOGIN_FAILED = "Login failure: "
+        NOTIFICATION_CONTENT_CLAIM_FAILED = "Claim failure: "
+        NOTIFICATION_CONTENT_TEST = (
+            "Test if the notification setting is functional or not "
+        )
+        NOTIFICATION_CONTENT_OWNED_ALL = (
+            "All claimable weekly free games are already in the liabrary"
+        )
+
+    class ru:
+        NOTIFICATION_TITLE_START = "Epicgames Claimer: Запущен"
+        NOTIFICATION_TITLE_NEED_LOGIN = "Epicgames Claimer: Требуется логин"
+        NOTIFICATION_TITLE_CLAIM_SUCCEED = "Epicgames Claimer: Успешно собранно"
+        NOTIFICATION_TITLE_ERROR = "EpicGames Claimer: Ошибка"
+        NOTIFICATION_TITLE_TEST = "EpicGames Claimer: Test"
+        NOTIFICATION_CONTENT_START = "Если вы получили это сообщение, это означает, что вы можете получать уведомления от Epicgames Claimer"
+        NOTIFICATION_CONTENT_NEED_LOGIN = "Информация для входа потеряна или срок ее действия истек, попробуйте повторно войти"
+        NOTIFICATION_CONTENT_CLAIM_SUCCEED = "Успешно полученна игра: "
+        NOTIFICATION_CONTENT_OPEN_BROWSER_FAILED = "Ошибка при открытии браузера: "
+        NOTIFICATION_CONTENT_LOGIN_FAILED = "Ошибка входа: "
+        NOTIFICATION_CONTENT_CLAIM_FAILED = "Ошибка получения игры: "
+        NOTIFICATION_CONTENT_TEST = (
+            "Проверка, работает ли настройка уведомлений или нет "
+        )
+        NOTIFICATION_CONTENT_OWNED_ALL = "Все еженедельные бесплатные игры, которые можно получить, уже находятся в библиотеке."
+
+
+local_texts = texts.en
 
 
 if "--enable-automation" in launcher.DEFAULT_ARGS:
@@ -942,6 +985,7 @@ class EpicgamesClaimer:
             return -1
 
         await self._navigate_async(item.store_url, timeout=self.timeout)
+        await self._try_click_async("div[data-component=PDPAgeGate] Button", sleep=8)
         await self._wait_for_text_change_async(
             "div[data-component=DesktopSticky] button[data-testid=purchase-cta-button]",
             "Loading",
@@ -960,7 +1004,7 @@ class EpicgamesClaimer:
         await self._try_click_async(
             "div[data-component=makePlatformUnsupportedWarningStep] button[data-component=BaseButton"
         )
-        await self._try_click_async("#agree")
+        # await self._try_click_async("#agree")
         await self._try_click_async("div[role=dialog] button[aria-disabled=false]")
         purchase_url = "https://www.epicgames.com" + await self._get_property_async(
             "#webPurchaseContainer iframe", "src"
@@ -969,9 +1013,7 @@ class EpicgamesClaimer:
         await self._click_async(
             "#purchase-app button[class*=confirm]:not([disabled])", timeout=self.timeout
         )
-        await self._try_click_async(
-            "#purchaseAppContainer div.payment-overlay button.payment-btn--primary"
-        )
+        # await self._try_click_async("#purchaseAppContainer div.payment-overlay button.payment-btn--primary")
         result = await findx_async(
             [
                 {
@@ -1001,9 +1043,6 @@ class EpicgamesClaimer:
             )
         else:
             await self._navigate_async(item.store_url, timeout=self.timeout)
-            await self._try_click_async(
-                "div[data-component=PDPAgeGate] Button", sleep=8
-            )
             await self._wait_for_text_change_async(
                 "div[data-component=DesktopSticky] button[data-testid=purchase-cta-button]",
                 "Loading",
@@ -1084,7 +1123,8 @@ class EpicgamesClaimer:
                         else:
                             self.log(f"{error_message}{e}", "error")
                             self.claimer_notifications.notify(
-                                NOTIFICATION_TITLE_ERROR, f"{error_notification}{e}"
+                                local_texts.NOTIFICATION_TITLE_ERROR,
+                                f"{error_notification}{e}",
                             )
                             await self._screenshot_async("screenshot.png")
                             if raise_error:
@@ -1106,14 +1146,14 @@ class EpicgamesClaimer:
         @self._async_auto_retry(
             retries,
             "Failed to open the browser: ",
-            NOTIFICATION_CONTENT_OPEN_BROWSER_FAILED,
+            local_texts.NOTIFICATION_CONTENT_OPEN_BROWSER_FAILED,
         )
         async def run_open_browser():
             if not self.browser_opened:
                 await self._open_browser_async()
 
         @self._async_auto_retry(
-            retries, "Failed to login: ", NOTIFICATION_CONTENT_LOGIN_FAILED
+            retries, "Failed to login: ", local_texts.NOTIFICATION_CONTENT_LOGIN_FAILED
         )
         async def run_login(
             interactive: bool,
@@ -1125,7 +1165,8 @@ class EpicgamesClaimer:
                 if interactive:
                     self.log("Need login")
                     self.claimer_notifications.notify(
-                        NOTIFICATION_TITLE_NEED_LOGIN, NOTIFICATION_CONTENT_NEED_LOGIN
+                        local_texts.NOTIFICATION_TITLE_NEED_LOGIN,
+                        local_texts.NOTIFICATION_CONTENT_NEED_LOGIN,
                     )
                     await self._close_browser_async()
                     email = input("Email: ")
@@ -1145,7 +1186,7 @@ class EpicgamesClaimer:
             @self._async_auto_retry(
                 retries,
                 "Failed to claim one item: ",
-                NOTIFICATION_CONTENT_CLAIM_FAILED,
+                local_texts.NOTIFICATION_CONTENT_CLAIM_FAILED,
                 raise_error=False,
             )
             async def retried_claim(item: Item) -> bool:
@@ -1163,7 +1204,8 @@ class EpicgamesClaimer:
                 self.log("All available free games are already in your library")
                 if self.push_when_owned_all:
                     self.claimer_notifications.notify(
-                        NOTIFICATION_TITLE_CLAIM_SUCCEED, NOTIFICATION_CONTENT_OWNED_ALL
+                        local_texts.NOTIFICATION_TITLE_CLAIM_SUCCEED,
+                        local_texts.NOTIFICATION_CONTENT_OWNED_ALL,
                     )
             if len(claimed_item_titles) != 0:
                 claimed_item_titles_string = ""
@@ -1171,8 +1213,8 @@ class EpicgamesClaimer:
                     claimed_item_titles_string += f"{title}, "
                 claimed_item_titles_string = claimed_item_titles_string.rstrip(", ")
                 self.claimer_notifications.notify(
-                    NOTIFICATION_TITLE_CLAIM_SUCCEED,
-                    f"{NOTIFICATION_CONTENT_CLAIM_SUCCEED}{claimed_item_titles_string}",
+                    local_texts.NOTIFICATION_TITLE_CLAIM_SUCCEED,
+                    f"{local_texts.NOTIFICATION_CONTENT_CLAIM_SUCCEED}{claimed_item_titles_string}",
                 )
             if len(claimed_item_titles) + len(owned_item_titles) < item_amount:
                 raise PermissionError("Failed to claim some items")
@@ -1354,6 +1396,7 @@ def get_args(run_by_main_script: bool = False) -> argparse.Namespace:
         parser.add_argument(
             "-a", "--auto-update", action="store_true", help="enable auto update"
         )
+        parser.add_argument("--cron", type=str, help="set cron expression")
     if not run_by_main_script:
         parser.add_argument(
             "-e",
@@ -1394,6 +1437,9 @@ def get_args(run_by_main_script: bool = False) -> argparse.Namespace:
         "--debug-show-args",
         action="store_true",
         help="Push a notification for testing and quit",
+    )
+    parser.add_argument(
+        "--push-lang", type=str, default="zh", help="set notifications language"
     )
     parser.add_argument(
         "-ps", "--push-serverchan-sendkey", type=str, help="set ServerChan sendkey"
@@ -1446,8 +1492,20 @@ def get_args(run_by_main_script: bool = False) -> argparse.Namespace:
     )
     args = parser.parse_args()
     args = update_args_from_env(args)
+    global local_texts
+    if args.push_lang:
+        local_texts = eval("texts." + args.push_lang)
+    localtime = time.localtime()
+    if run_by_main_script:
+        if args.cron is None:
+            if args.run_at == None:
+                args.cron = "{0:02d} {1:02d} * * *".format(
+                    localtime.tm_min, localtime.tm_hour
+                )
+            else:
+                hour, minute = args.run_at.split(":")
+                args.cron = "{0} {1} * * *".format(minute, hour)
     if args.run_at == None:
-        localtime = time.localtime()
         args.run_at = "{0:02d}:{1:02d}".format(localtime.tm_hour, localtime.tm_min)
     if args.email != None and args.password == None:
         raise ValueError("Must input both username and password.")
@@ -1465,7 +1523,9 @@ def get_args(run_by_main_script: bool = False) -> argparse.Namespace:
             telegram_bot_token=args.push_telegram_bot_token,
             telegram_chat_id=args.push_telegram_chat_id,
         )
-        test_notifications.notify(NOTIFICATION_TITLE_TEST, NOTIFICATION_CONTENT_TEST)
+        test_notifications.notify(
+            local_texts.NOTIFICATION_TITLE_TEST, local_texts.NOTIFICATION_CONTENT_TEST
+        )
         exit()
     if args.debug_show_args:
         print(args)
@@ -1513,7 +1573,8 @@ def main(
     elif args.external_schedule:
         if not args.no_startup_notification:
             claimer_notifications.notify(
-                NOTIFICATION_TITLE_START, NOTIFICATION_CONTENT_START
+                local_texts.NOTIFICATION_TITLE_START,
+                local_texts.NOTIFICATION_CONTENT_START,
             )
         claimer.run_once(
             args.interactive,
@@ -1526,7 +1587,8 @@ def main(
     else:
         if not args.no_startup_notification:
             claimer_notifications.notify(
-                NOTIFICATION_TITLE_START, NOTIFICATION_CONTENT_START
+                local_texts.NOTIFICATION_TITLE_START,
+                local_texts.NOTIFICATION_CONTENT_START,
             )
         claimer.run_once(
             args.interactive,
@@ -1554,9 +1616,9 @@ def main_handler(event: Dict[str, str] = None, context: Dict[str, str] = None) -
     args.once = True
     claimed_item_titles = main(args, raise_error=True)
     result_message = (
-        f"{NOTIFICATION_CONTENT_CLAIM_SUCCEED}{claimed_item_titles}"
+        f"{local_texts.NOTIFICATION_CONTENT_CLAIM_SUCCEED}{claimed_item_titles}"
         if len(claimed_item_titles)
-        else NOTIFICATION_CONTENT_OWNED_ALL
+        else local_texts.NOTIFICATION_CONTENT_OWNED_ALL
     )
     return result_message
 
@@ -1584,9 +1646,9 @@ def run(args: argparse.Namespace, check_items: dict) -> str or None:
             )
         claimed_item_titles = main(args, raise_error=True)
         msg = (
-            f"{NOTIFICATION_CONTENT_CLAIM_SUCCEED}{claimed_item_titles}"
+            f"{local_texts.NOTIFICATION_CONTENT_CLAIM_SUCCEED}{claimed_item_titles}"
             if len(claimed_item_titles)
-            else NOTIFICATION_CONTENT_OWNED_ALL
+            else local_texts.NOTIFICATION_CONTENT_OWNED_ALL
         )
         msg_all += msg + "\n\n"
     return msg_all

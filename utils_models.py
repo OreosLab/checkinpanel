@@ -1,9 +1,8 @@
-
 import datetime
 
 from peewee import *
 
-db = SqliteDatabase('rss.db')
+db = SqliteDatabase("rss.db")
 
 
 class BaseModel(Model):
