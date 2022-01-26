@@ -1,6 +1,55 @@
 # Changelog
 
 
+## 20220125-4-100 (2022-01-25)
+
+### Feature
+
+* :sparkles: : 恢复更新. [Oreo]
+
+  1. 同步更新 epic
+  2. 修复 iqiyi
+  3. 整合新脚本：换源、RSS
+
+* :sparkles: : add rssbot (#90) [JaimeZeng]
+
+  * add rssbot
+
+  * remove dateparser
+
+* :sparkles: : 增加 hdtime 签到. [LiGuo]
+
+* :sparkles: : 跟随上游适配圣诞特惠. [Oreo]
+
+* :sparkles: : 更新 api_hax 功能并重构消息. [Oreo]
+
+  应对新增的数据中心
+
+### Fix
+
+* :bug: : 跟随上游修复 aqc. [Oreo]
+
+* :bug: : 修复 18 岁验证：epic. [Oreo]
+
+* :bug: : 修复一个判断错误：api_hax. [Oreo]
+
+* :fire: : rm haxclock. [Oreo]
+
+* :wrench: : 修改配置文件错误：HAXCLOCK. [Oreo]
+
+### Code Style
+
+* :zap: : 本地化日志输出：EUserv. [Oreo]
+
+### Other
+
+* Add pt时间. [LiGuo]
+
+* 添加国内换源脚本. [Vincent]
+
+* :white_check_mark: 增加测试代码：haxclock. [Oreo]
+
+
 ## 20211211-4-201 (2021-12-11)
 
 ### Feature
