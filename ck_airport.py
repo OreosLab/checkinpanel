@@ -26,7 +26,10 @@ class SspanelQd(object):
     def checkin(url, email, password):
         url = url.rstrip("/")
         email = email.split("@")
-        email = email[0] + "%40" + email[1]
+        if len(email) > 1:
+            email = email[0] + "%40" + email[1]
+        else:
+            email = email[0]
         session = requests.session()
         """
         以下 except 都是用来捕获当 requests 请求出现异常时，
