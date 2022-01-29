@@ -40,7 +40,7 @@ class Hax:
     def get_data_center(self):
         html_text = self.check("https://hax.co.id/create-vps")
         soup = BeautifulSoup(html_text, "html.parser")
-        center_list = [x.text for x in soup("option", value=re.compile("^EU*"))]
+        center_list = [x.text for x in soup("option", value=re.compile(r"^[A-Z]{2}-"))]
         center_str = "\n".join(center_list)
         return center_list, center_str
 
