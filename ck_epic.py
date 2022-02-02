@@ -687,7 +687,7 @@ class EpicgamesClaimer:
             timeout=self.timeout,
         )
         if login_result == -1:
-            raise TimeoutError("Chcek login result timeout.")
+            raise TimeoutError("Check login result timeout.")
         elif login_result == 0:
             raise PermissionError(
                 "CAPTCHA is required for unknown reasons when logging in"
@@ -709,7 +709,7 @@ class EpicgamesClaimer:
                 ["#modal-content div[role*=alert]", "#user"], timeout=self.timeout
             )
             if verify_result == -1:
-                raise TimeoutError("Chcek login result timeout.")
+                raise TimeoutError("Check login result timeout.")
             elif verify_result == 0:
                 alert_text = await self._get_text_async(
                     "#modal-content div[role*=alert]"
