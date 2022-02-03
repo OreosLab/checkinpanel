@@ -1,6 +1,25 @@
 # Changelog
 
 
+## 20220129-4-100 (2022-02-02)
+
+### Feature
+
+* :racehorse: : 加入新区域 VPS 可开通查询：hax. [Oreo]
+
+* :racehorse: : 同时支持普通用户名：airport #79. [Oreo]
+
+### Fix
+
+* :bug: : 修正错字 (#94) [Canary233]
+
+* :bug: : rss 只推送 7 天内的内容，两小时更新一次。 [night-raise]
+
+### Other
+
+* :arrow_up: 升级 follow-redirects. [Oreo]
+
+
 ## 20220125-4-100 (2022-01-25)
 
 ### Feature
