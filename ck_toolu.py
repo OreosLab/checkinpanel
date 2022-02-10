@@ -18,7 +18,7 @@ class ToolLu:
 
     def sign(self, cookie):
         session = requests.Session()
-        url = "https://plus.tool.lu/user/sign/"
+        url = "https://id.tool.lu/user/sign"
         headers = {
             "cookie": cookie,
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36",
