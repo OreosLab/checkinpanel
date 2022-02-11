@@ -9,21 +9,6 @@
 
 * :racehorse: : 同时支持普通用户名：airport #79. [Oreo]
 
-### Fix
-
-* :bug: : 修正错字 (#94) [Canary233]
-
-* :bug: : rss 只推送 7 天内的内容，两小时更新一次。 [night-raise]
-
-### Other
-
-* :arrow_up: 升级 follow-redirects. [Oreo]
-
-
-## 20220125-4-100 (2022-01-25)
-
-### Feature
-
 * :sparkles: : 恢复更新. [Oreo]
 
   1. 同步更新 epic
@@ -46,6 +31,10 @@
 
 ### Fix
 
+* :bug: : 修正错字 (#94) [Canary233]
+
+* :bug: : rss 只推送 7 天内的内容，两小时更新一次。 [night-raise]
+
 * :bug: : 跟随上游修复 aqc. [Oreo]
 
 * :bug: : 修复 18 岁验证：epic. [Oreo]
@@ -61,6 +50,8 @@
 * :zap: : 本地化日志输出：EUserv. [Oreo]
 
 ### Other
+
+* :arrow_up: 升级 follow-redirects. [Oreo]
 
 * Add pt时间. [LiGuo]
 
@@ -79,22 +70,6 @@
 
 * :sparkles: : 跟随上游更新并优化. [Oreo]
 
-### Fix
-
-* :fire: : 关闭  heytap 早睡打卡. [Oreo]
-
-### Docs
-
-* :memo: : 调整 CHANGELOG 和 tag. [Oreo]
-
-  以大版本号为界打 tag
-  当前版本以周为界，周一或每周第一次更新时打 tag
-
-
-## 20211206-4-220 (2021-12-06)
-
-### Feature
-
 * :sparkles: : 新增开机自动安装依赖文件：checkins_pkg.js. [Oreo]
 
 * :sparkles: : 更新并重构 ck_epic 主函数. [Oreo]
@@ -106,6 +81,8 @@
 * :sparkles: : 新增 Epic. [Oreo]
 
 ### Fix
+
+* :fire: : 关闭  heytap 早睡打卡. [Oreo]
 
 * :bug: : 修复 epic 会被删除 cookies.json 的 bug. [Oreo]
 
@@ -124,6 +101,11 @@
 * :wrench: : 添加 ins_selenium 任务. [Oreo]
 
 ### Docs
+
+* :memo: : 调整 CHANGELOG 和 tag. [Oreo]
+
+  以大版本号为界打 tag
+  当前版本以周为界，周一或每周第一次更新时打 tag
 
 * :memo: : 更新 README badges. [Oreo]
 
@@ -148,6 +130,10 @@
 
 * :sparkles: : 新增系统及面板检测函数：Bash utils_env.sh. [Oreo]
 
+* :racehorse: : 更新 alpine 基础安装包. [Oreo]
+
+* :racehorse: : 更换 JS 更好的的 TOML 轮子——@iarna/toml. [Oreo]
+
 ### Fix
 
 * :bug: : 修复旧 pushplus 推送后结果解析失败问题. [Oreo]
@@ -157,29 +143,6 @@
 * :bug: : 修复 pip3 包安装判定方式. [Oreo]
 
 * :bug: : 修复 Shell 判断错误. [Oreo]
-
-### Docs
-
-* :memo: : 更新 elecV2P 依赖安装日志图. [Oreo]
-
-### Code Style
-
-* :art: : 调整推送日志行间距. [Oreo]
-
-* :zap: : 删除 Shell 多余代码. [Oreo]
-
-* :zap: : 提高 Shell 兼容性，适配 dash. [Oreo]
-
-
-## 20211122-4-110 (2021-11-22)
-
-### Feature
-
-* :racehorse: : 更新 alpine 基础安装包. [Oreo]
-
-* :racehorse: : 更换 JS 更好的的 TOML 轮子——@iarna/toml. [Oreo]
-
-### Fix
 
 * :bug: : 修改 notify_mtr.py 变量名称错误. [lustime]
 
@@ -191,9 +154,17 @@
 
 ### Docs
 
+* :memo: : 更新 elecV2P 依赖安装日志图. [Oreo]
+
 * :memo: : 修改 README 配置文件等说明. [Oreo]
 
 ### Code Style
+
+* :art: : 调整推送日志行间距. [Oreo]
+
+* :zap: : 删除 Shell 多余代码. [Oreo]
+
+* :zap: : 提高 Shell 兼容性，适配 dash. [Oreo]
 
 * :zap: : 提高 Shell 兼容性. [Oreo]
 
