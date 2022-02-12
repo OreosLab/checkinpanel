@@ -331,10 +331,11 @@ fabric.properties
 User_Data
 check.json5
 check.toml
-device_auths.json
 cookies.json
+device_auths.json
 notify.json5
 notify.toml
+rss.db
 
 # Others
 *.exe
