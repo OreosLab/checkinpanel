@@ -165,6 +165,16 @@
             "running": true
         },
         {
+            "name": "RSS 订阅",
+            "type": "cron",
+            "time": "15 8 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkin.js -env PYNAME=api_rssbot.py"
+            },
+            "running": true
+        },
+        {
             "name": "天气预报",
             "type": "cron",
             "time": "30 7 * * *",
