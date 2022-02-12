@@ -2,7 +2,9 @@ import datetime
 
 from peewee import *
 
-db = SqliteDatabase("rss.db")
+from utils_env import get_file_path
+
+db = SqliteDatabase(get_file_path("rss.db"))
 
 
 class BaseModel(Model):
