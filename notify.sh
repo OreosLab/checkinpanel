@@ -148,16 +148,16 @@ send_message() {
         fi
     fi
 
-    # SRE24.com 通知
+    # push.jwks123.com 通知
     if [ "${SRE_TOKEN}" ]; then
         result_sre24_log_text="${TITLE}${log_text}"
-        push=$(curl -k -sL https://push.jwks123.cn/to/ \
+        push=$(curl -k -sL https://push.jwks123.com/to/ \
             -d "{\"token\":\"${token}\",\"msg\":\"${result_sre24_log_text}\"}")
         push_code=$(echo "${push}" | jq -r ".code" 2>&1)
         if [ "${push_code}" -eq 202 ]; then
-            echo -e "SRE24.com 推送结果：成功"
+            echo -e "push.jwks123.com 推送结果：成功"
         else
-            echo -e "SRE24.com 推送结果：失败"
+            echo -e "push.jwks123.com 推送结果：失败"
         fi
     fi
 
