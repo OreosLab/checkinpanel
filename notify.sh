@@ -6,7 +6,8 @@ send_message() {
 
     # 钉钉群机器人通知
     if [ "${DD_BOT_TOKEN}" ]; then
-        push=$(curl -k -s "https://oapi.dingtalk.com/robot/send?access_token=${DD_BOT_TOKEN}" \
+        push=$(
+            curl -k -s "https://oapi.dingtalk.com/robot/send?access_token=${DD_BOT_TOKEN}" \
             -H 'Content-Type：application/json' \
             -d "{
             \"msgtype\"：\"markdown\",
@@ -14,7 +15,8 @@ send_message() {
                 \"title\":\"${TITLE}\",
                 \"text\"：\"${log_text}\"
             }
-        }")
+        }"
+        )
         push_code=$(echo "${push}" | jq -r ".errcode" 2>&1)
         if [ "${push_code}" -eq 0 ]; then
             echo -e "钉钉机器人推送结果：成功"
@@ -127,7 +129,8 @@ send_message() {
 
         if [ "${access_token}" ]; then
             result_wework_log_text="${TITLE}${log_text}"
-            push=$(curl -k -s "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=${access_token}" \
+            push=$(
+                curl -k -s "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=${access_token}" \
                 -H 'Content-Type：application/json' \
                 -d "{
                 \"touser\"：\"@all\",
@@ -136,7 +139,8 @@ send_message() {
                 \"text\"：{
                     \"content\":\"${result_wework_log_text}\"
                 }
-            }")
+            }"
+            )
             push_code=$(echo "${push}" | jq -r ".errcode" 2>&1)
             if [ "${push_code}" -eq 0 ]; then
                 echo -e "企业微信推送结果：成功"
@@ -148,16 +152,18 @@ send_message() {
         fi
     fi
 
-    # SRE24.com 通知
+    # push.jwks123.com 通知
     if [ "${SRE_TOKEN}" ]; then
         result_sre24_log_text="${TITLE}${log_text}"
-        push=$(curl -k -sL https://push.jwks123.cn/to/ \
-            -d "{\"token\":\"${token}\",\"msg\":\"${result_sre24_log_text}\"}")
+        push=$(
+            curl -k -sL https://push.jwks123.com/to/ \
+            -d "{\"token\":\"${token}\",\"msg\":\"${result_sre24_log_text}\"}"
+        )
         push_code=$(echo "${push}" | jq -r ".code" 2>&1)
         if [ "${push_code}" -eq 202 ]; then
-            echo -e "SRE24.com 推送结果：成功"
+            echo -e "push.jwks123.com 推送结果：成功"
         else
-            echo -e "SRE24.com 推送结果：失败"
+            echo -e "push.jwks123.com 推送结果：失败"
         fi
     fi
 
