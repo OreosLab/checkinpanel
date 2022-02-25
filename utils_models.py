@@ -17,6 +17,7 @@ class Rss(BaseModel):
     title = CharField(max_length=20)
     url = CharField(max_length=255)
     date_type = CharField(max_length=20)
+    before = SmallIntegerField()
 
 
 class History(BaseModel):
