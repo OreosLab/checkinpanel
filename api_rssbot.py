@@ -4,7 +4,7 @@ cron: */15 6-22/2 * * *
 new Env('RSS 订阅');
 """
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import feedparser
 
@@ -28,16 +28,20 @@ class RssRobot:
             feed = feedparser.parse(rss.feed)
             for entry in feed.entries:
                 # print(entry["published"])
+                # print(datetime.now())
+                pub_t = datetime.strptime(
+                    entry["published"],
+                    rss.date_type,
+                )
+
+                if pub_t.tzinfo is None:
+                    pub_t = pub_t.replace(tzinfo=timezone.utc)
+                # print(pub_t)
+
                 if (
                     entry.link not in post_url_list
-                    and (
-                        datetime.now()
-                        - datetime.strptime(
-                            entry["published"],
-                            rss.date_type,
-                        )
-                    ).days
-                    < 7
+                    and (datetime.timestamp(datetime.now()) - datetime.timestamp(pub_t))
+                    < rss.before * 86400
                 ):
                     msg = msg + f"{entry.title}\n{entry.link}\n\n"
                     rss_history_list.append(History(url=entry.link))
