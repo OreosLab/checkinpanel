@@ -33,7 +33,7 @@ class RssRobot:
                         datetime.now()
                         - datetime.strptime(
                             entry["published"].strip().split("T")[0].split(" ")[0],
-                            "%Y-%m-%d",
+                            rss.date_type,
                         )
                     ).days
                     < 7

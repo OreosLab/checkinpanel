@@ -33,7 +33,7 @@ class Site:
     @staticmethod
     def generate_headers(url):
         header = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36",
             "Accept-Language": "zh-CN,zh;q=0.9",
             "Referer": url,
         }
@@ -98,7 +98,7 @@ class Site:
                     tip = "cookie 已过期或网站类型不对!"
                     print(f"{url} {tip}")
                 log(f"{url} {tip}")
-        # bschool
+        # btchool
         elif url == "https://pt.btschool.club":
             attendance_url = url + "/index.php?action=addbonus"
             with session.get(attendance_url) as res:
