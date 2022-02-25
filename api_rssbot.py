@@ -27,12 +27,13 @@ class RssRobot:
             rss_history_list = []
             feed = feedparser.parse(rss.feed)
             for entry in feed.entries:
+                # print(entry["published"])
                 if (
                     entry.link not in post_url_list
                     and (
                         datetime.now()
                         - datetime.strptime(
-                            entry["published"].strip().split("T")[0].split(" ")[0],
+                            entry["published"],
                             rss.date_type,
                         )
                     ).days
