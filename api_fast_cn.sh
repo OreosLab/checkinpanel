@@ -17,7 +17,7 @@ index-url=https://pypi.mirrors.ustc.edu.cn/simple/
 EOF
 
 # NPM 换源
-npm config set registry https://registry.npm.taobao.org/
+npm config set registry https://registry.npmmirror.com/
 
 # CPAN 换源
 if ! (
