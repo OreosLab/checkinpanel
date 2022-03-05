@@ -10,7 +10,7 @@ from notify_mtr import send
 from utils import get_data
 
 
-class DuoKan:
+class CCAVA:
     def __init__(self, check_items):
         self.check_items = check_items
 
@@ -38,5 +38,5 @@ class DuoKan:
 if __name__ == "__main__":
     data = get_data()
     _check_items = data.get("CCAVA", [])
-    res = DuoKan(check_items=_check_items).main()
+    res = CCAVA(check_items=_check_items).main()
     send("CCAVA", res)
