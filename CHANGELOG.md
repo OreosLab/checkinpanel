@@ -1,6 +1,64 @@
 # Changelog
 
 
+## 20220226-4-020 (2022-02-26)
+
+### Feature
+
+* :racehorse: : 新增推送天数限制自定义：rssbot. [Oreomeow]
+
+* :sparkles: : 更新葫芦侠脚本 #69. [Oreo]
+
+### Fix
+
+* :bug: : 修复在线工具签到地址. [Oreomeow]
+
+* :bug: : 修复时间格式错误：rssbot. [Oreomeow]
+
+* :bug: : fix sre24 push domain (#102) [Tony]
+
+* :bug: : 修改在线工具地址 (#96) [七mi]
+
+  抓取该页面的cookie即可
+
+### Docs
+
+* :memo: : 更新测试情况 失效脚本数量较多，暂不更新. [Oreomeow]
+
+* :memo: : 调整 CHANGELOG 和 tag. [Oreomeow]
+
+  以大版本号为界打 tag
+  当前版本以月为界，当月第一次更新时打 tag
+
+### Code Style
+
+* :zap: : 分批发送：rssbot. [Oreomeow]
+
+* :building_construction: 更改名称和 rss.db 位置：api_rssbot 1. 上线 elecV2P 2. qinglong 或 elecV2P 根据脚本提示移动 rss.db 位置. [Oreomeow]
+
+* :zap: : 改进 hax 正则. [Oreo]
+
+### Refactor Functions
+
+* :hammer: : 给 rss 订阅加入日期格式. [night-raise]
+
+### Other
+
+* :arrow_up: Bump follow-redirects from 1.14.7 to 1.14.8 (#101) [dependabot[bot]]
+
+  Bumps [follow-redirects](https://github.com/follow-redirects/follow-redirects) from 1.14.7 to 1.14.8.
+  - [Release notes](https://github.com/follow-redirects/follow-redirects/releases)
+  - [Commits](https://github.com/follow-redirects/follow-redirects/compare/v1.14.7...v1.14.8)
+
+  ---
+  updated-dependencies:
+  - dependency-name: follow-redirects
+    dependency-type: indirect
+  ...
+
+* :see_no_evil: 更新 .gitignore 修改排序并增加 rss.db. [Oreomeow]
+
+
 ## 20220129-4-100 (2022-02-02)
 
 ### Feature
