@@ -4,7 +4,8 @@ cron: */15 6-22/2 * * *
 new Env('RSS 订阅');
 """
 
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
+from time import mktime
 
 import feedparser
 
@@ -18,7 +19,6 @@ class RssRobot:
 
         rss_list = Rss.select()
         msg = ""
-        no = 1
         post_url_list = [
             rss_history.url
             for rss_history in History.select().where(
@@ -27,37 +27,33 @@ class RssRobot:
         ]
 
         for rss in rss_list:
+            no = 1
             rss_history_list = []
             feed = feedparser.parse(rss.feed)
             for entry in feed.entries:
-                # print(entry["published"])
-                # print(datetime.now())
-                pub_t = datetime.strptime(
-                    entry["published"],
-                    rss.date_type,
-                )
+                pub_t = datetime.fromtimestamp(mktime(entry["published_parsed"]))
 
-                if pub_t.tzinfo is None:
-                    pub_t = pub_t.replace(tzinfo=timezone.utc)
-                # print(pub_t)
+                # 此网站单独处理
+                if rss.url == "https://www.foreverblog.cn":
+                    pub_t = pub_t.replace(year=datetime.utcnow().year) + timedelta(hours=8)
 
                 if (
-                    entry.link not in post_url_list
-                    and (datetime.timestamp(datetime.now()) - datetime.timestamp(pub_t))
-                    < rss.before * 86400
+                        entry.link not in post_url_list
+                        and (datetime.timestamp(datetime.utcnow()) - datetime.timestamp(pub_t))
+                        < rss.before * 86400
                 ):
                     msg = msg + f"{str(no).zfill(2)}.{entry.title}\n{entry.link}\n\n"
                     if no % 10 == 0:
-                        send("RSS 订阅", msg)
+                        send(f"RSS 订阅-{rss.title}", msg)
                         msg = ""
                     no += 1
                     rss_history_list.append(History(url=entry.link))
-
             with db.atomic():
                 History.bulk_create(rss_history_list, batch_size=10)
 
-        if no % 10 != 0:
-            send("RSS 订阅", msg)
+            if no % 10 != 0 and msg:
+                send(f"RSS 订阅-{rss.title}", msg)
+                msg = ""
 
     def remove_old_history(self):
         # 只保留最近一周的记录
