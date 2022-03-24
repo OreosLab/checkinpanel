@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 """
-cron: * 6-22/2 * * *
+cron: 22 6-22/2 * * *
 new Env('RSS 订阅');
 """
 
@@ -26,10 +26,12 @@ class RssRobot:
             )
         ]
 
+        no = 0
         for rss in rss_list:
-            no = 0
             rss_history_list = []
             feed = feedparser.parse(rss.feed)
+            title = True
+            c_no = 1
             for entry in feed.entries:
                 pub_t = datetime.fromtimestamp(mktime(entry["published_parsed"]))
 
@@ -44,18 +46,22 @@ class RssRobot:
                         and (datetime.timestamp(datetime.utcnow()) - datetime.timestamp(pub_t))
                         < rss.before * 86400
                 ):
-                    msg = msg + f"{str(no).zfill(2)}.{entry.title}\n{entry.link}\n\n"
+                    if title:
+                        msg += f"\n--{rss.title}--\n"
+                        title = False
+                    msg = msg + f"{str(c_no).zfill(2)}.{entry.title}\n{entry.link}\n"
                     no += 1
+                    c_no += 1
                     if no % 20 == 0:
-                        send(f"RSS 订阅 - {rss.title}", msg)
+                        send(f"RSS 订阅", msg)
                         msg = ""
+                        title = False
                     rss_history_list.append(History(url=entry.link))
             with db.atomic():
                 History.bulk_create(rss_history_list, batch_size=10)
 
-            if no % 20 != 0 and msg:
-                send(f"RSS 订阅 - {rss.title}", msg)
-                msg = ""
+        if no % 20 != 0 and msg:
+            send(f"RSS 订阅", msg)
 
     def remove_old_history(self):
         # 只保留最近一周的记录
