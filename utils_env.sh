@@ -5,6 +5,7 @@ PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 # 初始化变量
 V2P_FILE='/usr/local/app/script/Lists/task.list'
 QL_FILE='/ql/config/env.sh'
+QL_NEW_FILE='/ql/data/config/env.sh'
 IS_DISPLAY_CONTEXT=1
 
 # 检查环境：面板先于系统
@@ -14,6 +15,8 @@ check_env() {
         panel="elecv2p"
     elif [ -f "${QL_FILE}" ]; then
         panel="qinglong"
+    elif [ -f "${QL_NEW_FILE}" ]; then
+        panel="qinglong_new"
     else
         CMD="$(grep -i pretty_name /etc/os-release 2>/dev/null | cut -d \" -f2)
         $(hostnamectl 2>/dev/null | grep -i system | cut -d : -f2)
@@ -60,6 +63,8 @@ source_config() {
         ENV_FILE="/usr/local/app/script/Lists/.env"
     elif [ "${panel}" = "qinglong" ]; then
         ENV_FILE="/ql/config/.env"
+    elif [ "${panel}" = "qinglong_new" ]; then
+        ENV_FILE="/ql/data/config/.env"
     else
         ENV_FILE="./env"
     fi
@@ -86,6 +91,9 @@ get_some_path() {
     elif [ "${panel}" = "qinglong" ]; then
         SCR_PATH="/ql/scripts"
         CONF_PATH="/ql/config"
+    elif [ "${panel}" = "qinglong_new" ]; then
+        SCR_PATH="/ql/data/scripts"
+        CONF_PATH="/ql/data/config"
     else
         SCR_PATH="."
         CONF_PATH="."
