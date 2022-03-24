@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 """
-cron: */15 6-22/2 * * *
+cron: * 6-22/2 * * *
 new Env('RSS 订阅');
 """
 
@@ -27,7 +27,7 @@ class RssRobot:
         ]
 
         for rss in rss_list:
-            no = 1
+            no = 0
             rss_history_list = []
             feed = feedparser.parse(rss.feed)
             for entry in feed.entries:
@@ -36,6 +36,8 @@ class RssRobot:
                 # 此网站单独处理
                 if rss.url == "https://www.foreverblog.cn":
                     pub_t = pub_t.replace(year=datetime.utcnow().year) + timedelta(hours=8)
+                elif rss.url == "https://www.zhihu.com":
+                    entry.link = entry.link.split("/answer")[0]
 
                 if (
                         entry.link not in post_url_list
@@ -43,16 +45,16 @@ class RssRobot:
                         < rss.before * 86400
                 ):
                     msg = msg + f"{str(no).zfill(2)}.{entry.title}\n{entry.link}\n\n"
-                    if no % 10 == 0:
-                        send(f"RSS 订阅-{rss.title}", msg)
-                        msg = ""
                     no += 1
+                    if no % 20 == 0:
+                        send(f"RSS 订阅 - {rss.title}", msg)
+                        msg = ""
                     rss_history_list.append(History(url=entry.link))
             with db.atomic():
                 History.bulk_create(rss_history_list, batch_size=10)
 
-            if no % 10 != 0 and msg:
-                send(f"RSS 订阅-{rss.title}", msg)
+            if no % 20 != 0 and msg:
+                send(f"RSS 订阅 - {rss.title}", msg)
                 msg = ""
 
     def remove_old_history(self):
