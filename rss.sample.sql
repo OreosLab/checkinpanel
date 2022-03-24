@@ -1,48 +1,11 @@
-INSERT INTO rss (feed, title, url, date_type, before)
-VALUES (
-        'https://rsshub.app/telegram/channel/Oreomsg',
-        '猫粮投喂',
-        'https://t.me/Oreomsg',
-        '%a, %d %b %Y %H:%M:%S %Z',
-        '3'
-    );
-INSERT INTO rss (feed, title, url, date_type, before)
-VALUES (
-        'https://rsshub.app/telegram/channel/NewlearnerChannel',
-        'Newlearnerの自留地',
-        'https://t.me/NewlearnerChannel',
-        '%a, %d %b %Y %H:%M:%S %Z',
-        '3'
-    );
-INSERT INTO rss (feed, title, url, date_type, before)
-VALUES (
-        'https://rsshub.app/telegram/channel/appinnfeed',
-        'Appinn Feed',
-        'https://t.me/appinnfeed',
-        '%a, %d %b %Y %H:%M:%S %Z',
-        '3'
-    );
-INSERT INTO rss (feed, title, url, date_type, before)
-VALUES (
-        'http://feeds.feedburner.com/zhihu-daily',
-        '知乎日报',
-        'https://daily.zhihu.com',
-        '%a, %d %b %Y %H:%M:%S %z',
-        '1'
-    );
-INSERT INTO rss (feed, title, url, date_type, before)
-VALUES (
-        'https://www.zhihu.com/rss',
-        '知乎',
-        'https://www.zhihu.com',
-        '%a, %d %b %Y %H:%M:%S %z',
-        '1'
-    );
-INSERT INTO rss (feed, title, url, date_type, before)
-VALUES (
-        'https://feeds.feedburner.com/ruanyifeng',
-        '阮一峰的网络日志',
-        'https://www.ruanyifeng.com/blog',
-        '%a, %d %b %Y %H:%M:%S %z',
-        '3'
-    );
+INSERT INTO rss (id, feed, title, url, before) VALUES (1, 'https://rsshub.app/telegram/channel/Oreomsg', '猫粮投喂', 'https://t.me/Oreomsg', 1);
+INSERT INTO rss (id, feed, title, url, before) VALUES (2, 'https://rsshub.app/telegram/channel/NewlearnerChannel', 'Newlearnerの自留地', 'https://t.me/NewlearnerChannel', 1);
+INSERT INTO rss (id, feed, title, url, before) VALUES (3, 'https://rsshub.app/telegram/channel/appinnfeed', 'Appinn Feed', 'https://t.me/appinnfeed', 1);
+INSERT INTO rss (id, feed, title, url, before) VALUES (4, 'https://rsshub.app/zhihu/daily', '知乎日报', 'https://daily.zhihu.com', 1);
+INSERT INTO rss (id, feed, title, url, before) VALUES (5, 'https://www.zhihu.com/rss', '知乎', 'https://www.zhihu.com', 1);
+INSERT INTO rss (id, feed, title, url, before) VALUES (6, 'https://www.ruanyifeng.com/blog/atom.xml', '阮一峰的网络日志', 'https://www.ruanyifeng.com/blog', 1);
+INSERT INTO rss (id, feed, title, url, before) VALUES (7, 'https://rsshub.app/zhihu/hotlist', '知乎热榜', 'https://www.zhihu.com', 1);
+INSERT INTO rss (id, feed, title, url, before) VALUES (8, 'https://rsshub.app/blogs/foreverblog', '十年之约', 'https://www.foreverblog.cn', 1);
+INSERT INTO rss (id, feed, title, url, before) VALUES (9, 'https://rsshub.app/bjp/apod', '北京天文馆每日一图', 'https://www.bjp.org.cn/', 1);
+INSERT INTO rss (id, feed, title, url, before) VALUES (10, 'https://www.williamlong.info/rss.xml', '月光博客', 'https://www.williamlong.info', 1);
+INSERT INTO rss (id, feed, title, url, before) VALUES (11, 'https://insights.thoughtworks.cn/feed/', 'Thoughtworks洞见', 'https://insights.thoughtworks.cn', 1);
