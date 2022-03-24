@@ -6,7 +6,8 @@ cron: 16 */2 * * *
 new Env('签到依赖');
 COMMENT
 
-PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+. utils_env.sh
+get_some_path
 
 alpine_pkgs="bash curl gcc git jq libffi-dev make musl-dev openssl-dev perl perl-app-cpanminus perl-dev py3-pip python3 python3-dev wget"
 py_reqs="bs4 cryptography dateparser feedparser peewee pyaes pyppeteer requests rsa schedule tomli"
@@ -64,9 +65,9 @@ install_py_reqs() {
 }
 
 install_js_pkgs_initial() {
-    if [ -d "/ql/scripts/Oreomeow_checkinpanel_master" ]; then
-        cd /ql/scripts/Oreomeow_checkinpanel_master &&
-            cp /ql/repo/Oreomeow_checkinpanel_master/package.json /ql/scripts/Oreomeow_checkinpanel_master/package.json
+    if [ -d "${SCR_PATH}/Oreomeow_checkinpanel_master" ]; then
+        cd "${SCR_PATH}/Oreomeow_checkinpanel_master" &&
+            cp "${REPO_PATH}/Oreomeow_checkinpanel_master/package.json" "${SCR_PATH}/Oreomeow_checkinpanel_master/package.json"
     elif [ -d "/ql/scripts" ] && [ ! -f "/ql/scripts/package.bak.json" ]; then
         cd /ql/scripts || exit
         rm -rf node_modules

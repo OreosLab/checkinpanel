@@ -23,7 +23,7 @@ sub json52toml {
 
 if ( @ARGV == 0 ) {
     print "[Info.Auto] 未提供传入参数，将启动自动匹配转换\n";
-    my @PATH  = ( "./", "/ql/config/", "/usr/local/app/script/Lists/" );
+    my @PATH  = ( "./", "/ql/data/config/", "/ql/config/", "/usr/local/app/script/Lists/" );
     my @NAME  = ( "check.json5", "check.json", "notify.json5", "notify.json" );
     my @files = ( $ENV{CHECK_CONFIG}, $ENV{NOTIFY_CONFIG_PATH} );
     foreach my $path (@PATH) {
