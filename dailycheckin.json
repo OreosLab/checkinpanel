@@ -295,32 +295,12 @@
             "running": true
         },
         {
-            "name": "企鹅电竞",
-            "type": "cron",
-            "time": "8 8,12,18 * * *",
-            "job": {
-                "type": "runjs",
-                "target": "checkin.js -env PYNAME=ck_egame.py"
-            },
-            "running": true
-        },
-        {
             "name": "恩山论坛",
             "type": "cron",
             "time": "1 15 * * *",
             "job": {
                 "type": "runjs",
                 "target": "checkin.js -env PYNAME=ck_enshan.py"
-            },
-            "running": true
-        },
-        {
-            "name": "Epic",
-            "type": "cron",
-            "time": "50 1 * * *",
-            "job": {
-                "type": "runjs",
-                "target": "checkin.js -env PYNAME=ck_epic.py"
             },
             "running": true
         },
@@ -425,16 +405,6 @@
             "running": true
         },
         {
-            "name": "爱奇艺",
-            "type": "cron",
-            "time": "55 23 * * *",
-            "job": {
-                "type": "runjs",
-                "target": "checkin.js -env PYNAME=ck_iqiyi.py"
-            },
-            "running": true
-        },
-        {
             "name": "无忧行",
             "type": "cron",
             "time": "21 21 * * *",
@@ -481,16 +451,6 @@
             "job": {
                 "type": "runjs",
                 "target": "checkin.js -env PYNAME=ck_meizu.py"
-            },
-            "running": true
-        },
-        {
-            "name": "芒果 TV",
-            "type": "cron",
-            "time": "23 14 * * *",
-            "job": {
-                "type": "runjs",
-                "target": "checkin.js -env PYNAME=ck_mgtv.py"
             },
             "running": true
         },
@@ -625,16 +585,6 @@
             "running": true
         },
         {
-            "name": "联通营业厅",
-            "type": "cron",
-            "time": "18 16 * * *",
-            "job": {
-                "type": "runjs",
-                "target": "checkin.js -env PYNAME=ck_unicom.py"
-            },
-            "running": true
-        },
-        {
             "name": "V2EX",
             "type": "cron",
             "time": "10 19 * * *",
@@ -645,32 +595,12 @@
             "running": true
         },
         {
-            "name": "腾讯视频",
-            "type": "cron",
-            "time": "55 10 * * *",
-            "job": {
-                "type": "runjs",
-                "target": "checkin.js -env PYNAME=ck_vqq.py"
-            },
-            "running": true
-        },
-        {
             "name": "微博",
             "type": "cron",
             "time": "48 7 * * *",
             "job": {
                 "type": "runjs",
                 "target": "checkin.js -env PYNAME=ck_weibo.py"
-            },
-            "running": true
-        },
-        {
-            "name": "联通沃邮箱",
-            "type": "cron",
-            "time": "56 13 * * *",
-            "job": {
-                "type": "runjs",
-                "target": "checkin.js -env PYNAME=ck_womail.py"
             },
             "running": true
         },
