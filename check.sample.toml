@@ -100,21 +100,10 @@ user_agent = ""
 [[DUOKAN]]
 cookie = "user_id=xxxxxx; token=xxxxxx; user_gender=xxxxxx; device_id=xxxxxx; app_id=xxxxxx; build=xxxxxx; short_version=xxxxxx"
 
-# 企鹅电竞【WEB】
-# https://egame.qq.com cookie
-[[EGAME]]
-cookie = "pgv_pvi=xxxxxx; RK=xxxxxx; ptcz=xxxxxx; pgv_pvid=xxxxxx; pac_uid=xxxxxx; iip=x; o_cookie=xxxxxx; sd_userid=xxxxxx; sd_cookie_crttime=xxxxxx; tvfe_boss_uuid=xxxxxx; _tc_unionid=xxxxxx; _ga=xxxxxx; pgg_ssid=xxxxxx; new_device=x; pgv_info=xxxxxx; ts_refer=xxxxxx; ts_uid=xxxxxx; _qpsvr_localtk=xxxxxx; pgg_uid=xxxxxx; pgg_appid=xxxxxx; pgg_openid=xxxxxx; pgg_access_token=xxxxxx; pgg_type=x; pgg_user_type=x; pgg_pvid=xxxxxx; ts_last=xxxxxx; tKeplerToken=xxxxxx"
-
 # 恩山论坛【WEB】
 # https://www.right.com.cn/forum/forum.php cookie
 [[ENSHAN]]
 cookie = "DJyZ_2132_saltkey=xxxxxx; DJyZ_2132_lastvisit=xxxxxx; DJyZ_2132_onlineusernum=xxxx; DJyZ_2132_sendmail=1; DJyZ_2132_ulastactivity=xxxxxx; DJyZ_2132_auth=xxxxxxxx; DJyZ_2132_sid=0; DJyZ_2132_connect_is_bind=0; DJyZ_2132_nofavfid=1; DJyZ_2132_checkpm=1; DJyZ_2132_noticeTitle=1; DJyZ_2132_lastact=xxxxxx"
-
-# Epic【WEB】
-# https://www.epicgames.com/store/zh-CN
-[[EPIC]]
-email = ""
-password = ""
 
 # EUserv
 # https://apitruecaptcha.org/api 的 apikey
@@ -188,11 +177,6 @@ username = ""
 password = ""
 username = ""
 
-# 爱奇艺【WEB】
-# https://www.iqiyi.com cookie
-[[IQIYI]]
-cookie = "__dfp=xxxxxx; QP0013=xxxxxx; QP0022=xxxxxx; QYABEX=xxxxxx; P00001=xxxxxx; P00002=xxxxxx; P00003=xxxxxx; P00007=xxxxxx; QC163=xxxxxx; QC175=xxxxxx; QC179=xxxxxx; QC170=xxxxxx; P00010=xxxxxx; P00PRU=xxxxxx; P01010=xxxxxx; QC173=xxxxxx; QC180=xxxxxx; P00004=xxxxxx; QP0030=xxxxxx; QC006=xxxxxx; QC007=xxxxxx; QC008=xxxxxx; QC010=xxxxxx; nu=xxxxxx; __uuid=xxxxxx; QC005=xxxxxx;"
-
 # 无忧行【APP】
 # 无忧行 APP 利用 stream 通过 mitm 抓包，获取 payload 中的 user_id
 [[JEGOTRIP]]
@@ -228,11 +212,6 @@ password = ""
 [[MEIZU]]
 cookie = "aliyungf_tc=xxxxxx; logined_uid=xxxxxx; acw_tc=xxxxxx; LT=xxxxxx; MZBBS_2132_saltkey=xxxxxx; MZBBS_2132_lastvisit=xxxxxx; MZBBSUC_2132_auth=xxxxxx; MZBBSUC_2132_loginmember=xxxxxx; MZBBSUC_2132_ticket=xxxxxx; MZBBS_2132_sid=xxxxxx; MZBBS_2132_ulastactivity=xxxxxx; MZBBS_2132_auth=xxxxxx; MZBBS_2132_loginmember=xxxxxx; MZBBS_2132_lastcheckfeed=xxxxxx; MZBBS_2132_checkfollow=xxxxxx; MZBBS_2132_lastact=xxxxxx;"
 draw_count = "1"
-
-# 芒果 TV【WEB】
-# https://www.mgtv.com 请求参数
-[[MGTV]]
-params = "uuid=xxxxxx&uid=xxxxxx&ticket=xxxxxx&token=xxxxxx&device=iPhone&did=xxxxxx&deviceId=xxxxxx&appVersion=6.8.2&osType=ios&platform=iphone&abroad=0&aid=xxxxxx&nonce=xxxxxx×tamp=xxxxxx&appid=xxxxxx&type=1&sign=xxxxxx&callback=xxxxxx"
 
 # 小米运动【APP】
 # 最大步数
@@ -303,15 +282,6 @@ cookie = "BIDUPSID=xxxxxx; PSTM=xxxxxx; BAIDUID=xxxxxx; BAIDUID_BFESS=xxxxxx; de
 [[TOOLU]]
 cookie = "uuid=xxxxxx; _access=xxxxxx; XSRF-TOKEN=xxxxxx;"
 
-# 联通营业厅【APP】
-# 联通营业厅 APP 抓包域名为 https://m.client.10010.com/mobileService/login.htm 请求内容的 appId
-# 联通营业厅 APP 手机号
-# 联通营业厅 APP 密码
-[[UNICOM]]
-app_id = ""
-mobile = "18888xxxxxx"
-password = ""
-
 # V2EX【WEB】
 # https://v2ex.com，注意要抓签到那次的 ck（相当于需要先手动浏览器签到一次），不然可能签到无效
 # 使用代理信息，无密码示例：http://127.0.0.1:1080 有密码示例：http://username:password@127.0.0.1:1080
@@ -319,28 +289,10 @@ password = ""
 cookie = "_ga=xxxxxx; __cfduid=xxxxxx; PB3_SESSION=xxxxxx; A2=xxxxxx; V2EXSETTINGS=xxxxxx; V2EX_REFERRER=xxxxxx; V2EX_LANG=xxxxxx; _gid=xxxxxx; V2EX_TAB=xxxxxx;"
 proxy = ""
 
-# 腾讯视频【WEB】
-# https://v.qq.com 搜索带有 auth_refresh 的 url，填写其完整的 URL
-# https://v.qq.com 搜索带有 auth_refresh 的 url，填写其完整的 URL
-[[VQQ]]
-auth_refresh = "https://access.video.qq.com/user/auth_refresh?vappid=xxxxxx&vsecret=xxxxxx&type=qq&g_tk=&g_vstk=xxxxxx&g_actk=xxxxxx&callback=xxxxxx&_=xxxxxx"
-cookie = "pgv_pvid=xxxxxx; pac_uid=xxxxxx; RK=xxxxxx; ptcz=xxxxxx; tvfe_boss_uuid=xxxxxx; video_guid=xxxxxx; video_platform=xxxxxx; pgv_info=xxxxxx; main_login=xxxxxx; vqq_access_token=xxxxxx; vqq_appid=xxxxxx; vqq_openid=xxxxxx; vqq_vuserid=xxxxxx; vqq_refresh_token=xxxxxx; login_time_init=xxxxxx; uid=xxxxxx; vqq_vusession=xxxxxx; vqq_next_refresh_time=xxxxxx; vqq_login_time_init=xxxxxx; login_time_last=xxxxxx;"
-
 # 微博【APP】
 # 微博 APP 抓取开头为 https://api.weibo.cn/2/users/show? 的整个 url 填入即可
 [[WEIBO]]
 url = "https://api.weibo.cn/2/users/show?wm=xxxxxx&launchid=xxxxxx&b=xxxxxx&from=xxxxxx&c=xxxxxx&networktype=xxxxxx&v_p=xxxxxx&skin=xxxxxx&v_f=xxxxxx&lang=xxxxxx&sflag=xxxxxx&ua=xxxxxx&ft=xxxxxx&aid=xxxxxx&has_extend=xxxxxx&uid=xxxxxx&gsid=xxxxxx&sourcetype=&get_teenager=xxxxxx&s=xxxxxx&has_profile=xxxxxx"
-
-# 联通沃邮箱【公众号】
-# 密码
-# true 为开启21天自动暂停，false 为关闭自动暂停、每天都签到，默认开启自动暂停
-# 手机号
-# 联通沃邮箱公众号 https://nyan.mail.wo.cn/cn/sign/index/index?mobile 开头的 URL
-[[WOMAIL]]
-password = "Sitoi"
-pause21days = true
-phone = "18888xxxxxx"
-url = "https://nyan.mail.wo.cn/cn/sign/index/index?mobile=xxxxxx&userName=&openId=xxxxxx"
 
 # WPS【WEB】
 # https://www.kdocs.cn cookie
