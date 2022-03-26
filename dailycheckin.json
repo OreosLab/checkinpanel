@@ -435,6 +435,16 @@
             "running": true
         },
         {
+            "name": "联想乐云",
+            "type": "cron",
+            "time": "10 6 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkin.js -env JSNAME=ck_lecloud.py"
+            },
+            "running": true
+        },
+        {
             "name": "联想商城",
             "type": "cron",
             "time": "10 22 * * *",
