@@ -59,9 +59,9 @@ def change_time(time_str: str, first: bool):
     return " ".join(words)
 
 
-data = get_data()
-ran_t = data.get("QL_RANDOM_TIME")
-if ran_t:
-    change_db()
-    os.system("ql check")
-    send("随机定时", "处于启动状态的任务定时修改成功！")
+# data = get_data()
+# ran_t = data.get("QL_RANDOM_TIME")
+# if ran_t:
+    # change_db()
+    # os.system("ql check")
+    # send("随机定时", "处于启动状态的任务定时修改成功！")
