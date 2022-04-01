@@ -18,7 +18,7 @@ from utils import get_data
 def change_db():
     lines = []
     first = True
-    with open("/ql/db/crontab.db", "r", encoding="UTF-8") as f:
+    with open("/ql/data/db/crontab.db", "r", encoding="UTF-8") as f:
         for i in f.readlines():
             if (
                 i.find("Oreomeow_checkinpanel_master") != -1
@@ -42,9 +42,9 @@ def change_db():
                 lines.append(i)
 
     time_str = time.strftime("%Y-%m-%d", time.localtime())
-    os.system(f"copy /ql/db/crontab.db /ql/db/crontab.db.{time_str}.back")
+    os.system(f"copy /ql/data/db/crontab.db /ql/data/db/crontab.db.{time_str}.back")
 
-    with open("/ql/db/crontab.db", "w", encoding="UTF-8") as f:
+    with open("/ql/data/db/crontab.db", "w", encoding="UTF-8") as f:
         f.writelines(lines)
 
 
