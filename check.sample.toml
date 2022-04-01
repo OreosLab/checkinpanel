@@ -4,9 +4,6 @@
 # e.g.2 cookie = "xxx; app_param={'brand':'iPhone'}"
 # e.g.3 cookie = 'xxx; app_param={"brand":"iPhone"}'
 
-# 爱企查e卡监控
-ECARDCHECK = false
-
 # Hax 监控
 HAX = false
 
@@ -250,6 +247,14 @@ password = "xxxxxx"
 # https://www.52pojie.cn cookie
 [[POJIE]]
 cookie = "htVD_2132_client_token=xxxxxx; htVD_2132_connect_is_bind=xxxxxx; htVD_2132_connect_uin=xxxxxx; htVD_2132_nofavfid=xxxxxx; htVD_2132_smile=xxxxxx; Hm_lvt_46d556462595ed05e05f009cdafff31a=xxxxxx; htVD_2132_saltkey=xxxxxx; htVD_2132_lastvisit=xxxxxx; htVD_2132_client_created=xxxxxx; htVD_2132_auth=xxxxxx; htVD_2132_connect_login=xxxxxx; htVD_2132_home_diymode=xxxxxx; htVD_2132_visitedfid=xxxxxx; htVD_2132_viewid=xxxxxx; KF4=xxxxxx; htVD_2132_st_p=xxxxxx; htVD_2132_lastcheckfeed=xxxxxx; htVD_2132_sid=xxxxxx; htVD_2132_ulastactivity=xxxxxx; htVD_2132_noticeTitle=xxxxxx;"
+
+# 随机定时
+# 青龙 id；青龙 api secret；青龙的接口链接；是否所有签到都来两边
+[[RANDOM]]
+client_id = ""
+client_secret = ""
+url = "http://localhost:5700"
+twice = true
 
 # SF 轻小说【APP】
 [[SFACG]]
