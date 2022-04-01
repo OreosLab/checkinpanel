@@ -16,9 +16,6 @@ MOTTO = true
 # 每日新闻
 NEWS = true
 
-# 青龙随机定时
-QL_RANDOM_TIME = false
-
 # 天气预报
 CITY = ["上海", "朝阳区"]
 
@@ -249,7 +246,7 @@ password = "xxxxxx"
 cookie = "htVD_2132_client_token=xxxxxx; htVD_2132_connect_is_bind=xxxxxx; htVD_2132_connect_uin=xxxxxx; htVD_2132_nofavfid=xxxxxx; htVD_2132_smile=xxxxxx; Hm_lvt_46d556462595ed05e05f009cdafff31a=xxxxxx; htVD_2132_saltkey=xxxxxx; htVD_2132_lastvisit=xxxxxx; htVD_2132_client_created=xxxxxx; htVD_2132_auth=xxxxxx; htVD_2132_connect_login=xxxxxx; htVD_2132_home_diymode=xxxxxx; htVD_2132_visitedfid=xxxxxx; htVD_2132_viewid=xxxxxx; KF4=xxxxxx; htVD_2132_st_p=xxxxxx; htVD_2132_lastcheckfeed=xxxxxx; htVD_2132_sid=xxxxxx; htVD_2132_ulastactivity=xxxxxx; htVD_2132_noticeTitle=xxxxxx;"
 
 # 随机定时
-# 青龙 id；青龙 api secret；青龙的接口链接；是否所有签到都来两边
+# 青龙 id；青龙 api secret；青龙的接口链接；是否所有签到每日运行两次
 [[RANDOM]]
 client_id = ""
 client_secret = ""

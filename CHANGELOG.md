@@ -1,6 +1,51 @@
 # Changelog
 
 
+## 20220327-4-010 (2022-03-27)
+
+### Fix
+
+* :bug: : 临时关闭随机定时功能。 [night-raise]
+
+* :fire: : rm some scripts config. [Oreomeow]
+
+* :fire: : 移除部分脚本. [Oreomeow]
+
+  考虑到维护和调试成本，不再维护视频网站脚本等
+
+* :bug: : 修复知乎推送过多的问题. [night-raise]
+
+* :bug: : 更换无用代理：bili. [Oreomeow]
+
+* :bug: : 修正 CCAVA 类命名错误. [Oreomeow]
+
+### Code Style
+
+* :building_construction: 重构 hax. [Oreomeow]
+
+### Refactor Functions
+
+* :hammer: : 进一步降低 rss bot 的推送数量. [night-raise]
+
+* :hammer: : 移除 rss bot 的日期格式. [night-raise]
+
+  新增加了一些 rss 订阅链接，需要将 rss.simple.db 拷贝到 rss.db
+
+* :hammer: : 修复重复拉取问题. [Oreomeow]
+
+* :hammer: : 修复 acfun. [Oreomeow]
+
+### Other
+
+* :alien: : 青龙面板(v2.12.0+) 适配。 [night-raise]
+
+  修正插入 rss 的 sql
+
+* :alien: : 增加 青龙面板(v2.12.0+) 适配。 [Oreomeow]
+
+* :arrow_down: 降低 got 版本以兼容. [Oreomeow]
+
+
 ## 20220226-4-020 (2022-02-26)
 
 ### Feature
