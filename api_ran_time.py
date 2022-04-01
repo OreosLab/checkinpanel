@@ -5,63 +5,108 @@ cron: 0 0 */7 * *
 new Env('随机定时');
 """
 
-import json
-import os
-import random
-import re
-import time
+from abc import ABC
+from random import randrange
+from typing import Dict, List
+
+import requests
 
 from notify_mtr import send
 from utils import get_data
+from utils_env import get_env_int
 
 
-def change_db():
-    lines = []
-    first = True
-    with open("/ql/db/crontab.db", "r", encoding="UTF-8") as f:
-        for i in f.readlines():
-            if (
-                i.find("Oreomeow_checkinpanel_master") != -1
-                and i.find("ran_time") == -1
-            ):
-                record = json.loads(i)
-                if record.get("isDisabled") == 0:
-                    if (
-                        i.find("motto") != -1
-                        or i.find("leetcode") != -1
-                        or i.find("weather") != -1
-                        or i.find("news") != -1
-                    ):
-                        record["schedule"] = change_time(record["schedule"], True)
-                    else:
-                        record["schedule"] = change_time(record["schedule"], first)
-                if first:
-                    first = False
-                lines.append(json.dumps(record, ensure_ascii=False) + "\n")
-            else:
-                lines.append(i)
+class ClientApi(ABC):
+    def __init__(self):
+        self.cid = ""
+        self.sct = ""
+        self.url = "http://localhost:5700/"
+        self.twice = False
+        self.token = ""
+        self.cron: List[Dict] = []
 
-    time_str = time.strftime("%Y-%m-%d", time.localtime())
-    os.system(f"copy /ql/db/crontab.db /ql/db/crontab.db.{time_str}.back")
+    def init_cron(self):
+        raise NotImplementedError
 
-    with open("/ql/db/crontab.db", "w", encoding="UTF-8") as f:
-        f.writelines(lines)
+    def shuffle_cron(self):
+        raise NotImplementedError
+
+    def run(self):
+        self.init_cron()
+        self.shuffle_cron()
+
+    @staticmethod
+    def get_ran_min() -> str:
+        return str(randrange(0, 60))
+
+    def get_ran_hour(self, is_api: bool = False) -> str:
+        if is_api:
+            return str(randrange(7, 9))
+        if self.twice:
+            start = randrange(0, 12)
+            return f"{start},{start + randrange(6, 12)}"
+        return str(randrange(0, 24))
+
+    def random_time(self, origin_time: str, command: str):
+        if command.find("rssbot") != -1 or command.find("hax") != -1:
+            return ClientApi.get_ran_min() + " " + " ".join(origin_time.split(" ")[1:])
+        if command.find("api") != -1:
+            return ClientApi.get_ran_min() + " " + \
+                   self.get_ran_hour(True) + " " + \
+                   " ".join(origin_time.split(" ")[2:])
+        return ClientApi.get_ran_min() + " " + \
+               self.get_ran_hour() + " " + \
+               " ".join(origin_time.split(" ")[2:])
 
 
-def change_time(time_str: str, first: bool):
-    words = re.sub("\\s+", " ", time_str).split()
-    if first:
-        words[0] = str(random.randrange(0, 60, step=5))
-        words[1] = str(random.randrange(8, 9))
-    else:
-        words[0] = str(random.randrange(60))
-        words[1] = str(random.randrange(22))
-    return " ".join(words)
+class QLClient(ClientApi):
+    def __init__(self, client_info: Dict):
+        super().__init__()
+        if not client_info or not (cid := client_info.get("client_id")) or not (
+                sct := client_info.get("client_secret")):
+            raise KeyError
+        else:
+            self.cid = cid
+            self.sct = sct
+        self.url = client_info.get("url", "http://localhost:5700").rstrip("/") + "/"
+        self.twice = client_info.get("twice", False)
+        self.token = requests.get(url=self.url + "open/auth/token",
+                                  params={"client_id": self.cid, "client_secret": self.sct}).json()["data"]["token"]
+        if not self.token:
+            raise KeyError
+
+    def init_cron(self):
+        self.cron: List[Dict] = list(filter(lambda x: not x.get("isDisabled", 1) and
+                                                      x.get("command", "").find("Oreomeow_checkinpanel_master") != -1,
+                                            requests.get(url=self.url + "open/crons",
+                                                         headers={"Authorization": f"Bearer {self.token}"}).json()[
+                                                "data"]))
+
+    def shuffle_cron(self):
+        for c in self.cron:
+            data = {
+                "labels": c.get("labels", None),
+                "command": c["command"],
+                "schedule": self.random_time(c["schedule"], c["command"]),
+                "name": c["name"],
+                "id": c["id"],
+            }
+            requests.put(url=self.url + "open/crons",
+                         data=data,
+                         headers={"Authorization": f"Bearer {self.token}"})
 
 
-# data = get_data()
-# ran_t = data.get("QL_RANDOM_TIME")
-# if ran_t:
-    # change_db()
-    # os.system("ql check")
-    # send("随机定时", "处于启动状态的任务定时修改成功！")
+def get_client():
+    env_type = get_env_int()
+    if env_type == 5 or env_type == 6:
+        check_data = get_data()
+        return QLClient(check_data.get("RANDOM", [[]])[0])
+
+
+try:
+    get_client().run()
+    send("随机定时", "处于启动状态的任务定时修改成功！")
+except KeyError:
+    send("随机定时", "配置错误，请检查你的配置文件！")
+except AttributeError:
+    send("随机定时", "你的系统不支持运行随机定时！")
