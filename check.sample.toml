@@ -186,11 +186,6 @@ cookie = "ttcid=xxxxxx; MONITOR_WEB_ID=xxxxxx; passport_csrf_token_default=xxxxx
 [[KGQQ]]
 cookie = "muid=xxxxxx; uid=xxxxxx; userlevel=xxxxxx; openid=xxxxxx; openkey=xxxxxx; opentype=xxxxxx; qrsig=xxxxxx; pgv_pvid=xxxxxx;"
 
-# 联想乐云【WEB】
-# https://lecloud.lenovo.com/index cookie
-[[LECLOUD]]
-cookie = ""
-
 # 联想商城【APP】
 # 联想智选 APP 账户
 # 联想智选 APP 抓包
