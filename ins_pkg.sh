@@ -11,7 +11,7 @@ get_some_path
 
 alpine_pkgs="bash curl gcc git jq libffi-dev make musl-dev openssl-dev perl perl-app-cpanminus perl-dev py3-pip python3 python3-dev wget"
 py_reqs="bs4 cryptography dateparser feedparser peewee pyaes pyppeteer requests rsa schedule tomli"
-js_pkgs="@iarna/toml axios crypto-js got"
+js_pkgs="@iarna/toml axios cron-parser crypto-js got"
 pl_mods="File::Slurp JSON5 TOML::Dumper"
 
 install() {

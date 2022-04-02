@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-cron: 48 0-23/12 * * *
+cron: 48 */12 * * *
 new Env('HOSTLOC');
 """
 

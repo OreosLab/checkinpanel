@@ -75,6 +75,16 @@
             "running": true
         },
         {
+            "name": "随机定时",
+            "type": "cron",
+            "time": "0 0 */7 * *",
+            "job": {
+                "type": "runjs",
+                "target": "https://ghproxy.com/https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/checkin_ran.js"
+            },
+            "running": true
+        },
+        {
             "name": "复制 checkins_pkg.js",
             "type": "cron",
             "time": "25 16 * * *",
@@ -125,19 +135,9 @@
             "running": true
         },
         {
-            "name": "爱企查e卡监控",
-            "type": "cron",
-            "time": "18 0-23/6 * * *",
-            "job": {
-                "type": "runjs",
-                "target": "checkin.js -env PYNAME=api_ecardcheck.py"
-            },
-            "running": true
-        },
-        {
             "name": "Hax 监控",
             "type": "cron",
-            "time": "21 0-23/6 * * *",
+            "time": "21 */6 * * *",
             "job": {
                 "type": "runjs",
                 "target": "checkin.js -env PYNAME=api_hax.py"
@@ -167,7 +167,7 @@
         {
             "name": "RSS 订阅",
             "type": "cron",
-            "time": "15 8 * * *",
+            "time": "22 6/2 * * *",
             "job": {
                 "type": "runjs",
                 "target": "checkin.js -env PYNAME=api_rssbot.py"
@@ -217,7 +217,7 @@
         {
             "name": "爱企查",
             "type": "cron",
-            "time": "37 0-23/8 * * *",
+            "time": "37 */8 * * *",
             "job": {
                 "type": "runjs",
                 "target": "checkinjs.js -env JSNAME=ck_aqc.js"
@@ -397,7 +397,7 @@
         {
             "name": "HOSTLOC",
             "type": "cron",
-            "time": "48 0-23/12 * * *",
+            "time": "48 */12 * * *",
             "job": {
                 "type": "runjs",
                 "target": "checkin.js -env PYNAME=ck_hostloc.py"

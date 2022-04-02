@@ -278,7 +278,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.sample.toml /ql/config/notify.to
 * [x] Shell 消息推送、环境检查单列
 * [x] 项目重新初始化，更新日志规范化
 * [x] 依赖安装重构
-* [ ] elecV2P cron 随机
+* [x] cron 随机
 * [ ] 任务多合一执行
 * [ ] CK 检测判断是否跳出
 
