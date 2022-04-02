@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC2188
 <<'COMMENT'
-cron: 45 0-23/1 * * *
+cron: 45 */1 * * *
 new Env('JSON5toTOML 工具');
 COMMENT
 
