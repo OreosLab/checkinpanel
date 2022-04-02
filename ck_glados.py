@@ -97,12 +97,12 @@ class GLaDOS(object):
                 if check_in_msg == "\u6ca1\u6709\u6743\u9650":
                     msg = (
                         "--------------------\n"
-                        "GLaDOS \n"
                         "Msg: Your cookies are expired!\n"
                         "--------------------"
                     )
                 status_response = self.api_status(cookie)
-                left_days = int(status_response["data"]["leftDays"].split(".")[0])
+                # print(status_response)
+                left_days = int(status_response["data"]["leftDays"])
                 vip_level = status_response["data"]["vip"]
                 traffic_response = self.api_traffic(cookie)
                 used_gb = traffic_response["data"]["today"] / 1024 / 1024 / 1024
@@ -111,7 +111,6 @@ class GLaDOS(object):
                 plan = user_budget["level"]
                 msg = (
                     "--------------------\n"
-                    "GLaDOS \n"
                     + "Msg: "
                     + check_in_msg
                     + "\n"
@@ -132,7 +131,6 @@ class GLaDOS(object):
             except Exception:
                 msg = (
                     "--------------------\n"
-                    "GLaDOS \n"
                     "Msg: Check in error!\n"
                     "Error:\n"
                     f"{traceback.format_exc()}"
