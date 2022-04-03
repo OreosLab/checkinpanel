@@ -64,7 +64,7 @@ class QLClient(ClientApi):
         super().__init__()
         if not client_info or not (cid := client_info.get("client_id")) or not (
                 sct := client_info.get("client_secret")):
-            raise KeyError
+            raise ValueError("无法获取 client 相关参数！")
         else:
             self.cid = cid
             self.sct = sct
@@ -73,7 +73,7 @@ class QLClient(ClientApi):
         self.token = requests.get(url=self.url + "open/auth/token",
                                   params={"client_id": self.cid, "client_secret": self.sct}).json()["data"]["token"]
         if not self.token:
-            raise KeyError
+            raise ValueError("无法获取 token！")
 
     def init_cron(self):
         self.cron: List[Dict] = list(filter(lambda x: not x.get("isDisabled", 1) and
@@ -106,7 +106,7 @@ def get_client():
 try:
     get_client().run()
     send("随机定时", "处于启动状态的任务定时修改成功！")
-except KeyError:
-    send("随机定时", "配置错误，请检查你的配置文件！")
+except ValueError as e:
+    send("随机定时", f"配置错误，{e},请检查你的配置文件！")
 except AttributeError:
     send("随机定时", "你的系统不支持运行随机定时！")
