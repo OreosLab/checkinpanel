@@ -83,9 +83,7 @@ class GLaDOS(object):
         if len(user_budgets) > 0:
             return user_budgets[0]
         else:
-            raise EnvironmentError(
-                f"Budget info not found for this user! VIP: {vip_level}"
-            )
+            raise OSError(f"Budget info not found for this user! VIP: {vip_level}")
 
     def main(self):
         msg_all = ""
@@ -102,7 +100,7 @@ class GLaDOS(object):
                     )
                 status_response = self.api_status(cookie)
                 # print(status_response)
-                left_days = int(status_response["data"]["leftDays"])
+                left_days = int(str(status_response["data"]["leftDays"]).split(".")[0])
                 vip_level = status_response["data"]["vip"]
                 traffic_response = self.api_traffic(cookie)
                 used_gb = traffic_response["data"]["today"] / 1024 / 1024 / 1024
