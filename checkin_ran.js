@@ -69,12 +69,12 @@ async function replaceTask() {
     console.log('⏱ 开始修改运行中的 cron 任务...');
     let res = $task.add(tasklist);
     console.log(res);
-    console.log('✅ 开始保存修改后的任务列表...');
-    let saveres = $task.save();
-    console.log(saveres);
 }
 
 async function startTask() {
     console.log('🎈 启动之前处于运行中的 cron 任务...');
     $task.start(idlist);
+    console.log('✅ 开始保存修改后的任务列表...');
+    let saveres = $task.save();
+    console.log(saveres);
 }
