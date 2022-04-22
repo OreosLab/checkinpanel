@@ -37,19 +37,27 @@ class RssRobot:
 
                 # 此网站单独处理
                 if rss.url == "https://www.foreverblog.cn":
-                    pub_t = pub_t.replace(year=datetime.utcnow().year) + timedelta(hours=8)
+                    pub_t = pub_t.replace(year=datetime.utcnow().year) + timedelta(
+                        hours=8
+                    )
                 elif rss.url == "https://www.zhihu.com":
                     entry.link = entry.link.split("/answer")[0]
 
                 if (
-                        entry.link not in post_url_list
-                        and (datetime.timestamp(datetime.utcnow()) - datetime.timestamp(pub_t))
-                        < rss.before * 86400
+                    entry.link not in post_url_list
+                    and (
+                        datetime.timestamp(datetime.utcnow())
+                        - datetime.timestamp(pub_t)
+                    )
+                    < rss.before * 86400
                 ):
                     if title:
                         msg += f"\n--{rss.title}--\n"
                         title = False
-                    msg = msg + f"{str(c_no).zfill(2)}.{entry.title}\n{entry.link}\n"
+                    msg = (
+                        msg
+                        + f'{str(c_no).zfill(2)}.<a href="{entry.link}">{entry.title}</a>\n'
+                    )
                     no += 1
                     c_no += 1
                     if no % 20 == 0:

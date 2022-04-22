@@ -449,6 +449,7 @@ def telegram_bot(title: str, content: str) -> None:
         "chat_id": str(push_config.get("TG_USER_ID")),
         "text": f"{title}\n\n{content}",
         "disable_web_page_preview": "true",
+        "parse_mode": "HTML",
     }
     proxies = None
     if push_config.get("TG_PROXY_HOST") and push_config.get("TG_PROXY_PORT"):
