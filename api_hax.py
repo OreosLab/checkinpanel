@@ -22,8 +22,8 @@ class Hax:
         datas = requests.get(url, headers=headers).text
         return datas
 
-    def get_server_info(self):
-        html_text = self.check("https://hax.co.id/data-center")
+    def get_server_info(self, url):
+        html_text = self.check(url)
         soup = BeautifulSoup(html_text, "html.parser")
         zone_list = [x.text for x in soup("h5", class_="card-title mb-4")]
         sum_list = [x.text for x in soup("h1", class_="card-text")]
@@ -45,32 +45,31 @@ class Hax:
             vps_str += ">>" + k + "-" + ", ".join(v) + "\n"
         return vps_str
 
-    def get_data_center(self):
-        html_text = self.check("https://hax.co.id/create-vps")
+    def get_data_center(self, url, vir=False):
+        html_text = self.check(url)
         soup = BeautifulSoup(html_text, "html.parser")
         ctr_list = [x.text for x in soup("option", value=re.compile(r"^[A-Z]{2,}-"))]
-        vir_list = [(c.split(" (")[1].rstrip(")"), c.split(" (")[0]) for c in ctr_list]
-        vir_dict = {}
-        vir_str = ""
-        for k_v in vir_list:
-            k, v = k_v
-            vir_dict.setdefault(k, []).append(v)
-        for k, v in vir_dict.items():
-            vir_str += "★" + k + "★ " + ", ".join(v) + "\n"
-        return vir_str
+        ctr_str = "\n".join(ctr_list)
+        if vir:
+            ctr_list = [
+                (c.split(" (")[1].rstrip(")"), c.split(" (")[0]) for c in ctr_list
+            ]
+            ctr_dict = {}
+            ctr_str = ""
+            for k_v in ctr_list:
+                k, v = k_v
+                ctr_dict.setdefault(k, []).append(v)
+            for k, v in ctr_dict.items():
+                ctr_str += "★" + k + "★ " + ", ".join(v) + "\n"
+        return ctr_str
 
     def main(self):
-        vps_str = self.get_server_info()
-        srv_stat = f"[🛰Server Stats / 已开通数据]\n{vps_str}\n"
-        vir_str = self.get_data_center()
-        data_center = f"[🚩Available Centers / 可开通区域]\n{vir_str}\n"
-        FOCUS = "[♨Special Focus / 特别关注]\n"
-        eu_mid1 = (
-            f"{FOCUS}EU Middle Specs (KVM + SSD) are NOT available now. 暂时没有库存。"
-            if "EU Middle Specs" not in vir_str
-            else f"{FOCUS}CHECK https://hax.co.id/create-vps NOW!!! EU Middle Specs (KVM + SSD) are available now. 有库存！"
-        )
-        msg = srv_stat + data_center + eu_mid1
+        hax_str = self.get_server_info("https://hax.co.id/data-center")
+        hax_stat = f"[🛰Hax Stats / Hax 开通数据]\n{hax_str}\n"
+        vir_str = self.get_data_center("https://hax.co.id/create-vps", True)
+        woiden_str = self.get_data_center("https://woiden.id/create-vps")
+        data_center = f'[🚩Available Centers / 可开通区域]\n---------- <a href="https://hax.co.id/create-vps">Hax</a> ----------\n{vir_str}---------- <a href="https://woiden.id/create-vps">Woiden</a> ----------\n{woiden_str}\n'
+        msg = hax_stat + data_center
         return msg
 
 
