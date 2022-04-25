@@ -75,14 +75,14 @@ class Tieba:
             ).hexdigest()
             data = {"kw": tb_name, "tbs": tbs, "sign": md5}
             try:
-                response = session.post(
+                res = session.post(
                     url="http://c.tieba.baidu.com/c/c/forum/sign", data=data
                 ).json()
-                if response["error_code"] == "0":
+                if res["error_code"] == "0":
                     success_count += 1
-                elif response["error_code"] == "160002":
+                elif res["error_code"] == "160002":
                     exist_count += 1
-                elif response["error_code"] == "340006":
+                elif res["error_code"] == "340006":
                     shield_count += 1
                 else:
                     error_count += 1

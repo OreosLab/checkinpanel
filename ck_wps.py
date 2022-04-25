@@ -26,11 +26,11 @@ class WPS:
             "Cookie": cookie,
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
         }
-        res = requests.get(url=url0, headers=headers)
-        if "会员登录" in res.text:
+        response = requests.get(url=url0, headers=headers)
+        if "会员登录" in response.text:
             print("cookie 失效")
             exit()
-        is_sign = res.json().get("data", {}).get("is_sign")
+        is_sign = response.json().get("data", {}).get("is_sign")
         if is_sign:
             self.is_sign = True
 
@@ -51,17 +51,17 @@ class WPS:
                 "img_witdh": "275.164",
                 "img_height": "69.184",
             }  # 带验证坐标的请求
-            res = requests.post(url=url, headers=headers, data=data0)
-            if not ("msg" in res.text):
+            response = requests.post(url=url, headers=headers, data=data0)
+            if not ("msg" in response.text):
                 msg = "cookie 失效"
             else:
-                sus = json.loads(res.text)["result"]
+                sus = json.loads(response.text)["result"]
                 msg = f"免验证签到 --> {sus}\n"
                 if sus == "error":
                     for n in range(10):
                         requests.get(url=yz_url, headers=headers)
-                        res = requests.post(url=url, headers=headers, data=data)
-                        sus = json.loads(res.text)["result"]
+                        response = requests.post(url=url, headers=headers, data=data)
+                        sus = json.loads(response.text)["result"]
                         msg += f"{str(n + 1)} 尝试验证签到 --> {sus}\n"
                         time.sleep(random.randint(0, 5) / 10)
                         if sus == "ok":

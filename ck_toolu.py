@@ -23,8 +23,8 @@ class ToolLu:
             "cookie": cookie,
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36",
         }
-        res = session.get(url=url, headers=headers)
-        day = re.findall("你已经连续签到(.*)，再接再厉！", res.text)
+        response = session.get(url=url, headers=headers)
+        day = re.findall("你已经连续签到(.*)，再接再厉！", response.text)
         if len(day) == 0:
             msg = "cookie 失效"
         else:

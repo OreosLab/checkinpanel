@@ -56,20 +56,20 @@ class Picacomic:
         try:
             data = {"email": email, "password": password}
             sign_headers = self.generate_headers(path="auth/sign-in", data=data)
-            sign_response = requests.post(
+            sign_res = requests.post(
                 url="https://picaapi.picacomic.com/auth/sign-in",
                 data=json.dumps({"email": email, "password": password}),
                 headers=sign_headers,
                 timeout=60,
             ).json()
-            token = sign_response.get("data", {}).get("token")
+            token = sign_res.get("data", {}).get("token")
             punch_headers = self.generate_headers(path="users/punch-in", token=token)
-            response = requests.post(
+            res = requests.post(
                 url="https://picaapi.picacomic.com/users/punch-in",
                 headers=punch_headers,
                 timeout=60,
             ).json()
-            if response.get("data", {}).get("res", {}).get("status", {}) == "ok":
+            if res.get("data", {}).get("res", {}).get("status", {}) == "ok":
                 msg = "打卡成功"
             else:
                 msg = "重复签到"

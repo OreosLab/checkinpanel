@@ -33,8 +33,8 @@ class Meizu:
             ("mod", "signin"),
             ("action", "sign"),
         )
-        response = requests.get(url=self.url, headers=headers, params=params).json()
-        msg = response.get("message")
+        res = requests.get(url=self.url, headers=headers, params=params).json()
+        msg = res.get("message")
         return msg
 
     def draw(self, cookie, count: int = 0):

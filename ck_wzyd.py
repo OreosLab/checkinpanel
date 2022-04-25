@@ -18,16 +18,16 @@ class WZYD:
 
     @staticmethod
     def sign(data):
-        response = requests.post(
+        res = requests.post(
             url="https://ssl.kohsocialapp.qq.com:10001/play/h5sign", data=data
         ).json()
         try:
-            if response["result"] == 0:
+            if res["result"] == 0:
                 msg = "签到成功"
             else:
-                msg = response["returnMsg"]
+                msg = res["returnMsg"]
         except Exception:
-            msg = "请求失败,请检查接口"
+            msg = "请求失败，请检查接口"
         return msg
 
     def main(self):

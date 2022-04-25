@@ -26,10 +26,10 @@ class Enshan:
             "Cookie": cookie,
         }
         session = requests.session()
-        resp = session.get(url, headers=headers)
+        response = session.get(url, headers=headers)
         try:
-            coin = re.findall("恩山币: </em>(.*?)nb &nbsp;", resp.text)[0]
-            point = re.findall("<em>积分: </em>(.*?)<span", resp.text)[0]
+            coin = re.findall("恩山币: </em>(.*?)nb &nbsp;", response.text)[0]
+            point = re.findall("<em>积分: </em>(.*?)<span", response.text)[0]
             result = f"恩山币：{coin}\n积分：{point}"
         except Exception as e:
             result = str(e)

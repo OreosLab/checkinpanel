@@ -23,14 +23,14 @@ class MiMotion:
 
     def get_time(self):
         url = "http://api.m.taobao.com/rest/api3.do?api=mtop.common.getTimestamp"
-        response = requests.get(url, headers=self.headers).json()
-        t = response["data"]["t"]
+        res = requests.get(url, headers=self.headers).json()
+        t = res["data"]["t"]
         return t
 
     def get_app_token(self, login_token):
         url = f"https://account-cn.huami.com/v1/client/app_tokens?app_name=com.xiaomi.hm.health&dn=api-user.huami.com%2Capi-mifit.huami.com%2Capp-analytics.huami.com&login_token={login_token}"
-        response = requests.get(url=url, headers=self.headers).json()
-        app_token = response["token_info"]["app_token"]
+        res = requests.get(url=url, headers=self.headers).json()
+        app_token = res["token_info"]["app_token"]
         return app_token
 
     @staticmethod
@@ -106,8 +106,8 @@ class MiMotion:
                     "Content-Type": "application/x-www-form-urlencoded",
                 }
                 data = f"userid={userid}&last_sync_data_time=1628256960&device_type=0&last_deviceid=C4BDB6FFFE2BCA4C&data_json={data_json}"
-                response = requests.post(url=url, data=data, headers=headers).json()
-                msg = f"帐号信息: *******{phone[-4:]}\n修改状态: {response['message']}\n修改步数: {step}"
+                res = requests.post(url=url, data=data, headers=headers).json()
+                msg = f"帐号信息: *******{phone[-4:]}\n修改状态: {res['message']}\n修改步数: {step}"
                 msg_all += msg + "\n\n"
         return msg_all
 

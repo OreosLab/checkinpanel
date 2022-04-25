@@ -32,11 +32,11 @@ class Weather:
                 if not city_map:
                     raise FileNotFoundError
         except FileNotFoundError:
-            resp = requests.get(
+            r = requests.get(
                 "https://fastly.jsdelivr.net/gh/Oreomeow/checkinpanel@master/city.json"
             )
-            if resp.status_code == 200:
-                city_map = resp.json()
+            if r.status_code == 200:
+                city_map = r.json()
                 with open(
                     os.path.join(os.path.dirname(__file__), "city.json"),
                     "w",
@@ -49,9 +49,9 @@ class Weather:
         for city_name in self.check_items:
             city_code = city_map.get(city_name, "101020100")
             weather_url = f"http://t.weather.itboy.net/api/weather/city/{city_code}"
-            resp = requests.get(url=weather_url)
-            if resp.status_code == 200 and resp.json().get("status") == 200:
-                d = resp.json()
+            r = requests.get(url=weather_url)
+            if r.status_code == 200 and r.json().get("status") == 200:
+                d = r.json()
                 msg = (
                     "城市："
                     + d["cityInfo"]["parent"]

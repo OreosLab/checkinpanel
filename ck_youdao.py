@@ -20,10 +20,10 @@ class YouDao:
     def get_space(cookie):
         url = "https://note.youdao.com/yws/mapi/user?method=get"
         headers = {"Cookie": cookie}
-        res = requests.get(url=url, headers=headers)
-        if res.json().get("q") is None:
+        res = requests.get(url=url, headers=headers).json()
+        if res.get("q") is None:
             return 0
-        return res.json().get("q")
+        return res.get("q")
 
     def sign(self, cookie):
         msg = f"签到前空间: {int(self.get_space(cookie))//1048576}M\n"

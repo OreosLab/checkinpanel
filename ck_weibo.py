@@ -22,17 +22,16 @@ class WeiBo:
     @staticmethod
     def sign(token):
         headers = {"User-Agent": "Weibo/52588 (iPhone; iOS 14.5; Scale/3.00)"}
-        response = requests.get(
+        res = requests.get(
             url=f"https://api.weibo.cn/2/checkin/add?c=iphone&{token}",
             headers=headers,
-        )
-        result = response.json()
-        if result.get("status") == 10000:
-            msg = f'连续签到: {result.get("data").get("continuous")}天\n本次收益: {result.get("data").get("desc")}'
-        elif result.get("errno") == 30000:
+        ).json()
+        if res.get("status") == 10000:
+            msg = f'连续签到: {res.get("data").get("continuous")}天\n本次收益: {res.get("data").get("desc")}'
+        elif res.get("errno") == 30000:
             msg = "每日签到: 已签到"
-        elif result.get("status") == 90005:
-            msg = f'每日签到: {result.get("msg")}'
+        elif res.get("status") == 90005:
+            msg = f'每日签到: {res.get("msg")}'
         else:
             msg = "每日签到: 签到失败"
         return msg
@@ -40,16 +39,15 @@ class WeiBo:
     @staticmethod
     def card(token):
         headers = {"User-Agent": "Weibo/52588 (iPhone; iOS 14.5; Scale/3.00)"}
-        response = requests.get(
+        res = requests.get(
             url=f"https://api.weibo.cn/2/!/ug/king_act_home?c=iphone&{token}",
             headers=headers,
-        )
-        result = response.json()
-        if result.get("status") == 10000:
-            nickname = result.get("data").get("user").get("nickname")
+        ).json()
+        if res.get("status") == 10000:
+            nickname = res.get("data").get("user").get("nickname")
             msg = (
-                f'用户昵称: {nickname}\n每日打卡: {result.get("data").get("signin").get("title").split("<")[0]}天\n'
-                f'积分总计: {result.get("data").get("user").get("energy")}'
+                f'用户昵称: {nickname}\n每日打卡: {res.get("data").get("signin").get("title").split("<")[0]}天\n'
+                f'积分总计: {res.get("data").get("user").get("energy")}'
             )
         else:
             msg = "每日打卡: 活动过期或失效"
@@ -71,18 +69,17 @@ class WeiBo:
             data=data,
         )
         try:
-            result = response.json()
-            if result.get("status") == 1:
-                msg = f'微博钱包: {result.get("score")} 积分'
-            elif result.get("status") == 2:
+            res = response.json()
+            if res.get("status") == 1:
+                msg = f'微博钱包: {res.get("score")} 积分'
+            elif res.get("status") == 2:
                 msg = "微博钱包: 已签到"
-                info_response = requests.post(
+                info_res = requests.post(
                     url="https://pay.sc.weibo.com/api/client/sdk/app/balance",
                     headers=headers,
                     data=data,
-                )
-                info_result = info_response.json()
-                msg += f"\n当前现金: {info_result.get('data').get('balance')} 元"
+                ).json()
+                msg += f"\n当前现金: {info_res.get('data').get('balance')} 元"
             else:
                 msg = "微博钱包: Cookie失效"
             return msg
