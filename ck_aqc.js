@@ -276,7 +276,7 @@ async function dotask(tasklist, aqcCookie, exportkey) {
 
 function Log(info) {
     console.log(info);
-    desp = desp + '\n' + info;
+    desp = desp + info + '\n';
     return desp;
 }
 

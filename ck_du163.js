@@ -59,7 +59,7 @@ function du163() {
 
 function Log(info) {
     console.log(info);
-    desp = desp + '\n' + info;
+    desp = desp + info + '\n';
     return desp;
 }
 

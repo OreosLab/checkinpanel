@@ -52,11 +52,11 @@ class RssRobot:
                     < rss.before * 86400
                 ):
                     if title:
-                        msg += f"\n--{rss.title}--\n"
+                        msg += f"--{rss.title}--\n"
                         title = False
                     msg = (
                         msg
-                        + f'{str(c_no).zfill(2)}.<a href="{entry.link}">{entry.title}</a>\n'
+                        + f'{str(c_no).zfill(2)}. <a href="{entry.link}">{entry.title}</a>\n'
                     )
                     no += 1
                     c_no += 1

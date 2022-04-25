@@ -64,8 +64,8 @@ class LeetCode:
         num = json_text.get("questionFrontendId")
         # 题名（中文）
         leetcode_title = json_text.get("translatedTitle")
-        msg = num + "." + leetcode_title
-        return f"{msg}\n{url}"
+        msg = num + ". " + leetcode_title
+        return f'<a href="{url}">{msg}</a>'
 
 
 if __name__ == "__main__":
