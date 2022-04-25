@@ -22,8 +22,8 @@ class AcFun:
 
     def login(self, phone, password, session):
         url = "https://id.app.acfun.cn/rest/web/login/signin"
-        data = f"password={password}&username={phone}&key=&captcha="
-        res = session.post(url=url, data=data).json()
+        body = f"username={phone}&password={password}&key=&captcha="
+        res = session.post(url=url, data=body).json()
         if res.get("result") == 0:
             return True
         else:
@@ -31,14 +31,14 @@ class AcFun:
 
     def get_video(self, session):
         url = "https://www.acfun.cn/rest/pc-direct/rank/channel"
-        response = session.get(url=url)
-        self.contentid = response.json().get("rankList")[0].get("contentId")
+        res = session.get(url=url).json()
+        self.contentid = res.get("rankList")[0].get("contentId")
         return self.contentid
 
     def sign(self, session):
         url = "https://www.acfun.cn/rest/pc-direct/user/signIn"
-        response = session.post(url=url)
-        return response.json().get("msg")
+        res = session.post(url=url).json()
+        return res.get("msg")
 
     def danmu(self, session):
         url = "https://www.acfun.cn/rest/pc-direct/new-danmaku/add"
@@ -54,52 +54,70 @@ class AcFun:
             "subChannelId": "1",
             "subChannelName": "动画",
         }
-        res = session.get(url=f"https://www.acfun.cn/v/ac{self.contentid}")
-        videoId = re.findall('"currentVideoId":(\d+),', res.text)
+        response = session.get(url=f"https://www.acfun.cn/v/ac{self.contentid}")
+        videoId = re.findall('"currentVideoId":(\d+),', response.text)
         subChannel = re.findall(
-            '{subChannelId:(\d+),subChannelName:"([\u4e00-\u9fa5]+)"}', res.text
+            '{subChannelId:(\d+),subChannelName:"([\u4e00-\u9fa5]+)"}', response.text
         )
         if len(videoId) > 0:
             data["videoId"] = videoId[0]
             data["subChannelId"] = subChannel[0][0]
             data["subChannelName"] = subChannel[0][1]
-        response = session.post(url=url, data=data)
-        if response.json().get("result") == 0:
+        res = session.post(url=url, data=data).json()
+        if res.get("result") == 0:
             msg = "弹幕成功"
         else:
             msg = "弹幕失败"
         return msg
 
-    def throwbanana(self, session):
-        url = "https://www.acfun.cn/rest/pc-direct/banana/throwBanana"
-        data = {"resourceId": self.contentid, "count": "1", "resourceType": "2"}
-        response = session.post(url=url, data=data)
-        if response.json().get("result") == 0:
-            msg = "香蕉成功"
+    def get_token(self, session):
+        url = "https://id.app.acfun.cn/rest/web/token/get?sid=acfun.midground.api"
+        res = session.post(url=url).json()
+        if res.get("result") == 0:
+            self.st = res.get("acfun.midground.api_st")
         else:
-            msg = "香蕉失败"
-        return msg
+            self.st = ""
 
     def like(self, session):
         like_url = "https://kuaishouzt.com/rest/zt/interact/add"
         unlike_url = "https://kuaishouzt.com/rest/zt/interact/delete"
-        body = f"kpn=ACFUN_APP&kpf=PC_WEB&subBiz=mainApp&interactType=1&objectType=2&objectId={self.contentid}"
-        response = session.post(url=like_url, data=body)
+        body = f"kpn=ACFUN_APP&kpf=PC_WEB&subBiz=mainApp&interactType=1&objectType=2&objectId={self.contentid}&acfun.midground.api_st={self.st}&extParams%5BisPlaying%5D=false&extParams%5BshowCount%5D=1&extParams%5BotherBtnClickedCount%5D=10&extParams%5BplayBtnClickedCount%5D=0"
+        res = session.post(url=like_url, data=body).json()
         session.post(url=unlike_url, data=body)
-        if response.json().get("result") == 1:
+        if res.get("result") == 1:
             msg = "点赞成功"
         else:
             msg = "点赞失败"
         return msg
 
+    def throwbanana(self, session):
+        url = "https://www.acfun.cn/rest/pc-direct/banana/throwBanana"
+        data = {"resourceId": self.contentid, "count": "1", "resourceType": "2"}
+        res = session.post(url=url, data=data).json()
+        if res.get("result") == 0:
+            msg = "投🍌成功"
+        else:
+            msg = "投🍌失败"
+        return msg
+
     # def share(self, session):
     #     url = "https://api-ipv6.acfunchina.com/rest/app/task/reportTaskAction?taskType=1&market=tencent&product=ACFUN_APP&appMode=0"
-    #     response = session.get(url=url)
-    #     if response.json().get("result") == 0:
+    #     res = session.get(url=url).json()
+    #     if res.get("result") == 0:
     #         msg = "分享成功"
     #     else:
     #         msg = "分享失败"
     #     return msg
+
+    def get_info(self, session):
+        url = "https://www.acfun.cn/rest/pc-direct/user/personalInfo"
+        res = session.get(url=url).json()
+        if res.get("result") == 0:
+            info = res.get("info")
+            msg = f'当前等级: {info.get("level")}\n持有香蕉: {info.get("banana")}'
+        else:
+            msg = "查询失败"
+        return msg
 
     def main(self):
         msg_all = ""
@@ -121,10 +139,12 @@ class AcFun:
             if flag is True:
                 self.get_video(s)
                 sign_msg = self.sign(s)
+                self.get_token(s)
                 like_msg = self.like(s)
                 # share_msg = self.share(s)
                 danmu_msg = self.danmu(s)
                 throwbanana_msg = self.throwbanana(s)
+                info = self.get_info(s)
 
                 msg = (
                     f"帐号信息: *******{phone[-4:]}\n"
@@ -132,7 +152,8 @@ class AcFun:
                     f"点赞任务: {like_msg}\n"
                     f"弹幕任务: {danmu_msg}\n"
                     f"香蕉任务: {throwbanana_msg}\n"
-                    # f"分享任务: {share_msg}"
+                    # f"分享任务: {share_msg}\n"
+                    f"{info}"
                 )
 
             else:
