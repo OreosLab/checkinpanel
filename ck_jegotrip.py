@@ -16,14 +16,14 @@ class JegoTrip:
         self.check_items = check_items
 
     def task(self, user_id):
-        resp = requests.get(
+        response = requests.get(
             f"http://task.jegotrip.com.cn:8080/app/tasks?userid={user_id}"
         )
-        data = resp.json()
+        data = response.json()
         return data["rtn"]["tasks"]
 
     def sign(self, user_id, task_id) -> bool:
-        resp = requests.post(
+        response = requests.post(
             "http://task.jegotrip.com.cn:8080/app/sign",
             json={"userid": user_id, "taskId": task_id},  # 此处`I`要大写
             headers={
@@ -41,7 +41,7 @@ class JegoTrip:
             },
         )
 
-        data = resp.json()
+        data = response.json()
         return data["result"]
 
     def verify_result(self, user_id):

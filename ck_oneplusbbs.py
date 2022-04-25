@@ -37,13 +37,13 @@ class OnePlusBBS:
         )
         formhash = re.findall(r"bbs_formhash=(.*?);", cookie)[0]
         data = {"formhash": formhash, "qdxq": "kx", "qdmode": "1", "todaysay": "努力奋斗"}
-        response = requests.post(
+        res = requests.post(
             url="https://www.oneplusbbs.com/plugin.php",
             headers=headers,
             params=params,
             data=data,
         ).text
-        msg = re.findall(r'<div class="c">(.*?)</div>', response, re.S)
+        msg = re.findall(r'<div class="c">(.*?)</div>', res, re.S)
         msg = msg[0].strip() if msg else "Cookie 可能过期"
         return msg
 

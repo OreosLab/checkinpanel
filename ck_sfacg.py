@@ -57,10 +57,10 @@ class SFACG:
 
     def check_cookie(self, authorization, cookie, useragent, sfsecurity):
         headers = self.generate_headers(authorization, cookie, useragent, sfsecurity)
-        result = requests.get("https://api.sfacg.com/user?", headers=headers).json()
+        res = requests.get("https://api.sfacg.com/user?", headers=headers).json()
         money = requests.get("https://api.sfacg.com/user/money", headers=headers).json()
         try:
-            nickname = result["data"]["nickName"]
+            nickname = res["data"]["nickName"]
             fire_money_remain = money["data"]["fireMoneyRemain"]
             vip_level = money["data"]["vipLevel"]
             info = (
@@ -73,7 +73,7 @@ class SFACG:
             )
             print("Cookie 凭证有效！")
         except Exception:
-            info = "Cookie 凭证失效 httpCode: " + str(result["status"]["httpCode"])
+            info = "Cookie 凭证失效 httpCode: " + str(res["status"]["httpCode"])
             print(info)
         return info
 
@@ -123,14 +123,14 @@ class SFACG:
             print(sign_msg)
         else:
             print("检测到今天还未签到，开始自动签到和完成任务")
-            response = requests.put(
+            res = requests.put(
                 "https://api.sfacg.com/user/signInfo", headers=headers
             ).json()
-            # print(response)
-            if response["status"]["httpCode"] == 200:
+            # print(res)
+            if res["status"]["httpCode"] == 200:
                 sign_tip = "签到提醒: 签到成功！"
             else:
-                sign_tip = "签到提醒: " + str(response["status"]["msg"])
+                sign_tip = "签到提醒: " + str(res["status"]["msg"])
             sign_msg = ""
             for data in self.get_re("https://api.sfacg.com/user/signInfo", headers)[
                 "data"
@@ -148,11 +148,11 @@ class SFACG:
 
     def check_coin(self, authorization, cookie, useragent, sfsecurity):
         headers = self.generate_headers(authorization, cookie, useragent, sfsecurity)
-        response = self.get_re("https://api.sfacg.com/user/welfare/income", headers)
+        res = self.get_re("https://api.sfacg.com/user/welfare/income", headers)
         try:
-            coin_info = "金币数量: " + str(response["data"]["coinRemain"])
+            coin_info = "金币数量: " + str(res["data"]["coinRemain"])
         except Exception:
-            coin_info = "Cookie 凭证失效 httpCode: " + str(response["status"]["httpCode"])
+            coin_info = "Cookie 凭证失效 httpCode: " + str(res["status"]["httpCode"])
         return coin_info
 
     def main(self):

@@ -17,34 +17,34 @@ class BiliBili(object):
     @staticmethod
     def get_nav(session):
         url = "https://api.bilibili.com/x/web-interface/nav"
-        ret = session.get(url=url).json()
-        uname = ret.get("data", {}).get("uname")
-        uid = ret.get("data", {}).get("mid")
-        is_login = ret.get("data", {}).get("isLogin")
-        coin = ret.get("data", {}).get("money")
-        vip_type = ret.get("data", {}).get("vipType")
-        current_exp = ret.get("data", {}).get("level_info", {}).get("current_exp")
+        res = session.get(url=url).json()
+        uname = res.get("data", {}).get("uname")
+        uid = res.get("data", {}).get("mid")
+        is_login = res.get("data", {}).get("isLogin")
+        coin = res.get("data", {}).get("money")
+        vip_type = res.get("data", {}).get("vipType")
+        current_exp = res.get("data", {}).get("level_info", {}).get("current_exp")
         return uname, uid, is_login, coin, vip_type, current_exp
 
     @staticmethod
     def reward(session) -> dict:
         """取B站经验信息"""
         url = "https://account.bilibili.com/home/reward"
-        ret = session.get(url=url).json()
-        return ret
+        res = session.get(url=url).json()
+        return res
 
     @staticmethod
     def live_sign(session) -> str:
         """B站直播签到"""
         try:
             url = "https://api.live.bilibili.com/xlive/web-ucenter/v1/sign/DoSign"
-            ret = session.get(url=url).json()
-            if ret["code"] == 0:
-                msg = f'签到成功，{ret["data"]["text"]}，特别信息:{ret["data"]["specialText"]}，本月已签到{ret["data"]["hadSignDays"]}天'
-            elif ret["code"] == 1011040:
+            res = session.get(url=url).json()
+            if res["code"] == 0:
+                msg = f'签到成功，{res["data"]["text"]}，特别信息:{res["data"]["specialText"]}，本月已签到{res["data"]["hadSignDays"]}天'
+            elif res["code"] == 1011040:
                 msg = "今日已签到过,无法重复签到"
             else:
-                msg = f'签到失败，信息为: {ret["message"]}'
+                msg = f'签到失败，信息为: {res["message"]}'
         except Exception as e:
             msg = f"签到异常，原因为{str(e)}"
             print(msg)
@@ -58,13 +58,13 @@ class BiliBili(object):
         try:
             url = "https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn"
             post_data = {"platform": platform}
-            ret = session.post(url=url, data=post_data).json()
-            if ret["code"] == 0:
+            res = session.post(url=url, data=post_data).json()
+            if res["code"] == 0:
                 msg = "签到成功"
-            elif ret["msg"] == "clockin clockin is duplicate":
+            elif res["msg"] == "clockin clockin is duplicate":
                 msg = "今天已经签到过了"
             else:
-                msg = f'签到失败，信息为({ret["msg"]})'
+                msg = f'签到失败，信息为({res["msg"]})'
                 print(msg)
         except Exception as e:
             msg = f"签到异常,原因为: {str(e)}"
@@ -79,15 +79,15 @@ class BiliBili(object):
         """
         url = "https://api.bilibili.com/x/vip/privilege/receive"
         post_data = {"type": receive_type, "csrf": bili_jct}
-        ret = session.post(url=url, data=post_data).json()
-        return ret
+        res = session.post(url=url, data=post_data).json()
+        return res
 
     @staticmethod
     def vip_manga_reward(session) -> dict:
         """获取漫画大会员福利"""
         url = "https://manga.bilibili.com/twirp/user.v1.User/GetVipReward"
-        ret = session.post(url=url, json={"reason_id": 1}).json()
-        return ret
+        res = session.post(url=url, json={"reason_id": 1}).json()
+        return res
 
     @staticmethod
     def report_task(session, bili_jct, aid: int, cid: int, progres: int = 300) -> dict:
@@ -99,8 +99,8 @@ class BiliBili(object):
         """
         url = "http://api.bilibili.com/x/v2/history/report"
         post_data = {"aid": aid, "cid": cid, "progres": progres, "csrf": bili_jct}
-        ret = session.post(url=url, data=post_data).json()
-        return ret
+        res = session.post(url=url, data=post_data).json()
+        return res
 
     @staticmethod
     def share_task(session, bili_jct, aid) -> dict:
@@ -110,8 +110,8 @@ class BiliBili(object):
         """
         url = "https://api.bilibili.com/x/web-interface/share/add"
         post_data = {"aid": aid, "csrf": bili_jct}
-        ret = session.post(url=url, data=post_data).json()
-        return ret
+        res = session.post(url=url, data=post_data).json()
+        return res
 
     @staticmethod
     def get_followings(
@@ -138,8 +138,8 @@ class BiliBili(object):
             "order_type": order_type,
         }
         url = "https://api.bilibili.com/x/relation/followings"
-        ret = session.get(url=url, params=params).json()
-        return ret
+        res = session.get(url=url, params=params).json()
+        return res
 
     @staticmethod
     def space_arc_search(
@@ -169,7 +169,7 @@ class BiliBili(object):
             "keyword": keyword,
         }
         url = "https://api.bilibili.com/x/space/arc/search"
-        ret = session.get(url=url, params=params).json()
+        res = session.get(url=url, params=params).json()
         data_list = [
             {
                 "aid": one.get("aid"),
@@ -177,7 +177,7 @@ class BiliBili(object):
                 "title": one.get("title"),
                 "owner": one.get("author"),
             }
-            for one in ret.get("data", {}).get("list", {}).get("vlist", [])
+            for one in res.get("data", {}).get("list", {}).get("vlist", [])
         ]
         return data_list
 
@@ -196,8 +196,8 @@ class BiliBili(object):
             "oid": uid,
             "csrf": bili_jct,
         }
-        ret = session.post(url=url, data=post_data).json()
-        return ret
+        res = session.post(url=url, data=post_data).json()
+        return res
 
     @staticmethod
     def coin_add(
@@ -217,16 +217,16 @@ class BiliBili(object):
             "cross_domain": "true",
             "csrf": bili_jct,
         }
-        ret = session.post(url=url, data=post_data).json()
+        res = session.post(url=url, data=post_data).json()
 
-        return ret
+        return res
 
     @staticmethod
     def live_status(session) -> str:
         """B站直播获取金银瓜子状态"""
         url = "https://api.live.bilibili.com/pay/v1/Exchange/getStatus"
-        ret = session.get(url=url).json()
-        data = ret.get("data")
+        res = session.get(url=url).json()
+        data = res.get("data")
         silver = data.get("silver", 0)
         gold = data.get("gold", 0)
         coin = data.get("coin", 0)
@@ -238,8 +238,8 @@ class BiliBili(object):
         """银瓜子兑换硬币"""
         url = "https://api.live.bilibili.com/pay/v1/Exchange/silver2coin"
         post_data = {"csrf_token": bili_jct, "csrf": bili_jct}
-        ret = session.post(url=url, data=post_data).json()
-        return ret
+        res = session.post(url=url, data=post_data).json()
+        return res
 
     @staticmethod
     def get_region(session, rid=1, num=6):
@@ -254,7 +254,7 @@ class BiliBili(object):
             + "&rid="
             + str(rid)
         )
-        ret = session.get(url=url).json()
+        res = session.get(url=url).json()
         data_list = [
             {
                 "aid": one.get("aid"),
@@ -262,7 +262,7 @@ class BiliBili(object):
                 "title": one.get("title"),
                 "owner": one.get("owner", {}).get("name"),
             }
-            for one in ret.get("data", {}).get("archives", [])
+            for one in res.get("data", {}).get("archives", [])
         ]
         return data_list
 
@@ -296,8 +296,8 @@ class BiliBili(object):
                 manhua_msg = self.manga_sign(session=session)
                 live_msg = self.live_sign(session=session)
                 aid_list = self.get_region(session=session)
-                reward_ret = self.reward(session=session)
-                coins_av_count = reward_ret.get("data", {}).get("coins_av") // 10
+                reward_res = self.reward(session=session)
+                coins_av_count = reward_res.get("data", {}).get("coins_av") // 10
                 coin_num = coin_num - coins_av_count
                 coin_num = coin_num if coin_num < coin else coin
                 if coin_type == 1 and coin_num:
@@ -308,19 +308,19 @@ class BiliBili(object):
                             aid_list += self.space_arc_search(session=session, uid=mid)
                 if coin_num > 0:
                     for aid in aid_list[::-1]:
-                        ret = self.coin_add(
+                        res = self.coin_add(
                             session=session, aid=aid.get("aid"), bili_jct=bili_jct
                         )
-                        if ret["code"] == 0:
+                        if res["code"] == 0:
                             coin_num -= 1
                             print(f'成功给{aid.get("title")}投一个币')
                             success_count += 1
-                        elif ret["code"] == 34005:
-                            print(f'投币{aid.get("title")}失败，原因为{ret["message"]}')
+                        elif res["code"] == 34005:
+                            print(f'投币{aid.get("title")}失败，原因为{res["message"]}')
                             continue
                             # -104 硬币不够了 -111 csrf 失败 34005 投币达到上限
                         else:
-                            print(f'投币{aid.get("title")}失败，原因为{ret["message"]}，跳过投币')
+                            print(f'投币{aid.get("title")}失败，原因为{res["message"]}，跳过投币')
                             break
                         if coin_num <= 0:
                             break
@@ -332,28 +332,28 @@ class BiliBili(object):
                 aid = aid_list[0].get("aid")
                 cid = aid_list[0].get("cid")
                 title = aid_list[0].get("title")
-                report_ret = self.report_task(
+                report_res = self.report_task(
                     session=session, bili_jct=bili_jct, aid=aid, cid=cid
                 )
-                if report_ret.get("code") == 0:
+                if report_res.get("code") == 0:
                     report_msg = f"观看《{title}》300秒"
                 else:
                     report_msg = "任务失败"
                     print(report_msg)
-                share_ret = self.share_task(session=session, bili_jct=bili_jct, aid=aid)
-                if share_ret.get("code") == 0:
+                share_res = self.share_task(session=session, bili_jct=bili_jct, aid=aid)
+                if share_res.get("code") == 0:
                     share_msg = f"分享《{title}》成功"
                 else:
                     share_msg = "分享失败"
                     print(share_msg)
                 if silver2coin:
-                    silver2coin_ret = self.silver2coin(
+                    silver2coin_res = self.silver2coin(
                         session=session, bili_jct=bili_jct
                     )
-                    if silver2coin_ret["code"] == 0:
+                    if silver2coin_res["code"] == 0:
                         silver2coin_msg = "成功将银瓜子兑换为1个硬币"
                     else:
-                        silver2coin_msg = silver2coin_ret["message"]
+                        silver2coin_msg = silver2coin_res["message"]
                 else:
                     silver2coin_msg = "未开启银瓜子兑换硬币功能"
                 live_stats = self.live_status(session=session)
@@ -365,11 +365,11 @@ class BiliBili(object):
                     vip_type,
                     new_current_exp,
                 ) = self.get_nav(session=session)
-                reward_ret = self.reward(session=session)
-                login = reward_ret.get("data", {}).get("login")
-                watch_av = reward_ret.get("data", {}).get("watch_av")
-                coins_av = reward_ret.get("data", {}).get("coins_av", 0)
-                share_av = reward_ret.get("data", {}).get("share_av")
+                reward_res = self.reward(session=session)
+                login = reward_res.get("data", {}).get("login")
+                watch_av = reward_res.get("data", {}).get("watch_av")
+                coins_av = reward_res.get("data", {}).get("coins_av", 0)
+                share_av = reward_res.get("data", {}).get("share_av")
                 today_exp = 5 * len([one for one in [login, watch_av, share_av] if one])
                 today_exp += coins_av
                 update_data = (28800 - new_current_exp) // (

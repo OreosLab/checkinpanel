@@ -22,16 +22,16 @@ class FMAPP:
             url = (
                 "https://fmapp.chinafamilymart.com.cn/api/app/market/member/signin/sign"
             )
-            response = requests.post(url=url, headers=headers).json()
-            code = response.get("code")
+            res = requests.post(url=url, headers=headers).json()
+            code = res.get("code")
             if code == "200":
-                data = response.get("data", {})
+                data = res.get("data", {})
                 msg = (
-                    f"在坚持{data.get('nextDay')}天即可获得{data.get('nextNumber')}个发米粒\n"
-                    f"签到{data.get('lastDay')}天可获得{data.get('lastNumber')}个发米粒"
+                    f"再坚持 {data.get('nextDay')} 天即可获得 {data.get('nextNumber')} 个发米粒\n"
+                    f"签到 {data.get('lastDay')} 天可获得 {data.get('lastNumber')} 个发米粒"
                 )
             else:
-                msg = response.get("message")
+                msg = res.get("message")
         except Exception as e:
             print("错误信息", str(e))
             msg = f"未知错误：{str(e)}"
@@ -41,13 +41,13 @@ class FMAPP:
     def user_info(headers):
         try:
             url = "https://fmapp.chinafamilymart.com.cn/api/app/member/info"
-            response = requests.post(url=url, headers=headers).json()
-            code = response.get("code")
+            res = requests.post(url=url, headers=headers).json()
+            code = res.get("code")
             if code == "200":
-                data = response.get("data", {})
+                data = res.get("data", {})
                 msg = data.get("nickName")
             else:
-                msg = response.get("message")
+                msg = res.get("message")
         except Exception as e:
             print("错误信息", str(e))
             msg = "未知错误，检查日志"
@@ -57,15 +57,15 @@ class FMAPP:
     def mili_count(headers):
         try:
             url = "https://fmapp.chinafamilymart.com.cn/api/app/member/v1/mili/service/detail"
-            response = requests.post(
+            res = requests.post(
                 url=url, headers=headers, data=json.dumps({"pageSize": 10, "pageNo": 1})
             ).json()
-            code = response.get("code")
+            code = res.get("code")
             if code == "200":
-                data = response.get("data", {})
+                data = res.get("data", {})
                 msg = data.get("miliNum")
             else:
-                msg = response.get("message")
+                msg = res.get("message")
         except Exception as e:
             print("错误信息", str(e))
             msg = "未知错误，检查日志"

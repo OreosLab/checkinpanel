@@ -15,7 +15,6 @@ from utils import get_data
 class DuoKan:
     def __init__(self, check_items):
         self.check_items = check_items
-        self.can = False
         self.gift_code_list = [
             "d16ad58199c69518a4afd87b5cf0fe67",
             "828672d6bc39ccd25e1f6ad34e00b86c",
@@ -235,7 +234,7 @@ class DuoKan:
         t = int(time.time())
         t_device_id = f"{device_id}&{t}"
         c = 0
-        for index, one in enumerate(t_device_id):
+        for _, one in enumerate(t_device_id):
             c = (c * 131 + ord(one)) % 65536
         data = f"_t={t}&_c={c}"
         return data
@@ -243,53 +242,51 @@ class DuoKan:
     def sign(self, cookies):
         url = "https://www.duokan.com/checkin/v0/checkin"
         data = self.get_data(cookies=cookies)
-        response = requests.post(
+        res = requests.post(
             url=url, data=data, cookies=cookies, headers=self.headers
-        )
-        result = response.json()
-        msg = result.get("msg")
+        ).json()
+        msg = res.get("msg")
         return msg
+
+    def delay(self, date, cookies):
+        url = "https://www.duokan.com/store/v0/award/coin/delay"
+        data = f"date={date}&{self.get_data(cookies=cookies)}&withid=1"
+        res = requests.post(
+            url=url, data=data, headers=self.headers, cookies=cookies
+        ).json()
+        return res
 
     def info(self, cookies):
         url = "https://www.duokan.com/store/v0/award/coin/list"
         data = f"sandbox=0&{self.get_data(cookies=cookies)}&withid=1"
-        response = requests.post(
+        res = requests.post(
             url=url, data=data, cookies=cookies, headers=self.headers
-        )
-        result = response.json()
-        if "尚未登录" not in result.get("msg"):
-            coin = sum([one.get("coin") for one in result.get("data", {}).get("award")])
-            msg = f"当前书豆: {coin}\n" + "\n".join(
-                [
-                    f"{one.get('expire')} 到期，{one.get('coin')} 书豆"
-                    for one in result.get("data", {}).get("award")
-                ]
-            )
-            for one in result.get("data", {}).get("award"):
+        ).json()
+        if "尚未登录" not in res.get("msg"):
+            coin = sum([one.get("coin") for one in res.get("data", {}).get("award")])
+            msg = f"当前书豆: {coin}\n"
+            for one in res.get("data", {}).get("award"):
                 if one.get("delay") == 1:  # 判断是否有可延迟的豆子
-                    self.delay(one.get("expire"), cookies=cookies)
+                    res = self.delay(one.get("expire"), cookies=cookies)
+                    msg += f"{one.get('expire')} 到期，{one.get('coin')} 书豆 | 延期：{res.get('msg')}\n"
                 else:
-                    if self.can:
-                        msg += "\n豆子延期: 完成"
-                    else:
-                        msg += "\n豆子延期: 没有"
+                    msg += f"{one.get('expire')} 到期，{one.get('coin')} 书豆\n"
         else:
             msg = "账号异常: Cookie 失效"
         return msg
 
     def free(self, cookies):
         url = "https://www.duokan.com/hs/v4/channel/query/2027"
-        response = requests.get(url=url, cookies=cookies, headers=self.headers)
-        bid = response.json().get("items")[0].get("data").get("book_id")
+        res = requests.get(url=url, cookies=cookies, headers=self.headers).json()
+        bid = res.get("items")[0].get("data").get("book_id")
         data = f"payment_name=BC&ch=VSZUVB&book_id={bid}&price=0&allow_discount=1"
         free_url = "https://www.duokan.com/store/v0/payment/book/create"
-        response = requests.post(
+        res = requests.post(
             url=free_url, data=data, cookies=cookies, headers=self.headers
-        )
-        result = response.json()
-        if "尚未登录" not in result.get("msg"):
-            book_title = result.get("book").get("title")
-            book_msg = result.get("msg")
+        ).json()
+        if "尚未登录" not in res.get("msg"):
+            book_title = res.get("book").get("title")
+            book_msg = res.get("msg")
             msg = f"今日限免: {book_title} · {book_msg}"
             return msg
         else:
@@ -298,29 +295,27 @@ class DuoKan:
     def gift(self, cookies):
         url = "https://www.duokan.com/events/common_task_gift_check"
         data = f"code=KYKJF7LL0G&{self.get_data(cookies=cookies)}&withid=1"
-        response = requests.post(
+        res = requests.post(
             url=url, data=data, cookies=cookies, headers=self.headers
-        )
-        result = response.json()
-        if result.get("chances") == 0:
+        ).json()
+        if res.get("chances") == 0:
             msg = "体验任务: 已经做完啦"
-        elif result.get("chances"):
+        elif res.get("chances"):
             num = 0
             for gift_code in self.gift_code_list:
                 url = "https://www.duokan.com/events/common_task_gift"
                 data = f"code=KYKJF7LL0G&chances=1&sign={gift_code}&{self.get_data(cookies=cookies)}&withid=1"
-                response = requests.post(
+                res = requests.post(
                     url=url, data=data, cookies=cookies, headers=self.headers
-                )
-                result = response.json()
-                if result.get("msg") == "成功":
+                ).json()
+                if res.get("msg") == "成功":
                     num += 30
                     print("体验任务完成啦！豆子 +30")
                 else:
-                    print(result.get("data"))
+                    print(res.get("data"))
             msg = f"体验任务: 获得 {num} 豆子"
         else:
-            msg = f"体验任务: {response.text}"
+            msg = f"体验任务: {res.text}"
         return msg
 
     def add_draw(self, cookies):
@@ -330,11 +325,10 @@ class DuoKan:
             data = (
                 f"code=8ulcky4bknbe_f&count=1&{self.get_data(cookies=cookies)}&withid=1"
             )
-            response = requests.post(
+            res = requests.post(
                 url=url, data=data, cookies=cookies, headers=self.headers
-            )
-            result = response.json()
-            if result.get("result") == 0:
+            ).json()
+            if res.get("res") == 0:
                 success_count += 1
         msg = f"添加抽奖: {success_count} 次"
         return msg
@@ -344,11 +338,10 @@ class DuoKan:
         for _ in range(6):
             url = "https://www.duokan.com/store/v0/event/drawing"
             data = f"code=8ulcky4bknbe_f&{self.get_data(cookies=cookies)}&withid=1"
-            response = requests.post(
+            res = requests.post(
                 url=url, data=data, cookies=cookies, headers=self.headers
-            )
-            result = response.json()
-            if result.get("result") == 0:
+            ).json()
+            if res.get("res") == 0:
                 success_count += 1
         msg = f"成功抽奖: {success_count} 次"
         return msg
@@ -356,11 +349,10 @@ class DuoKan:
     def download(self, cookies):
         url = "https://www.duokan.com/events/common_task_gift"
         data = f"code=J18UK6YYAY&chances=17&{self.get_data(cookies=cookies)}&withid=1"
-        response = requests.post(
+        res = requests.post(
             url=url, data=data, cookies=cookies, headers=self.headers
-        )
-        result = response.json()
-        msg = "下载任务: " + result.get("msg")
+        ).json()
+        msg = "下载任务: " + res.get("msg")
         return msg
 
     def task(self, cookies):
@@ -368,21 +360,12 @@ class DuoKan:
         url = "https://www.duokan.com/events/tasks_gift"
         for code in self.code_list:
             data = f"code={code}&chances=3&{self.get_data(cookies=cookies)}&withid=1"
-            response = requests.post(
+            res = requests.post(
                 url=url, data=data, cookies=cookies, headers=self.headers
-            )
-            result = response.json()
-            if result.get("result") == 0:
+            ).json()
+            if res.get("res") == 0:
                 success_count += 1
         return f"其他任务: 完成 {success_count} 个"
-
-    def delay(self, date, cookies):
-        url = "https://www.duokan.com/store/v0/award/coin/delay"
-        data = f"date={date}&{self.get_data(cookies=cookies)}&withid=1"
-        res = requests.post(url=url, data=data, headers=self.headers, cookies=cookies)
-        print(res.json())
-        if res.json().get("result") == 0:
-            self.can = True
 
     def main(self):
         msg_all = ""
