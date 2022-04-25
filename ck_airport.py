@@ -58,8 +58,8 @@ class SspanelQd(object):
         post_data = post_data.encode()
 
         try:
-            res = session.post(login_url, post_data, headers=headers, verify=False)
-            res_str = res.text.encode("utf-8").decode("unicode_escape")
+            response = session.post(login_url, post_data, headers=headers, verify=False)
+            res_str = response.text.encode("utf-8").decode("unicode_escape")
             print(f"{url} 接口登录返回信息：{res_str}")
             res_dict = json.loads(res_str)
             if res_dict.get("ret") == 0:
