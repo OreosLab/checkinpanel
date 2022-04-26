@@ -26,10 +26,10 @@ class Tieba:
         try:
             content = session.get(url="http://tieba.baidu.com/dc/common/tbs")
         except Exception as e:
-            return False, f"登录验证异常,错误信息: {e}"
+            return False, f"登录验证异常，错误信息: {e}"
         data = json.loads(content.text)
         if data["is_login"] == 0:
-            return False, "登录失败,cookie 异常"
+            return False, "登录失败，cookie 异常"
         tbs = data["tbs"]
         user_name = self.login_info(session=session)["userName"]
         return tbs, user_name
@@ -37,7 +37,7 @@ class Tieba:
     @staticmethod
     def tieba_list_more(session):
         content = session.get(
-            url="http://tieba.baidu.com/f/like/mylike?&pn=1",
+            url="https://tieba.baidu.com/f/like/mylike?&pn=1",
             timeout=(5, 20),
             allow_redirects=False,
         )
@@ -57,7 +57,7 @@ class Tieba:
                 yield x
             next_page += 1
             content = session.get(
-                url=f"http://tieba.baidu.com/f/like/mylike?&pn={next_page}",
+                url=f"https://tieba.baidu.com/f/like/mylike?&pn={next_page}",
                 timeout=(5, 20),
                 allow_redirects=False,
             )
@@ -87,7 +87,7 @@ class Tieba:
                 else:
                     error_count += 1
             except Exception as e:
-                print(f"贴吧 {tb_name} 签到异常,原因{str(e)}")
+                print(f"贴吧 {tb_name} 签到异常，原因{str(e)}")
         msg = f"贴吧总数: {len(tb_name_list)}\n签到成功: {success_count}\n已经签到: {exist_count}\n被屏蔽的: {shield_count}\n签到失败: {error_count}"
         return msg
 
