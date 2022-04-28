@@ -48,6 +48,8 @@ class ClientApi(ABC):
         return str(randrange(0, 24))
 
     def random_time(self, origin_time: str, command: str):
+        if command.find("ran_time") != -1:
+            return origin_time
         if command.find("rssbot") != -1 or command.find("hax") != -1:
             return ClientApi.get_ran_min() + " " + " ".join(origin_time.split(" ")[1:])
         if command.find("api") != -1:
