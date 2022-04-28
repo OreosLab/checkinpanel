@@ -328,7 +328,7 @@ class DuoKan:
             res = requests.post(
                 url=url, data=data, cookies=cookies, headers=self.headers
             ).json()
-            if res.get("res") == 0:
+            if res.get("result") == 0:
                 success_count += 1
         msg = f"添加抽奖: {success_count} 次"
         return msg
@@ -341,7 +341,7 @@ class DuoKan:
             res = requests.post(
                 url=url, data=data, cookies=cookies, headers=self.headers
             ).json()
-            if res.get("res") == 0:
+            if res.get("result") == 0:
                 success_count += 1
         msg = f"成功抽奖: {success_count} 次"
         return msg
@@ -363,7 +363,7 @@ class DuoKan:
             res = requests.post(
                 url=url, data=data, cookies=cookies, headers=self.headers
             ).json()
-            if res.get("res") == 0:
+            if res.get("result") == 0:
                 success_count += 1
         return f"其他任务: 完成 {success_count} 个"
 
