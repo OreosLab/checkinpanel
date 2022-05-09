@@ -16,6 +16,13 @@ import tomli
 
 from utils_env import get_file_path
 
+reg = re.compile(r"<a href=['|\"](.+)['|\"]>(.+)<\s?/a>")
+
+
+def html2md(content: str) -> str:
+    return reg.sub(r'[\2](\1)', content)
+
+
 # 原先的 print 函数和主线程的锁
 _print = print
 mutex = threading.Lock()
@@ -121,11 +128,11 @@ def bark(title: str, content: str) -> None:
     }
     params = ""
     for pair in filter(
-        lambda pairs: pairs[0].startswith("BARK_")
-        and pairs[0] != "BARK_PUSH"
-        and pairs[1]
-        and bark_params.get(pairs[0]),
-        push_config.items(),
+            lambda pairs: pairs[0].startswith("BARK_")
+                          and pairs[0] != "BARK_PUSH"
+                          and pairs[1]
+                          and bark_params.get(pairs[0]),
+            push_config.items(),
     ):
         params += f"{bark_params.get(pair[0])}={pair[1]}&"
     if params:
@@ -166,7 +173,7 @@ def dingding_bot(title: str, content: str) -> None:
     sign = urllib.parse.quote_plus(base64.b64encode(hmac_code))
     url = f'https://oapi.dingtalk.com/robot/send?access_token={push_config.get("DD_BOT_TOKEN")}&timestamp={timestamp}&sign={sign}'
     headers = {"Content-Type": "application/json;charset=utf-8"}
-    data = {"msgtype": "text", "text": {"content": f"{title}\n\n{content}"}}
+    data = {"msgtype": "markdown", "markdown": {"text": html2md(content), "title": title}}
 
     datas = requests.post(
         url=url, data=json.dumps(data), headers=headers, timeout=15
@@ -366,8 +373,8 @@ class WeCom:
 
     def send_text(self, message, touser="@all"):
         send_url = (
-            "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token="
-            + self.get_access_token()
+                "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token="
+                + self.get_access_token()
         )
         send_values = {
             "touser": touser,
@@ -382,8 +389,8 @@ class WeCom:
 
     def send_mpnews(self, title, message, media_id, touser="@all"):
         send_url = (
-            "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token="
-            + self.get_access_token()
+                "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token="
+                + self.get_access_token()
         )
         send_values = {
             "touser": touser,
@@ -453,13 +460,11 @@ def telegram_bot(title: str, content: str) -> None:
     }
     proxies = None
     if push_config.get("TG_PROXY_HOST") and push_config.get("TG_PROXY_PORT"):
-        if push_config.get("TG_PROXY_AUTH") is not None and "@" not in push_config.get(
-            "TG_PROXY_HOST"
-        ):
+        if push_config.get("TG_PROXY_AUTH") is not None and "@" not in push_config.get("TG_PROXY_HOST"):
             push_config["TG_PROXY_HOST"] = (
-                push_config.get("TG_PROXY_AUTH")
-                + "@"
-                + push_config.get("TG_PROXY_HOST")
+                    push_config.get("TG_PROXY_AUTH")
+                    + "@"
+                    + push_config.get("TG_PROXY_HOST")
             )
         proxyStr = "http://{}:{}".format(
             push_config.get("TG_PROXY_HOST"), push_config.get("TG_PROXY_PORT")
@@ -544,7 +549,7 @@ def send(title: str, content: str) -> None:
     hitokoto = push_config.get("HITOKOTO")
 
     text = one() if hitokoto else ""
-    content += "\n\n" + text
+    content += "\n\n> " + text
 
     ts = [
         threading.Thread(target=mode, args=(title, content), name=mode.__name__)
