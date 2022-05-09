@@ -52,7 +52,7 @@ class RssRobot:
                     < rss.before * 86400
                 ):
                     if title:
-                        msg += f"## {rss.title}\n"
+                        msg += f"<b>{rss.title.strip()}</b>\n"
                         title = False
                     msg = (
                         msg
