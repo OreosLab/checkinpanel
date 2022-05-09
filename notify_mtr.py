@@ -18,9 +18,11 @@ from utils_env import get_file_path
 
 link_reg = re.compile(r"<a href=['|\"](.+)['|\"]>(.+)<\s?/a>")
 bold_reg = re.compile(r"<b>\s*(.+)\s*<\s?/b>")
+list_reg = re.compile(r"^(\d+\.|-)\s.+$")
 
 
 def html2md(content: str) -> str:
+    content = "\n".join(map(lambda x: x if list_reg.fullmatch(x) else x + "\n", content.split("\n")))
     return bold_reg.sub(r"### **\1**", link_reg.sub(r"[\2](\1)", content))
 
 
