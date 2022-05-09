@@ -16,11 +16,12 @@ import tomli
 
 from utils_env import get_file_path
 
-reg = re.compile(r"<a href=['|\"](.+)['|\"]>(.+)<\s?/a>")
+link_reg = re.compile(r"<a href=['|\"](.+)['|\"]>(.+)<\s?/a>")
+bold_reg = re.compile(r"<b>\s*(.+)\s*<\s?/b>")
 
 
 def html2md(content: str) -> str:
-    return reg.sub(r'[\2](\1)', content)
+    return bold_reg.sub(r"### **\1**", link_reg.sub(r"[\2](\1)", content))
 
 
 # 原先的 print 函数和主线程的锁
@@ -454,7 +455,7 @@ def telegram_bot(title: str, content: str) -> None:
     headers = {"Content-Type": "application/x-www-form-urlencoded"}
     payload = {
         "chat_id": str(push_config.get("TG_USER_ID")),
-        "text": f"{title}\n\n{content}",
+        "text": f"<b><u>{title}</u></b>\n\n{content}",
         "disable_web_page_preview": "true",
         "parse_mode": "HTML",
     }
@@ -548,8 +549,7 @@ def send(title: str, content: str) -> None:
 
     hitokoto = push_config.get("HITOKOTO")
 
-    text = one() if hitokoto else ""
-    content += "\n\n> " + text
+    content += "\n\n> " + one() if hitokoto else ""
 
     ts = [
         threading.Thread(target=mode, args=(title, content), name=mode.__name__)
