@@ -50,7 +50,7 @@ async function lenovo() {
             url.login = `https://uss.lenovomm.com/authen/1.2/tgt/user/get?msisdn=${account}`;
             headers.baseinfo = baseinfo;
             headers.unique = deviceid;
-            Log('\n========== [Account ' + (a + 1) + '] Start ========== ');
+            Log('\n======== [Account ' + (a + 1) + '] Start ======== ');
             let lpsutgt = await lxlogin(deviceid, info, password);
             let session = await getsession(lpsutgt);
             if (session) {

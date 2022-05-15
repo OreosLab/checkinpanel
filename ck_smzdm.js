@@ -176,8 +176,8 @@ async function smzdm() {
                 magicJS.logError(`执行任务出现异常：${err}`);
                 content += '❌执行任务出现，请查阅日志';
             }
-            content += '\n========== [Cookie ' + $.index + '] End  ========== \n\n\n';
-            magicJS.log('\n========== [Cookie ' + $.index + '] End  ========== \n\n\n');
+            content += '\n========== [Cookie ' + $.index + '] End  ========== \n';
+            magicJS.log('\n========== [Cookie ' + $.index + '] End  ========== \n');
             result.push(content);
         }
     }

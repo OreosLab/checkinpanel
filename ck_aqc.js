@@ -63,7 +63,7 @@ async function aqc() {
             let aqcCookie = COOKIES_AQC[a].cookie;
             let exportkey = COOKIES_AQC[a].exportkey ? COOKIES_AQC[a].exportkey : '';
             headers.cookie = aqcCookie;
-            Log('\n========== [Account ' + (a + 1) + '] Start ========== ');
+            Log('\n======== [Account ' + (a + 1) + '] Start ======== ');
             Log('爱企查每日任务开始');
             let logininfo = await get('m/getuserinfoAjax');
             if (logininfo.data.isLogin == 1) {
