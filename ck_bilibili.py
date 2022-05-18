@@ -3,6 +3,7 @@
 cron: 30 8 * * *
 new Env('Bilibili');
 """
+import time
 
 import requests
 
@@ -27,11 +28,12 @@ class BiliBili(object):
         return uname, uid, is_login, coin, vip_type, current_exp
 
     @staticmethod
-    def reward(session) -> dict:
+    def reward(session) -> list:
         """取B站经验信息"""
-        url = "https://account.bilibili.com/home/reward"
-        res = session.get(url=url).json()
-        return res
+        url = "https://api.bilibili.com/x/member/web/exp/log?jsonp=jsonp"
+        today = time.strftime('%Y-%m-%d', time.localtime())
+        return list(
+            filter(lambda x: x['time'].split()[0] == today, session.get(url=url).json().get("data").get("list")))
 
     @staticmethod
     def live_sign(session) -> str:
@@ -115,12 +117,12 @@ class BiliBili(object):
 
     @staticmethod
     def get_followings(
-        session,
-        uid: int,
-        pn: int = 1,
-        ps: int = 50,
-        order: str = "desc",
-        order_type: str = "attention",
+            session,
+            uid: int,
+            pn: int = 1,
+            ps: int = 50,
+            order: str = "desc",
+            order_type: str = "attention",
     ) -> dict:
         """
         获取指定用户关注的up主
@@ -143,13 +145,13 @@ class BiliBili(object):
 
     @staticmethod
     def space_arc_search(
-        session,
-        uid: int,
-        pn: int = 1,
-        ps: int = 100,
-        tid: int = 0,
-        order: str = "pubdate",
-        keyword: str = "",
+            session,
+            uid: int,
+            pn: int = 1,
+            ps: int = 100,
+            tid: int = 0,
+            order: str = "pubdate",
+            keyword: str = "",
     ):
         """
         获取指定up主空间视频投稿信息
@@ -201,7 +203,7 @@ class BiliBili(object):
 
     @staticmethod
     def coin_add(
-        session, bili_jct, aid: int, num: int = 1, select_like: int = 1
+            session, bili_jct, aid: int, num: int = 1, select_like: int = 1
     ) -> dict:
         """
         给指定 av 号视频投币
@@ -249,10 +251,10 @@ class BiliBili(object):
         num int 获取视频数量
         """
         url = (
-            "https://api.bilibili.com/x/web-interface/dynamic/region?ps="
-            + str(num)
-            + "&rid="
-            + str(rid)
+                "https://api.bilibili.com/x/web-interface/dynamic/region?ps="
+                + str(num)
+                + "&rid="
+                + str(rid)
         )
         res = session.get(url=url).json()
         data_list = [
@@ -296,8 +298,7 @@ class BiliBili(object):
                 manhua_msg = self.manga_sign(session=session)
                 live_msg = self.live_sign(session=session)
                 aid_list = self.get_region(session=session)
-                reward_res = self.reward(session=session)
-                coins_av_count = reward_res.get("data", {}).get("coins_av") // 10
+                coins_av_count = len(list(filter(lambda x: x['reason'] == "视频投币奖励", self.reward(session=session))))
                 coin_num = coin_num - coins_av_count
                 coin_num = coin_num if coin_num < coin else coin
                 if coin_type == 1 and coin_num:
@@ -365,13 +366,14 @@ class BiliBili(object):
                     vip_type,
                     new_current_exp,
                 ) = self.get_nav(session=session)
-                reward_res = self.reward(session=session)
-                login = reward_res.get("data", {}).get("login")
-                watch_av = reward_res.get("data", {}).get("watch_av")
-                coins_av = reward_res.get("data", {}).get("coins_av", 0)
-                share_av = reward_res.get("data", {}).get("share_av")
-                today_exp = 5 * len([one for one in [login, watch_av, share_av] if one])
-                today_exp += coins_av
+                # reward_res = self.reward(session=session)
+                # login = reward_res.get("data", {}).get("login")
+                # watch_av = reward_res.get("data", {}).get("watch_av")
+                # coins_av = reward_res.get("data", {}).get("coins_av", 0)
+                # share_av = reward_res.get("data", {}).get("share_av")
+                # today_exp = 5 * len([one for one in [login, watch_av, share_av] if one])
+                # today_exp += coins_av
+                today_exp = sum(map(lambda x: x['delta'], self.reward(session=session)))
                 update_data = (28800 - new_current_exp) // (
                     today_exp if today_exp else 1
                 )
