@@ -1,6 +1,60 @@
 # Changelog
 
 
+## 20220428-4-020 (2022-04-28)
+
+### Feature
+
+* :sparkles: : 新增 woiden 监控：api_hax. [Oreomeow]
+
+* :sparkles: : 修改 tg 推送格式为 HTML. [Oreomeow]
+
+* :sparkles: : 新增 elecV2P 随机 cron 功能. [Oreomeow]
+
+### Fix
+
+* :bug: : 随机定时不要随机自己. [night-raise]
+
+* :bug: : 修复返回值判断错误：duokan. [Oreomeow]
+
+* :bug: : 修复链接失效：tieba. [Oreomeow]
+
+* :bug: : 修复 Acfun 点赞功能. [Oreomeow]
+
+* :bug: : 调整随机定时保存任务列表执行顺序. [Oreo]
+
+* :bug: : fix glados. [Oreomeow]
+
+* :bug: : fix error type. [night-raise]
+
+* :bug: : fix glados. [Oreomeow]
+
+  However
+  --------------------
+
+* :fire: : rm expired lecloud. [Oreomeow]
+
+* :wrench: : 移除及修改配置信息. [Oreomeow]
+
+### Code Style
+
+* :art: : 规范 response(r) 和 res. [Oreomeow]
+
+* :art: : 优化代码. [Oreomeow]
+
+  1. 新增 HTML 格式
+  2. 变量名调整
+  3. 空行缩减
+
+### Refactor Functions
+
+* :recycle: : 重构随机定时. [night-raise]
+
+### Other
+
+* :arrow_up: Update cpm to 0.997009. [Oreomeow]
+
+
 ## 20220327-4-010 (2022-03-27)
 
 ### Fix

@@ -365,6 +365,16 @@
             "running": true
         },
         {
+            "name": "海底捞会员签到",
+            "type": "cron",
+            "time": "20 8 * * *",
+            "job": {
+                "type": "runjs",
+                "target": "checkin.js -env PYNAME=ck_haidilao.py"
+            },
+            "running": true
+        },
+        {
             "name": "欢太商城",
             "type": "cron",
             "time": "19 5,21 * * *",
