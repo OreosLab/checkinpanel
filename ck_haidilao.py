@@ -20,9 +20,13 @@ class Haidilao:
     def checkin(openid, uid):
         url = "https://superapp-public.kiwa-tech.com/"
         headers = {
+            "Host": "superapp-public.kiwa-tech.com",
+            "Content-Length": "115",
+            "appId": "15",
+            "content-type": "application/json",
+            "Accept-Encoding": "gzip,compress,br,deflate",
             "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile MicroMessenger NetType/4G Language/en miniProgram",
-            "Content-Type": "json",
-            "AppId": 15,
+            "Referer": "https://servicewechat.com/wx1ddeb67115f30d1a/14/page-frame.html",
         }
         login_data = {
             "openId": openid,
@@ -68,7 +72,7 @@ class Haidilao:
                 return (
                     "账号："
                     + login["data"]["name"]
-                    + "\n\n签到成功，碎片余额："
+                    + "\n签到成功，碎片余额："
                     + fragment["data"]["total"]
                 )
         except json.decoder.JSONDecodeError:
