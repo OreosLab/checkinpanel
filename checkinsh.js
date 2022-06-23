@@ -20,7 +20,6 @@ $exec(`bash ${shname}`, {
         TG_BOT_TOKEN: $store.get('TG_BOT_TOKEN', 'string'),                       // tg 机器人的 TG_BOT_TOKEN
         TG_USER_ID: $store.get('TG_USER_ID', 'string'),                           // tg 机器人的 TG_USER_ID
     },
-    cb(data, error) {
-        error ? console.error(error) : console.log(data);
-    },
+    logname: shname.substring(shname.indexOf("_") + 1, shname.lastIndexOf(".")),
+    from: 'task',
 });
