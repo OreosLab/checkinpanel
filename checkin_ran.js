@@ -33,7 +33,7 @@ async function filterList() {
     if (excluding != undefined) {
         console.log('🗑 排除 EXRAND 变量列表中的任务名');
         tasklist = tasklist.filter(function (i) {
-            return excluding.indexof(i['name']) == -1;
+            return excluding.indexOf(i['name']) == -1;
         });
     }
 }
