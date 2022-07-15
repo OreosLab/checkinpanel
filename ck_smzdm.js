@@ -31,8 +31,8 @@ async function smzdm() {
         for (var i = 0; i < COOKIES_SMZDM.length; i++) {
             try {
                 $.index = i + 1;
-                content += '\n========== [Cookie ' + $.index + '] Start ========== \n';
-                magicJS.log('\n========== [Cookie ' + $.index + '] Start ========== ');
+                content += '\n======== [Cookie ' + $.index + '] Start ======== \n';
+                magicJS.log('\n======== [Cookie ' + $.index + '] Start ======== ');
                 let smzdmCookie = COOKIES_SMZDM[i].cookie;
                 // 任务完成情况
                 let clickGoBuyTimes = 0;
@@ -176,8 +176,8 @@ async function smzdm() {
                 magicJS.logError(`执行任务出现异常：${err}`);
                 content += '❌执行任务出现，请查阅日志';
             }
-            content += '\n========== [Cookie ' + $.index + '] End  ========== \n';
-            magicJS.log('\n========== [Cookie ' + $.index + '] End  ========== \n');
+            content += '\n======== [Cookie ' + $.index + '] End  ======== \n';
+            magicJS.log('\n======== [Cookie ' + $.index + '] End  ======== \n');
             result.push(content);
         }
     }

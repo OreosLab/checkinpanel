@@ -25,7 +25,7 @@ function du163() {
                 let cookie = COOKIES_DU163[a].cookie;
                 let _xsrf = cookie.match(/_xsrf=(\S*);*/)[1];
                 let user_agent = COOKIES_DU163[a].user_agent;
-                Log('\n========== [Cookie ' + (a + 1) + '] Start ========== ');
+                Log('\n======== [Cookie ' + (a + 1) + '] Start ======== ');
                 try {
                     const headers = {
                         headers: {
