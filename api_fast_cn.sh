@@ -7,7 +7,7 @@ new Env('国内加速');
 COMMENT
 
 # alpine 换源
-sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
 
 # Python 换源
 mkdir -p /root/.config/pip
