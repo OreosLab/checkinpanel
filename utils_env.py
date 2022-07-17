@@ -11,15 +11,15 @@ def get_env_str() -> str:
     """
     尝试获取当前系统的环境，返回字符。
 
-    :return: Windows / Linux / Darwin / github / v2p / ql / ql_new /空
+    :return: Windows / Linux / Darwin / github / v2p / ql_new / ql /空
     """
     global ENV
     if ENV:
         return ENV
 
     v2p_file = "/usr/local/app/script/Lists/task.list"
-    ql_file = "/ql/config/env.sh"
     ql_new_file = "/ql/data/config/env.sh"
+    ql_file = "/ql/config/env.sh"
 
     print("尝试检查运行环境...")
     if os.getenv("GITHUB_ACTIONS"):
@@ -28,12 +28,12 @@ def get_env_str() -> str:
     elif os.path.exists(v2p_file):
         print("成功，当前环境为: elecV2P 面板。")
         env = "v2p"
-    elif os.path.exists(ql_file):
-        print("成功，当前环境为: 青龙面板。")
-        env = "ql"
     elif os.path.exists(ql_new_file):
         print("成功，当前环境为: 青龙面板(v2.12.0+)。")
         env = "ql_new"
+    elif os.path.exists(ql_file):
+        print("成功，当前环境为: 青龙面板。")
+        env = "ql"
 
     # 面板判断优先于系统判断
     elif (e := platform.system()) == "Windows" or "Linux" or "Darwin":
@@ -52,7 +52,7 @@ def get_env_int() -> int:
     """
     尝试获取当前系统的环境，返回数字。
 
-    :return: 空: -1 / Windows: 0 / Linux: 1 / Darwin: 2 / github: 3 / v2p: 4 / ql: 5 / ql_new: 6
+    :return: 空: -1 / Windows: 0 / Linux: 1 / Darwin: 2 / github: 3 / v2p: 4 / ql_new: 5 / ql: 6
     """
     env = get_env_str()
     if env == "Windows":
@@ -65,9 +65,9 @@ def get_env_int() -> int:
         return 3
     if env == "v2p":
         return 4
-    if env == "ql":
-        return 5
     if env == "ql_new":
+        return 5
+    if env == "ql":
         return 6
 
     return -1
@@ -88,8 +88,8 @@ def get_file_path(file_name: str) -> str:
         file_name,
         file_name,
         f"/usr/local/app/script/Lists/{file_name}",
-        f"/ql/config/{file_name}",
         f"/ql/data/config/{file_name}",
+        f"/ql/config/{file_name}",
     ]
 
     if env_i < 0:

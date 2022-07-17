@@ -13,10 +13,10 @@ IS_DISPLAY_CONTEXT=1
 check_env() {
     if [ -f "${V2P_FILE}" ]; then
         panel="elecv2p"
-    elif [ -f "${QL_FILE}" ]; then
-        panel="qinglong"
     elif [ -f "${QL_NEW_FILE}" ]; then
         panel="qinglong_new"
+    elif [ -f "${QL_FILE}" ]; then
+        panel="qinglong"
     else
         CMD="$(grep -i pretty_name /etc/os-release 2>/dev/null | cut -d \" -f2)
         $(hostnamectl 2>/dev/null | grep -i system | cut -d : -f2)
@@ -61,10 +61,10 @@ source_config() {
         ENV_FILE=$ENV_PATH
     elif [ "${panel}" = "elecv2p" ]; then
         ENV_FILE="/usr/local/app/script/Lists/.env"
-    elif [ "${panel}" = "qinglong" ]; then
-        ENV_FILE="/ql/config/.env"
     elif [ "${panel}" = "qinglong_new" ]; then
         ENV_FILE="/ql/data/config/.env"
+    elif [ "${panel}" = "qinglong" ]; then
+        ENV_FILE="/ql/config/.env"
     else
         ENV_FILE="./env"
     fi
@@ -88,14 +88,14 @@ get_some_path() {
     if [ "${panel}" = "elecv2p" ]; then
         SCR_PATH="/usr/local/app/script/Shell"
         CONF_PATH="/usr/local/app/script/Lists"
-    elif [ "${panel}" = "qinglong" ]; then
-        SCR_PATH="/ql/scripts"
-        CONF_PATH="/ql/config"
-        REPO_PATH="/ql/repo"
     elif [ "${panel}" = "qinglong_new" ]; then
         SCR_PATH="/ql/data/scripts"
         CONF_PATH="/ql/data/config"
         REPO_PATH="/ql/data/repo"
+    elif [ "${panel}" = "qinglong" ]; then
+        SCR_PATH="/ql/scripts"
+        CONF_PATH="/ql/config"
+        REPO_PATH="/ql/repo"
     else
         SCR_PATH="."
         CONF_PATH="."
