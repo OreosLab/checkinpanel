@@ -20,12 +20,6 @@ EOF
 npm config set registry https://registry.npmmirror.com/
 
 # CPAN 换源
-if ! (
-    perl -MCPAN -e 'CPAN::HandleConfig->load();' \
-        -e 'CPAN::HandleConfig->prettyprint("urllist")' |
-        grep -qF 'https://mirrors.tuna.tsinghua.edu.cn/CPAN/'
-); then
-    echo "Yes" | perl -MCPAN -e 'CPAN::HandleConfig->load();' \
-        -e 'CPAN::HandleConfig->edit("urllist", "unshift", "https://mirrors.tuna.tsinghua.edu.cn/CPAN/");' \
-        -e 'CPAN::HandleConfig->commit()'
-fi
+mkdir -p ~/.cpan/CPAN
+mv ~/.cpan/CPAN/MyConfig.pm ~/.cpan/CPAN/MyConfig.pm.back
+wget https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/cpmConfig.pm -O ~/.cpan/CPAN/MyConfig.pm
