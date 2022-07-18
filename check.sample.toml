@@ -40,7 +40,7 @@ password = "xxxxxxxx"
 url = "https://xxxxxxxx.xxx"
 
 # 爱企查【WEB】
-# https://www.baidu.com，同百度贴吧 cookie 一样
+# https://www.baidu.com 同百度贴吧 cookie 一样
 # 批量查询任务需手动抓包查询之后的 exportkey，可不填
 [[AQC]]
 cookie = 'log_guid=xxxxxx; BDPPN=xxxxxx; _j54_6ae_=xxxxxx; PSTM=xxxxxx; __yjs_duid=xxxxxx; BIDUPSID=xxxxxx; BDUSS=xxxxxx; BDUSS_BFESS=xxxxxx; BAIDUID=xxxxxx; H_WISE_SIDS=xxxxxx; H_PS_PSSID=xxxxxx; delPer=x; PSINO=x; BA_HECTOR=xxxxxx; BAIDUID_BFESS=xxxxxx; Hm_lvt_ad52b306e1ae4557f5d3534cce8f8bbf=xxxxxx; Hm_lpvt_ad52b306e1ae4557f5d3534cce8f8bbf=xxxxxx; RT="xxxxxx"'
@@ -286,7 +286,7 @@ cookie = "bdshare_firstime=xxxxxx; PSTM=xxxxxx; __yjs_duid=xxxxxx; BIDUPSID=xxxx
 cookie = "uuid=xxxxxx; _access=xxxxxx; XSRF-TOKEN=xxxxxx;"
 
 # V2EX【WEB】
-# https://v2ex.com，注意要抓签到那次的 ck（相当于需要先手动浏览器签到一次），不然可能签到无效
+# https://v2ex.com 注意要抓签到那次的 ck（相当于需要先手动浏览器签到一次），不然可能签到无效
 # 使用代理信息，无密码示例：http://127.0.0.1:1080 有密码示例：http://username:password@127.0.0.1:1080
 [[V2EX]]
 cookie = 'V2EX_LANG=xxxx; _ga=xxxxxx; _gid=xxxxxx; V2EX_TAB="xxxxxx"; A2="xxxxxx"; PB3_SESSION="xxxxxx"; _gat=x'
