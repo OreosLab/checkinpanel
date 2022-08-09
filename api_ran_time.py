@@ -53,49 +53,69 @@ class ClientApi(ABC):
         if command.find("rssbot") != -1 or command.find("hax") != -1:
             return ClientApi.get_ran_min() + " " + " ".join(origin_time.split(" ")[1:])
         if command.find("api") != -1:
-            return ClientApi.get_ran_min() + " " + \
-                   self.get_ran_hour(True) + " " + \
-                   " ".join(origin_time.split(" ")[2:])
-        return ClientApi.get_ran_min() + " " + \
-               self.get_ran_hour() + " " + \
-               " ".join(origin_time.split(" ")[2:])
+            return (
+                ClientApi.get_ran_min()
+                + " "
+                + self.get_ran_hour(True)
+                + " "
+                + " ".join(origin_time.split(" ")[2:])
+            )
+        return (
+            ClientApi.get_ran_min()
+            + " "
+            + self.get_ran_hour()
+            + " "
+            + " ".join(origin_time.split(" ")[2:])
+        )
 
 
 class QLClient(ClientApi):
     def __init__(self, client_info: Dict):
         super().__init__()
-        if not client_info or not (cid := client_info.get("client_id")) or not (
-                sct := client_info.get("client_secret")):
+        if (
+            not client_info
+            or not (cid := client_info.get("client_id"))
+            or not (sct := client_info.get("client_secret"))
+        ):
             raise ValueError("无法获取 client 相关参数！")
         else:
             self.cid = cid
             self.sct = sct
         self.url = client_info.get("url", "http://localhost:5700").rstrip("/") + "/"
         self.twice = client_info.get("twice", False)
-        self.token = requests.get(url=self.url + "open/auth/token",
-                                  params={"client_id": self.cid, "client_secret": self.sct}).json()["data"]["token"]
+        self.token = requests.get(
+            url=self.url + "open/auth/token",
+            params={"client_id": self.cid, "client_secret": self.sct},
+        ).json()["data"]["token"]
         if not self.token:
             raise ValueError("无法获取 token！")
 
     def init_cron(self):
-        self.cron: List[Dict] = list(filter(lambda x: not x.get("isDisabled", 1) and
-                                                      x.get("command", "").find("Oreomeow_checkinpanel_master") != -1,
-                                            requests.get(url=self.url + "open/crons",
-                                                         headers={"Authorization": f"Bearer {self.token}"}).json()[
-                                                "data"]))
+        self.cron: List[Dict] = list(
+            filter(
+                lambda x: not x.get("isDisabled", 1)
+                and x.get("command", "").find("Oreomeow_checkinpanel_master") != -1,
+                requests.get(
+                    url=self.url + "open/crons",
+                    headers={"Authorization": f"Bearer {self.token}"},
+                ).json()["data"],
+            )
+        )
 
     def shuffle_cron(self):
         for c in self.cron:
-            data = {
+            json = {
                 "labels": c.get("labels", None),
                 "command": c["command"],
                 "schedule": self.random_time(c["schedule"], c["command"]),
                 "name": c["name"],
                 "id": c["id"],
             }
-            requests.put(url=self.url + "open/crons",
-                         data=data,
-                         headers={"Authorization": f"Bearer {self.token}"})
+            requests.put(
+                url=self.url + "open/crons",
+                json=json,
+                headers={"Authorization": f"Bearer {self.token}"},
+            )
 
 
 def get_client():
