@@ -129,17 +129,17 @@ def bark(title: str, content: str) -> None:
         "BARK_GROUP": "group",
         "BARK_SOUND": "sound",
     }
-    params = ""
-    for pair in filter(
+    if params := "".join(
+        f"{bark_params.get(pair[0])}={pair[1]}&"
+        for pair in filter(
             lambda pairs: pairs[0].startswith("BARK_")
-                          and pairs[0] != "BARK_PUSH"
-                          and pairs[1]
-                          and bark_params.get(pairs[0]),
+            and pairs[0] != "BARK_PUSH"
+            and pairs[1]
+            and bark_params.get(pairs[0]),
             push_config.items(),
+        )
     ):
-        params += f"{bark_params.get(pair[0])}={pair[1]}&"
-    if params:
-        url = url + "?" + params.rstrip("&")
+        url = f"{url}?" + params.rstrip("&")
 
     datas = requests.get(url, timeout=15).json()
     if datas.get("code") == 200:
@@ -168,7 +168,7 @@ def dingding_bot(title: str, content: str) -> None:
 
     timestamp = str(round(time.time() * 1000))
     secret_enc = push_config.get("DD_BOT_SECRET").encode("utf-8")
-    string_to_sign = "{}\n{}".format(timestamp, push_config.get("DD_BOT_SECRET"))
+    string_to_sign = f'{timestamp}\n{push_config.get("DD_BOT_SECRET")}'
     string_to_sign_enc = string_to_sign.encode("utf-8")
     hmac_code = hmac.new(
         secret_enc, string_to_sign_enc, digestmod=hashlib.sha256
@@ -469,9 +469,8 @@ def telegram_bot(title: str, content: str) -> None:
                     + "@"
                     + push_config.get("TG_PROXY_HOST")
             )
-        proxyStr = "http://{}:{}".format(
-            push_config.get("TG_PROXY_HOST"), push_config.get("TG_PROXY_PORT")
-        )
+        proxyStr = f'http://{push_config.get("TG_PROXY_HOST")}:{push_config.get("TG_PROXY_PORT")}'
+
         proxies = {"http": proxyStr, "https": proxyStr}
 
     datas = requests.post(

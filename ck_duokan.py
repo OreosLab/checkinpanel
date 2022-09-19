@@ -234,10 +234,9 @@ class DuoKan:
         t = int(time.time())
         t_device_id = f"{device_id}&{t}"
         c = 0
-        for _, one in enumerate(t_device_id):
+        for one in t_device_id:
             c = (c * 131 + ord(one)) % 65536
-        data = f"_t={t}&_c={c}"
-        return data
+        return f"_t={t}&_c={c}"
 
     def sign(self, cookies):
         url = "https://www.duokan.com/checkin/v0/checkin"
@@ -245,16 +244,14 @@ class DuoKan:
         res = requests.post(
             url=url, data=data, cookies=cookies, headers=self.headers
         ).json()
-        msg = res.get("msg")
-        return msg
+        return res.get("msg")
 
     def delay(self, date, cookies):
         url = "https://www.duokan.com/store/v0/award/coin/delay"
         data = f"date={date}&{self.get_data(cookies=cookies)}&withid=1"
-        res = requests.post(
+        return requests.post(
             url=url, data=data, headers=self.headers, cookies=cookies
         ).json()
-        return res
 
     def info(self, cookies):
         url = "https://www.duokan.com/store/v0/award/coin/list"
@@ -263,7 +260,7 @@ class DuoKan:
             url=url, data=data, cookies=cookies, headers=self.headers
         ).json()
         if "尚未登录" not in res.get("msg"):
-            coin = sum([one.get("coin") for one in res.get("data", {}).get("award")])
+            coin = sum(one.get("coin") for one in res.get("data", {}).get("award"))
             msg = f"当前书豆: {coin}\n"
             for one in res.get("data", {}).get("award"):
                 if one.get("delay") == 1:  # 判断是否有可延迟的豆子
@@ -284,13 +281,11 @@ class DuoKan:
         res = requests.post(
             url=free_url, data=data, cookies=cookies, headers=self.headers
         ).json()
-        if "尚未登录" not in res.get("msg"):
-            book_title = res.get("book").get("title")
-            book_msg = res.get("msg")
-            msg = f"今日限免: {book_title} · {book_msg}"
-            return msg
-        else:
+        if "尚未登录" in res.get("msg"):
             return "今日限免: Cookie 失效"
+        book_title = res.get("book").get("title")
+        book_msg = res.get("msg")
+        return f"今日限免: {book_title} · {book_msg}"
 
     def gift(self, cookies):
         url = "https://www.duokan.com/events/common_task_gift_check"
@@ -299,11 +294,11 @@ class DuoKan:
             url=url, data=data, cookies=cookies, headers=self.headers
         ).json()
         if res.get("chances") == 0:
-            msg = "体验任务: 已经做完啦"
+            return "体验任务: 已经做完啦"
         elif res.get("chances"):
             num = 0
+            url = "https://www.duokan.com/events/common_task_gift"
             for gift_code in self.gift_code_list:
-                url = "https://www.duokan.com/events/common_task_gift"
                 data = f"code=KYKJF7LL0G&chances=1&sign={gift_code}&{self.get_data(cookies=cookies)}&withid=1"
                 res = requests.post(
                     url=url, data=data, cookies=cookies, headers=self.headers
@@ -313,15 +308,14 @@ class DuoKan:
                     print("体验任务完成啦！豆子 +30")
                 else:
                     print(res.get("data"))
-            msg = f"体验任务: 获得 {num} 豆子"
+            return f"体验任务: 获得 {num} 豆子"
         else:
-            msg = f"体验任务: {res.text}"
-        return msg
+            return f"体验任务: {res.text}"
 
     def add_draw(self, cookies):
         success_count = 0
+        url = "https://www.duokan.com/store/v0/event/chances/add"
         for _ in range(6):
-            url = "https://www.duokan.com/store/v0/event/chances/add"
             data = (
                 f"code=8ulcky4bknbe_f&count=1&{self.get_data(cookies=cookies)}&withid=1"
             )
@@ -330,21 +324,19 @@ class DuoKan:
             ).json()
             if res.get("result") == 0:
                 success_count += 1
-        msg = f"添加抽奖: {success_count} 次"
-        return msg
+        return f"添加抽奖: {success_count} 次"
 
     def draw(self, cookies):
         success_count = 0
+        url = "https://www.duokan.com/store/v0/event/drawing"
         for _ in range(6):
-            url = "https://www.duokan.com/store/v0/event/drawing"
             data = f"code=8ulcky4bknbe_f&{self.get_data(cookies=cookies)}&withid=1"
             res = requests.post(
                 url=url, data=data, cookies=cookies, headers=self.headers
             ).json()
             if res.get("result") == 0:
                 success_count += 1
-        msg = f"成功抽奖: {success_count} 次"
-        return msg
+        return f"成功抽奖: {success_count} 次"
 
     def download(self, cookies):
         url = "https://www.duokan.com/events/common_task_gift"
@@ -352,8 +344,7 @@ class DuoKan:
         res = requests.post(
             url=url, data=data, cookies=cookies, headers=self.headers
         ).json()
-        msg = "下载任务: " + res.get("msg")
-        return msg
+        return "下载任务: " + res.get("msg")
 
     def task(self, cookies):
         success_count = 0

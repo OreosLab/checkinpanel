@@ -22,10 +22,7 @@ class Game163:
             "authorization": authorization,
         }
         res = requests.post(url, headers=headers).text
-        if res[0] == "{":
-            return "cookie 已失效"
-        else:
-            return "签到成功"
+        return "cookie 已失效" if res[0] == "{" else "签到成功"
 
     def main(self):
         msg_all = ""

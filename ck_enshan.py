@@ -37,13 +37,11 @@ class Enshan:
 
     def main(self):
         msg_all = ""
-        i = 1
-        for check_item in self.check_items:
+        for i, check_item in enumerate(self.check_items, start=1):
             cookie = str(check_item.get("cookie"))
             result = self.sign(cookie=cookie)
             msg = f"账号{i}" + "\n------ 签到结果 ------\n" + result
             time.sleep(1)
-            i += 1
             msg_all += msg + "\n\n"
         return msg_all
 

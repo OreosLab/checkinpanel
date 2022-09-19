@@ -26,11 +26,9 @@ class ToolLu:
         response = session.get(url=url, headers=headers)
         day = re.findall("你已经连续签到(.*)，再接再厉！", response.text)
         if len(day) == 0:
-            msg = "cookie 失效"
-        else:
-            day = day[0].replace(" ", "")
-            msg = f"连续签到 {day}"
-        return msg
+            return "cookie 失效"
+        day = day[0].replace(" ", "")
+        return f"连续签到 {day}"
 
     def main(self):
         msg_all = ""

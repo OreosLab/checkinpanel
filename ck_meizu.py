@@ -34,8 +34,7 @@ class Meizu:
             ("action", "sign"),
         )
         res = requests.get(url=self.url, headers=headers, params=params).json()
-        msg = res.get("message")
-        return msg
+        return res.get("message")
 
     def draw(self, cookie, count: int = 0):
         headers = {
@@ -51,8 +50,8 @@ class Meizu:
         }
         data = {"mod": "index", "action": "draw", "id": "2"}
         award_list = []
-        success_count = 0
         if count:
+            success_count = 0
             for i in range(count):
                 try:
                     data = requests.post(
@@ -69,10 +68,10 @@ class Meizu:
                         one_msg = "抽奖失败"
                 except Exception as e:
                     one_msg = f"抽奖失败: {e}"
-                print(f"第{i + 1}次抽奖结果：" + str(one_msg))
+                print(f"第{i + 1}次抽奖结果：{str(one_msg)}")
                 time.sleep(5)
             msg = f"成功抽奖 {success_count} 次"
-            draw_msg = "抽奖状态: " + str(msg)
+            draw_msg = f"抽奖状态: {str(msg)}"
             draw_msg += f"\n抽奖结果: {';'.join(award_list)}"
         else:
             draw_msg = "抽奖结果: 未开启抽奖"
@@ -88,7 +87,7 @@ class Meizu:
             try:
                 draw_count = int(check_item.get("draw_count", 0))
             except Exception as e:
-                print("初始化抽奖次数失败: 重置为 0 ", str(e))
+                print("初始化抽奖次数失败: 重置为 0 ", e)
                 draw_count = 0
             sign_msg = self.sign(cookie=cookie)
             draw_msg, uid = self.draw(cookie=cookie, count=draw_count)

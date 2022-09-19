@@ -74,13 +74,12 @@ class GLaDOS(object):
 
     def get_budget(self, vip_level: Optional[int]) -> dict:
         budget_info = utils_tmp.budget_list
-        user_budgets = [
+        if user_budgets := [
             i
             for i in budget_info
             if (vip_level is not None and "vip" in i and i["vip"] == vip_level)
             or (vip_level is None and "vip" not in i)
-        ]
-        if len(user_budgets) > 0:
+        ]:
             return user_budgets[0]
         else:
             raise OSError(f"Budget info not found for this user! VIP: {vip_level}")

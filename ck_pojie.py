@@ -42,14 +42,12 @@ class Pojie:
         return result
 
     def main(self):
-        i = 1
         msg_all = ""
-        for check_item in self.check_items:
+        for i, check_item in enumerate(self.check_items, start=1):
             cookie = check_item.get("cookie")
             sign_msg = self.sign(cookie=cookie)
             msg = f"账号 {i} 签到状态: {sign_msg}"
             msg_all += msg + "\n\n"
-            i += 1
         return msg_all
 
 

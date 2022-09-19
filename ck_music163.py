@@ -40,15 +40,11 @@ class Music163:
         encryptor = cipher.encryptor()
         length = 16
         count = len(text.encode("utf-8"))
-        if count % length != 0:
-            add = length - (count % length)
-        else:
-            add = 16
+        add = length - (count % length) if count % length != 0 else 16
         pad = chr(add)
         text1 = text + (pad * add)
         ciphertext = encryptor.update(text1.encode("utf-8")) + encryptor.finalize()
-        crypted_str = str(base64.b64encode(ciphertext), encoding="utf-8")
-        return crypted_str
+        return str(base64.b64encode(ciphertext), encoding="utf-8")
 
     def encrypt(self, text):
         return {
@@ -82,28 +78,27 @@ class Music163:
         res = session.post(
             url=login_url, data=login_data, headers=headers, verify=False
         ).json()
-        if res["code"] == 200:
-            csrf = requests.utils.dict_from_cookiejar(res.cookies)["__csrf"]
-            nickname = res["profile"]["nickname"]
-            level_data = self.get_level(
-                session=session, csrf=csrf, login_data=login_data
-            )
-            level = level_data["level"]
-            now_play_count = level_data["nowPlayCount"]
-            next_play_count = level_data["nextPlayCount"]
-            now_login_count = level_data["nowLoginCount"]
-            next_login_count = level_data["nextLoginCount"]
-            return (
-                csrf,
-                nickname,
-                level,
-                now_play_count,
-                next_play_count,
-                now_login_count,
-                next_login_count,
-            )
-        else:
+        if res["code"] != 200:
             return False, res.get("message"), 0, 0, 0, 0, 0
+        csrf = requests.utils.dict_from_cookiejar(res.cookies)["__csrf"]
+        nickname = res["profile"]["nickname"]
+        level_data = self.get_level(
+            session=session, csrf=csrf, login_data=login_data
+        )
+        level = level_data["level"]
+        now_play_count = level_data["nowPlayCount"]
+        next_play_count = level_data["nextPlayCount"]
+        now_login_count = level_data["nowLoginCount"]
+        next_login_count = level_data["nextLoginCount"]
+        return (
+            csrf,
+            nickname,
+            level,
+            now_play_count,
+            next_play_count,
+            now_login_count,
+            next_login_count,
+        )
 
     def sign(self, session):
         sign_url = "https://music.163.com/weapi/point/dailyTask"
@@ -121,7 +116,7 @@ class Music163:
             return "签到失败: " + res["message"]
 
     def task(self, session, csrf):
-        url = "https://music.163.com/weapi/v6/playlist/detail?csrf_token=" + csrf
+        url = f"https://music.163.com/weapi/v6/playlist/detail?csrf_token={csrf}"
         recommend_url = "https://music.163.com/weapi/v1/discovery/recommend/resource"
         music_lists = []
         res = session.post(
@@ -131,7 +126,7 @@ class Music163:
             verify=False,
         ).json()
         if res["code"] != 200:
-            print("获取推荐歌曲失败: ", str(res["code"]), ":", res["message"])
+            print("获取推荐歌曲失败: ", res["code"], ":", res["message"])
         else:
             lists = res["recommend"]
             music_lists = [(d["id"]) for d in lists]
@@ -144,8 +139,7 @@ class Music163:
                 verify=False,
             )
             res = json.loads(response.text)
-            for i in res["playlist"]["trackIds"]:
-                music_id.append(i["id"])
+            music_id.extend(i["id"] for i in res["playlist"]["trackIds"])
         post_data = json.dumps(
             {
                 "logs": json.dumps(
@@ -163,25 +157,21 @@ class Music163:
                                     "wifi": 0,
                                 },
                             },
-                            random.sample(
-                                music_id, 420 if len(music_id) > 420 else len(music_id)
-                            ),
+                            random.sample(music_id, min(len(music_id), 420)),
                         )
                     )
                 )
             }
         )
+
         res = session.post(
             url="http://music.163.com/weapi/feedback/weblog",
             data=self.encrypt(post_data),
         ).json()
-        if res["code"] == 200:
-            return "刷听歌量成功"
-        else:
-            return "刷听歌量失败: " + res["message"]
+        return "刷听歌量成功" if res["code"] == 200 else "刷听歌量失败: " + res["message"]
 
     def get_level(self, session, csrf, login_data):
-        url = "https://music.163.com/weapi/user/level?csrf_token=" + csrf
+        url = f"https://music.163.com/weapi/user/level?csrf_token={csrf}"
         response = session.post(url=url, data=login_data, headers=self.headers)
         res = json.loads(response.text)
         return res["data"]

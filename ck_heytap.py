@@ -98,7 +98,7 @@ class Heytap:
             else:
                 self.log += "【登录失败】：" + result["errorMessage"] + "\n"
         except Exception as e:
-            self.log += "【登录】：错误，原因为: " + str(e) + "\n"
+            self.log += f"【登录】：错误，原因为: {str(e)}" + "\n"
 
         if flag:
             self.get_cookie_data()
@@ -159,13 +159,11 @@ class Heytap:
                             if res1["code"] == 200:
                                 self.log += "【每日签到成功】：" + res1["data"]["message"] + "\n"
                             else:
-                                self.log += "【每日签到失败】：" + res1 + "\n"
+                                self.log += f"【每日签到失败】：{res1}" + "\n"
                         else:
                             # print(str(qd["credits"]), str(qd["type"]), str(qd["gift"]))
-                            if not qd["type"]:
-                                data = self.amount + str(qd["credits"])
-                            else:
-                                data = (
+                            data = (
+                                (
                                     self.amount
                                     + str(qd["credits"])
                                     + "&type="
@@ -173,6 +171,10 @@ class Heytap:
                                     + "&gift="
                                     + str(qd["gift"])
                                 )
+                                if qd["type"]
+                                else self.amount + str(qd["credits"])
+                            )
+
                             res1 = self.client.post(
                                 "https://store.oppo.com/cn/oapi/credits/web/report/immediately",
                                 headers=headers,
@@ -182,12 +184,12 @@ class Heytap:
                             if res1["code"] == 200:
                                 self.log += "【每日签到成功】：" + res1["data"]["message"] + "\n"
                             else:
-                                self.log += "【每日签到失败】：" + str(res1) + "\n"
+                                self.log += f"【每日签到失败】：{str(res1)}" + "\n"
             else:
                 self.log += "【每日签到】：已经签到过了！\n"
             time.sleep(1)
         except Exception as e:
-            self.log += "【每日签到】：错误，原因为: " + str(e) + "\n"
+            self.log += f"【每日签到】：错误，原因为: {str(e)}" + "\n"
 
     # 浏览商品 10个sku +20 分
     # 位置: APP → 我的 → 签到 → 每日任务 → 浏览商品
@@ -219,28 +221,26 @@ class Heytap:
                             for skuinfo in res["details"][0]["infos"]:
                                 skuid = skuinfo["skuId"]
                                 self.client.get(
-                                    "https://msec.opposhop.cn/goods/v1/info/sku?skuId="
-                                    + str(skuid),
+                                    f"https://msec.opposhop.cn/goods/v1/info/sku?skuId={str(skuid)}",
                                     headers=headers,
                                 )
+
                                 i += 1
                                 if i > 10:
                                     break
                                 time.sleep(7)
-                            res2 = self.cashingCredits(
+                            if res2 := self.cashingCredits(
                                 data["marking"], data["type"], data["credits"]
-                            )
-                            if res2:
+                            ):
                                 self.log += self.point_got + str(data["credits"]) + "\n"
                             else:
                                 self.log += self.point_err
                         else:
                             self.log += "错误，获取商品列表失败\n"
                     elif data["completeStatus"] == 1:
-                        res2 = self.cashingCredits(
+                        if res2 := self.cashingCredits(
                             data["marking"], data["type"], data["credits"]
-                        )
-                        if res2:
+                        ):
                             self.log += self.point_got + str(data["credits"]) + "\n"
                         else:
                             self.log += self.point_err
@@ -277,14 +277,16 @@ class Heytap:
                         headers=headers,
                     )
                     count += 1
-                res2 = self.cashingCredits(qd["marking"], qd["type"], qd["credits"])
-                if res2:
+                if res2 := self.cashingCredits(
+                    qd["marking"], qd["type"], qd["credits"]
+                ):
                     self.log += self.point_got + str(qd["credits"]) + "\n"
                 else:
                     self.log += self.point_err
             elif qd["completeStatus"] == 1:
-                res2 = self.cashingCredits(qd["marking"], qd["type"], qd["credits"])
-                if res2:
+                if res2 := self.cashingCredits(
+                    qd["marking"], qd["type"], qd["credits"]
+                ):
                     self.log += self.point_got + str(qd["credits"]) + "\n"
                 else:
                     self.log += self.point_err
@@ -295,6 +297,9 @@ class Heytap:
 
     # 执行完成任务领取奖励
     def cashingCredits(self, info_marking, info_type, info_credits):
+        data = f"marking={str(info_marking)}&type={str(info_type)}&amount={str(info_credits)}"
+
+
         headers = {
             "Host": self.host1,
             "clientPackage": self.client_package,
@@ -310,15 +315,6 @@ class Heytap:
             "referer": "https://store.oppo.com/cn/app/taskCenter/index?us=gerenzhongxin&um=hudongleyuan&uc=renwuzhongxin",
         }
 
-        data = (
-            "marking="
-            + str(info_marking)
-            + "&type="
-            + str(info_type)
-            + "&amount="
-            + str(info_credits)
-        )
-
         res = self.client.post(
             "https://store.oppo.com/cn/oapi/credits/web/credits/cashingCredits",
             data=data,
@@ -327,10 +323,7 @@ class Heytap:
 
         res = res.json()
 
-        if res["code"] == 200:
-            return True
-        else:
-            return False
+        return res["code"] == 200
 
     # 活动平台抽奖通用接口
     def lottery(self, datas, referer="", extra_draw_cookie=""):
@@ -351,9 +344,7 @@ class Heytap:
                 "https://hd.oppo.com/platform/lottery", data=datas, headers=headers
             )
             res = res.json()
-            return res
-        else:
-            return res
+        return res
 
     # 活动平台完成任务接口
     def task_finish(self, aid, t_index):
@@ -367,7 +358,7 @@ class Heytap:
             "Origin": "https://hd.oppo.com",
             "X-Requested-With": "XMLHttpRequest",
         }
-        datas = "aid=" + str(aid) + "&t_index=" + str(t_index)
+        datas = f"aid={str(aid)}&t_index={str(t_index)}"
         res = self.client.post(
             "https://hd.oppo.com/task/finish", data=datas, headers=headers
         )
@@ -386,7 +377,7 @@ class Heytap:
             "Origin": "https://hd.oppo.com",
             "X-Requested-With": "XMLHttpRequest",
         }
-        datas = "aid=" + str(aid) + "&t_index=" + str(t_index)
+        datas = f"aid={str(aid)}&t_index={str(t_index)}"
         res = self.client.post(
             "https://hd.oppo.com/task/award", data=datas, headers=headers
         )
@@ -401,8 +392,6 @@ class Heytap:
                 act_name = act_list["act_name"]
                 aid = act_list["aid"]
                 referer = act_list["referer"]
-                if_draw = act_list["if_draw"]
-                if_task = act_list["if_task"]
                 end_time = act_list["end_time"]
                 headers = {
                     "Accept": "application/json, text/javascript, */*; q=0.01",
@@ -419,13 +408,14 @@ class Heytap:
                 )  # 设置活动结束日期
 
                 if dated < end_time:
+                    if_task = act_list["if_task"]
                     if if_task:
                         res = self.client.get(
                             f"https://hd.oppo.com/task/list?aid={aid}", headers=headers
                         )
                         tasklist = res.json()
                         self.log += f"【{act_name}-任务】\n"
-                        for _, jobs in enumerate(tasklist["data"]):
+                        for jobs in tasklist["data"]:
                             title = jobs["title"]
                             t_index = jobs["t_index"]
                             aid = t_index[: t_index.index("i")]
@@ -444,6 +434,7 @@ class Heytap:
                                 time.sleep(3)
                             else:
                                 self.log += f"{title}：任务已完成\n"
+                    if_draw = act_list["if_draw"]
                     if self.if_draw and if_draw:  # 判断当前用户是否抽奖 和 判断当前活动是否抽奖
                         lid = act_list["lid"]
                         extra_draw_cookie = act_list["extra_draw_cookie"]
@@ -455,24 +446,21 @@ class Heytap:
                             res = self.lottery(data, referer, extra_draw_cookie)
                             msg = res["msg"]
                             if "次数已用完" in msg:
-                                self.log += "  第" + str(x + 1) + "抽奖：抽奖次数已用完\n"
+                                self.log += f"  第{str(x + 1)}" + "抽奖：抽奖次数已用完\n"
                                 break
                             if "活动已结束" in msg:
-                                self.log += "  第" + str(x + 1) + "抽奖：活动已结束，终止抽奖\n"
+                                self.log += f"  第{str(x + 1)}" + "抽奖：活动已结束，终止抽奖\n"
                                 break
-                            goods_name = res["data"]["goods_name"]
-                            if goods_name:
-                                self.log += (
-                                    "  第" + str(x + 1) + "次抽奖：" + str(goods_name) + "\n"
-                                )
+                            if goods_name := res["data"]["goods_name"]:
+                                self.log += f"  第{str(x + 1)}次抽奖：{str(goods_name)}" + "\n"
                             elif "提交成功" in msg:
-                                self.log += "  第" + str(x + 1) + "次抽奖：未中奖\n"
+                                self.log += f"  第{str(x + 1)}" + "次抽奖：未中奖\n"
                             x += 1
                             time.sleep(5)
                 else:
                     self.log += f"【{act_name}】：活动已结束，不再执行\n"
         except Exception as e:
-            self.log += "【执行任务和抽奖】：错误，原因为: " + str(e) + "\n"
+            self.log += f"【执行任务和抽奖】：错误，原因为: {str(e)}" + "\n"
 
     # 早睡打卡
     def zaoshui_task(self):
@@ -517,11 +505,11 @@ class Heytap:
             else:
                 applyStatus = res["data"]["applyStatus"]
                 # 2 19:30打卡成功 0 8：00打卡成功
-                if applyStatus == 1:
-                    self.log += "【早睡打卡】：报名成功，请当天19:30-22:00留意打卡状态\n"
                 if applyStatus == 0:
                     self.log += "【早睡打卡】：申请失败，积分不足或报名时间已过\n"
-                if applyStatus == 2:
+                elif applyStatus == 1:
+                    self.log += "【早睡打卡】：报名成功，请当天19:30-22:00留意打卡状态\n"
+                elif applyStatus == 2:
                     self.log += "【早睡打卡】：已报名成功，请当天19:30-22:00留意打卡状态\n"
                 if res["data"]["clockInStatus"] == 1:
                     self.log += "【早睡打卡】：打卡成功，积分将于24:00前到账\n"
@@ -550,12 +538,11 @@ class Heytap:
                         break
 
         except Exception as e:
-            self.log += "【早睡打卡】：错误，原因为: " + str(e) + "\n"
+            self.log += f"【早睡打卡】：错误，原因为: {str(e)}" + "\n"
 
     # 主程序
     def main(self):
-        i = 1
-        for check_item in self.check_items:
+        for i, check_item in enumerate(self.check_items, start=1):
             self.cookies = check_item.get("cookie")
             self.user_agent = check_item.get("useragent")
             self.if_draw = check_item.get("draw")
@@ -571,7 +558,6 @@ class Heytap:
                     self.log += f"账号{i}执行出错：{e}\n"
             else:
                 self.log += f"账号{i}已失效，请及时更新cookies\n"
-            i += 1
             self.log += "\n\n"
         return self.log
 

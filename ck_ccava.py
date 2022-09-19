@@ -18,12 +18,11 @@ class CCAVA:
         url = "https://pc.ccava.net/zb_users/plugin/mochu_us/cmd.php?act=qiandao"
         res = requests.get(url, headers={"Cookie": cookie}).json()
         if "登录" in res["msg"]:
-            msg = "cookie 失效"
+            return "cookie 失效"
         elif "今天" in res["msg"]:
-            msg = f'重复签到, 剩余 {res["giod"]} 月光币'
+            return f'重复签到, 剩余 {res["giod"]} 月光币'
         else:
-            msg = f'签到成功, 剩余 {res["giod"]} 月光币'
-        return msg
+            return f'签到成功, 剩余 {res["giod"]} 月光币'
 
     def main(self):
         msg_all = ""

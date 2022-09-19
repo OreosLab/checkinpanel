@@ -35,16 +35,13 @@ class HOSTLOC:
         # 访问小黑屋用户空间不会获得积分、生成的随机数可能会重复，这里多生成两个链接用作冗余
         for _ in range(12):
             uid = random.randint(10000, 50000)
-            url = "https://hostloc.com/space-uid-{}.html".format(str(uid))
+            url = f"https://hostloc.com/space-uid-{uid}.html"
             url_list.append(url)
         return url_list
 
     # 使用Python实现防CC验证页面中JS写的的toNumbers函数
     def toNumbers(self, secret: str) -> list:
-        text = []
-        for value in textwrap.wrap(secret, 2):
-            text.append(int(value, 16))
-        return text
+        return [int(value, 16) for value in textwrap.wrap(secret, 2)]
 
     # 不带Cookies访问论坛首页，检查是否开启了防CC机制，将开启状态、AES计算所需的参数全部放在一个字典中返回
     def check_anti_cc(self) -> dict:
@@ -75,9 +72,7 @@ class HOSTLOC:
     # 在开启了防CC机制时使用获取到的数据进行AES解密计算生成一条Cookie（未开启防CC机制时返回空Cookies）
     def gen_anti_cc_cookies(self) -> dict:
         cookies = {}
-        anti_cc_status = self.check_anti_cc()
-
-        if anti_cc_status:  # 不为空，代表开启了防CC机制
+        if anti_cc_status := self.check_anti_cc():
             if anti_cc_status["ok"] == 0:
                 log("防 CC 验证过程所需参数不符合要求，页面可能存在错误！")
             else:  # 使用获取到的三个值进行AES Cipher-Block Chaining解密计算以生成特定的Cookie值用于通过防CC验证
@@ -126,10 +121,10 @@ class HOSTLOC:
 
         if len(test_title) != 0:  # 确保正则匹配到了内容，防止出现数组索引越界的情况
             if test_title[0] != "个人资料 -  全球主机交流论坛 -  Powered by Discuz!":
-                log("第 " + str(number_c) + " 个帐户登录失败！")
+                log(f"第 {number_c} 个帐户登录失败！")
                 return False
             else:
-                log("第 " + str(number_c) + " 个帐户登录成功！")
+                log(f"第 {number_c} 个帐户登录成功！")
                 return True
         else:
             log("无法在用户设置页面找到标题，该页面存在错误或被防 CC 机制拦截！")
@@ -144,7 +139,7 @@ class HOSTLOC:
         points = re.findall(r"积分: (\d+)", r.text)
 
         if len(points) != 0:  # 确保正则匹配到了内容，防止出现数组索引越界的情况
-            log("帐户当前积分：" + points[0])
+            log(f"帐户当前积分：{points[0]}")
         else:
             log("无法获取帐户积分，可能页面存在错误或者未登录！")
         time.sleep(5)
@@ -160,10 +155,10 @@ class HOSTLOC:
                 try:
                     r = s.get(url)
                     r.raise_for_status()
-                    log("第 " + str(i + 1) + " 个用户空间链接访问成功")
+                    log(f"第 {str(i + 1)} 个用户空间链接访问成功")
                     time.sleep(5)  # 每访问一个链接后休眠5秒，以避免触发论坛的防CC机制
                 except Exception as e:
-                    log("链接访问异常：" + str(e))
+                    log(f"链接访问异常：{str(e)}")
             self.log_current_points(s)  # 再次打印帐户当前积分
         else:
             log("请检查你的帐户是否正确！")
@@ -175,17 +170,16 @@ class HOSTLOC:
             r = requests.get(url=api_url)
             r.raise_for_status()
             r.encoding = "utf-8"
-            log("当前使用 ip 地址：" + r.text)
+            log(f"当前使用 ip 地址：{r.text}")
         except Exception as e:
-            log("获取当前 ip 地址失败：" + str(e))
+            log(f"获取当前 ip 地址失败：{str(e)}")
 
     def main(self):
-        i = 0
-        for check_item in self.check_items:
+        for i, check_item in enumerate(self.check_items):
             username = check_item.get("username")
             password = check_item.get("password")
             self.log_my_ip()
-            log("共检测到 " + str(len(self.check_items)) + " 个帐户，开始获取积分")
+            log(f"共检测到 {len(self.check_items)} 个帐户，开始获取积分")
             log("*" * 12)
 
             try:
@@ -193,10 +187,8 @@ class HOSTLOC:
                 self.get_points(s, i + 1)
                 log("*" * 12)
             except Exception as e:
-                log("程序执行异常：" + str(e))
+                log(f"程序执行异常：{str(e)}")
                 log("*" * 12)
-
-            i += 1
 
         log("程序执行完毕，获取积分过程结束")
         return desp

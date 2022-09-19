@@ -22,10 +22,7 @@ class WZYD:
             url="https://ssl.kohsocialapp.qq.com:10001/play/h5sign", data=data
         ).json()
         try:
-            if res["result"] == 0:
-                msg = "签到成功"
-            else:
-                msg = res["returnMsg"]
+            msg = "签到成功" if res["result"] == 0 else res["returnMsg"]
         except Exception:
             msg = "请求失败，请检查接口"
         return msg

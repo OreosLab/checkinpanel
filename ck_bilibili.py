@@ -81,15 +81,13 @@ class BiliBili(object):
         """
         url = "https://api.bilibili.com/x/vip/privilege/receive"
         post_data = {"type": receive_type, "csrf": bili_jct}
-        res = session.post(url=url, data=post_data).json()
-        return res
+        return session.post(url=url, data=post_data).json()
 
     @staticmethod
     def vip_manga_reward(session) -> dict:
         """获取漫画大会员福利"""
         url = "https://manga.bilibili.com/twirp/user.v1.User/GetVipReward"
-        res = session.post(url=url, json={"reason_id": 1}).json()
-        return res
+        return session.post(url=url, json={"reason_id": 1}).json()
 
     @staticmethod
     def report_task(session, bili_jct, aid: int, cid: int, progres: int = 300) -> dict:
@@ -101,8 +99,7 @@ class BiliBili(object):
         """
         url = "http://api.bilibili.com/x/v2/history/report"
         post_data = {"aid": aid, "cid": cid, "progres": progres, "csrf": bili_jct}
-        res = session.post(url=url, data=post_data).json()
-        return res
+        return session.post(url=url, data=post_data).json()
 
     @staticmethod
     def share_task(session, bili_jct, aid) -> dict:
@@ -112,8 +109,7 @@ class BiliBili(object):
         """
         url = "https://api.bilibili.com/x/web-interface/share/add"
         post_data = {"aid": aid, "csrf": bili_jct}
-        res = session.post(url=url, data=post_data).json()
-        return res
+        return session.post(url=url, data=post_data).json()
 
     @staticmethod
     def get_followings(
@@ -140,8 +136,7 @@ class BiliBili(object):
             "order_type": order_type,
         }
         url = "https://api.bilibili.com/x/relation/followings"
-        res = session.get(url=url, params=params).json()
-        return res
+        return session.get(url=url, params=params).json()
 
     @staticmethod
     def space_arc_search(
@@ -172,7 +167,7 @@ class BiliBili(object):
         }
         url = "https://api.bilibili.com/x/space/arc/search"
         res = session.get(url=url, params=params).json()
-        data_list = [
+        return [
             {
                 "aid": one.get("aid"),
                 "cid": 0,
@@ -181,7 +176,6 @@ class BiliBili(object):
             }
             for one in res.get("data", {}).get("list", {}).get("vlist", [])
         ]
-        return data_list
 
     @staticmethod
     def elec_pay(session, bili_jct, uid: int, num: int = 50) -> dict:
@@ -198,8 +192,7 @@ class BiliBili(object):
             "oid": uid,
             "csrf": bili_jct,
         }
-        res = session.post(url=url, data=post_data).json()
-        return res
+        return session.post(url=url, data=post_data).json()
 
     @staticmethod
     def coin_add(
@@ -219,9 +212,7 @@ class BiliBili(object):
             "cross_domain": "true",
             "csrf": bili_jct,
         }
-        res = session.post(url=url, data=post_data).json()
-
-        return res
+        return session.post(url=url, data=post_data).json()
 
     @staticmethod
     def live_status(session) -> str:
@@ -232,16 +223,14 @@ class BiliBili(object):
         silver = data.get("silver", 0)
         gold = data.get("gold", 0)
         coin = data.get("coin", 0)
-        msg = f"银瓜子数量: {silver}\n金瓜子数量: {gold}\n硬币数量: {coin}"
-        return msg
+        return f"银瓜子数量: {silver}\n金瓜子数量: {gold}\n硬币数量: {coin}"
 
     @staticmethod
     def silver2coin(session, bili_jct) -> dict:
         """银瓜子兑换硬币"""
         url = "https://api.live.bilibili.com/pay/v1/Exchange/silver2coin"
         post_data = {"csrf_token": bili_jct, "csrf": bili_jct}
-        res = session.post(url=url, data=post_data).json()
-        return res
+        return session.post(url=url, data=post_data).json()
 
     @staticmethod
     def get_region(session, rid=1, num=6):
@@ -257,7 +246,7 @@ class BiliBili(object):
                 + str(rid)
         )
         res = session.get(url=url).json()
-        data_list = [
+        return [
             {
                 "aid": one.get("aid"),
                 "cid": one.get("cid"),
@@ -266,7 +255,6 @@ class BiliBili(object):
             }
             for one in res.get("data", {}).get("archives", [])
         ]
-        return data_list
 
     def main(self):
         msg_all = ""
@@ -290,7 +278,6 @@ class BiliBili(object):
                     "Connection": "keep-alive",
                 }
             )
-            success_count = 0
             uname, uid, is_login, coin, vip_type, current_exp = self.get_nav(
                 session=session
             )
@@ -304,9 +291,9 @@ class BiliBili(object):
                 if coin_type == 1 and coin_num:
                     following_list = self.get_followings(session=session, uid=uid)
                     for following in following_list.get("data", {}).get("list"):
-                        mid = following.get("mid")
-                        if mid:
+                        if mid := following.get("mid"):
                             aid_list += self.space_arc_search(session=session, uid=mid)
+                success_count = 0
                 if coin_num > 0:
                     for aid in aid_list[::-1]:
                         res = self.coin_add(
@@ -374,9 +361,7 @@ class BiliBili(object):
                 # today_exp = 5 * len([one for one in [login, watch_av, share_av] if one])
                 # today_exp += coins_av
                 today_exp = sum(map(lambda x: x['delta'], self.reward(session=session)))
-                update_data = (28800 - new_current_exp) // (
-                    today_exp if today_exp else 1
-                )
+                update_data = (28800 - new_current_exp) // (today_exp or 1)
                 msg = (
                     f"帐号信息: {uname}\n漫画签到: {manhua_msg}\n直播签到: {live_msg}\n"
                     f"登陆任务: 今日已登陆\n观看视频: {report_msg}\n分享任务: {share_msg}\n投币任务: {coin_msg}\n"

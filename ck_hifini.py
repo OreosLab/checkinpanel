@@ -31,11 +31,9 @@ class HiFiNi(object):
 
     def main(self):
         msg_all = ""
-        i = 1
-        for check_item in self.check_items:
+        for i, check_item in enumerate(self.check_items, start=1):
             cookie = check_item.get("cookie")
             msg = f"账号{i}\n{self.signin(cookie)}"
-            i += 1
             msg_all += msg + "\n\n"
         return msg_all
 

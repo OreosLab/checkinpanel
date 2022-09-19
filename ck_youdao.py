@@ -21,20 +21,16 @@ class YouDao:
         url = "https://note.youdao.com/yws/mapi/user?method=get"
         headers = {"Cookie": cookie}
         res = requests.get(url=url, headers=headers).json()
-        if res.get("q") is None:
-            return 0
-        return res.get("q")
+        return 0 if res.get("q") is None else res.get("q")
 
     def sign(self, cookie):
         msg = f"签到前空间: {int(self.get_space(cookie))//1048576}M\n"
-        c = ""
         ad = 0
         headers = {"Cookie": cookie}
         r = requests.get(
             "http://note.youdao.com/login/acc/pe/getsess?product=YNOTE", headers=headers
         )
-        for key, value in r.cookies.items():
-            c += key + "=" + value + ";"
+        c = "".join(f"{key}={value};" for key, value in r.cookies.items())
         headers = {"Cookie": c}
         re = requests.post(
             "https://note.youdao.com/yws/api/daupromotion?method=sync", headers=headers
@@ -65,7 +61,7 @@ class YouDao:
                 space = str(sync + checkin + checkin2 + ad)
                 msg += f"获得空间：{space}M, 总空间：{int(s)//1048576}M"
         else:
-            msg += "错误" + str(re.json())
+            msg += f"错误{str(re.json())}"
         return msg
 
     def main(self):

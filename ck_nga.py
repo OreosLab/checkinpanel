@@ -56,10 +56,7 @@ class NGA:
         data = res["data"][0]
         # print(data)
         try:
-            if "已经" in data[4]:
-                silver_coin_get_stat = data[4]
-            else:
-                silver_coin_get_stat = data[2]["2"]
+            silver_coin_get_stat = data[4] if "已经" in data[4] else data[2]["2"]
         except Exception as e:
             silver_coin_get_stat = e
         return silver_coin_get_stat
@@ -80,10 +77,7 @@ class NGA:
         data = res["data"][0]
         # print(data)
         try:
-            if "已经" in data[4]:
-                n_coin_get_stat = data[4]
-            else:
-                n_coin_get_stat = data[2]["30"]
+            n_coin_get_stat = data[4] if "已经" in data[4] else data[2]["30"]
         except Exception as e:
             n_coin_get_stat = str(e)
         return n_coin_get_stat
@@ -108,9 +102,9 @@ class NGA:
                 res = json.loads(res)
                 # print(res)
                 time.sleep(30)
-                raw_stat = re.search(r"\'raw_stat\':\s*{([^}]+)", str(res)).group(1)
-                task_code = re.search(r"\'6\':\s(\d)", raw_stat).group(1)
-                time_code = re.search(r"\'5\':\s(\d)", raw_stat).group(1)
+                raw_stat = re.search(r"\'raw_stat\':\s*{([^}]+)", str(res))[1]
+                task_code = re.search(r"\'6\':\s(\d)", raw_stat)[1]
+                time_code = re.search(r"\'5\':\s(\d)", raw_stat)[1]
                 if task_code == "1" or (task_code == "0" and time_code == "1"):
                     success_sum += 1
             except Exception as e:
@@ -118,12 +112,11 @@ class NGA:
                 failure_sum += 1
             failure_msg_all += failure_msg + "\n"
         video_coin = success_sum // 2 * 1
-        video_view_stat = (
+        return (
             f"观看视频成功次数：{success_sum}，共获得N币：{video_coin}"
             if failure_sum == 0
             else f"观看视频成功次数：{success_sum}，共获得N币：{video_coin}；\n观看视频失败次数：{failure_sum}；\n错误信息：{failure_msg_all}"
         )
-        return video_view_stat
 
     def view_video_for_adfree_24h(self, token, uid):
         data = {
@@ -144,10 +137,7 @@ class NGA:
                 code = res["data"][1][1]["141"]["raw_stat"]["6"]
             else:
                 code = res["data"][1][0]["141"]["raw_stat"]["6"]
-            if code == 1:
-                adfree_24h_stat = "已获得免广告状态：24h"
-            else:
-                adfree_24h_stat = "观看视频失败！"
+            adfree_24h_stat = "已获得免广告状态：24h" if code == 1 else "观看视频失败！"
         except Exception as e:
             adfree_24h_stat = str(e)
         return adfree_24h_stat
@@ -183,12 +173,11 @@ class NGA:
                 failure_sum += 1
             failure_msg_all += failure_msg + "\n"
         adfree_time = success_sum * 6
-        adfree_stat = (
+        return (
             f"观看视频成功次数：{success_sum}，共获得免广告时长：{adfree_time}h"
             if failure_sum == 0
             else f"观看视频成功次数：{success_sum}，共获得免广告时长：{adfree_time}h；\n观看视频失败次数：{failure_sum}；\n错误信息：{failure_msg_all}"
         )
-        return adfree_stat
 
     def get_signin_stat(self, token, uid):
         data = {

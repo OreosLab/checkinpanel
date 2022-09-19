@@ -20,18 +20,18 @@ class EverPhoto:
 
     def main(self):
         msg_all = ""
+        url = "https://openapi.everphoto.cn/sf/3/v4/PostCheckIn"
+        login_url = "https://web.everphoto.cn/api/auth"
         for check_item in self.check_items:
             mobile = check_item.get("mobile")
             password = check_item.get("password")
 
+            login_key = f"mobile={mobile}&password={password}"
             header = {
                 "user-agent": "EverPhoto/4.5.0 (Android;4050002;MuMu;23;dev)",
-                "application": "tc.everphoto" 
-                }
-                
-            url = "https://openapi.everphoto.cn/sf/3/v4/PostCheckIn"
-            login_url = "https://web.everphoto.cn/api/auth"
-            login_key = f"mobile={mobile}&password={password}"
+                "application": "tc.everphoto",
+            }
+
             login_res = requests.post(login_url, data=login_key, headers=header)
             login_data = json.loads(login_res.text)["data"]
 
@@ -50,9 +50,7 @@ class EverPhoto:
             checkin_result = data["data"]["checkin_result"]
             continuity = data["data"]["continuity"]
 
-            msg = (
-                "是否为今日第一次签到：" + str(checkin_result) + "\n" + "累积签到天数：" + str(continuity)
-            )
+            msg = f"是否为今日第一次签到：{str(checkin_result)}" + "\n" + "累积签到天数：" + str(continuity)
             msg_all += msg + "\n\n"
         return msg_all
 

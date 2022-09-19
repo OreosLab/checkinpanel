@@ -11,8 +11,7 @@ ver_re = re.compile("__version__ = .(\\d+-\\d+-...).")
 
 
 def get_present_ver() -> str:
-    ver_msg = f"checkinpanel 当前版本：{__version__}"
-    return ver_msg
+    return f"checkinpanel 当前版本：{__version__}"
 
 
 def get_latest_ver() -> str:

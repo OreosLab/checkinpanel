@@ -18,7 +18,6 @@ class Haidilao:
 
     @staticmethod
     def checkin(openid, uid):
-        url = "https://superapp-public.kiwa-tech.com/"
         headers = {
             "Host": "superapp-public.kiwa-tech.com",
             "Content-Length": "115",
@@ -35,9 +34,13 @@ class Haidilao:
             "type": 1,
             "codeType": 1,
         }
+        url = "https://superapp-public.kiwa-tech.com/"
         login = requests.post(
-            url + "login/thirdCommLogin", headers=headers, data=json.dumps(login_data)
+            f"{url}login/thirdCommLogin",
+            headers=headers,
+            data=json.dumps(login_data),
         ).text
+
         try:
             login = json.loads(login)
             if login["success"] != True:
@@ -47,16 +50,17 @@ class Haidilao:
         headers["_HAIDILAO_APP_TOKEN"] = login["data"]["token"]
         headers["ReqType"] = "APPH5"
         headers["Referer"] = (
-            url
-            + "app-sign-in/?SignInToken="
+            f"{url}app-sign-in/?SignInToken="
             + login["data"]["token"]
             + "&source=MiniApp"
         )
+
         signin = requests.post(
-            url + "activity/wxapp/signin/signin",
+            f"{url}activity/wxapp/signin/signin",
             headers=headers,
             data=json.dumps({"signinSource": "MiniApp"}),
         ).text
+
         try:
             signin = json.loads(signin)
             if signin["success"] != True:
@@ -64,8 +68,9 @@ class Haidilao:
         except json.decoder.JSONDecodeError:
             return "请求失败"
         fragment = requests.post(
-            url + "activity/wxapp/signin/queryFragment", headers=headers
+            f"{url}activity/wxapp/signin/queryFragment", headers=headers
         ).text
+
         try:
             fragment = json.loads(fragment)
             if signin["success"] == True:

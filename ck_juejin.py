@@ -21,7 +21,7 @@ class Juejin:
         }
 
     def sign(self, cookie):
-        sign_url = self.base_url + "growth_api/v1/check_in"
+        sign_url = f"{self.base_url}growth_api/v1/check_in"
         res = requests.post(
             url=sign_url, headers=self.headers, cookies={"Cookie": cookie}
         ).content
@@ -29,7 +29,7 @@ class Juejin:
         return res
 
     def lottery(self, cookie):
-        lottery_url = self.base_url + "growth_api/v1/lottery/draw"
+        lottery_url = f"{self.base_url}growth_api/v1/lottery/draw"
         res = requests.post(
             url=lottery_url, headers=self.headers, cookies={"Cookie": cookie}
         ).content
@@ -38,8 +38,7 @@ class Juejin:
 
     def main(self):
         msg_all = ""
-        i = 1
-        for check_item in self.check_items:
+        for i, check_item in enumerate(self.check_items, start=1):
             cookie = str(check_item.get("cookie"))
             sign_msg = self.sign(cookie=cookie)["err_msg"]
             lottery_msg = self.lottery(cookie=cookie)["err_msg"]
@@ -49,7 +48,6 @@ class Juejin:
                 + "\n------ 掘金抽奖结果 ------\n"
                 + lottery_msg
             )
-            i += 1
             msg_all += msg + "\n\n"
         return msg_all
 

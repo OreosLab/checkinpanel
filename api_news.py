@@ -15,35 +15,34 @@ from utils import get_data
 
 class News:
     def parse_data(self, data: dict, obj_name: str) -> str:
-        if data.get(obj_name) != {}:
-            msg = ""
-            need_obj = data.get(obj_name)
-            items = need_obj.items()
-            for key, value in items:
-                if key == "content":
-                    for i in value:
-                        msg += str(i)
-                    msg += "\n"
-                elif (
-                    type(value) is not bool
-                    and len(value) != 0
-                    and not bool(re.search("[a-z]", str(value)))
-                ):
-                    msg += str(value) + "\n"
-            return msg
+        if data.get(obj_name) == {}:
+            return
+        msg = ""
+        need_obj = data.get(obj_name)
+        items = need_obj.items()
+        for key, value in items:
+            if key == "content":
+                for i in value:
+                    msg += str(i)
+                msg += "\n"
+            elif (
+                type(value) is not bool
+                and len(value) != 0
+                and not bool(re.search("[a-z]", str(value)))
+            ):
+                msg += str(value) + "\n"
+        return msg
 
     def main(self):
         msg = ""
         try:
-            res = requests.get(url=f"https://news.topurl.cn/api").json()
+            res = requests.get(url="https://news.topurl.cn/api").json()
             if res.get("code") == 200:
                 data = res.get("data", {})
                 if data.get("newsList") != []:
                     msg += "📮 每日新闻 📮\n"
-                    no = 1
-                    for news in data.get("newsList", []):
+                    for no, news in enumerate(data.get("newsList", []), start=1):
                         msg += f'{str(no).zfill(2)}. <a href="{news.get("url")}">{news.get("title")}</a>\n'
-                        no += 1
                 if data.get("historyList") != []:
                     msg += "\n🎬 历史上的今天 🎬\n"
                     for history in data.get("historyList", []):
@@ -58,7 +57,6 @@ class News:
 
 if __name__ == "__main__":
     data = get_data()
-    news = data.get("NEWS")
-    if news:
+    if news := data.get("NEWS"):
         res = News().main()
         send("每日新闻", res)
