@@ -5,14 +5,13 @@ import time
 
 import requests
 
-__version__ = "20220802-4-100"
+__version__ = "20221007-4-100"
 ONLINE_VERSION = ""
 ver_re = re.compile("__version__ = .(\\d+-\\d+-...).")
 
 
 def get_present_ver() -> str:
-    ver_msg = f"checkinpanel 当前版本：{__version__}"
-    return ver_msg
+    return f"checkinpanel 当前版本：{__version__}"
 
 
 def get_latest_ver() -> str:
