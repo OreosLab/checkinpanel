@@ -25,6 +25,13 @@ class Picacomic:
     def generate_headers(path: str, data: dict = None, token: str = None):
         api_key = "C69BAF41DA5ABD1FFEDC6D2FEA56B"
         api_secret = "~d}$Q7$eIni=V)9\\RK/P.RM4;9[7|@/CA}b~OW!3?EV`:<>M7pddUBL5n|0/*Cn"
+        current_time = str(int(time.time()))
+        nonce = "".join(random.choices(string.ascii_lowercase + string.digits, k=32))
+        raw = path + current_time + nonce + "POST" + api_key
+        raw = raw.lower()
+        h = hmac.new(api_secret.encode(), digestmod=hashlib.sha256)
+        h.update(raw.encode())
+        signature = h.hexdigest()
         headers = {
             "api-key": api_key,
             "accept": "application/vnd.picacomic.com.v1+json",
@@ -35,17 +42,11 @@ class Picacomic:
             "app-build-version": "44",
             "User-Agent": "okhttp/3.8.1",
             "image-quality": "original",
+            "time": current_time,
+            "nonce": nonce,
+            "signature": signature,
         }
-        current_time = str(int(time.time()))
-        nonce = "".join(random.choices(string.ascii_lowercase + string.digits, k=32))
-        raw = path + current_time + nonce + "POST" + api_key
-        raw = raw.lower()
-        h = hmac.new(api_secret.encode(), digestmod=hashlib.sha256)
-        h.update(raw.encode())
-        signature = h.hexdigest()
-        headers["time"] = current_time
-        headers["nonce"] = nonce
-        headers["signature"] = signature
+
         if data is not None:
             headers["Content-Type"] = "application/json; charset=UTF-8"
         if token is not None:

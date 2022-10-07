@@ -81,7 +81,7 @@ class OnePlusBBS:
                     ret = data["ret"]
                     sum_list.append(ret_map.get(ret, 0))
                     one_msg = data["msg"]
-                    if str(ret) in ["-1", "-6", "-7"]:
+                    if str(ret) in {"-1", "-6", "-7"}:
                         break
                     else:
                         success_count += 1
@@ -89,10 +89,10 @@ class OnePlusBBS:
                     one_msg = "抽奖失败"
             except Exception as e:
                 one_msg = f"抽奖失败: {e}"
-            print(f"第{i + 1}次抽奖结果：" + str(one_msg))
+            print(f"第{i + 1}次抽奖结果：{str(one_msg)}")
             time.sleep(5)
         msg = f"成功抽奖 {success_count} 次"
-        draw_msg = "抽奖状态: " + str(msg)
+        draw_msg = f"抽奖状态: {str(msg)}"
         draw_msg += f"\n抽奖结果: 获得 {sum(sum_list) - success_count * 10} 加油"
         print(draw_msg)
         return draw_msg

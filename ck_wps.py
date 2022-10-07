@@ -35,8 +35,6 @@ class WPS:
             self.is_sign = True
 
     def sign(self, cookie):
-        url = "https://vip.wps.cn/sign/v2"
-        yz_url = "https://vip.wps.cn/checkcode/signin/captcha.png?platform=8&encode=0&img_witdh=275.164&img_height=69.184"
         headers = {
             "Cookie": cookie,
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
@@ -51,13 +49,15 @@ class WPS:
                 "img_witdh": "275.164",
                 "img_height": "69.184",
             }  # 带验证坐标的请求
+            url = "https://vip.wps.cn/sign/v2"
             response = requests.post(url=url, headers=headers, data=data0)
-            if not ("msg" in response.text):
+            if "msg" not in response.text:
                 msg = "cookie 失效"
             else:
                 sus = json.loads(response.text)["result"]
                 msg = f"免验证签到 --> {sus}\n"
                 if sus == "error":
+                    yz_url = "https://vip.wps.cn/checkcode/signin/captcha.png?platform=8&encode=0&img_witdh=275.164&img_height=69.184"
                     for n in range(10):
                         requests.get(url=yz_url, headers=headers)
                         response = requests.post(url=url, headers=headers, data=data)
@@ -67,7 +67,7 @@ class WPS:
                         if sus == "ok":
                             break
                 msg += f"最终签到结果 --> {sus}\n"
-                # {"result":"ok","data":{"exp":0,"wealth":0,"weath_double":0,"count":5,"double":0,"gift_type":"space_5","gift_id":133,"url":""},"msg":""}
+                        # {"result":"ok","data":{"exp":0,"wealth":0,"weath_double":0,"count":5,"double":0,"gift_type":"space_5","gift_id":133,"url":""},"msg":""}
         return msg
 
     def main(self):

@@ -48,7 +48,7 @@ class JegoTrip:
         tasks = self.task(user_id)
         for task in tasks.get("日常任务", []):
             if task.get("name") == "每日签到奖励":
-                return True if task.get("triggerAction") == "已签到" else False
+                return task.get("triggerAction") == "已签到"
 
     def main(self):
         msg_all = ""

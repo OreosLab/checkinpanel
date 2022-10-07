@@ -26,10 +26,7 @@ class SspanelQd(object):
     def checkin(url, email, password):
         url = url.rstrip("/")
         email = email.split("@")
-        if len(email) > 1:
-            email = email[0] + "%40" + email[1]
-        else:
-            email = email[0]
+        email = f"{email[0]}%40{email[1]}" if len(email) > 1 else email[0]
         session = requests.session()
         """
         以下 except 都是用来捕获当 requests 请求出现异常时，
@@ -48,13 +45,13 @@ class SspanelQd(object):
             print(f"未知错误，错误信息：\n{traceback.format_exc()}")
             return msg
 
-        login_url = url + "/auth/login"
+        login_url = f"{url}/auth/login"
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36",
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
         }
 
-        post_data = "email=" + email + "&passwd=" + password + "&code="
+        post_data = f"email={email}&passwd={password}&code="
         post_data = post_data.encode()
 
         try:
@@ -72,26 +69,22 @@ class SspanelQd(object):
 
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36",
-            "Referer": url + "/user",
+            "Referer": f"{url}/user",
         }
 
+
         try:
-            response = session.post(
-                url + "/user/checkin", headers=headers, verify=False
-            )
+            response = session.post(f"{url}/user/checkin", headers=headers, verify=False)
             res_str = response.text.encode("utf-8").decode("unicode_escape")
             print(f"{url} 接口签到返回信息：{res_str}")
             res_dict = json.loads(res_str)
             check_msg = res_dict.get("msg")
-            if check_msg:
-                msg = url + "\n" + str(check_msg)
-            else:
-                msg = url + "\n" + str(res_dict)
+            msg = url + "\n" + str(check_msg) if check_msg else url + "\n" + str(res_dict)
         except Exception:
             msg = url + "\n" + "签到失败，请查看日志"
             print(f"签到失败，错误信息：\n{traceback.format_exc()}")
 
-        info_url = url + "/user"
+        info_url = f"{url}/user"
         response = session.get(info_url, verify=False)
         """
         以下只适配了editXY主题

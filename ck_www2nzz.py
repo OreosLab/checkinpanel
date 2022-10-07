@@ -46,12 +46,10 @@ class WWW2nzz:
         uid = re.findall(r"uid=(\d+)\"", user_rep.text)
         uid = uid[0] if uid else "未获取到 UID"
         if "您今天已经签到过了或者签到时间还未开始" in response.text:
-            msg = f"用户信息: {uid}\n签到信息: 您今天已经签到过了或者签到时间还未开始"
-        else:
-            check_msg = re.findall(r"<div class=\"c\">(.*?)</div>", response.text, re.S)
-            check_msg = check_msg[0].strip() if check_msg else "签到失败"
-            msg = f"用户信息: {uid}\n签到信息: {check_msg}"
-        return msg
+            return f"用户信息: {uid}\n签到信息: 您今天已经签到过了或者签到时间还未开始"
+        check_msg = re.findall(r"<div class=\"c\">(.*?)</div>", response.text, re.S)
+        check_msg = check_msg[0].strip() if check_msg else "签到失败"
+        return f"用户信息: {uid}\n签到信息: {check_msg}"
 
     def main(self):
         msg_all = ""

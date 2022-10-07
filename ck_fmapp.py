@@ -33,7 +33,7 @@ class FMAPP:
             else:
                 msg = res.get("message")
         except Exception as e:
-            print("错误信息", str(e))
+            print("错误信息", e)
             msg = f"未知错误：{str(e)}"
         return msg
 
@@ -49,7 +49,7 @@ class FMAPP:
             else:
                 msg = res.get("message")
         except Exception as e:
-            print("错误信息", str(e))
+            print("错误信息", e)
             msg = "未知错误，检查日志"
         return msg
 
@@ -67,7 +67,7 @@ class FMAPP:
             else:
                 msg = res.get("message")
         except Exception as e:
-            print("错误信息", str(e))
+            print("错误信息", e)
             msg = "未知错误，检查日志"
         return msg
 

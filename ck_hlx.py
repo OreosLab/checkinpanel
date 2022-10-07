@@ -22,8 +22,7 @@ class HLX:
         m = hashlib.md5()
         b = password.encode(encoding="utf-8")
         m.update(b)
-        password_md5 = m.hexdigest()
-        return password_md5
+        return m.hexdigest()
 
     def login(self, username, password):
         password_md5 = self.md5(password)
@@ -42,7 +41,7 @@ class HLX:
         key = json.loads(response.text)["_key"]
         nick = json.loads(response.text)["user"]["nick"]
         userID = json.loads(response.text)["user"]["userID"]
-        msg = "[+]用户：" + nick + " userID：" + str(userID)
+        msg = f"[+]用户：{nick} userID：{str(userID)}"
         return key, nick, userID, msg
 
     def get_level(self, userID, key):
@@ -50,7 +49,7 @@ class HLX:
         response = requests.post(url=url)
         soup = BeautifulSoup(response.text, "html.parser")  # 解析html页面
         level = soup.select(".lev_li_forth span")  # 筛选经验值
-        msg = (
+        return (
             "[+]当前经验值："
             + level[0].string
             + "\n[+]距离下一等级："
@@ -59,7 +58,6 @@ class HLX:
             + level[2].string
             + " 经验"
         )
-        return msg
 
     def sign(self, key):
         # 获取所有板块 url
@@ -92,10 +90,9 @@ class HLX:
                     data={"_key": key, "cat_id": cat["categoryID"]},
                     headers=headers,
                 ).json()
-                msg = res["msg"]
                 status = res["status"]
                 if status == 0:
-                    result += "\n[+]" + cat["title"] + " 签到失败 错误原因：" + msg
+                    result += "\n[+]" + cat["title"] + " 签到失败 错误原因：" + res["msg"]
                 elif status == 1:
                     result += (
                         "\n[+]"

@@ -67,10 +67,7 @@ def get_env_int() -> int:
         return 4
     if env == "ql_new":
         return 5
-    if env == "ql":
-        return 6
-
-    return -1
+    return 6 if env == "ql" else -1
 
 
 def get_file_path(file_name: str) -> str:

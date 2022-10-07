@@ -19,8 +19,7 @@ class Hax:
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36 Edg/99.0.1150.39",
             "Content-type": "application/json",
         }
-        datas = requests.get(url, headers=headers).text
-        return datas
+        return requests.get(url, headers=headers).text
 
     def get_server_info(self, url):
         html_text = self.check(url)
@@ -29,7 +28,6 @@ class Hax:
         sum_list = [x.text for x in soup("h1", class_="card-text")]
         vps_list = []
         vps_dict = {}
-        vps_str = ""
         for k, v in zip(zone_list, sum_list):
             zone = k.split("-", 1)[0].lstrip("./")
             sum = (
@@ -41,9 +39,7 @@ class Hax:
         for k_v in vps_list:
             k, v = k_v
             vps_dict.setdefault(k, []).append(v)
-        for k, v in vps_dict.items():
-            vps_str += ">>" + k + "-" + ", ".join(v) + "\n"
-        return vps_str
+        return "".join(f">>{k}-" + ", ".join(v) + "\n" for k, v in vps_dict.items())
 
     def get_data_center(self, url, vir=False):
         html_text = self.check(url)
@@ -55,12 +51,10 @@ class Hax:
                 (c.split(" (")[1].rstrip(")"), c.split(" (")[0]) for c in ctr_list
             ]
             ctr_dict = {}
-            ctr_str = ""
             for k_v in ctr_list:
                 k, v = k_v
                 ctr_dict.setdefault(k, []).append(v)
-            for k, v in ctr_dict.items():
-                ctr_str += "★" + k + "★ " + ", ".join(v) + "\n"
+            ctr_str = "".join(f"★{k}★ " + ", ".join(v) + "\n" for k, v in ctr_dict.items())
         return ctr_str
 
     def main(self):
@@ -69,8 +63,7 @@ class Hax:
         vir_str = self.get_data_center("https://hax.co.id/create-vps", True)
         woiden_str = self.get_data_center("https://woiden.id/create-vps")
         data_center = f'[🚩Available Centers / 可开通区域]\n---------- <a href="https://hax.co.id/create-vps">Hax</a> ----------\n{vir_str}---------- <a href="https://woiden.id/create-vps">Woiden</a> ----------\n{woiden_str}\n'
-        msg = hax_stat + data_center
-        return msg
+        return hax_stat + data_center
 
 
 if __name__ == "__main__":

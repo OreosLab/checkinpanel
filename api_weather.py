@@ -35,16 +35,15 @@ class Weather:
             r = requests.get(
                 "https://fastly.jsdelivr.net/gh/Oreomeow/checkinpanel@master/city.json"
             )
-            if r.status_code == 200:
-                city_map = r.json()
-                with open(
-                    os.path.join(os.path.dirname(__file__), "city.json"),
-                    "w",
-                    encoding="utf-8",
-                ) as city_file:
-                    json.dump(city_map, city_file, ensure_ascii=False)
-            else:
+            if r.status_code != 200:
                 return "下载 city.json 失败！"
+            city_map = r.json()
+            with open(
+                os.path.join(os.path.dirname(__file__), "city.json"),
+                "w",
+                encoding="utf-8",
+            ) as city_file:
+                json.dump(city_map, city_file, ensure_ascii=False)
         msg_all = ""
         for city_name in self.check_items:
             city_code = city_map.get(city_name, "101020100")

@@ -48,23 +48,15 @@ class ClientApi(ABC):
         return str(randrange(0, 24))
 
     def random_time(self, origin_time: str, command: str):
-        if command.find("ran_time") != -1:
+        if "ran_time" in command:
             return origin_time
-        if command.find("rssbot") != -1 or command.find("hax") != -1:
-            return ClientApi.get_ran_min() + " " + " ".join(origin_time.split(" ")[1:])
-        if command.find("api") != -1:
-            return (
-                ClientApi.get_ran_min()
-                + " "
-                + self.get_ran_hour(True)
-                + " "
-                + " ".join(origin_time.split(" ")[2:])
-            )
+        if "rssbot" in command or "hax" in command:
+            return f"{ClientApi.get_ran_min()} " + " ".join(origin_time.split(" ")[1:])
         return (
-            ClientApi.get_ran_min()
-            + " "
-            + self.get_ran_hour()
-            + " "
+            f"{ClientApi.get_ran_min()} {self.get_ran_hour(True)} "
+            + " ".join(origin_time.split(" ")[2:])
+            if "api" in command
+            else f"{ClientApi.get_ran_min()} {self.get_ran_hour()} "
             + " ".join(origin_time.split(" ")[2:])
         )
 
@@ -78,15 +70,15 @@ class QLClient(ClientApi):
             or not (sct := client_info.get("client_secret"))
         ):
             raise ValueError("无法获取 client 相关参数！")
-        else:
-            self.cid = cid
-            self.sct = sct
+        self.cid = cid
+        self.sct = sct
         self.url = client_info.get("url", "http://localhost:5700").rstrip("/") + "/"
         self.twice = client_info.get("twice", False)
         self.token = requests.get(
-            url=self.url + "open/auth/token",
+            url=f"{self.url}open/auth/token",
             params={"client_id": self.cid, "client_secret": self.sct},
         ).json()["data"]["token"]
+
         if not self.token:
             raise ValueError("无法获取 token！")
 
@@ -94,9 +86,10 @@ class QLClient(ClientApi):
         self.cron: List[Dict] = list(
             filter(
                 lambda x: not x.get("isDisabled", 1)
-                and x.get("command", "").find("Oreomeow_checkinpanel_master") != -1,
+                and x.get("command", "").find("Oreomeow_checkinpanel_master")
+                != -1,
                 requests.get(
-                    url=self.url + "open/crons",
+                    url=f"{self.url}open/crons",
                     headers={"Authorization": f"Bearer {self.token}"},
                 ).json()["data"],
             )
@@ -112,7 +105,7 @@ class QLClient(ClientApi):
                 "id": c["id"],
             }
             requests.put(
-                url=self.url + "open/crons",
+                url=f"{self.url}open/crons",
                 json=json,
                 headers={"Authorization": f"Bearer {self.token}"},
             )
@@ -120,7 +113,7 @@ class QLClient(ClientApi):
 
 def get_client():
     env_type = get_env_int()
-    if env_type == 5 or env_type == 6:
+    if env_type in [5, 6]:
         check_data = get_data()
         return QLClient(check_data.get("RANDOM", [[]])[0])
 

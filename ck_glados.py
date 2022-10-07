@@ -80,7 +80,7 @@ class GLaDOS(object):
             if (vip_level is not None and "vip" in i and i["vip"] == vip_level)
             or (vip_level is None and "vip" not in i)
         ]
-        if len(user_budgets) > 0:
+        if user_budgets:
             return user_budgets[0]
         else:
             raise OSError(f"Budget info not found for this user! VIP: {vip_level}")

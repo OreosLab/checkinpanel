@@ -44,12 +44,10 @@ class Zhiyoo:
         uid = re.findall(r"uid=(\d+)\"", user_rep.text)
         uid = uid[0] if uid else "未获取到 UID"
         if "今日已经签到" in response.text:
-            msg = f"用户信息: {uid}\n签到信息: 您今日已经签到，请明天再来！"
-        else:
-            check_msg = re.findall(r"恭喜你签到成功!获得随机奖励 金币 (\d+) 元.", response.text, re.S)
-            check_msg = check_msg[0].strip() if check_msg else "签到失败"
-            msg = f"用户信息: {uid}\n签到信息: 恭喜你签到成功!获得随机奖励 金币 {check_msg} 元."
-        return msg
+            return f"用户信息: {uid}\n签到信息: 您今日已经签到，请明天再来！"
+        check_msg = re.findall(r"恭喜你签到成功!获得随机奖励 金币 (\d+) 元.", response.text, re.S)
+        check_msg = check_msg[0].strip() if check_msg else "签到失败"
+        return f"用户信息: {uid}\n签到信息: 恭喜你签到成功!获得随机奖励 金币 {check_msg} 元."
 
     def main(self):
         msg_all = ""
