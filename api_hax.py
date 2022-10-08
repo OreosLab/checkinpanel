@@ -14,9 +14,11 @@ from utils import get_data
 
 
 class Hax:
-    def check(self, url):
+    @staticmethod
+    def check(url):
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36 Edg/99.0.1150.39",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36",
             "Content-type": "application/json",
         }
         return requests.get(url, headers=headers).text
@@ -30,12 +32,12 @@ class Hax:
         vps_dict = {}
         for k, v in zip(zone_list, sum_list):
             zone = k.split("-", 1)[0].lstrip("./")
-            sum = (
+            sum_ = (
                 k.split("-", 1)[1] + "(" + v.rstrip(" VPS") + "♝)"
                 if len(k.split("-", 1)) > 1
                 else v
             )
-            vps_list.append((zone, sum))
+            vps_list.append((zone, sum_))
         for k_v in vps_list:
             k, v = k_v
             vps_dict.setdefault(k, []).append(v)
@@ -54,7 +56,9 @@ class Hax:
             for k_v in ctr_list:
                 k, v = k_v
                 ctr_dict.setdefault(k, []).append(v)
-            ctr_str = "".join(f"★{k}★ " + ", ".join(v) + "\n" for k, v in ctr_dict.items())
+            ctr_str = "".join(
+                f"★{k}★ " + ", ".join(v) + "\n" for k, v in ctr_dict.items()
+            )
         return ctr_str
 
     def main(self):
@@ -62,7 +66,13 @@ class Hax:
         hax_stat = f"[🛰Hax Stats / Hax 开通数据]\n{hax_str}\n"
         vir_str = self.get_data_center("https://hax.co.id/create-vps", True)
         woiden_str = self.get_data_center("https://woiden.id/create-vps")
-        data_center = f'[🚩Available Centers / 可开通区域]\n---------- <a href="https://hax.co.id/create-vps">Hax</a> ----------\n{vir_str}---------- <a href="https://woiden.id/create-vps">Woiden</a> ----------\n{woiden_str}\n'
+        data_center = (
+            f"[🚩Available Centers / 可开通区域]\n"
+            f'---------- <a href="https://hax.co.id/create-vps">Hax</a> ----------\n'
+            f"{vir_str}"
+            f'---------- <a href="https://woiden.id/create-vps">Woiden</a> ----------\n'
+            f"{woiden_str}\n"
+        )
         return hax_stat + data_center
 
 
@@ -70,5 +80,5 @@ if __name__ == "__main__":
     data = get_data()
     hax = data.get("HAX")
     if hax:
-        res = Hax().main()
-        send("Hax", res)
+        result = Hax().main()
+        send("Hax", result)

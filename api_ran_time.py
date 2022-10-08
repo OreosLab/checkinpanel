@@ -52,11 +52,9 @@ class ClientApi(ABC):
             return origin_time
         if "rssbot" in command or "hax" in command:
             return f"{ClientApi.get_ran_min()} " + " ".join(origin_time.split(" ")[1:])
+        is_api = "api" in command
         return (
-            f"{ClientApi.get_ran_min()} {self.get_ran_hour(True)} "
-            + " ".join(origin_time.split(" ")[2:])
-            if "api" in command
-            else f"{ClientApi.get_ran_min()} {self.get_ran_hour()} "
+            f"{ClientApi.get_ran_min()} {self.get_ran_hour(is_api)} "
             + " ".join(origin_time.split(" ")[2:])
         )
 
@@ -115,7 +113,7 @@ def get_client():
     env_type = get_env_int()
     if env_type in [5, 6]:
         check_data = get_data()
-        return QLClient(check_data.get("RANDOM", [[]])[0])
+        return QLClient(check_data.get("RANDOM", [{}])[0])
 
 
 try:

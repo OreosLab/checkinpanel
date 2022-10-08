@@ -17,11 +17,8 @@ class Weather:
     def __init__(self, check_items):
         self.check_items = check_items
 
-    def main(self):
-        """
-        获取天气信息。网址：https://www.sojson.com/blog/305.html
-        :return:
-        """
+    @staticmethod
+    def city_map():
         try:
             with open(
                 os.path.join(os.path.dirname(__file__), "city.json"),
@@ -44,9 +41,13 @@ class Weather:
                 encoding="utf-8",
             ) as city_file:
                 json.dump(city_map, city_file, ensure_ascii=False)
+        return city_map
+
+    def main(self):
+        msg = ""
         msg_all = ""
         for city_name in self.check_items:
-            city_code = city_map.get(city_name, "101020100")
+            city_code = self.city_map().get(city_name, "101020100")
             weather_url = f"http://t.weather.itboy.net/api/weather/city/{city_code}"
             r = requests.get(url=weather_url)
             if r.status_code == 200 and r.json().get("status") == 200:
@@ -92,5 +93,5 @@ class Weather:
 if __name__ == "__main__":
     data = get_data()
     _check_items = data.get("CITY", [])
-    res = Weather(check_items=_check_items).main()
-    send("天气预报", res)
+    result = Weather(check_items=_check_items).main()
+    send("天气预报", result)

@@ -4,7 +4,8 @@ cron: 22 6-22/2 * * *
 new Env('RSS 订阅');
 """
 
-from datetime import datetime, timedelta
+
+from datetime import datetime, timedelta, timezone
 from time import mktime
 
 import feedparser
@@ -25,7 +26,6 @@ class RssRobot:
             )
         ]
 
-
         no = 0
         msg = ""
         for rss in rss_list:
@@ -38,16 +38,17 @@ class RssRobot:
 
                 # 此网站单独处理
                 if rss.url == "https://www.foreverblog.cn":
-                    pub_t = pub_t.replace(year=datetime.utcnow().year) + timedelta(
-                        hours=8
-                    )
+                    pub_t = pub_t.replace(
+                        year=datetime.now(timezone.utc).year
+                    ) + timedelta(hours=8)
+
                 elif rss.url == "https://www.zhihu.com":
                     entry.link = entry.link.split("/answer")[0]
 
                 if (
                     entry.link not in post_url_list
                     and (
-                        datetime.timestamp(datetime.utcnow())
+                        datetime.timestamp(datetime.now(timezone.utc))
                         - datetime.timestamp(pub_t)
                     )
                     < rss.before * 86400
@@ -69,7 +70,8 @@ class RssRobot:
         if no % 20 != 0 and msg:
             send("RSS 订阅", msg)
 
-    def remove_old_history(self):
+    @staticmethod
+    def remove_old_history():
         # 只保留最近一周的记录
         week_date_range = datetime.now() + timedelta(days=-7)
         History.delete().where(
@@ -78,4 +80,4 @@ class RssRobot:
 
 
 if __name__ == "__main__":
-    res = RssRobot().main()
+    RssRobot().main()

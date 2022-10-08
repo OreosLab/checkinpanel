@@ -21,16 +21,14 @@ class Motto:
         """
         response = requests.get(url="http://open.iciba.com/dsapi")
         if response.status_code != 200:
-            return ""
+            return
         res = json.loads(response.content.decode("utf-8"))
-        content = res["content"]
-        note = res["note"]
-        return f"{content}\n{note}\n"
+        return f'{res["content"]}\n{res["note"]}\n'
 
 
 if __name__ == "__main__":
     data = get_data()
     motto = data.get("MOTTO")
     if motto:
-        res = Motto().main()
-        send("每日一句", res)
+        result = Motto().main()
+        send("每日一句", result)
