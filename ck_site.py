@@ -32,12 +32,11 @@ class Site:
 
     @staticmethod
     def generate_headers(url):
-        header = {
+        return {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36",
             "Accept-Language": "zh-CN,zh;q=0.9",
             "Referer": url,
         }
-        return header
 
     @staticmethod
     def cookie_parse(cookie_str):
@@ -51,7 +50,7 @@ class Site:
     def signin(self, session, url):
         # hdarea签到
         if url == "https://www.hdarea.co":
-            attendance_url = url + "/sign_in.php"
+            attendance_url = f"{url}/sign_in.php"
             data = {"action": "sign_in"}
             with session.post(attendance_url, data) as response:
                 r = re.compile(r"获得了\d+魔力值")
@@ -65,9 +64,8 @@ class Site:
                     tip = self.url
                     print(f"{url} {tip}")
                 log(f"{url} {tip}")
-        # 猫站签到
         elif url == "https://pterclub.com":
-            attendance_url = url + "/attendance-ajax.php"
+            attendance_url = f"{url}/attendance-ajax.php"
             with session.get(attendance_url) as response:
                 try:
                     msg = json.loads(
@@ -84,9 +82,8 @@ class Site:
                     tip = self.url
                     print(f"{url} {tip}")
                 log(f"{url} {tip}")
-        # 海胆签到
         elif url == "https://www.haidan.video":
-            attendance_url = url + "/signin.php"
+            attendance_url = f"{url}/signin.php"
             with session.get(attendance_url) as response:
                 r = re.compile(r"已经打卡")
                 r1 = re.compile(r"退出")
@@ -98,9 +95,8 @@ class Site:
                     tip = "cookie 已过期或网站类型不对!"
                     print(f"{url} {tip}")
                 log(f"{url} {tip}")
-        # btchool
         elif url == "https://pt.btschool.club":
-            attendance_url = url + "/index.php?action=addbonus"
+            attendance_url = f"{url}/index.php?action=addbonus"
             with session.get(attendance_url) as response:
                 r = re.compile(r"今天签到您获得\d+点魔力值")
                 r1 = re.compile(r"退出")
@@ -112,9 +108,8 @@ class Site:
                     tip = "cookie已过期"
                     print(f"{url} {tip}")
                 log(f"{url} {tip}")
-        # lemonhd
         elif url == "https://lemonhd.org":
-            attendance_url = url + "/attendance.php"
+            attendance_url = f"{url}/attendance.php"
             with session.get(attendance_url) as response:
                 r = re.compile(r"已签到")
                 r1 = re.compile(r"请勿重复刷新")
@@ -127,9 +122,8 @@ class Site:
                     tip = self.url
                     print(f"{url} {tip}")
                 log(f"{url} {tip}")
-        # hdtime and pttime
-        elif url == "https://hdtime.org" or url == "https://www.pttime.org":
-            attendance_url = url + "/attendance.php"
+        elif url in ["https://hdtime.org", "https://www.pttime.org"]:
+            attendance_url = f"{url}/attendance.php"
             with session.get(attendance_url) as response:
                 r = re.compile(r"签到成功")
                 r1 = re.compile(r"请勿重复刷新")
@@ -142,7 +136,7 @@ class Site:
                     print(f"{url} {tip}")
                 log(f"{url} {tip}")
         else:
-            attendance_url = url + "/attendance.php"
+            attendance_url = f"{url}/attendance.php"
             with session.get(attendance_url) as response:
                 r = re.compile(r"请勿重复刷新")
                 r1 = re.compile(r"签到已得[\s]*\d+")
@@ -156,16 +150,15 @@ class Site:
                 log(f"{url} {tip}")
 
     @staticmethod
-    # discuz 系列签到
     def signin_discuz_dsu(session, url):
         attendance_url = (
             url
             + "/plugin.php?id=dsu_paulsign:sign&operation=qiandao&infloat=1&sign_as=1&inajax=1"
         )
-        hash_url = url + "/plugin.php?id=dsu_paulsign:sign"
+        hash_url = f"{url}/plugin.php?id=dsu_paulsign:sign"
         with session.get(hash_url) as hashurl:
             h = re.compile(r'name="formhash" value="(.*?)"')
-            formhash = h.search(hashurl.text).group(1)
+            formhash = h.search(hashurl.text)[1]
         data = {
             "qdmode": 3,
             "qdxq": "kx",
@@ -185,9 +178,8 @@ class Site:
                 print(f"{url} {response.text}")
 
     @staticmethod
-    # hifi 签到
     def signin_hifi(session, url):
-        attendance_url = url + "/sg_sign.htm"
+        attendance_url = f"{url}/sg_sign.htm"
         with session.post(attendance_url) as response:
             r = re.compile(r"成功")
             r1 = re.compile(r"今天已经")

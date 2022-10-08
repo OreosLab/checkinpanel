@@ -25,7 +25,7 @@ class SFACG:
 
     @staticmethod
     def generate_headers(authorization, cookie, useragent, sfsecurity):
-        headers = {
+        return {
             "Host": "api.sfacg.com",
             "accept-charset": "UTF-8",
             "accept": "application/vnd.sfacg.api+json;version=1",
@@ -41,7 +41,6 @@ class SFACG:
             + sfsecurity.split("&")[3],
             "accept-encoding": "gzip",
         }
-        return headers
 
     @staticmethod
     def post_re(api, headers, data):
@@ -60,17 +59,17 @@ class SFACG:
         res = requests.get("https://api.sfacg.com/user?", headers=headers).json()
         money = requests.get("https://api.sfacg.com/user/money", headers=headers).json()
         try:
-            nickname = res["data"]["nickName"]
             fire_money_remain = money["data"]["fireMoneyRemain"]
             vip_level = money["data"]["vipLevel"]
+            nickname = res["data"]["nickName"]
             info = (
-                "账号名称: "
-                + nickname
+                f"账号名称: {nickname}"
                 + "\n火卷余额: "
                 + str(fire_money_remain)
                 + "\nVIP: "
                 + str(vip_level)
             )
+
             print("Cookie 凭证有效！")
         except Exception:
             info = "Cookie 凭证失效 httpCode: " + str(res["status"]["httpCode"])

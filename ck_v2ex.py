@@ -59,7 +59,7 @@ class V2ex:
         data = re.findall(
             pattern=r"<div class=\"cell\">(.*?)天</div>", string=response.text
         )
-        data = data[0] + "天" if data else "获取连续签到天数失败"
+        data = f"{data[0]}天" if data else "获取连续签到天数失败"
         msg += f"\n签到天数: {data}"
         msg = msg.strip()
         return msg

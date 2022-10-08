@@ -82,7 +82,7 @@ class FreeNom:
             if not match:
                 msg_all += f"account{i} get page token failed\n\n"
                 continue
-            token = match.group(1)
+            token = match[1]
 
             # domains
             domains = re.findall(domain_info_ptn, r.text)
@@ -113,7 +113,7 @@ class FreeNom:
                         else f"{domain} 续期失败"
                     )
                 result += f"{domain} 还有 {days} 天续期\n"
-                msg = f"账号{i}\n" + result
+                msg = f"账号{i}\n{result}"
             msg_all += msg + "\n"
         return msg_all
 

@@ -27,14 +27,14 @@ class WeiBo:
             headers=headers,
         ).json()
         if res.get("status") == 10000:
-            msg = f'连续签到: {res.get("data").get("continuous")}天\n本次收益: {res.get("data").get("desc")}'
+            return f'连续签到: {res.get("data").get("continuous")}天\n本次收益: {res.get("data").get("desc")}'
+
         elif res.get("errno") == 30000:
-            msg = "每日签到: 已签到"
+            return "每日签到: 已签到"
         elif res.get("status") == 90005:
-            msg = f'每日签到: {res.get("msg")}'
+            return f'每日签到: {res.get("msg")}'
         else:
-            msg = "每日签到: 签到失败"
-        return msg
+            return "每日签到: 签到失败"
 
     @staticmethod
     def card(token):
@@ -43,15 +43,10 @@ class WeiBo:
             url=f"https://api.weibo.cn/2/!/ug/king_act_home?c=iphone&{token}",
             headers=headers,
         ).json()
-        if res.get("status") == 10000:
-            nickname = res.get("data").get("user").get("nickname")
-            msg = (
-                f'用户昵称: {nickname}\n每日打卡: {res.get("data").get("signin").get("title").split("<")[0]}天\n'
-                f'积分总计: {res.get("data").get("user").get("energy")}'
-            )
-        else:
-            msg = "每日打卡: 活动过期或失效"
-        return msg
+        if res.get("status") != 10000:
+            return "每日打卡: 活动过期或失效"
+        nickname = res.get("data").get("user").get("nickname")
+        return f'用户昵称: {nickname}\n每日打卡: {res.get("data").get("signin").get("title").split("<")[0]}天\n积分总计: {res.get("data").get("user").get("energy")}'
 
     @staticmethod
     def pay(token):
@@ -62,7 +57,7 @@ class WeiBo:
             "Host": "pay.sc.weibo.com",
             "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Weibo (iPhone10,1__weibo__11.2.1__iphone__os14.5)",
         }
-        data = token + "&lang=zh_CN&wm=3333_2001"
+        data = f"{token}&lang=zh_CN&wm=3333_2001"
         response = requests.post(
             url="https://pay.sc.weibo.com/aj/mobile/home/welfare/signin/do",
             headers=headers,

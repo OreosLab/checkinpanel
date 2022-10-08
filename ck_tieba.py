@@ -44,18 +44,17 @@ class Tieba:
         try:
             pn = int(
                 re.match(
-                    r".*/f/like/mylike\?&pn=(.*?)\">尾页.*", content.text, re.S | re.I
-                ).group(1)
+                    r".*/f/like/mylike\?&pn=(.*?)\">尾页.*",
+                    content.text,
+                    re.S | re.I,
+                )[1]
             )
+
         except Exception:
             pn = 1
-        next_page = 1
         pattern = re.compile(r".*?<a href=\"/f\?kw=.*?title=\"(.*?)\">")
-        while next_page <= pn:
-            tbname = pattern.findall(content.text)
-            for x in tbname:
-                yield x
-            next_page += 1
+        for next_page in range(2, pn + 2):
+            yield from pattern.findall(content.text)
             content = session.get(
                 url=f"https://tieba.baidu.com/f/like/mylike?&pn={next_page}",
                 timeout=(5, 20),
@@ -63,8 +62,7 @@ class Tieba:
             )
 
     def get_tieba_list(self, session):
-        tieba_list = list(self.tieba_list_more(session=session))
-        return tieba_list
+        return list(self.tieba_list_more(session=session))
 
     @staticmethod
     def sign(session, tb_name_list, tbs):
@@ -88,8 +86,7 @@ class Tieba:
                     error_count += 1
             except Exception as e:
                 print(f"贴吧 {tb_name} 签到异常，原因{str(e)}")
-        msg = f"贴吧总数: {len(tb_name_list)}\n签到成功: {success_count}\n已经签到: {exist_count}\n被屏蔽的: {shield_count}\n签到失败: {error_count}"
-        return msg
+        return f"贴吧总数: {len(tb_name_list)}\n签到成功: {success_count}\n已经签到: {exist_count}\n被屏蔽的: {shield_count}\n签到失败: {error_count}"
 
     def main(self):
         msg_all = ""

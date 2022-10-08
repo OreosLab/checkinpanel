@@ -32,15 +32,15 @@ class Cloud189:
         for i in range(len(a)):
             if list(a)[i] != "=":
                 v = self.b64map.index(list(a)[i])
-                if 0 == e:
+                if e == 0:
                     e = 1
                     d += self.int2char(v >> 2)
                     c = 3 & v
-                elif 1 == e:
+                elif e == 1:
                     e = 2
                     d += self.int2char(c << 2 | v >> 4)
                     c = 15 & v
-                elif 2 == e:
+                elif e == 2:
                     e = 3
                     d += self.int2char(c)
                     d += self.int2char(v >> 2)
@@ -56,10 +56,9 @@ class Cloud189:
     def rsa_encode(self, j_rsakey, string):
         rsa_key = f"-----BEGIN PUBLIC KEY-----\n{j_rsakey}\n-----END PUBLIC KEY-----"
         pubkey = rsa.PublicKey.load_pkcs1_openssl_pem(rsa_key.encode())
-        result = self.b64tohex(
+        return self.b64tohex(
             (base64.b64encode(rsa.encrypt(f"{string}".encode(), pubkey))).decode()
         )
-        return result
 
     def login(self, session, username, password):
         url = "https://cloud.189.cn/api/portal/loginUrl.action?redirectURL=https://cloud.189.cn/web/redirect.html"
@@ -90,12 +89,11 @@ class Cloud189:
             "paramId": paramid,
         }
         r = session.post(url, data=data, headers=headers, timeout=5)
-        if r.json()["result"] == 0:
-            redirect_url = r.json()["toUrl"]
-            session.get(url=redirect_url)
-            return True
-        else:
+        if r.json()["result"] != 0:
             return "登陆状态: " + r.json()["msg"]
+        redirect_url = r.json()["toUrl"]
+        session.get(url=redirect_url)
+        return True
 
     @staticmethod
     def sign(session):
@@ -141,10 +139,7 @@ class Cloud189:
             password = check_item.get("password")
             session = requests.Session()
             flag = self.login(session=session, username=phone, password=password)
-            if flag is True:
-                sign_msg = self.sign(session=session)
-            else:
-                sign_msg = flag
+            sign_msg = self.sign(session=session) if flag is True else flag
             msg = f"帐号信息: *******{phone[-4:]}\n{sign_msg}"
             msg_all += msg + "\n\n"
         return msg_all

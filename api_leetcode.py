@@ -19,7 +19,7 @@ class LeetCode:
         base_url = "https://leetcode-cn.com"
         # 获取今日每日一题的题名(英文)
         response = requests.post(
-            base_url + "/graphql",
+            f"{base_url}/graphql",
             json={
                 "operationName": "questionOfToday",
                 "variables": {},
@@ -27,6 +27,7 @@ class LeetCode:
                 "__typename   }   lastSubmission {     id     __typename   }   date   userStatus   __typename }} ",
             },
         )
+
         leetcode_title = (
             json.loads(response.text)
             .get("data")
@@ -36,9 +37,9 @@ class LeetCode:
         )
 
         # 获取今日每日一题的所有信息
-        url = base_url + "/problems/" + leetcode_title
+        url = f"{base_url}/problems/{leetcode_title}"
         response = requests.post(
-            base_url + "/graphql",
+            f"{base_url}/graphql",
             json={
                 "operationName": "questionData",
                 "variables": {"titleSlug": leetcode_title},
@@ -58,13 +59,14 @@ class LeetCode:
                 "dailyRecordStatus    editorType    ugcQuestionId    style    __typename  }}",
             },
         )
+
         # 转化成json格式
         json_text = json.loads(response.text).get("data").get("question")
         # 题目题号
         num = json_text.get("questionFrontendId")
         # 题名（中文）
         leetcode_title = json_text.get("translatedTitle")
-        msg = num + ". " + leetcode_title
+        msg = f"{num}. {leetcode_title}"
         return f'<a href="{url}">{msg}</a>'
 
 
