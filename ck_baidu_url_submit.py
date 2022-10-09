@@ -34,7 +34,13 @@ class BaiduUrlSubmit:
             except Exception as e:
                 print(e)
                 error_count += 1
-        return f"站点地址: {site}\n当天剩余的可推送 url 条数: {remain}\n成功推送的 url 条数: {success_count}\n成功推送的 url 次数: {times - error_count}\n失败推送的 url 次数: {error_count}"
+        return (
+            f"站点地址: {site}\n"
+            f"当天剩余的可推送 url 条数: {remain}\n"
+            f"成功推送的 url 条数: {success_count}\n"
+            f"成功推送的 url 次数: {times - error_count}\n"
+            f"失败推送的 url 次数: {error_count}"
+        )
 
     def main(self):
         msg_all = ""

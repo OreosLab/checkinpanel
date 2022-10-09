@@ -5,17 +5,15 @@ cron: 20 10 * * *
 new Env('机场签到');
 """
 
+import contextlib
 import json
 import re
 import traceback
 
 import requests
-import urllib3
 
 from notify_mtr import send
 from utils import get_data
-
-urllib3.disable_warnings()
 
 
 class SspanelQd(object):
@@ -47,7 +45,9 @@ class SspanelQd(object):
 
         login_url = f"{url}/auth/login"
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/56.0.2924.87 Safari/537.36",
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
         }
 
@@ -68,18 +68,23 @@ class SspanelQd(object):
             return msg
 
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/56.0.2924.87 Safari/537.36",
             "Referer": f"{url}/user",
         }
 
-
         try:
-            response = session.post(f"{url}/user/checkin", headers=headers, verify=False)
+            response = session.post(
+                f"{url}/user/checkin", headers=headers, verify=False
+            )
             res_str = response.text.encode("utf-8").decode("unicode_escape")
             print(f"{url} 接口签到返回信息：{res_str}")
             res_dict = json.loads(res_str)
             check_msg = res_dict.get("msg")
-            msg = url + "\n" + str(check_msg) if check_msg else url + "\n" + str(res_dict)
+            msg = (
+                url + "\n" + str(check_msg) if check_msg else url + "\n" + str(res_dict)
+            )
         except Exception:
             msg = url + "\n" + "签到失败，请查看日志"
             print(f"签到失败，错误信息：\n{traceback.format_exc()}")
@@ -89,7 +94,7 @@ class SspanelQd(object):
         """
         以下只适配了editXY主题
         """
-        try:
+        with contextlib.suppress(Exception):
             level = re.findall(r'\["Class", "(.*?)"],', response.text)[0]
             day = re.findall(r'\["Class_Expire", "(.*)"],', response.text)[0]
             rest = re.findall(r'\["Unused_Traffic", "(.*?)"]', response.text)[0]
@@ -104,8 +109,6 @@ class SspanelQd(object):
                 + "\n- 剩余流量："
                 + str(rest)
             )
-        except Exception:
-            pass
         return msg
 
     def main(self):
