@@ -27,7 +27,12 @@ class MiMotion:
         return res["data"]["t"]
 
     def get_app_token(self, login_token):
-        url = f"https://account-cn.huami.com/v1/client/app_tokens?app_name=com.xiaomi.hm.health&dn=api-user.huami.com%2Capi-mifit.huami.com%2Capp-analytics.huami.com&login_token={login_token}"
+        url = (
+            f"https://account-cn.huami.com/v1/client/app_tokens?"
+            f"app_name=com.xiaomi.hm.health&"
+            f"dn=api-user.huami.com%2Capi-mifit.huami.com%2Capp-analytics.huami.com&"
+            f"login_token={login_token}"
+        )
         res = requests.get(url=url, headers=self.headers).json()
         return res["token_info"]["app_token"]
 
@@ -101,18 +106,21 @@ class MiMotion:
                     "apptoken": app_token,
                     "Content-Type": "application/x-www-form-urlencoded",
                 }
-                data = f"userid={userid}&last_sync_data_time=1628256960&device_type=0&last_deviceid=C4BDB6FFFE2BCA4C&data_json={data_json}"
+                data = (
+                    f"userid={userid}&last_sync_data_time=1628256960&"
+                    f"device_type=0&last_deviceid=C4BDB6FFFE2BCA4C&data_json={data_json}"
+                )
                 res = requests.post(url=url, data=data, headers=headers).json()
                 msg = f"帐号信息: *******{phone[-4:]}\n修改状态: {res['message']}\n修改步数: {step}"
-                msg_all += msg + "\n\n"
+            msg_all += msg + "\n\n"
         return msg_all
 
 
 def start():
-    data = get_data()
-    _check_items = data.get("MIMOTION", [])
-    res = MiMotion(check_items=_check_items).main()
-    send("小米运动", res)
+    _data = get_data()
+    _check_items = _data.get("MIMOTION", [])
+    result = MiMotion(check_items=_check_items).main()
+    send("小米运动", result)
 
 
 if __name__ == "__main__":

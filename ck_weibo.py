@@ -7,12 +7,9 @@ new Env('微博');
 from urllib import parse
 
 import requests
-import urllib3
 
 from notify_mtr import send
 from utils import get_data
-
-urllib3.disable_warnings()
 
 
 class WeiBo:
@@ -46,7 +43,11 @@ class WeiBo:
         if res.get("status") != 10000:
             return "每日打卡: 活动过期或失效"
         nickname = res.get("data").get("user").get("nickname")
-        return f'用户昵称: {nickname}\n每日打卡: {res.get("data").get("signin").get("title").split("<")[0]}天\n积分总计: {res.get("data").get("user").get("energy")}'
+        return (
+            f"用户昵称: {nickname}\n"
+            f'每日打卡: {res.get("data").get("signin").get("title").split("<")[0]}天\n'
+            f'积分总计: {res.get("data").get("user").get("energy")}'
+        )
 
     @staticmethod
     def pay(token):
@@ -55,7 +56,9 @@ class WeiBo:
             "Connection": "keep-alive",
             "Content-Type": "application/x-www-form-urlencoded",
             "Host": "pay.sc.weibo.com",
-            "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Weibo (iPhone10,1__weibo__11.2.1__iphone__os14.5)",
+            "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_5 like Mac OS X) "
+            "AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 "
+            "Weibo (iPhone10,1__weibo__11.2.1__iphone__os14.5)",
         }
         data = f"{token}&lang=zh_CN&wm=3333_2001"
         response = requests.post(
@@ -103,7 +106,7 @@ class WeiBo:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items_list = data.get("WEIBO", [])
-    res = WeiBo(check_items=_check_items_list).main()
-    send("微博", res)
+    _data = get_data()
+    _check_items = _data.get("WEIBO", [])
+    result = WeiBo(check_items=_check_items).main()
+    send("微博", result)

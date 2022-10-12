@@ -105,7 +105,7 @@ class FMAPP:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("FMAPP", [])
-    res = FMAPP(check_items=_check_items).main()
-    send("Fa米家", res)
+    _data = get_data()
+    _check_items = _data.get("FMAPP", [])
+    result = FMAPP(check_items=_check_items).main()
+    send("Fa米家", result)

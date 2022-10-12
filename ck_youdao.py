@@ -74,7 +74,7 @@ class YouDao:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("YOUDAO", [])
-    res = YouDao(check_items=_check_items).main()
-    send("有道云笔记", res)
+    _data = get_data()
+    _check_items = _data.get("YOUDAO", [])
+    result = YouDao(check_items=_check_items).main()
+    send("有道云笔记", result)

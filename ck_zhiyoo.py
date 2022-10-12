@@ -7,12 +7,9 @@ new Env('智友邦');
 import re
 
 import requests
-import urllib3
 
 from notify_mtr import send
 from utils import get_data
-
-urllib3.disable_warnings()
 
 
 class Zhiyoo:
@@ -62,8 +59,12 @@ class Zhiyoo:
                 {
                     "Origin": "http://bbs.zhiyoo.net",
                     "Content-Type": "application/x-www-form-urlencoded",
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.54",
-                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.54",
+                    "Accept": "text/html,application/xhtml+xml,application/xml;"
+                    "q=0.9,image/webp,image/apng,*/*;"
+                    "q=0.8,application/signed-exchange;v=b3;q=0.9",
                     "Referer": "http://bbs.zhiyoo.net/plugin.php?id=dsu_paulsign:sign",
                     "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
                 }
@@ -74,7 +75,7 @@ class Zhiyoo:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("ZHIYOO", [])
-    res = Zhiyoo(check_items=_check_items).main()
-    send("智友邦", res)
+    _data = get_data()
+    _check_items = _data.get("ZHIYOO", [])
+    result = Zhiyoo(check_items=_check_items).main()
+    send("智友邦", result)

@@ -86,17 +86,15 @@ class Heytap:
         )
         response.encoding = "utf-8"
         try:
-            result = response.json()
-            if result["code"] == 200:
-                self.log += f'======== {result["data"]["userName"]} ========\n'
+            res = response.json()
+            if res["code"] == 200:
+                self.log += f'======== {res["data"]["userName"]} ========\n'
                 self.log += (
-                    "【登录成功】："
-                    + result["data"]["userName"]
-                    + f"\n【抽奖开关】：{self.if_draw}\n"
+                    "【登录成功】：" + res["data"]["userName"] + f"\n【抽奖开关】：{self.if_draw}\n"
                 )
                 flag = True
             else:
-                self.log += "【登录失败】：" + result["errorMessage"] + "\n"
+                self.log += "【登录失败】：" + res["errorMessage"] + "\n"
         except Exception as e:
             self.log += f"【登录】：错误，原因为: {str(e)}" + "\n"
 
@@ -299,7 +297,6 @@ class Heytap:
     def cashingCredits(self, info_marking, info_type, info_credits):
         data = f"marking={str(info_marking)}&type={str(info_type)}&amount={str(info_credits)}"
 
-
         headers = {
             "Host": self.host1,
             "clientPackage": self.client_package,
@@ -453,7 +450,9 @@ class Heytap:
                                 break
                             goods_name = res["data"]["goods_name"]
                             if goods_name:
-                                self.log += f"  第{str(x + 1)}次抽奖：{str(goods_name)}" + "\n"
+                                self.log += (
+                                    f"  第{str(x + 1)}次抽奖：{str(goods_name)}" + "\n"
+                                )
                             elif "提交成功" in msg:
                                 self.log += f"  第{str(x + 1)}" + "次抽奖：未中奖\n"
                             x += 1
@@ -564,7 +563,7 @@ class Heytap:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("HEYTAP", [])
-    res = Heytap(check_items=_check_items).main()
-    send("欢太商城", res)
+    _data = get_data()
+    _check_items = _data.get("HEYTAP", [])
+    result = Heytap(check_items=_check_items).main()
+    send("欢太商城", result)

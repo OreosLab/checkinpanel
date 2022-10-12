@@ -382,7 +382,7 @@ class DuoKan:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("DUOKAN", [])
-    res = DuoKan(check_items=_check_items).main()
-    send("多看阅读", res)
+    _data = get_data()
+    _check_items = _data.get("DUOKAN", [])
+    result = DuoKan(check_items=_check_items).main()
+    send("多看阅读", result)

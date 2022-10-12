@@ -4,8 +4,6 @@ cron: 7 11 * * *
 new Env('掘金');
 """
 
-import json
-
 import requests
 
 from notify_mtr import send
@@ -17,24 +15,21 @@ class Juejin:
         self.check_items = check_items
         self.base_url = "https://api.juejin.cn/"
         self.headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36"
         }
 
     def sign(self, cookie):
         sign_url = f"{self.base_url}growth_api/v1/check_in"
-        res = requests.post(
+        return requests.post(
             url=sign_url, headers=self.headers, cookies={"Cookie": cookie}
-        ).content
-        res = json.loads(res)
-        return res
+        ).json()
 
     def lottery(self, cookie):
         lottery_url = f"{self.base_url}growth_api/v1/lottery/draw"
-        res = requests.post(
+        return requests.post(
             url=lottery_url, headers=self.headers, cookies={"Cookie": cookie}
-        ).content
-        res = json.loads(res)
-        return res
+        ).json()
 
     def main(self):
         msg_all = ""
@@ -53,7 +48,7 @@ class Juejin:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("JUEJIN", [])
-    res = Juejin(check_items=_check_items).main()
-    send("掘金", res)
+    _data = get_data()
+    _check_items = _data.get("JUEJIN", [])
+    result = Juejin(check_items=_check_items).main()
+    send("掘金", result)

@@ -54,6 +54,7 @@ class FreeNom:
         return r.status_code == 200
 
     def main(self) -> str:
+        msg = ""
         msg_all = ""
         i = 0
 
@@ -88,7 +89,7 @@ class FreeNom:
             domains = re.findall(domain_info_ptn, r.text)
 
             # renew domains
-            result = ""
+            res = ""
             for domain, days, renewal_id in domains:
                 days = int(days)
                 if days < 14:
@@ -107,19 +108,19 @@ class FreeNom:
                             "paymentmethod": "credit",
                         },
                     )
-                    result += (
+                    res += (
                         f"{domain} 续期成功\n"
                         if r.text.find("Order Confirmation") != -1
                         else f"{domain} 续期失败"
                     )
-                result += f"{domain} 还有 {days} 天续期\n"
-                msg = f"账号{i}\n{result}"
+                res += f"{domain} 还有 {days} 天续期\n"
+                msg = f"账号{i}\n{res}"
             msg_all += msg + "\n"
         return msg_all
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("FREENOM", [])
-    res = FreeNom(check_items=_check_items).main()
-    send("FreeNom", res)
+    _data = get_data()
+    _check_items = _data.get("FREENOM", [])
+    result = FreeNom(check_items=_check_items).main()
+    send("FreeNom", result)

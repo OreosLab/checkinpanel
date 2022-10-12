@@ -20,7 +20,11 @@ class GLaDOS(object):
     def __init__(self, check_items):
         self.check_items = check_items
         self.original_url = "https://glados.rocks"
-        self.UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"
+        self.UA = (
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/91.0.4472.114 Safari/537.36"
+        )
 
     def api_traffic(self, cookies):
         traffic_url = f"{self.original_url}/api/user/traffic"
@@ -72,7 +76,8 @@ class GLaDOS(object):
         ) as r:
             return r.json()
 
-    def get_budget(self, vip_level: Optional[int]) -> dict:
+    @staticmethod
+    def get_budget(vip_level: Optional[int]) -> dict:
         budget_info = utils_tmp.budget_list
         user_budgets = [
             i
@@ -98,6 +103,8 @@ class GLaDOS(object):
                         "Msg: Your cookies are expired!\n"
                         "--------------------"
                     )
+                    msg_all += msg
+                    continue
                 status_response = self.api_status(cookie)
                 # print(status_response)
                 left_days = int(str(status_response["data"]["leftDays"]).split(".")[0])
@@ -140,7 +147,7 @@ class GLaDOS(object):
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("GLADOS", [])
-    res = GLaDOS(check_items=_check_items).main()
-    send("GLaDOS", res)
+    _data = get_data()
+    _check_items = _data.get("GLADOS", [])
+    result = GLaDOS(check_items=_check_items).main()
+    send("GLaDOS", result)

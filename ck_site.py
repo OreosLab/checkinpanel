@@ -10,12 +10,9 @@ import re
 from json.decoder import JSONDecodeError
 
 import requests
-import urllib3
 
 from notify_mtr import send
 from utils import get_data
-
-urllib3.disable_warnings()
 
 desp = ""
 
@@ -29,11 +26,13 @@ class Site:
     def __init__(self, check_items):
         self.check_items = check_items
         self.error_tip = "cookie 已过期或网站类型不对"
+        self.url = ""
 
     @staticmethod
     def generate_headers(url):
         return {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36",
             "Accept-Language": "zh-CN,zh;q=0.9",
             "Referer": url,
         }
@@ -139,7 +138,7 @@ class Site:
             attendance_url = f"{url}/attendance.php"
             with session.get(attendance_url) as response:
                 r = re.compile(r"请勿重复刷新")
-                r1 = re.compile(r"签到已得[\s]*\d+")
+                r1 = re.compile(r"签到已得\s*\d+")
                 if r.search(response.text):
                     tip = "重复签到"
                 elif location := r1.search(response.text).span():
@@ -213,7 +212,7 @@ class Site:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("SITE", [])
-    res = Site(check_items=_check_items).main()
-    send("Site", res)
+    _data = get_data()
+    _check_items = _data.get("SITE", [])
+    result = Site(check_items=_check_items).main()
+    send("Site", result)

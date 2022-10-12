@@ -59,7 +59,7 @@ class BaiduUrlSubmit:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("BAIDU", [])
+    _data = get_data()
+    _check_items = _data.get("BAIDU", [])
     res = BaiduUrlSubmit(check_items=_check_items).main()
     send("百度搜索资源平台", res)

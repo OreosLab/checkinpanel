@@ -17,12 +17,15 @@ class Enshan:
     def __init__(self, check_items):
         self.check_items = check_items
 
-    def sign(self, cookie):
+    @staticmethod
+    def sign(cookie):
         url = (
             "https://www.right.com.cn/FORUM/home.php?mod=spacecp&ac=credit&showcredit=1"
         )
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/92.0.4515.131 Safari/537.36",
             "Cookie": cookie,
         }
         session = requests.session()
@@ -30,24 +33,23 @@ class Enshan:
         try:
             coin = re.findall("恩山币: </em>(.*?)nb &nbsp;", response.text)[0]
             point = re.findall("<em>积分: </em>(.*?)<span", response.text)[0]
-            result = f"恩山币：{coin}\n积分：{point}"
+            res = f"恩山币：{coin}\n积分：{point}"
         except Exception as e:
-            result = str(e)
-        return result
+            res = str(e)
+        return res
 
     def main(self):
         msg_all = ""
         for i, check_item in enumerate(self.check_items, start=1):
             cookie = str(check_item.get("cookie"))
-            result = self.sign(cookie=cookie)
-            msg = f"账号{i}" + "\n------ 签到结果 ------\n" + result
+            msg = f"账号{i}\n------ 签到结果 ------\n{self.sign(cookie=cookie)}"
             time.sleep(1)
             msg_all += msg + "\n\n"
         return msg_all
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("ENSHAN", [])
-    res = Enshan(check_items=_check_items).main()
-    send("恩山论坛", res)
+    _data = get_data()
+    _check_items = _data.get("ENSHAN", [])
+    result = Enshan(check_items=_check_items).main()
+    send("恩山论坛", result)

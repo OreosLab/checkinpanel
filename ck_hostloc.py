@@ -30,7 +30,8 @@ class HOSTLOC:
         self.home_page = "https://hostloc.com/forum.php"
 
     # 随机生成用户空间链接
-    def randomly_gen_uspace_url(self) -> list:
+    @staticmethod
+    def randomly_gen_uspace_url() -> list:
         url_list = []
         # 访问小黑屋用户空间不会获得积分、生成的随机数可能会重复，这里多生成两个链接用作冗余
         for _ in range(12):
@@ -40,14 +41,16 @@ class HOSTLOC:
         return url_list
 
     # 使用Python实现防CC验证页面中JS写的的toNumbers函数
-    def toNumbers(self, secret: str) -> list:
+    @staticmethod
+    def toNumbers(secret: str) -> list:
         return [int(value, 16) for value in textwrap.wrap(secret, 2)]
 
     # 不带Cookies访问论坛首页，检查是否开启了防CC机制，将开启状态、AES计算所需的参数全部放在一个字典中返回
     def check_anti_cc(self) -> dict:
         result_dict = {}
         headers = {
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"
         }
         home_page = self.home_page
         r = requests.get(home_page, headers=headers)
@@ -83,21 +86,25 @@ class HOSTLOC:
                 b = bytes(self.toNumbers(anti_cc_status["b"]))
                 c = bytes(self.toNumbers(anti_cc_status["c"]))
                 cbc_mode = AESModeOfOperationCBC(a, b)
-                result = cbc_mode.decrypt(c)
+                res = cbc_mode.decrypt(c)
 
                 name = anti_cc_status["cookie_name"]
-                cookies[name] = result.hex()
+                cookies[name] = res.hex()
 
         return cookies
 
-    # 登录帐户
+    # 登录账户
     def login(self, username: str, password: str) -> req_Session:
         headers = {
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36",
             "origin": "https://hostloc.com",
             "referer": self.home_page,
         }
-        login_url = "https://hostloc.com/member.php?mod=logging&action=login&loginsubmit=yes&infloat=yes&lssubmit=yes&inajax=1"
+        login_url = (
+            "https://hostloc.com/member.php?mod=logging&action=login&"
+            "loginsubmit=yes&infloat=yes&lssubmit=yes&inajax=1"
+        )
         login_data = {
             "fastloginfield": "username",
             "username": username,
@@ -114,12 +121,13 @@ class HOSTLOC:
         return s
 
     # 通过抓取用户设置页面的标题检查是否登录成功
-    def check_login_status(self, s: req_Session, number_c: int) -> bool:
+    @staticmethod
+    def check_login_status(s: req_Session, number_c: int) -> bool:
         test_url = "https://hostloc.com/home.php?mod=spacecp"
         r = s.get(test_url)
         r.raise_for_status()
         r.encoding = "utf-8"
-        test_title = re.findall(r"<title>(.*?)<\/title>", r.text)
+        test_title = re.findall(r"<title>(.*?)</title>", r.text)
 
         if len(test_title) != 0:  # 确保正则匹配到了内容，防止出现数组索引越界的情况
             if test_title[0] != "个人资料 -  全球主机交流论坛 -  Powered by Discuz!":
@@ -132,7 +140,7 @@ class HOSTLOC:
             log("无法在用户设置页面找到标题，该页面存在错误或被防 CC 机制拦截！")
             return False
 
-    # 抓取并打印输出帐户当前积分
+    # 抓取并打印输出账户当前积分
     def log_current_points(self, s: req_Session):
         test_url = self.home_page
         r = s.get(test_url)
@@ -149,7 +157,7 @@ class HOSTLOC:
     # 依次访问随机生成的用户空间链接获取积分
     def get_points(self, s: req_Session, number_c: int):
         if self.check_login_status(s, number_c):
-            self.log_current_points(s)  # 打印帐户当前积分
+            self.log_current_points(s)  # 打印账户当前积分
             url_list = self.randomly_gen_uspace_url()
             # 依次访问用户空间链接获取积分，出现错误时不中断程序继续尝试访问下一个链接
             for i in range(len(url_list)):
@@ -161,12 +169,13 @@ class HOSTLOC:
                     time.sleep(5)  # 每访问一个链接后休眠5秒，以避免触发论坛的防CC机制
                 except Exception as e:
                     log(f"链接访问异常：{str(e)}")
-            self.log_current_points(s)  # 再次打印帐户当前积分
+            self.log_current_points(s)  # 再次打印账户当前积分
         else:
             log("请检查你的帐户是否正确！")
 
     # 打印输出当前ip地址
-    def log_my_ip(self):
+    @staticmethod
+    def log_my_ip():
         api_url = "https://api.ipify.org/"
         try:
             r = requests.get(url=api_url)
@@ -197,7 +206,7 @@ class HOSTLOC:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("HOSTLOC", [])
-    res = HOSTLOC(check_items=_check_items).main()
-    send("HOSTLOC", res)
+    _data = get_data()
+    _check_items = _data.get("HOSTLOC", [])
+    result = HOSTLOC(check_items=_check_items).main()
+    send("HOSTLOC", result)

@@ -187,7 +187,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.sample.toml /ql/config/notify.to
 
 ### 5. 配置通知
 
-参见上文中的[配置通知](#https://github.com/Oreomeow/checkinpanel/blob/master/README.md#4配置通知)
+参见上文中的[配置通知](https://github.com/OreosLab/checkinpanel/blob/master/README.md#4-%E9%85%8D%E7%BD%AE%E9%80%9A%E7%9F%A5)
 
 特别的：
 

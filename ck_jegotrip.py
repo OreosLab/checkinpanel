@@ -15,15 +15,16 @@ class JegoTrip:
     def __init__(self, check_items):
         self.check_items = check_items
 
-    def task(self, user_id):
-        response = requests.get(
+    @staticmethod
+    def task(user_id):
+        res = requests.get(
             f"http://task.jegotrip.com.cn:8080/app/tasks?userid={user_id}"
-        )
-        data = response.json()
-        return data["rtn"]["tasks"]
+        ).json()
+        return res["rtn"]["tasks"]
 
-    def sign(self, user_id, task_id) -> bool:
-        response = requests.post(
+    @staticmethod
+    def sign(user_id, task_id) -> bool:
+        res = requests.post(
             "http://task.jegotrip.com.cn:8080/app/sign",
             json={"userid": user_id, "taskId": task_id},  # 此处`I`要大写
             headers={
@@ -39,10 +40,8 @@ class JegoTrip:
                 "Accept-Language": "en-us",
                 "Referer": "http://task.jegotrip.com.cn:8080/task/index.html",
             },
-        )
-
-        data = response.json()
-        return data["result"]
+        ).json()
+        return res["result"]
 
     def verify_result(self, user_id):
         tasks = self.task(user_id)
@@ -51,6 +50,7 @@ class JegoTrip:
                 return task.get("triggerAction") == "已签到"
 
     def main(self):
+        msg = ""
         msg_all = ""
         for check_item in self.check_items:
             user_id = check_item.get("user_id")
@@ -58,8 +58,8 @@ class JegoTrip:
             for task in task_list.get("日常任务", []):
                 if task.get("name") == "每日签到奖励":
                     if task.get("triggerAction") == "签到":
-                        result = self.sign(user_id=user_id, task_id=task["id"])
-                        if result:
+                        res = self.sign(user_id=user_id, task_id=task["id"])
+                        if res:
                             msg = (
                                 "签到成功"
                                 if self.verify_result(user_id=user_id)
@@ -72,7 +72,7 @@ class JegoTrip:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("JEGOTRIP", [])
-    res = JegoTrip(check_items=_check_items).main()
-    send("无忧行", res)
+    _data = get_data()
+    _check_items = _data.get("JEGOTRIP", [])
+    result = JegoTrip(check_items=_check_items).main()
+    send("无忧行", result)

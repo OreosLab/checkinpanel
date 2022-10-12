@@ -27,8 +27,8 @@ class Motto:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    motto = data.get("MOTTO")
+    _data = get_data()
+    motto = _data.get("MOTTO")
     if motto:
         result = Motto().main()
         send("每日一句", result)

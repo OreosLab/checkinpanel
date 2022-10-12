@@ -77,8 +77,8 @@ class Hax:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    hax = data.get("HAX")
+    _data = get_data()
+    hax = _data.get("HAX")
     if hax:
         result = Hax().main()
         send("Hax", result)

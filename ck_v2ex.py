@@ -7,12 +7,9 @@ new Env('V2EX');
 import re
 
 import requests
-import urllib3
 
 from notify_mtr import send
 from utils import get_data
-
-urllib3.disable_warnings()
 
 
 class V2ex:
@@ -81,9 +78,12 @@ class V2ex:
             requests.utils.add_dict_to_cookiejar(session.cookies, cookie)
             session.headers.update(
                 {
-                    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36",
+                    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36",
                     "referer": self.url,
-                    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                    "accept": "text/html,application/xhtml+xml,application/xml;"
+                    "q=0.9,image/webp,image/apng,*/*;"
+                    "q=0.8,application/signed-exchange;v=b3;q=0.9",
                     "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",
                 }
             )
@@ -93,7 +93,7 @@ class V2ex:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("V2EX", [])
-    res = V2ex(check_items=_check_items).main()
-    send("V2EX", res)
+    _data = get_data()
+    _check_items = _data.get("V2EX", [])
+    result = V2ex(check_items=_check_items).main()
+    send("V2EX", result)

@@ -86,7 +86,13 @@ class Tieba:
                     error_count += 1
             except Exception as e:
                 print(f"贴吧 {tb_name} 签到异常，原因{str(e)}")
-        return f"贴吧总数: {len(tb_name_list)}\n签到成功: {success_count}\n已经签到: {exist_count}\n被屏蔽的: {shield_count}\n签到失败: {error_count}"
+        return (
+            f"贴吧总数: {len(tb_name_list)}\n"
+            f"签到成功: {success_count}\n"
+            f"已经签到: {exist_count}\n"
+            f"被屏蔽的: {shield_count}\n"
+            f"签到失败: {error_count}"
+        )
 
     def main(self):
         msg_all = ""
@@ -110,7 +116,7 @@ class Tieba:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("TIEBA", [])
-    res = Tieba(check_items=_check_items).main()
-    send("百度贴吧", res)
+    _data = get_data()
+    _check_items = _data.get("TIEBA", [])
+    result = Tieba(check_items=_check_items).main()
+    send("百度贴吧", result)

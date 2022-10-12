@@ -53,9 +53,8 @@ class ClientApi(ABC):
         if "rssbot" in command or "hax" in command:
             return f"{ClientApi.get_ran_min()} " + " ".join(origin_time.split(" ")[1:])
         is_api = "api" in command
-        return (
-            f"{ClientApi.get_ran_min()} {self.get_ran_hour(is_api)} "
-            + " ".join(origin_time.split(" ")[2:])
+        return f"{ClientApi.get_ran_min()} {self.get_ran_hour(is_api)} " + " ".join(
+            origin_time.split(" ")[2:]
         )
 
 
@@ -84,8 +83,7 @@ class QLClient(ClientApi):
         self.cron: List[Dict] = list(
             filter(
                 lambda x: not x.get("isDisabled", 1)
-                and x.get("command", "").find("Oreomeow_checkinpanel_master")
-                != -1,
+                and x.get("command", "").find("Oreomeow_checkinpanel_master") != -1,
                 requests.get(
                     url=f"{self.url}open/crons",
                     headers={"Authorization": f"Bearer {self.token}"},

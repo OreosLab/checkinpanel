@@ -17,11 +17,12 @@ class Pojie:
 
     @staticmethod
     def sign(cookie):
-        result = ""
+        res = ""
         headers = {
             "Cookie": cookie,
             "ContentType": "text/html;charset=gbk",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36",
         }
         requests.session().put(
             "https://www.52pojie.cn/home.php?mod=task&do=apply&id=2", headers=headers
@@ -32,14 +33,14 @@ class Pojie:
         fb = BeautifulSoup(fa.text, "html.parser")
         fc = fb.find("div", id="messagetext").find("p").text
         if "您需要先登录才能继续本操作" in fc:
-            result += "Cookie 失效"
+            res += "Cookie 失效"
         elif "恭喜" in fc:
-            result += "签到成功"
+            res += "签到成功"
         elif "不是进行中的任务" in fc:
-            result += "不是进行中的任务"
+            res += "不是进行中的任务"
         else:
-            result += "签到失败"
-        return result
+            res += "签到失败"
+        return res
 
     def main(self):
         msg_all = ""
@@ -52,7 +53,7 @@ class Pojie:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("POJIE", [])
-    res = Pojie(check_items=_check_items).main()
-    send("吾爱破解", res)
+    _data = get_data()
+    _check_items = _data.get("POJIE", [])
+    result = Pojie(check_items=_check_items).main()
+    send("吾爱破解", result)

@@ -13,15 +13,15 @@ import requests
 from notify_mtr import send
 from utils import get_data
 
-requests.packages.urllib3.disable_warnings()
-
 
 class NGA:
     def __init__(self, check_items):
         self.check_items = check_items
         self.url = "https://ngabbs.com/nuke.php"
         self.headers = {
-            "User-Agent": "Mozilla/5.0 (Linux; Android 10; NOH-AN00 Build/HUAWEINOH-AN00; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/83.0.4103.106 Mobile Safari/537.36 Nga_Official/90021",
+            "User-Agent": "Mozilla/5.0 (Linux; Android 10; NOH-AN00 Build/HUAWEINOH-AN00; wv) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 "
+            "Chrome/83.0.4103.106 Mobile Safari/537.36 Nga_Official/90021",
             "X-Requested-With": "gov.pianzong.androidnga",
             "X-USER-AGENT": "Nga_Official/90021(HUAWEI NOH-AN00;Android 10)",
         }
@@ -191,10 +191,9 @@ class NGA:
             "__output": "14",
         }
         res = requests.post(self.url, headers=self.headers, data=data).content
-        res = json.loads(res)
-        result = res["result"][0]
-        continued = result["continued"]
-        total = result["sum"]
+        res = json.loads(res)["result"][0]
+        continued = res["continued"]
+        total = res["sum"]
         return continued, total
 
     def get_user(self, token, uid):
@@ -229,6 +228,8 @@ class NGA:
                     signin_stat = (
                         f"用户：{username}\n统计信息：今日已签，连续签到{continued}天，累计签到{total}天"
                     )
+                else:
+                    signin_stat = f'用户：{username}\n统计信息：{signin_res["msg"]}'
                 time.sleep(1)
                 silver_coin_get_stat = self.silver_coin_get(token=token, uid=uid)
                 n_coin_get_stat = self.n_coin_get(token=token, uid=uid)
@@ -248,7 +249,7 @@ class NGA:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("NGA", [])
-    res = NGA(check_items=_check_items).main()
-    send("NGA", res)
+    _data = get_data()
+    _check_items = _data.get("NGA", [])
+    result = NGA(check_items=_check_items).main()
+    send("NGA", result)

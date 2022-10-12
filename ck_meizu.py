@@ -23,7 +23,9 @@ class Meizu:
             "pragma": "no-cache",
             "cache-control": "no-cache",
             "accept": "application/json, text/javascript, */*; q=0.01",
-            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36 Edg/88.0.705.74",
+            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_2) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/88.0.4324.182 Safari/537.36 Edg/88.0.705.74",
             "origin": "https://bbs.meizu.cn",
             "referer": "https://bbs.meizu.cn/",
             "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",
@@ -41,7 +43,9 @@ class Meizu:
             "authority": "bbs-act.meizu.cn",
             "accept": "application/json, text/javascript, */*; q=0.01",
             "x-requested-with": "XMLHttpRequest",
-            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36 Edg/88.0.705.74",
+            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_2) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/88.0.4324.182 Safari/537.36 Edg/88.0.705.74",
             "content-type": "application/x-www-form-urlencoded",
             "origin": "https://bbs-act.meizu.cn",
             "referer": "https://bbs-act.meizu.cn/2/index.html",
@@ -54,17 +58,17 @@ class Meizu:
             success_count = 0
             for i in range(count):
                 try:
-                    data = requests.post(
+                    res = requests.post(
                         url=self.url,
                         headers=headers,
                         data=data,
                     ).json()
-                    if data["code"] == 200:
-                        one_msg = data.get("data", {}).get("award_name")
+                    if res["code"] == 200:
+                        one_msg = res.get("data", {}).get("award_name")
                         award_list.append(one_msg)
                         success_count += 1
                     else:
-                        print(data.get("code"), data.get("message"))
+                        print(res.get("code"), res.get("message"))
                         one_msg = "抽奖失败"
                 except Exception as e:
                     one_msg = f"抽奖失败: {e}"
@@ -97,7 +101,7 @@ class Meizu:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("MEIZU", [])
-    res = Meizu(check_items=_check_items).main()
-    send("MEIZU 社区", res)
+    _data = get_data()
+    _check_items = _data.get("MEIZU", [])
+    result = Meizu(check_items=_check_items).main()
+    send("MEIZU 社区", result)

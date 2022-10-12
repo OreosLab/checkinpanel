@@ -10,21 +10,19 @@ import json
 import random
 
 import requests
-import urllib3
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
 from notify_mtr import send
 from utils import get_data
 
-urllib3.disable_warnings()
-
 
 class Music163:
     def __init__(self, check_items):
         self.check_items = check_items
         self.headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36",
             "Referer": "http://music.163.com/",
             "Accept-Encoding": "gzip, deflate",
         }
@@ -57,7 +55,8 @@ class Music163:
     def login(self, session, phone, password):
         login_url = "https://music.163.com/weapi/login/cellphone"
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36",
             "Referer": "http://music.163.com/",
             "Accept-Encoding": "gzip, deflate",
             "Cookie": "os=pc; osver=Microsoft-Windows-10-Professional-build-10586-64bit; appver=2.0.3.131777; channel=netease; __remember_me=true;",
@@ -82,9 +81,7 @@ class Music163:
             return False, res.get("message"), 0, 0, 0, 0, 0
         csrf = requests.utils.dict_from_cookiejar(res.cookies)["__csrf"]
         nickname = res["profile"]["nickname"]
-        level_data = self.get_level(
-            session=session, csrf=csrf, login_data=login_data
-        )
+        level_data = self.get_level(session=session, csrf=csrf, login_data=login_data)
         level = level_data["level"]
         now_play_count = level_data["nowPlayCount"]
         next_play_count = level_data["nextPlayCount"]
@@ -206,7 +203,7 @@ class Music163:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("MUSIC163", [])
-    res = Music163(check_items=_check_items).main()
-    send("网易云音乐", res)
+    _data = get_data()
+    _check_items = _data.get("MUSIC163", [])
+    result = Music163(check_items=_check_items).main()
+    send("网易云音乐", result)

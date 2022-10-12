@@ -73,8 +73,8 @@ class LeetCode:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    leetcode = data.get("LEETCODE")
+    _data = get_data()
+    leetcode = _data.get("LEETCODE")
     if leetcode:
         result = LeetCode().main()
         send("LeetCode 每日一题", result)

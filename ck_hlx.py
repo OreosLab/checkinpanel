@@ -18,7 +18,8 @@ class HLX:
     def __init__(self, check_items):
         self.check_items = check_items
 
-    def md5(self, password):
+    @staticmethod
+    def md5(password):
         m = hashlib.md5()
         b = password.encode(encoding="utf-8")
         m.update(b)
@@ -44,7 +45,8 @@ class HLX:
         msg = f"[+]用户：{nick} userID：{str(userID)}"
         return key, nick, userID, msg
 
-    def get_level(self, userID, key):
+    @staticmethod
+    def get_level(userID, key):
         url = f"http://floor.huluxia.com/view/level?viewUserID={userID}&_key={key}"
         response = requests.post(url=url)
         soup = BeautifulSoup(response.text, "html.parser")  # 解析html页面
@@ -59,7 +61,8 @@ class HLX:
             + " 经验"
         )
 
-    def sign(self, key):
+    @staticmethod
+    def sign(key):
         # 获取所有板块 url
         url = "https://floor.huluxia.com/category/forum/list/IOS/1.0"
         # 获取所有板块下的内容 url
@@ -116,10 +119,10 @@ class HLX:
 
 
 def start():
-    data = get_data()
-    _check_items = data.get("HLX", [])
-    res = HLX(check_items=_check_items).main()
-    send("葫芦侠", res)
+    _data = get_data()
+    _check_items = _data.get("HLX", [])
+    result = HLX(check_items=_check_items).main()
+    send("葫芦侠", result)
 
 
 if __name__ == "__main__":

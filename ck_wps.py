@@ -24,7 +24,9 @@ class WPS:
         url0 = "https://vip.wps.cn/sign/mobile/v3/get_data"
         headers = {
             "Cookie": cookie,
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
         }
         response = requests.get(url=url0, headers=headers)
         if "会员登录" in response.text:
@@ -37,7 +39,9 @@ class WPS:
     def sign(self, cookie):
         headers = {
             "Cookie": cookie,
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
         }
         if self.is_sign:
             msg = "今日已签到"
@@ -57,7 +61,10 @@ class WPS:
                 sus = json.loads(response.text)["result"]
                 msg = f"免验证签到 --> {sus}\n"
                 if sus == "error":
-                    yz_url = "https://vip.wps.cn/checkcode/signin/captcha.png?platform=8&encode=0&img_witdh=275.164&img_height=69.184"
+                    yz_url = (
+                        "https://vip.wps.cn/checkcode/signin/captcha.png?"
+                        "platform=8&encode=0&img_witdh=275.164&img_height=69.184"
+                    )
                     for n in range(10):
                         requests.get(url=yz_url, headers=headers)
                         response = requests.post(url=url, headers=headers, data=data)
@@ -67,7 +74,7 @@ class WPS:
                         if sus == "ok":
                             break
                 msg += f"最终签到结果 --> {sus}\n"
-                        # {"result":"ok","data":{"exp":0,"wealth":0,"weath_double":0,"count":5,"double":0,"gift_type":"space_5","gift_id":133,"url":""},"msg":""}
+                # {"result":"ok","data":{"exp":0,"wealth":0,"weath_double":0,"count":5,"double":0,"gift_type":"space_5","gift_id":133,"url":""},"msg":""}
         return msg
 
     def main(self):
@@ -81,7 +88,7 @@ class WPS:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("WPS", [])
-    res = WPS(check_items=_check_items).main()
-    send("WPS", res)
+    _data = get_data()
+    _check_items = _data.get("WPS", [])
+    result = WPS(check_items=_check_items).main()
+    send("WPS", result)

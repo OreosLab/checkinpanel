@@ -18,7 +18,9 @@ class Game163:
     def checkin(authorization):
         url = "http://n.cg.163.com/api/v2/sign-today"
         headers = {
-            "user-agent": "Mozilla/5.0 (Linux; Android 10; Redmi K30 Build/QKQ1.190825.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/85.0.4183.127 Mobile Safari/537.36",
+            "user-agent": "Mozilla/5.0 (Linux; Android 10; Redmi K30 Build/QKQ1.190825.002; wv) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 "
+            "Chrome/85.0.4183.127 Mobile Safari/537.36",
             "authorization": authorization,
         }
         res = requests.post(url, headers=headers).text
@@ -34,7 +36,7 @@ class Game163:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("GAME163", [])
-    res = Game163(check_items=_check_items).main()
-    send("网易云游戏", res)
+    _data = get_data()
+    _check_items = _data.get("GAME163", [])
+    result = Game163(check_items=_check_items).main()
+    send("网易云游戏", result)

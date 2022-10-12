@@ -24,7 +24,9 @@ class Haidilao:
             "appId": "15",
             "content-type": "application/json",
             "Accept-Encoding": "gzip,compress,br,deflate",
-            "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile MicroMessenger NetType/4G Language/en miniProgram",
+            "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_5 like Mac OS X) "
+            "AppleWebKit/605.1.15 (KHTML, like Gecko) "
+            "Mobile MicroMessenger NetType/4G Language/en miniProgram",
             "Referer": "https://servicewechat.com/wx1ddeb67115f30d1a/14/page-frame.html",
         }
         login_data = {
@@ -43,7 +45,7 @@ class Haidilao:
 
         try:
             login = json.loads(login)
-            if login["success"] != True:
+            if not login["success"]:
                 return "登陆失败"
         except json.decoder.JSONDecodeError:
             return "请求失败"
@@ -63,7 +65,7 @@ class Haidilao:
 
         try:
             signin = json.loads(signin)
-            if signin["success"] != True:
+            if not signin["success"]:
                 return "今日签到过了"
         except json.decoder.JSONDecodeError:
             return "请求失败"
@@ -73,7 +75,7 @@ class Haidilao:
 
         try:
             fragment = json.loads(fragment)
-            if signin["success"] == True:
+            if signin["success"]:
                 return (
                     "账号："
                     + login["data"]["name"]
@@ -94,7 +96,7 @@ class Haidilao:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("HAIDILAO", [])
-    res = Haidilao(check_items=_check_items).main()
-    send("海底捞会员签到", res)
+    _data = get_data()
+    _check_items = _data.get("HAIDILAO", [])
+    result = Haidilao(check_items=_check_items).main()
+    send("海底捞会员签到", result)

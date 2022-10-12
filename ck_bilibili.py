@@ -19,13 +19,13 @@ class BiliBili:
     @staticmethod
     def get_nav(session: requests.Session) -> tuple:
         url = "https://api.bilibili.com/x/web-interface/nav"
-        _data = session.get(url=url).json().get("data", {})
-        uname = _data.get("uname")
-        uid = _data.get("mid")
-        is_login = _data.get("isLogin")
-        coin = _data.get("money")
-        vip_type = _data.get("vipType")
-        current_exp = _data.get("level_info", {}).get("current_exp")
+        data = session.get(url=url).json().get("data", {})
+        uname = data.get("uname")
+        uid = data.get("mid")
+        is_login = data.get("isLogin")
+        coin = data.get("money")
+        vip_type = data.get("vipType")
+        current_exp = data.get("level_info", {}).get("current_exp")
         return uname, uid, is_login, coin, vip_type, current_exp
 
     @staticmethod
@@ -229,10 +229,10 @@ class BiliBili:
         """B站直播获取金银瓜子状态"""
         url = "https://api.live.bilibili.com/pay/v1/Exchange/getStatus"
         res = session.get(url=url).json()
-        _data = res.get("data")
-        silver = _data.get("silver", 0)
-        gold = _data.get("gold", 0)
-        coin = _data.get("coin", 0)
+        data = res.get("data")
+        silver = data.get("silver", 0)
+        gold = data.get("gold", 0)
+        coin = data.get("coin", 0)
         return f"银瓜子数量: {silver}\n金瓜子数量: {gold}\n硬币数量: {coin}"
 
     @staticmethod
@@ -384,7 +384,7 @@ class BiliBili:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("BILIBILI", [])
+    _data = get_data()
+    _check_items = _data.get("BILIBILI", [])
     result = BiliBili(check_items=_check_items).main()
     send("Bilibili", result)

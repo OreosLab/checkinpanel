@@ -39,7 +39,7 @@ class AcFun:
 
     def danmu(self, session):
         url = "https://www.acfun.cn/rest/pc-direct/new-danmaku/add"
-        _data = {
+        data = {
             "mode": "1",
             "color": "16777215",
             "size": "25",
@@ -57,10 +57,10 @@ class AcFun:
             r'{subChannelId:(\d+),subChannelName:"([\u4e00-\u9fa5]+)"}', response.text
         )
         if videoId:
-            _data["videoId"] = videoId[0]
-            _data["subChannelId"] = subChannel[0][0]
-            _data["subChannelName"] = subChannel[0][1]
-        res = session.post(url=url, data=_data).json()
+            data["videoId"] = videoId[0]
+            data["subChannelId"] = subChannel[0][0]
+            data["subChannelName"] = subChannel[0][1]
+        res = session.post(url=url, data=data).json()
         return "弹幕成功" if res.get("result") == 0 else "弹幕失败"
 
     def get_token(self, session):
@@ -83,8 +83,8 @@ class AcFun:
 
     def throwbanana(self, session):
         url = "https://www.acfun.cn/rest/pc-direct/banana/throwBanana"
-        _data = {"resourceId": self.contentid, "count": "1", "resourceType": "2"}
-        res = session.post(url=url, data=_data).json()
+        data = {"resourceId": self.contentid, "count": "1", "resourceType": "2"}
+        res = session.post(url=url, data=data).json()
         return "投🍌成功" if res.get("result") == 0 else "投🍌失败"
 
     @staticmethod
@@ -141,7 +141,7 @@ class AcFun:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("ACFUN", [])
+    _data = get_data()
+    _check_items = _data.get("ACFUN", [])
     result = AcFun(check_items=_check_items).main()
     send("AcFun", result)

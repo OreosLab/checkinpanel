@@ -14,7 +14,8 @@ class CSDN:
     def __init__(self, check_items):
         self.check_items = check_items
         self.headers = {
-            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_2) AppleWebKit/537.36 (KHTML, like Gecko)"
+            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_2) "
+            "AppleWebKit/537.36 (KHTML, like Gecko)"
             "Chrome/88.0.4324.182 Safari/537.36 Edg/88.0.705.74"
         }
 
@@ -34,7 +35,7 @@ class CSDN:
         if res.get("code") == 200:
             return (
                 f", {res.get('data').get('prize_title')}"
-                if res.get("data").get("prize_title") != None
+                if res.get("data").get("prize_title") is not None
                 else f"{res.get('data').get('msg')}"
             )
 
@@ -61,7 +62,7 @@ class CSDN:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("CSDN", [])
-    res = CSDN(check_items=_check_items).main()
-    send("CSDN", res)
+    _data = get_data()
+    _check_items = _data.get("CSDN", [])
+    result = CSDN(check_items=_check_items).main()
+    send("CSDN", result)

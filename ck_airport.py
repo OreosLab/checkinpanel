@@ -128,7 +128,7 @@ class SspanelQd(object):
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("AIRPORT", [])
+    _data = get_data()
+    _check_items = _data.get("AIRPORT", [])
     res = SspanelQd(check_items=_check_items).main()
     send("机场签到", res)

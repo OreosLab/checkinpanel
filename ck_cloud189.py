@@ -61,7 +61,10 @@ class Cloud189:
         )
 
     def login(self, session, username, password):
-        url = "https://cloud.189.cn/api/portal/loginUrl.action?redirectURL=https://cloud.189.cn/web/redirect.html"
+        url = (
+            "https://cloud.189.cn/api/portal/loginUrl.action?"
+            "redirectURL=https://cloud.189.cn/web/redirect.html"
+        )
         r = session.get(url=url)
         captchatoken = re.findall(r"captchaToken' value='(.+?)'", r.text)[0]
         lt = re.findall(r'lt = "(.+?)"', r.text)[0]
@@ -74,7 +77,8 @@ class Cloud189:
         password = self.rsa_encode(j_rsakey, password)
         url = "https://open.e.189.cn/api/logbox/oauth2/loginSubmit.do"
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:74.0) Gecko/20100101 Firefox/76.0",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:74.0) "
+            "Gecko/20100101 Firefox/76.0",
             "Referer": "https://open.e.189.cn/",
         }
         data = {
@@ -98,12 +102,24 @@ class Cloud189:
     @staticmethod
     def sign(session):
         rand = str(round(time.time() * 1000))
-        surl = f"https://api.cloud.189.cn/mkt/userSign.action?rand={rand}&clientType=TELEANDROID&version=8.6.3&model=SM-G930K"
-        url = "https://m.cloud.189.cn/v2/drawPrizeMarketDetails.action?taskId=TASK_SIGNIN&activityId=ACT_SIGNIN"
-        url2 = "https://m.cloud.189.cn/v2/drawPrizeMarketDetails.action?taskId=TASK_SIGNIN_PHOTOS&activityId=ACT_SIGNIN"
+        surl = (
+            f"https://api.cloud.189.cn/mkt/userSign.action?"
+            f"rand={rand}&clientType=TELEANDROID&version=8.6.3&model=SM-G930K"
+        )
+        url = (
+            "https://m.cloud.189.cn/v2/drawPrizeMarketDetails.action?"
+            "taskId=TASK_SIGNIN&activityId=ACT_SIGNIN"
+        )
+        url2 = (
+            "https://m.cloud.189.cn/v2/drawPrizeMarketDetails.action?"
+            "taskId=TASK_SIGNIN_PHOTOS&activityId=ACT_SIGNIN"
+        )
         headers = {
-            "User-Agent": "Mozilla/5.0 (Linux; Android 5.1.1; SM-G930K Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 \
-                 Chrome/74.0.3729.136 Mobile Safari/537.36 Ecloud/8.6.3 Android/22 clientId/355325117317828 clientModel/SM-G930K imsi/460071114317824 clientChannelId/qq proVersion/1.0.6",
+            "User-Agent": "Mozilla/5.0 (Linux; Android 5.1.1; SM-G930K Build/NRD90M; wv) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 "
+            "Chrome/74.0.3729.136 Mobile Safari/537.36 Ecloud/8.6.3 Android/22 "
+            "clientId/355325117317828 clientModel/SM-G930K "
+            "imsi/460071114317824 clientChannelId/qq proVersion/1.0.6",
             "Referer": "https://m.cloud.189.cn/zhuanti/2016/sign/index.jsp?albumBackupOpened=1",
             "Host": "m.cloud.189.cn",
             "Accept-Encoding": "gzip, deflate",
@@ -120,7 +136,7 @@ class Cloud189:
         else:
             description = response.json().get("description", "")
             if description in ["1", 1]:
-                description = "50M空间"
+                description = "50M 空间"
             msg += f"\n第一次抽奖: 获得{description}"
         response = session.get(url=url2, headers=headers)
         if "errorCode" in response.text:
@@ -128,7 +144,7 @@ class Cloud189:
         else:
             description = response.json().get("description", "")
             if description in ["1", 1]:
-                description = "50M空间"
+                description = "50M 空间"
             msg += f"\n第二次抽奖: 获得{description}"
         return msg
 
@@ -146,7 +162,7 @@ class Cloud189:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("CLOUD189", [])
-    res = Cloud189(check_items=_check_items).main()
-    send("天翼云盘", res)
+    _data = get_data()
+    _check_items = _data.get("CLOUD189", [])
+    result = Cloud189(check_items=_check_items).main()
+    send("天翼云盘", result)

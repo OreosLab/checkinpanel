@@ -7,12 +7,9 @@ new Env('咔叽网单');
 import re
 
 import requests
-import urllib3
 
 from notify_mtr import send
 from utils import get_data
-
-urllib3.disable_warnings()
 
 
 class WWW2nzz:
@@ -63,8 +60,12 @@ class WWW2nzz:
             session.headers.update(
                 {
                     "Origin": "http://www.2nzz.com",
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36 Edg/88.0.705.74",
-                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/88.0.4324.182 Safari/537.36 Edg/88.0.705.74",
+                    "Accept": "text/html,application/xhtml+xml,application/xml;"
+                    "q=0.9,image/webp,image/apng,*/*;"
+                    "q=0.8,application/signed-exchange;v=b3;q=0.9",
                     "Referer": "http://www.2nzz.com/index.php",
                     "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
                 }
@@ -75,7 +76,7 @@ class WWW2nzz:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("WWW2NZZ", [])
-    res = WWW2nzz(check_items=_check_items).main()
-    send("咔叽网单", res)
+    _data = get_data()
+    _check_items = _data.get("WWW2NZZ", [])
+    result = WWW2nzz(check_items=_check_items).main()
+    send("咔叽网单", result)

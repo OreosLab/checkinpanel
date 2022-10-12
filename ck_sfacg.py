@@ -4,6 +4,7 @@ cron: 15 10 * * *
 new Env('SF 轻小说');
 """
 
+
 import json
 import time
 from datetime import datetime, timedelta, timezone
@@ -13,7 +14,7 @@ import requests
 from notify_mtr import send
 from utils import get_data
 
-utc_dt = datetime.utcnow().replace(tzinfo=timezone.utc)
+utc_dt = datetime.now(timezone.utc).replace(tzinfo=timezone.utc)
 bj_dt = utc_dt.astimezone(timezone(timedelta(hours=8)))
 timestamp = bj_dt.timestamp()
 readingDate = datetime.fromtimestamp(timestamp).strftime("%Y 年 %m 月 %d 日")
@@ -170,7 +171,7 @@ class SFACG:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("SFACG", [])
-    res = SFACG(check_items=_check_items).main()
-    send("SFACG", res)
+    _data = get_data()
+    _check_items = _data.get("SFACG", [])
+    result = SFACG(check_items=_check_items).main()
+    send("SFACG", result)

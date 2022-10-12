@@ -91,7 +91,7 @@ class Weather:
 
 
 if __name__ == "__main__":
-    data = get_data()
-    _check_items = data.get("CITY", [])
+    _data = get_data()
+    _check_items = _data.get("CITY", [])
     result = Weather(check_items=_check_items).main()
     send("天气预报", result)
