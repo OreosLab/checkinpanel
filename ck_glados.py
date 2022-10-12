@@ -16,7 +16,7 @@ from notify_mtr import send
 from utils import get_data
 
 
-class GLaDOS(object):
+class GLaDOS:
     def __init__(self, check_items):
         self.check_items = check_items
         self.original_url = "https://glados.rocks"
