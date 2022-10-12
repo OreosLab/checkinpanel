@@ -38,9 +38,7 @@ class CSDN:
                 if res.get("data").get("prize_title") is not None
                 else f"{res.get('data').get('msg')}"
             )
-
-        else:
-            return "抽奖失败\n"
+        return "抽奖失败\n"
 
     def main(self):
         msg_all = ""

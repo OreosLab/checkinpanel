@@ -407,12 +407,11 @@ class EUserv:
                 )
 
                 return sess_id, session
-            else:
-                log(
-                    f'[Captcha Solver] {log_lang_options.get(log_lang, lambda x: x)("CAPTCHA Verification failed")}'
-                )
+            log(
+                f'[Captcha Solver] {log_lang_options.get(log_lang, lambda x: x)("CAPTCHA Verification failed")}'
+            )
 
-                return "-1", session
+            return "-1", session
         except (KeyError, ValueError):
             return "-1", session
 
