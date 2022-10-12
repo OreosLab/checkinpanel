@@ -6,6 +6,7 @@ new Env('WPS');
 
 import json
 import random
+import sys
 import time
 
 import requests
@@ -31,7 +32,7 @@ class WPS:
         response = requests.get(url=url0, headers=headers)
         if "会员登录" in response.text:
             print("cookie 失效")
-            exit()
+            sys.exit()
         is_sign = response.json().get("data", {}).get("is_sign")
         if is_sign:
             self.is_sign = True
