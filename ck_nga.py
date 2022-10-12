@@ -158,12 +158,12 @@ class NGA:
         failure_msg = ""
         failure_msg_all = ""
         code = {}
-        for i in range(len(ids)):
+        for i, item in enumerate(ids):
             try:
                 res = requests.post(self.url, headers=self.headers, data=data).content
                 res = json.loads(res)
                 time.sleep(30)
-                code[i] = res["data"][1][0][ids[i]]["raw_stat"]["6"]
+                code[i] = res["data"][1][0][item]["raw_stat"]["6"]
                 if code[i] == 1:
                     success_sum += 1
                 else:
