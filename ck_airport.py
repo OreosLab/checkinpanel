@@ -16,7 +16,7 @@ from notify_mtr import send
 from utils import get_data
 
 
-class SspanelQd(object):
+class SspanelQd:
     def __init__(self, check_items):
         self.check_items = check_items
 
