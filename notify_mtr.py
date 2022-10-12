@@ -35,9 +35,7 @@ mutex = threading.Lock()
 
 # 定义新的 print 函数
 def print(text, *args, **kw):
-    """
-    使输出有序进行，不出现多线程同一时间输出导致错乱的问题。
-    """
+    """使输出有序进行，不出现多线程同一时间输出导致错乱的问题。"""
     with mutex:
         _print(text, *args, **kw)
 
@@ -120,9 +118,7 @@ elif CONFIG_PATH:
 
 
 def bark(title: str, content: str) -> None:
-    """
-    使用 bark 推送消息。
-    """
+    """使用 bark 推送消息。"""
     if not push_config.get("BARK_PUSH"):
         print("bark 服务的 BARK_PUSH 未设置!!\n取消推送")
         return
@@ -168,16 +164,12 @@ def bark(title: str, content: str) -> None:
 
 
 def console(title: str, content: str) -> None:
-    """
-    使用 控制台 推送消息。
-    """
+    """使用 控制台 推送消息。"""
     print(f"{title}\n\n{content}")
 
 
 def dingding_bot(title: str, content: str) -> None:
-    """
-    使用 钉钉机器人 推送消息。
-    """
+    """使用 钉钉机器人 推送消息。"""
     if not push_config.get("DD_BOT_SECRET") or not push_config.get("DD_BOT_TOKEN"):
         print("钉钉机器人 服务的 DD_BOT_SECRET 或者 DD_BOT_TOKEN 未设置!!\n取消推送")
         return
@@ -210,9 +202,7 @@ def dingding_bot(title: str, content: str) -> None:
 
 
 def pushdeer(title: str, content: str) -> None:
-    """
-    通过 PushDeer 推送消息
-    """
+    """通过 PushDeer 推送消息"""
     if not push_config.get("DEER_KEY"):
         print("PushDeer 服务的 DEER_KEY 未设置!!\n取消推送")
         return
@@ -235,9 +225,7 @@ def pushdeer(title: str, content: str) -> None:
 
 
 def feishu_bot(title: str, content: str) -> None:
-    """
-    使用 飞书机器人 推送消息。
-    """
+    """使用 飞书机器人 推送消息。"""
     if not push_config.get("FSKEY"):
         print("飞书 服务的 FSKEY 未设置!!\n取消推送")
         return
@@ -255,9 +243,7 @@ def feishu_bot(title: str, content: str) -> None:
 
 
 def go_cqhttp(title: str, content: str) -> None:
-    """
-    使用 go_cqhttp 推送消息。
-    """
+    """使用 go_cqhttp 推送消息。"""
     if not push_config.get("GOBOT_URL") or not push_config.get("GOBOT_QQ"):
         print("go-cqhttp 服务的 GOBOT_URL 或 GOBOT_QQ 未设置!!\n取消推送")
         return
@@ -278,9 +264,7 @@ def go_cqhttp(title: str, content: str) -> None:
 
 
 def gotify(title: str, content: str) -> None:
-    """
-    使用 gotify 推送消息。
-    """
+    """使用 gotify 推送消息。"""
     if not push_config.get("GOTIFY_URL") or not push_config.get("GOTIFY_TOKEN"):
         print("gotify 服务的 GOTIFY_URL 或 GOTIFY_TOKEN 未设置!!\n取消推送")
         return
@@ -303,9 +287,7 @@ def gotify(title: str, content: str) -> None:
 
 
 def iGot(title: str, content: str) -> None:
-    """
-    使用 iGot 推送消息。
-    """
+    """使用 iGot 推送消息。"""
     if not push_config.get("IGOT_PUSH_KEY"):
         print("iGot 服务的 IGOT_PUSH_KEY 未设置!!\n取消推送")
         return
@@ -324,9 +306,7 @@ def iGot(title: str, content: str) -> None:
 
 
 def serverJ(title: str, content: str) -> None:
-    """
-    通过 serverJ 推送消息。
-    """
+    """通过 serverJ 推送消息。"""
     if not push_config.get("PUSH_KEY"):
         print("serverJ 服务的 PUSH_KEY 未设置!!\n取消推送")
         return
@@ -349,9 +329,7 @@ def serverJ(title: str, content: str) -> None:
 
 
 def pushplus_bot(title: str, content: str) -> None:
-    """
-    通过 push+ 推送消息。
-    """
+    """通过 push+ 推送消息。"""
     if not push_config.get("PUSH_PLUS_TOKEN"):
         print("PUSHPLUS 服务的 PUSH_PLUS_TOKEN 未设置!!\n取消推送")
         return
@@ -387,9 +365,7 @@ def pushplus_bot(title: str, content: str) -> None:
 
 
 def qmsg_bot(title: str, content: str) -> None:
-    """
-    使用 qmsg 推送消息。
-    """
+    """使用 qmsg 推送消息。"""
     if not push_config.get("QMSG_KEY") or not push_config.get("QMSG_TYPE"):
         print("qmsg 的 QMSG_KEY 或者 QMSG_TYPE 未设置!!\n取消推送")
         return
@@ -407,9 +383,7 @@ def qmsg_bot(title: str, content: str) -> None:
 
 
 def wecom_app(title: str, content: str) -> None:
-    """
-    通过 企业微信 APP 推送消息。
-    """
+    """通过 企业微信 APP 推送消息。"""
     if not push_config.get("QYWX_AM"):
         print("QYWX_AM 未设置!!\n取消推送")
         return
@@ -502,9 +476,7 @@ class WeCom:
 
 
 def wecom_bot(title: str, content: str) -> None:
-    """
-    通过 企业微信机器人 推送消息。
-    """
+    """通过 企业微信机器人 推送消息。"""
     if not push_config.get("QYWX_KEY"):
         print("企业微信机器人 服务的 QYWX_KEY 未设置!!\n取消推送")
         return
@@ -523,9 +495,7 @@ def wecom_bot(title: str, content: str) -> None:
 
 
 def telegram_bot(title: str, content: str) -> None:
-    """
-    使用 telegram 机器人 推送消息。
-    """
+    """使用 telegram 机器人 推送消息。"""
     if not push_config.get("TG_BOT_TOKEN") or not push_config.get("TG_USER_ID"):
         print("tg 服务的 bot_token 或者 user_id 未设置!!\n取消推送")
         return
