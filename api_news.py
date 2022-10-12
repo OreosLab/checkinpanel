@@ -15,11 +15,11 @@ from utils import get_data
 
 class News:
     @staticmethod
-    def parse_data(data_, obj):
-        if not data_.get(obj):
+    def parse_data(data, topic):
+        if not data.get(topic):
             return
         msg = ""
-        for key, value in data_.get(obj).items():
+        for key, value in data.get(topic).items():
             if key == "content":
                 for i in value:
                     msg += str(i)
@@ -35,7 +35,7 @@ class News:
     def main(self):
         msg = ""
         try:
-            res = requests.get(url="https://news.topurl.cn/api").json()
+            res = requests.get("https://news.topurl.cn/api").json()
             if res.get("code") == 200:
                 data = res.get("data")
                 if data.get("newsList"):

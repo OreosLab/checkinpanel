@@ -17,6 +17,7 @@ class LeetCode:
     @staticmethod
     def main():
         base_url = "https://leetcode-cn.com"
+
         # 获取今日每日一题的题名(英文)
         response = requests.post(
             f"{base_url}/graphql",
@@ -29,7 +30,6 @@ class LeetCode:
                 "date userStatus __typename } }",
             },
         )
-
         leetcode_title = (
             json.loads(response.text)
             .get("data")

@@ -4,8 +4,6 @@ cron: 30 7 * * *
 new Env('每日一句');
 """
 
-import json
-
 import requests
 
 from notify_mtr import send
@@ -15,14 +13,14 @@ from utils import get_data
 class Motto:
     @staticmethod
     def main():
+        """从词霸中获取每日一句，带英文
+
+        :return: str
         """
-        从词霸中获取每日一句，带英文。
-        :return:
-        """
-        response = requests.get(url="http://open.iciba.com/dsapi")
+        response = requests.get("http://open.iciba.com/dsapi")
         if response.status_code != 200:
             return
-        res = json.loads(response.content.decode("utf-8"))
+        res = response.json()
         return f'{res["content"]}\n{res["note"]}\n'
 
 
