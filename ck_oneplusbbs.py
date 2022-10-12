@@ -89,8 +89,7 @@ class OnePlusBBS:
                     one_msg = data["msg"]
                     if str(ret) in {"-1", "-6", "-7"}:
                         break
-                    else:
-                        success_count += 1
+                    success_count += 1
                 else:
                     one_msg = "抽奖失败"
             except Exception as e:
