@@ -135,9 +135,8 @@ class HOSTLOC:
                 return False
             log(f"第 {number_c} 个帐户登录成功！")
             return True
-        else:
-            log("无法在用户设置页面找到标题，该页面存在错误或被防 CC 机制拦截！")
-            return False
+        log("无法在用户设置页面找到标题，该页面存在错误或被防 CC 机制拦截！")
+        return False
 
     # 抓取并打印输出账户当前积分
     def log_current_points(self, s: req_Session):
