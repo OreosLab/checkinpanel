@@ -159,8 +159,7 @@ class HOSTLOC:
             self.log_current_points(s)  # 打印账户当前积分
             url_list = self.randomly_gen_uspace_url()
             # 依次访问用户空间链接获取积分，出现错误时不中断程序继续尝试访问下一个链接
-            for i in range(len(url_list)):
-                url = url_list[i]
+            for i, url in enumerate(url_list):
                 try:
                     r = s.get(url)
                     r.raise_for_status()
