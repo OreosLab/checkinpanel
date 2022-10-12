@@ -23,13 +23,12 @@ class AcFun:
         url = "https://id.app.acfun.cn/rest/web/login/signin"
         body = f"username={phone}&password={password}&key=&captcha="
         res = session.post(url=url, data=body).json()
-        return True if res.get("result") == 0 else res.get("err_msg")
+        return (True, res) if res.get("result") == 0 else (False, res.get("err_msg"))
 
     def get_video(self, session):
         url = "https://www.acfun.cn/rest/pc-direct/rank/channel"
         res = session.get(url=url).json()
         self.contentid = res.get("rankList")[0].get("contentId")
-        return self.contentid
 
     @staticmethod
     def sign(session):
@@ -102,39 +101,36 @@ class AcFun:
             phone = check_item.get("phone")
             password = check_item.get("password")
 
-            headers = {
-                "accept": "*/*",
-                "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
-                "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-                "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.70",
-                "Referer": "https://www.acfun.cn/",
-            }
             s = requests.session()
-            s.headers.update(headers)
+            s.headers.update(
+                {
+                    "accept": "*/*",
+                    "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+                    "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+                    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.70",
+                    "Referer": "https://www.acfun.cn/",
+                }
+            )
 
-            flag = self.login(phone=phone, password=password, session=s)
+            flag, res = self.login(phone, password, s)
+
             if flag is True:
                 self.get_video(s)
-                sign_msg = self.sign(s)
                 self.get_token(s)
-                like_msg = self.like(s)
-                danmu_msg = self.danmu(s)
-                throwbanana_msg = self.throwbanana(s)
-                info = self.get_info(s)
 
                 msg = (
                     f"帐号信息: *******{phone[-4:]}\n"
-                    f"签到状态: {sign_msg}\n"
-                    f"点赞任务: {like_msg}\n"
-                    f"弹幕任务: {danmu_msg}\n"
-                    f"香蕉任务: {throwbanana_msg}\n"
-                    f"{info}"
+                    f"签到状态: {self.sign(s)}\n"
+                    f"点赞任务: {self.like(s)}\n"
+                    f"弹幕任务: {self.danmu(s)}\n"
+                    f"香蕉任务: {self.throwbanana(s)}\n"
+                    f"{self.get_info(s)}"
                 )
 
             else:
-                msg = f"*******{phone[-4:]} {flag}"
+                msg = f"*******{phone[-4:]} {res}"
 
             msg_all += msg + "\n\n"
         return msg_all
