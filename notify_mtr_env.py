@@ -96,8 +96,10 @@ def bark(title: str, content: str) -> None:
     print("bark 服务启动")
 
     if push_config.get("BARK_PUSH").startswith("http"):
-        url = f'{push_config.get("BARK_PUSH").rstrip("/")}/'
-        f"{urllib.parse.quote_plus(title)}/{urllib.parse.quote_plus(content)}"
+        url = (
+            f'{push_config.get("BARK_PUSH").rstrip("/")}/'
+            f"{urllib.parse.quote_plus(title)}/{urllib.parse.quote_plus(content)}"
+        )
     else:
         url = (
             f'https://api.day.app/{push_config.get("BARK_PUSH")}/'
