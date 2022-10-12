@@ -295,7 +295,7 @@ class DuoKan:
         ).json()
         if res.get("chances") == 0:
             return "体验任务: 已经做完啦"
-        elif res.get("chances"):
+        if res.get("chances"):
             num = 0
             url = "https://www.duokan.com/events/common_task_gift"
             for gift_code in self.gift_code_list:
@@ -309,8 +309,7 @@ class DuoKan:
                 else:
                     print(res.get("data"))
             return f"体验任务: 获得 {num} 豆子"
-        else:
-            return f"体验任务: {res.text}"
+        return f"体验任务: {res.text}"
 
     def add_draw(self, cookies):
         success_count = 0

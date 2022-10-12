@@ -87,8 +87,7 @@ class GLaDOS(object):
         ]
         if user_budgets:
             return user_budgets[0]
-        else:
-            raise OSError(f"Budget info not found for this user! VIP: {vip_level}")
+        raise OSError(f"Budget info not found for this user! VIP: {vip_level}")
 
     def main(self):
         msg_all = ""

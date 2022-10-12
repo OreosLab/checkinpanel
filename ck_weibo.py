@@ -26,12 +26,11 @@ class WeiBo:
         if res.get("status") == 10000:
             return f'连续签到: {res.get("data").get("continuous")}天\n本次收益: {res.get("data").get("desc")}'
 
-        elif res.get("errno") == 30000:
+        if res.get("errno") == 30000:
             return "每日签到: 已签到"
-        elif res.get("status") == 90005:
+        if res.get("status") == 90005:
             return f'每日签到: {res.get("msg")}'
-        else:
-            return "每日签到: 签到失败"
+        return "每日签到: 签到失败"
 
     @staticmethod
     def card(token):

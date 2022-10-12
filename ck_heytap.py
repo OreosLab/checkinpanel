@@ -101,8 +101,7 @@ class Heytap:
         if flag:
             self.get_cookie_data()
             return self.session
-        else:
-            return False
+        return False
 
     # 任务中心列表，获取任务及任务状态
     def taskCenter(self):

@@ -133,9 +133,8 @@ class HOSTLOC:
             if test_title[0] != "个人资料 -  全球主机交流论坛 -  Powered by Discuz!":
                 log(f"第 {number_c} 个帐户登录失败！")
                 return False
-            else:
-                log(f"第 {number_c} 个帐户登录成功！")
-                return True
+            log(f"第 {number_c} 个帐户登录成功！")
+            return True
         else:
             log("无法在用户设置页面找到标题，该页面存在错误或被防 CC 机制拦截！")
             return False

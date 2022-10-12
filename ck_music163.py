@@ -107,10 +107,9 @@ class Music163:
         ).json()
         if res["code"] == 200:
             return "签到成功，经验+ " + str(res["point"])
-        elif res["code"] == -2:
+        if res["code"] == -2:
             return "今天已经签到过了"
-        else:
-            return "签到失败: " + res["message"]
+        return "签到失败: " + res["message"]
 
     def task(self, session, csrf):
         url = f"https://music.163.com/weapi/v6/playlist/detail?csrf_token={csrf}"

@@ -28,7 +28,7 @@ class V2ex:
         url = urls[0] if urls else None
         if url is None:
             return "cookie 可能过期"
-        elif url != "/balance":
+        if url != "/balance":
             data = {"once": url.split("=")[-1]}
             _ = session.get(
                 url="https://www.v2ex.com" + url.split("?")[0],
