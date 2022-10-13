@@ -42,7 +42,7 @@ class Enshan:
         msg_all = ""
         for i, check_item in enumerate(self.check_items, start=1):
             cookie = str(check_item.get("cookie"))
-            msg = f"账号{i}\n------ 签到结果 ------\n{self.sign(cookie=cookie)}"
+            msg = f"账号{i}\n------ 签到结果 ------\n{self.sign(cookie)}"
             time.sleep(1)
             msg_all += msg + "\n\n"
         return msg_all

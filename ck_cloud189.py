@@ -65,14 +65,14 @@ class Cloud189:
             "https://cloud.189.cn/api/portal/loginUrl.action?"
             "redirectURL=https://cloud.189.cn/web/redirect.html"
         )
-        r = session.get(url=url)
-        captchatoken = re.findall(r"captchaToken' value='(.+?)'", r.text)[0]
-        lt = re.findall(r'lt = "(.+?)"', r.text)[0]
-        returnurl = re.findall(r"returnUrl = '(.+?)'", r.text)[0]
-        paramid = re.findall(r'paramId = "(.+?)"', r.text)[0]
-        j_rsakey = re.findall(r'j_rsaKey" value="(\S+)"', r.text, re.M)[0]
-        session.headers.update({"lt": lt})
+        res = session.get(url).text
+        captchatoken = re.findall(r"captchaToken' value='(.+?)'", res)[0]
+        lt = re.findall(r'lt = "(.+?)"', res)[0]
+        returnurl = re.findall(r"returnUrl = '(.+?)'", res)[0]
+        paramid = re.findall(r'paramId = "(.+?)"', res)[0]
+        j_rsakey = re.findall(r'j_rsaKey" value="(\S+)"', res, re.M)[0]
 
+        session.headers.update({"lt": lt})
         username = self.rsa_encode(j_rsakey, username)
         password = self.rsa_encode(j_rsakey, password)
         url = "https://open.e.189.cn/api/logbox/oauth2/loginSubmit.do"
@@ -92,16 +92,16 @@ class Cloud189:
             "mailSuffix": "@189.cn",
             "paramId": paramid,
         }
-        r = session.post(url, data=data, headers=headers, timeout=5)
-        if r.json()["result"] != 0:
-            return "登陆状态: " + r.json()["msg"]
-        redirect_url = r.json()["toUrl"]
-        session.get(url=redirect_url)
+        res = session.post(url, data=data, headers=headers, timeout=5).json()
+        if res["result"] != 0:
+            return "登陆状态: " + res["msg"]
+        redirect_url = res["toUrl"]
+        session.get(redirect_url)
         return True
 
     @staticmethod
     def sign(session):
-        rand = str(round(time.time() * 1000))
+        rand = round(time.time() * 1000)
         surl = (
             f"https://api.cloud.189.cn/mkt/userSign.action?"
             f"rand={rand}&clientType=TELEANDROID&version=8.6.3&model=SM-G930K"
@@ -124,28 +124,30 @@ class Cloud189:
             "Host": "m.cloud.189.cn",
             "Accept-Encoding": "gzip, deflate",
         }
-        response = session.get(url=surl, headers=headers)
+        response = session.get(surl, headers=headers)
         netdiskbonus = response.json().get("netdiskBonus")
         if response.json().get("isSign") == "false":
             msg = f"签到结果: 未签到，签到获得 {netdiskbonus}M 空间"
         else:
             msg = f"签到结果: 已经签到过了，签到获得 {netdiskbonus}M 空间"
-        response = session.get(url=url, headers=headers)
+
+        response = session.get(url, headers=headers)
         if "errorCode" in response.text:
             msg += f"\n第一次抽奖: {response.json().get('errorCode')}"
         else:
             description = response.json().get("description", "")
             if description in ["1", 1]:
                 description = "50M 空间"
-            msg += f"\n第一次抽奖: 获得{description}"
-        response = session.get(url=url2, headers=headers)
+            msg += f"\n第一次抽奖: 获得 {description}"
+
+        response = session.get(url2, headers=headers)
         if "errorCode" in response.text:
             msg += f"\n第二次抽奖: {response.json().get('errorCode')}"
         else:
             description = response.json().get("description", "")
             if description in ["1", 1]:
                 description = "50M 空间"
-            msg += f"\n第二次抽奖: 获得{description}"
+            msg += f"\n第二次抽奖: 获得 {description}"
         return msg
 
     def main(self):
@@ -154,8 +156,8 @@ class Cloud189:
             phone = check_item.get("phone")
             password = check_item.get("password")
             session = requests.Session()
-            flag = self.login(session=session, username=phone, password=password)
-            sign_msg = self.sign(session=session) if flag is True else flag
+            flag = self.login(session, phone, password)
+            sign_msg = self.sign(session) if flag is True else flag
             msg = f"帐号信息: *******{phone[-4:]}\n{sign_msg}"
             msg_all += msg + "\n\n"
         return msg_all

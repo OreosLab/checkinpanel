@@ -4,8 +4,6 @@ cron: 30 14 * * *
 new Env('Fa米家');
 """
 
-import json
-
 import requests
 
 from notify_mtr import send
@@ -22,9 +20,8 @@ class FMAPP:
             url = (
                 "https://fmapp.chinafamilymart.com.cn/api/app/market/member/signin/sign"
             )
-            res = requests.post(url=url, headers=headers).json()
-            code = res.get("code")
-            if code == "200":
+            res = requests.post(url, headers=headers).json()
+            if res.get("code") == "200":
                 data = res.get("data", {})
                 msg = (
                     f"再坚持 {data.get('nextDay')} 天即可获得 {data.get('nextNumber')} 个发米粒\n"
@@ -34,18 +31,16 @@ class FMAPP:
                 msg = res.get("message")
         except Exception as e:
             print("错误信息", e)
-            msg = f"未知错误：{str(e)}"
+            msg = f"未知错误：{e}"
         return msg
 
     @staticmethod
     def user_info(headers):
         try:
             url = "https://fmapp.chinafamilymart.com.cn/api/app/member/info"
-            res = requests.post(url=url, headers=headers).json()
-            code = res.get("code")
-            if code == "200":
-                data = res.get("data", {})
-                msg = data.get("nickName")
+            res = requests.post(url, headers=headers).json()
+            if res.get("code") == "200":
+                msg = res.get("data", {}).get("nickName")
             else:
                 msg = res.get("message")
         except Exception as e:
@@ -58,12 +53,10 @@ class FMAPP:
         try:
             url = "https://fmapp.chinafamilymart.com.cn/api/app/member/v1/mili/service/detail"
             res = requests.post(
-                url=url, headers=headers, data=json.dumps({"pageSize": 10, "pageNo": 1})
+                url, headers=headers, json={"pageSize": 10, "pageNo": 1}
             ).json()
-            code = res.get("code")
-            if code == "200":
-                data = res.get("data", {})
-                msg = data.get("miliNum")
+            if res.get("code") == "200":
+                msg = res.get("data", {}).get("miliNum")
             else:
                 msg = res.get("message")
         except Exception as e:
@@ -96,9 +89,9 @@ class FMAPP:
                 "cookie": cookie,
                 "blackBox": blackbox,
             }
-            sign_msg = self.sign(headers=headers)
-            name_msg = self.user_info(headers=headers)
-            mili_msg = self.mili_count(headers=headers)
+            sign_msg = self.sign(headers)
+            name_msg = self.user_info(headers)
+            mili_msg = self.mili_count(headers)
             msg = f"帐号信息: {name_msg}\n签到状态: {sign_msg}\n米粒数量: {mili_msg}"
             msg_all += msg + "\n\n"
         return msg_all

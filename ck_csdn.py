@@ -21,7 +21,7 @@ class CSDN:
 
     def sign(self, cookies):
         url = "https://me.csdn.net/api/LuckyDraw_v2/signIn"
-        res = requests.get(url=url, headers=self.headers, cookies=cookies).json()
+        res = requests.get(url, headers=self.headers, cookies=cookies).json()
         if res.get("code") == 200:
             msg = res.get("data").get("msg")
         else:
@@ -31,14 +31,14 @@ class CSDN:
 
     def draw(self, cookies):
         url = "https://me.csdn.net/api/LuckyDraw_v2/goodluck"
-        res = requests.get(url=url, headers=self.headers, cookies=cookies).json()
+        res = requests.get(url, headers=self.headers, cookies=cookies).json()
         if res.get("code") == 200:
             return (
                 f", {res.get('data').get('prize_title')}"
                 if res.get("data").get("prize_title") is not None
                 else f"{res.get('data').get('msg')}"
             )
-        return "抽奖失败\n"
+        return "抽奖失败"
 
     def main(self):
         msg_all = ""
@@ -52,8 +52,8 @@ class CSDN:
             except Exception as e:
                 print(f"获取用户信息失败: {e}")
                 user_name = "未获取到用户信息"
-            sign_msg = self.sign(cookies=cookie)
-            draw_msg = self.draw(cookies=cookie)
+            sign_msg = self.sign(cookie)
+            draw_msg = self.draw(cookie)
             msg = f"帐号信息: {user_name}\n签到信息: {sign_msg}\n抽奖结果: {draw_msg}"
             msg_all += msg + "\n\n"
         return msg_all

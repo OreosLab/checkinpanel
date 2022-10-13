@@ -4,7 +4,7 @@ cron: 32 7 * * *
 new Env('百度搜索资源平台');
 """
 
-from urllib import parse
+from urllib.parse import parse_qs, urlsplit
 
 import requests
 
@@ -18,17 +18,17 @@ class BaiduUrlSubmit:
 
     @staticmethod
     def url_submit(data_url: str, submit_url: str, times: int = 100) -> str:
-        site = parse.parse_qs(parse.urlsplit(submit_url).query).get("site")[0]
-        urls_data = requests.get(url=data_url)
+        site = parse_qs(urlsplit(submit_url).query).get("site", [])[0]
+        urls_data = requests.get(data_url)
         remain = 100000
         success_count = 0
         error_count = 0
         for _ in range(times):
             try:
-                response = requests.post(url=submit_url, data=urls_data)
-                if response.json().get("success"):
-                    remain = response.json().get("remain")
-                    success_count += response.json().get("success")
+                res = requests.post(submit_url, data=urls_data).json()
+                if res.get("success"):
+                    remain = res.get("remain")
+                    success_count += res.get("success")
                 else:
                     error_count += 1
             except Exception as e:
@@ -49,9 +49,7 @@ class BaiduUrlSubmit:
             submit_url = check_item.get("submit_url")
             times = int(check_item.get("times", 100))
             if data_url and submit_url:
-                msg = self.url_submit(
-                    data_url=data_url, submit_url=submit_url, times=times
-                )
+                msg = self.url_submit(data_url, submit_url, times)
             else:
                 msg = "配置错误"
             msg_all += msg + "\n\n"
@@ -61,5 +59,5 @@ class BaiduUrlSubmit:
 if __name__ == "__main__":
     _data = get_data()
     _check_items = _data.get("BAIDU", [])
-    res = BaiduUrlSubmit(check_items=_check_items).main()
-    send("百度搜索资源平台", res)
+    result = BaiduUrlSubmit(check_items=_check_items).main()
+    send("百度搜索资源平台", result)

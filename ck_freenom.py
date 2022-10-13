@@ -56,16 +56,13 @@ class FreeNom:
     def main(self) -> str:
         msg = ""
         msg_all = ""
-        i = 0
 
-        for check_item in self.check_items:
-            i += 1
+        for i, check_item in enumerate(self.check_items, start=1):
             username = check_item.get("username")
             password = check_item.get("password")
 
             # login
-            ok = self._login(usr=username, pwd=password)
-            if not ok:
+            if not self._login(usr=username, pwd=password):
                 msg_all += f"account{i} login failed\n\n"
                 continue
 
@@ -91,8 +88,7 @@ class FreeNom:
             # renew domains
             res = ""
             for domain, days, renewal_id in domains:
-                days = int(days)
-                if days < 14:
+                if int(days) < 14:
                     self._s.headers.update(
                         {
                             "referer": f"https://my.freenom.com/domains.php?a=renewdomain&domain={renewal_id}",

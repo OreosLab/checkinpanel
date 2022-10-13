@@ -37,53 +37,46 @@ class Haidilao:
             "codeType": 1,
         }
         url = "https://superapp-public.kiwa-tech.com/"
-        login = requests.post(
-            f"{url}login/thirdCommLogin",
-            headers=headers,
-            data=json.dumps(login_data),
-        ).text
 
         try:
-            login = json.loads(login)
-            if not login["success"]:
-                return "登陆失败"
+            login_res = requests.post(
+                f"{url}login/thirdCommLogin",
+                headers=headers,
+                json=login_data,
+            ).json()
+            if not login_res["success"]:
+                return "登录失败"
+            data = login_res["data"]
         except json.decoder.JSONDecodeError:
-            return "请求失败"
-        headers["_HAIDILAO_APP_TOKEN"] = login["data"]["token"]
-        headers["ReqType"] = "APPH5"
-        headers["Referer"] = (
-            f"{url}app-sign-in/?SignInToken="
-            + login["data"]["token"]
-            + "&source=MiniApp"
-        )
+            return "登录请求失败"
 
-        signin = requests.post(
-            f"{url}activity/wxapp/signin/signin",
-            headers=headers,
-            data=json.dumps({"signinSource": "MiniApp"}),
-        ).text
+        headers["_HAIDILAO_APP_TOKEN"] = data["token"]
+        headers["ReqType"] = "APPH5"
+        headers[
+            "Referer"
+        ] = f'{url}app-sign-in/?SignInToken={data["token"]}&source=MiniApp'
 
         try:
-            signin = json.loads(signin)
-            if not signin["success"]:
+            signin_res = requests.post(
+                f"{url}activity/wxapp/signin/signin",
+                headers=headers,
+                json={"signinSource": "MiniApp"},
+            ).json()
+            if "请勿重复操作" in signin_res["msg"]:
                 return "今日签到过了"
         except json.decoder.JSONDecodeError:
-            return "请求失败"
-        fragment = requests.post(
-            f"{url}activity/wxapp/signin/queryFragment", headers=headers
-        ).text
+            return "签到请求失败"
 
         try:
-            fragment = json.loads(fragment)
-            if signin["success"]:
+            fragment_res = requests.post(
+                f"{url}activity/wxapp/signin/queryFragment", headers=headers
+            ).json()
+            if fragment_res["success"]:
                 return (
-                    "账号："
-                    + login["data"]["name"]
-                    + "\n签到成功，碎片余额："
-                    + fragment["data"]["total"]
+                    f'账号：{data["name"]} 签到成功\n' f'碎片余额：{fragment_res["data"]["total"]}'
                 )
         except json.decoder.JSONDecodeError:
-            return "请求失败"
+            return "查询请求失败"
 
     def main(self):
         msg_all = ""

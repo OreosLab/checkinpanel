@@ -19,7 +19,7 @@ class HiFiNi:
         sign_in_url = "https://www.hifini.com/sg_sign.htm"
         data = {"x-requested-with": "XMLHttpRequest"}
         cookies = {"enwiki_session": f"{cookies}"}
-        r1 = requests.post(url=sign_in_url, data=data, cookies=cookies)
+        r1 = requests.post(sign_in_url, data=data, cookies=cookies)
         html_text = r1.text
         is_sign = False
         msg = ""
