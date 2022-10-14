@@ -6,7 +6,6 @@ import time
 import requests
 
 __version__ = "20221014-4-043"
-ONLINE_VERSION = ""
 ver_re = re.compile("__version__ = .(\\d+-\\d+-...).")
 
 
@@ -15,10 +14,7 @@ def get_present_ver() -> str:
 
 
 def get_latest_ver() -> str:
-    global ONLINE_VERSION, ver_re
     url = "https://ghproxy.com/https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/utils_ver.py"
-    if ONLINE_VERSION:
-        return f"最新版本：{ONLINE_VERSION}"
     if time.localtime().tm_hour < 8 or time.localtime().tm_hour > 12:
         return "不在 8-12 点内，跳过版本检查。"
     try:
