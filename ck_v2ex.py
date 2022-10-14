@@ -35,9 +35,7 @@ class V2ex:
         if url != "/balance":
             data = {"once": url.split("=")[-1]}
             session.get(
-                f'https://www.v2ex.com{url.split("?")[0]}',
-                verify=False,
-                params=data,
+                f'https://www.v2ex.com{url.split("?")[0]}', verify=False, params=data
             )
 
         response = session.get("https://www.v2ex.com/balance", verify=False)
@@ -47,14 +45,12 @@ class V2ex:
         )
         total = totals[0] if totals else "签到失败"
         today = re.findall(
-            r'<td class="d"><span class="gray">(.*?)</span></td>',
-            response.text,
+            r'<td class="d"><span class="gray">(.*?)</span></td>', response.text
         )
         today = today[0] if today else "签到失败"
 
         usernames = re.findall(
-            r"<a href=\"/member/.*?\" class=\"top\">(.*?)</a>",
-            response.text,
+            r"<a href=\"/member/.*?\" class=\"top\">(.*?)</a>", response.text
         )
         username = usernames[0] if usernames else "用户名获取失败"
 

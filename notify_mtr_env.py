@@ -482,10 +482,7 @@ class WeCom:
 
     def get_access_token(self):
         url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken"
-        values = {
-            "corpid": self.CORPID,
-            "corpsecret": self.CORPSECRET,
-        }
+        values = {"corpid": self.CORPID, "corpsecret": self.CORPSECRET}
         response = requests.post(url, params=values, timeout=15)
         json_data = json.loads(response.text)
         return json_data.get("access_token")

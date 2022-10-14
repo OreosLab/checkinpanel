@@ -64,10 +64,7 @@ class OnePlusBBS:
             "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6,fr;q=0.5,pl;q=0.4",
             "cookie": cookie,
         }
-        params = (
-            ("id", "choujiang"),
-            ("do", "draw"),
-        )
+        params = (("id", "choujiang"), ("do", "draw"))
         sum_list = []
         success_count = 0
         for i in range(10):
@@ -79,12 +76,7 @@ class OnePlusBBS:
                 ).json()
                 if res["ret"] != "":
                     ret = res["ret"]
-                    ret_map = {
-                        "2": 18,
-                        "4": 188,
-                        "5": 88,
-                        "7": 8,
-                    }
+                    ret_map = {"2": 18, "4": 188, "5": 88, "7": 8}
                     sum_list.append(ret_map.get(ret, 0))
                     one_msg = res["msg"]
                     if str(ret) in {"-1", "-6", "-7"}:

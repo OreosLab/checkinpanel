@@ -261,9 +261,7 @@ class EUserv:
                         return (
                             eval(
                                 "{left} {operator} {right}".format(
-                                    left=left_part,
-                                    operator=operator,
-                                    right=right_part,
+                                    left=left_part, operator=operator, right=right_part
                                 )
                             )
                             if left_part.isdigit() and right_part.isdigit()
@@ -303,10 +301,7 @@ class EUserv:
     def get_captcha_solver_usage(userid: str, apikey: str) -> dict:
         url = "https://api.apitruecaptcha.org/one/getusage"
 
-        params = {
-            "username": userid,
-            "apikey": apikey,
-        }
+        params = {"username": userid, "apikey": apikey}
         r = requests.get(url=url, params=params)
         return json.loads(r.text)
 
@@ -329,13 +324,7 @@ class EUserv:
         )
         return response.json()[0]["pin"]
 
-    def login(
-        self,
-        username: str,
-        password: str,
-        userid: str,
-        apikey: str,
-    ) -> tuple:
+    def login(self, username: str, password: str, userid: str, apikey: str) -> tuple:
         headers = {"user-agent": self.UA, "origin": "https://www.euserv.com"}
         url = self.BASE_URL
         session = requests.Session()

@@ -20,8 +20,7 @@ class WeiBo:
     def sign(token):
         headers = {"User-Agent": "Weibo/52588 (iPhone; iOS 14.5; Scale/3.00)"}
         res = requests.get(
-            url=f"https://api.weibo.cn/2/checkin/add?c=iphone&{token}",
-            headers=headers,
+            url=f"https://api.weibo.cn/2/checkin/add?c=iphone&{token}", headers=headers
         ).json()
         if res.get("status") == 10000:
             return (

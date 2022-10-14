@@ -41,11 +41,7 @@ class Tieba:
         ).text
         try:
             pn = int(
-                re.match(
-                    r".*/f/like/mylike\?&pn=(.*?)\">尾页.*",
-                    res,
-                    re.S | re.I,
-                )[1]
+                re.match(r".*/f/like/mylike\?&pn=(.*?)\">尾页.*", res, re.S | re.I)[1]
             )
 
         except Exception:

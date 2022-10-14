@@ -27,9 +27,7 @@ class HLX:
     def login(self, username, password):
         password_md5 = self.md5(password)
         url = "https://floor.huluxia.com/account/login/IOS/4.0"
-        headers = {
-            "Content-Type": "application/x-www-form-urlencoded",
-        }
+        headers = {"Content-Type": "application/x-www-form-urlencoded"}
         data = {
             "account": username,
             "deviceCode": "",

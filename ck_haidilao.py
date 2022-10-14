@@ -40,9 +40,7 @@ class Haidilao:
 
         try:
             login_res = requests.post(
-                f"{url}login/thirdCommLogin",
-                headers=headers,
-                json=login_data,
+                f"{url}login/thirdCommLogin", headers=headers, json=login_data
             ).json()
             if not login_res["success"]:
                 return "登录失败"

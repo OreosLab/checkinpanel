@@ -31,10 +31,7 @@ class Meizu:
             "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",
             "cookie": cookie,
         }
-        params = (
-            ("mod", "signin"),
-            ("action", "sign"),
-        )
+        params = (("mod", "signin"), ("action", "sign"))
         res = requests.get(self.url, headers=headers, params=params).json()
         return res.get("message")
 
