@@ -36,7 +36,7 @@ v2021.09.30
 
 v2021.11.06
 - Receive renew PIN(6-digits) using mailparser parsed data download url
-  workflow: auto-forward your EUserv PIN email to your mailparser inbox 
+  workflow: auto-forward your EUserv PIN email to your mailparser inbox
   -> parsing PIN via mailparser -> get PIN from mailparser
 - Update kc2_security_password_get_token request
 

@@ -8,8 +8,8 @@ send_message() {
     if [ "${DD_BOT_TOKEN}" ]; then
         push=$(
             curl -k -s "https://oapi.dingtalk.com/robot/send?access_token=${DD_BOT_TOKEN}" \
-            -H 'Content-Type：application/json' \
-            -d "{
+                -H 'Content-Type：application/json' \
+                -d "{
             \"msgtype\"：\"markdown\",
             \"markdown\"：{
                 \"title\":\"${TITLE}\",
@@ -131,8 +131,8 @@ send_message() {
             result_wework_log_text="${TITLE}${log_text}"
             push=$(
                 curl -k -s "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=${access_token}" \
-                -H 'Content-Type：application/json' \
-                -d "{
+                    -H 'Content-Type：application/json' \
+                    -d "{
                 \"touser\"：\"@all\",
                 \"msgtype\"：\"text\",
                 \"agentid\"：\"${AGENTID}\",
@@ -157,7 +157,7 @@ send_message() {
         result_sre24_log_text="${TITLE}${log_text}"
         push=$(
             curl -k -sL https://push.jwks123.com/to/ \
-            -d "{\"token\":\"${token}\",\"msg\":\"${result_sre24_log_text}\"}"
+                -d "{\"token\":\"${token}\",\"msg\":\"${result_sre24_log_text}\"}"
         )
         push_code=$(echo "${push}" | jq -r ".code" 2>&1)
         if [ "${push_code}" -eq 202 ]; then
