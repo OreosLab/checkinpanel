@@ -26,8 +26,8 @@ class WPS:
         headers = {
             "Cookie": cookie,
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                          "AppleWebKit/537.36 (KHTML, like Gecko) "
-                          "Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
         }
         response = requests.get(url0, headers=headers)
         if "会员登录" in response.text:
@@ -41,8 +41,8 @@ class WPS:
         headers = {
             "Cookie": cookie,
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                          "AppleWebKit/537.36 (KHTML, like Gecko) "
-                          "Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
         }
         if self.is_sign:
             msg = "今日已签到"
