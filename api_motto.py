@@ -19,7 +19,7 @@ class Motto:
         """
         response = requests.get("http://open.iciba.com/dsapi")
         if response.status_code != 200:
-            return
+            return ""
         res = response.json()
         return f'{res["content"]}\n{res["note"]}\n'
 

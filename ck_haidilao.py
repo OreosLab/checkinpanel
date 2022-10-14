@@ -76,6 +76,8 @@ class Haidilao:
         except json.decoder.JSONDecodeError:
             return "查询请求失败"
 
+        return "未知错误"
+
     def main(self):
         msg_all = ""
         for check_item in self.check_items:

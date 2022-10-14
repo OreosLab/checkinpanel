@@ -13,7 +13,7 @@ from utils import get_data
 
 
 class BiliBili:
-    def __init__(self, check_items: dict):
+    def __init__(self, check_items: list):
         self.check_items = check_items
 
     @staticmethod
@@ -410,7 +410,7 @@ class BiliBili:
             coin_num = min(expected_coin - coins_av_count, coin)
             if coin_type == 1:
                 following_list = self.get_followings(session=session, uid=uid)
-                for following in following_list.get("data", {}).get("list"):
+                for following in following_list.get("data", {}).get("list", []):
                     mid = following.get("mid")
                     if mid:
                         aid_list += self.search_space_arc(session=session, uid=mid)

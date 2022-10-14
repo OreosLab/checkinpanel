@@ -17,7 +17,7 @@ class News:
     @staticmethod
     def parse_data(data, topic):
         if not data.get(topic):
-            return
+            return ""
         msg = ""
         for key, value in data.get(topic).items():
             if key == "content":

@@ -174,7 +174,7 @@ def log(info: str):
 
 
 class EUserv:
-    def __init__(self, check_items: dict):
+    def __init__(self, check_items: list):
         self.check_items = check_items
         self.BASE_URL = "https://support.euserv.com/index.iphp"
         self.UA = (
@@ -222,7 +222,7 @@ class EUserv:
         return json.loads(r.text)
 
     @staticmethod
-    def handle_captcha_solved_result(solved: dict) -> str:
+    def handle_captcha_solved_result(solved: dict) -> str:  # type: ignore
         """Since CAPTCHA sometimes appears as a very simple binary arithmetic expression.
         But since recognition sometimes doesn't show the result of the calculation directly,
         that's what this function is for.
@@ -441,7 +441,7 @@ class EUserv:
             "origin": "https://support.euserv.com",
             "Referer": self.BASE_URL,
         }
-        data = {
+        data: dict = {
             "Submit": "Extend contract",
             "sess_id": sess_id,
             "ord_no": order_id,

@@ -34,7 +34,7 @@ login_status_ptn = re.compile('<a href="logout.php">Logout</a>', re.I)
 
 
 class FreeNom:
-    def __init__(self, check_items: dict):
+    def __init__(self, check_items: list):
         self.check_items = check_items
         self._s = requests.Session()
         self._s.headers.update(

@@ -16,7 +16,7 @@ from utils import get_data
 
 
 class GLaDOS:
-    def __init__(self, check_items: dict):
+    def __init__(self, check_items: list):
         self.check_items = check_items
         self.original_url = "https://glados.rocks"
         self.UA = (

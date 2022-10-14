@@ -25,12 +25,12 @@ class Weather:
                 city_map = json.load(city_file)
                 if not city_map:
                     raise FileNotFoundError
-        except FileNotFoundError:
+        except FileNotFoundError as e:
             r = requests.get(
                 "https://fastly.jsdelivr.net/gh/Oreomeow/checkinpanel@master/city.json"
             )
             if r.status_code != 200:
-                return "下载 city.json 失败！"
+                raise ConnectionError("下载 city.json 失败！") from e
             city_map = r.json()
             with open(join(cur_dir, "city.json"), "w", encoding="utf-8") as city_file:
                 json.dump(city_map, city_file, ensure_ascii=False)
