@@ -24,26 +24,29 @@ class Zhiyoo:
         formhash = re.findall(
             r'<input type="hidden" name="formhash" value="(.*?)"', response.text
         )[0]
+        data = {"formhash": formhash, "qdxq": "kx"}
         params = (
             ("id", "dsu_paulsign:sign"),
             ("operation", "qiandao"),
             ("infloat", "1"),
             ("inajax", "1"),
         )
-        data = {"formhash": formhash, "qdxq": "kx"}
+
         response = session.post(
             url="http://bbs.zhiyoo.net/plugin.php",
             params=params,
             data=data,
             verify=False,
         )
-        user_rep = session.get(url="http://bbs.zhiyoo.net/home.php")
-        uid = re.findall(r"uid=(\d+)\"", user_rep.text)
+        user_resp = session.get(url="http://bbs.zhiyoo.net/home.php")
+        uid = re.findall(r"uid=(\d+)\"", user_resp.text)
         uid = uid[0] if uid else "未获取到 UID"
         if "今日已经签到" in response.text:
             return f"用户信息: {uid}\n签到信息: 您今日已经签到，请明天再来！"
+
         check_msg = re.findall(r"恭喜你签到成功!获得随机奖励 金币 (\d+) 元.", response.text, re.S)
         check_msg = check_msg[0].strip() if check_msg else "签到失败"
+
         return f"用户信息: {uid}\n签到信息: 恭喜你签到成功!获得随机奖励 金币 {check_msg} 元."
 
     def main(self):
@@ -53,8 +56,9 @@ class Zhiyoo:
                 item.split("=")[0]: item.split("=")[1]
                 for item in check_item.get("cookie").split("; ")
             }
+
             session = requests.session()
-            requests.utils.add_dict_to_cookiejar(session.cookies, cookie)
+            session.cookies.update(cookie)
             session.headers.update(
                 {
                     "Origin": "http://bbs.zhiyoo.net",
@@ -69,7 +73,7 @@ class Zhiyoo:
                     "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
                 }
             )
-            msg = self.sign(session=session)
+            msg = self.sign(session)
             msg_all += msg + "\n\n"
         return msg_all
 

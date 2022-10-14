@@ -4,7 +4,6 @@ cron: 26 13 * * *
 new Env('NGA');
 """
 
-import json
 import re
 import time
 
@@ -36,11 +35,9 @@ class NGA:
             "__lib": "check_in",
             "__output": "12",
         }
-        req = requests.post(self.url, headers=self.headers, data=data).content
-        # print(json.loads(req))
-        return json.loads(req)
+        return requests.post(self.url, data, headers=self.headers).json()
 
-    def silver_coin_get(self, token, uid):
+    def get_silver_coin(self, token, uid):
         data = {
             "access_token": token,
             "t": round(time.time()),
@@ -51,17 +48,15 @@ class NGA:
             "__lib": "mission",
             "__output": "11",
         }
-        res = requests.post(self.url, headers=self.headers, data=data).content
-        res = json.loads(res)
-        data = res["data"][0]
-        # print(data)
         try:
-            silver_coin_get_stat = data[4] if "已经" in data[4] else data[2]["2"]
+            res = requests.post(self.url, data, headers=self.headers).json()
+            stat = res["data"][0]
+            silver_coin_get_stat = stat[4] if "已经" in stat[4] else stat[2]["2"]
         except Exception as e:
-            silver_coin_get_stat = e
+            silver_coin_get_stat = str(e)
         return silver_coin_get_stat
 
-    def n_coin_get(self, token, uid):
+    def get_n_coin(self, token, uid):
         data = {
             "access_token": token,
             "t": round(time.time()),
@@ -72,12 +67,10 @@ class NGA:
             "__lib": "mission",
             "__output": "11",
         }
-        res = requests.post(self.url, headers=self.headers, data=data).content
-        res = json.loads(res)
-        data = res["data"][0]
-        # print(data)
         try:
-            n_coin_get_stat = data[4] if "已经" in data[4] else data[2]["30"]
+            res = requests.post(self.url, data, headers=self.headers).json()
+            stat = res["data"][0]
+            n_coin_get_stat = stat[4] if "已经" in stat[4] else stat[2]["30"]
         except Exception as e:
             n_coin_get_stat = str(e)
         return n_coin_get_stat
@@ -98,9 +91,7 @@ class NGA:
         failure_msg_all = ""
         for _ in range(4):
             try:
-                res = requests.post(self.url, headers=self.headers, data=data).content
-                res = json.loads(res)
-                # print(res)
+                res = requests.post(self.url, data, headers=self.headers).json()
                 time.sleep(30)
                 raw_stat = re.search(r"\'raw_stat\':\s*{([^}]+)", str(res))[1]
                 task_code = re.search(r"\'6\':\s(\d)", raw_stat)[1]
@@ -115,7 +106,9 @@ class NGA:
         return (
             f"观看视频成功次数：{success_sum}，共获得N币：{video_coin}"
             if failure_sum == 0
-            else f"观看视频成功次数：{success_sum}，共获得N币：{video_coin}；\n观看视频失败次数：{failure_sum}；\n错误信息：{failure_msg_all}"
+            else f"观看视频成功次数：{success_sum}，共获得N币：{video_coin}；\n"
+            f"观看视频失败次数：{failure_sum}；\n"
+            f"错误信息：{failure_msg_all}"
         )
 
     def view_video_for_adfree_24h(self, token, uid):
@@ -129,9 +122,7 @@ class NGA:
             "__output": "11",
         }
         try:
-            res = requests.post(self.url, headers=self.headers, data=data).content
-            res = json.loads(res)
-            # print(res)
+            res = requests.post(self.url, data, headers=self.headers).json()
             time.sleep(30)
             if str(res["data"][1][0]) == "{}":
                 code = res["data"][1][1]["141"]["raw_stat"]["6"]
@@ -160,8 +151,7 @@ class NGA:
         code = {}
         for i, item in enumerate(ids):
             try:
-                res = requests.post(self.url, headers=self.headers, data=data).content
-                res = json.loads(res)
+                res = requests.post(self.url, data, headers=self.headers).json()
                 time.sleep(30)
                 code[i] = res["data"][1][0][item]["raw_stat"]["6"]
                 if code[i] == 1:
@@ -176,7 +166,9 @@ class NGA:
         return (
             f"观看视频成功次数：{success_sum}，共获得免广告时长：{adfree_time}h"
             if failure_sum == 0
-            else f"观看视频成功次数：{success_sum}，共获得免广告时长：{adfree_time}h；\n观看视频失败次数：{failure_sum}；\n错误信息：{failure_msg_all}"
+            else f"观看视频成功次数：{success_sum}，共获得免广告时长：{adfree_time} h；\n"
+            f"观看视频失败次数：{failure_sum}；\n"
+            f"错误信息：{failure_msg_all}"
         )
 
     def get_signin_stat(self, token, uid):
@@ -190,8 +182,7 @@ class NGA:
             "__lib": "check_in",
             "__output": "14",
         }
-        res = requests.post(self.url, headers=self.headers, data=data).content
-        res = json.loads(res)["result"][0]
+        res = requests.post(self.url, data, headers=self.headers).json()["result"][0]
         continued = res["continued"]
         total = res["sum"]
         return continued, total
@@ -207,19 +198,18 @@ class NGA:
             "__lib": "login",
             "__output": "12",
         }
-        req = requests.post(self.url, headers=self.headers, data=data).content
-        req = json.loads(req)["result"]["username"]
-        return req
+        res = requests.post(self.url, data, headers=self.headers).json()
+        return res["result"]["username"]
 
     def main(self):
         msg_all = ""
         for check_item in self.check_items:
             token = check_item.get("token")
             uid = check_item.get("uid")
-            signin_res = self.signin(token=token, uid=uid)
+            signin_res = self.signin(token, uid)
             try:
-                continued, total = self.get_signin_stat(token=token, uid=uid)
-                username = self.get_user(token=token, uid=uid)
+                continued, total = self.get_signin_stat(token, uid)
+                username = self.get_user(token, uid)
                 if signin_res["code"] == 0:
                     signin_stat = (
                         f"用户：{username}\n统计信息：签到成功，连续签到{continued}天，累计签到{total}天"
@@ -231,16 +221,20 @@ class NGA:
                 else:
                     signin_stat = f'用户：{username}\n统计信息：{signin_res["msg"]}'
                 time.sleep(1)
-                silver_coin_get_stat = self.silver_coin_get(token=token, uid=uid)
-                n_coin_get_stat = self.n_coin_get(token=token, uid=uid)
-                video_view_stat = self.view_video(token=token, uid=uid)
-                adfree_24h_stat = self.view_video_for_adfree_24h(token=token, uid=uid)
+                silver_coin_get_stat = self.get_silver_coin(token, uid)
+                n_coin_get_stat = self.get_n_coin(token, uid)
+                video_view_stat = self.view_video(token, uid)
+                adfree_24h_stat = self.view_video_for_adfree_24h(token, uid)
                 msg = (
                     f"{signin_stat}\n"
-                    f"------【每日签到得银币】------\n{silver_coin_get_stat}\n"
-                    f"------【每日签到得N币】------\n{n_coin_get_stat}\n"
-                    f"------【每天看两次视频】------\n{video_view_stat}\n"
-                    f"------【看视频免广告(限时任务)】------\n{adfree_24h_stat}\n"
+                    f"------【每日签到得银币】------\n"
+                    f"{silver_coin_get_stat}\n"
+                    f"------【每日签到得N币】------\n"
+                    f"{n_coin_get_stat}\n"
+                    f"------【每天看两次视频】------\n"
+                    f"{video_view_stat}\n"
+                    f"------【看视频免广告(限时任务)】------\n"
+                    f"{adfree_24h_stat}\n"
                 )
             except Exception as e:
                 msg = str(e)

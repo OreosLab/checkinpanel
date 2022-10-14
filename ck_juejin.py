@@ -35,10 +35,11 @@ class Juejin:
         msg_all = ""
         for i, check_item in enumerate(self.check_items, start=1):
             cookie = str(check_item.get("cookie"))
-            sign_msg = self.sign(cookie=cookie)["err_msg"]
-            lottery_msg = self.lottery(cookie=cookie)["err_msg"]
+            sign_msg = self.sign(cookie)["err_msg"]
+            lottery_msg = self.lottery(cookie)["err_msg"]
             msg = (
-                f"账号 {i}\n------ 掘金签到结果 ------\n"
+                f"账号 {i}"
+                + "\n------ 掘金签到结果 ------\n"
                 + sign_msg
                 + "\n------ 掘金抽奖结果 ------\n"
                 + lottery_msg

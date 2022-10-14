@@ -47,7 +47,7 @@ class Site:
         return cookie_dict
 
     def signin(self, session, url):
-        # hdarea签到
+        # hdarea 签到
         if url == "https://www.hdarea.co":
             attendance_url = f"{url}/sign_in.php"
             data = {"action": "sign_in"}
@@ -99,7 +99,8 @@ class Site:
             with session.get(attendance_url) as response:
                 r = re.compile(r"今天签到您获得\d+点魔力值")
                 r1 = re.compile(r"退出")
-                if location := r.search(response.text):
+                location = r.search(response.text)
+                if location:
                     tip = location.group()
                 elif r1.search(response.text):
                     tip = "重复签到"
@@ -139,9 +140,10 @@ class Site:
             with session.get(attendance_url) as response:
                 r = re.compile(r"请勿重复刷新")
                 r1 = re.compile(r"签到已得\s*\d+")
+                location = r1.search(response.text).span()
                 if r.search(response.text):
                     tip = "重复签到"
-                elif location := r1.search(response.text).span():
+                elif location:
                     tip = response.text[location[0], location[1]]
                 else:
                     tip = self.url
@@ -151,8 +153,8 @@ class Site:
     @staticmethod
     def signin_discuz_dsu(session, url):
         attendance_url = (
-            url
-            + "/plugin.php?id=dsu_paulsign:sign&operation=qiandao&infloat=1&sign_as=1&inajax=1"
+            f"{url}/plugin.php?"
+            f"id=dsu_paulsign:sign&operation=qiandao&infloat=1&sign_as=1&inajax=1"
         )
         hash_url = f"{url}/plugin.php?id=dsu_paulsign:sign"
         with session.get(hash_url) as hashurl:

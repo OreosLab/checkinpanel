@@ -20,16 +20,16 @@ class WPS:
         self.check_items = check_items
         self.is_sign = False
 
-    # 判断Cookie是否失效 和 今日是否签到
+    # 判断 Cookie 是否失效 和 今日是否签到
     def check(self, cookie):
         url0 = "https://vip.wps.cn/sign/mobile/v3/get_data"
         headers = {
             "Cookie": cookie,
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
+                          "AppleWebKit/537.36 (KHTML, like Gecko) "
+                          "Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
         }
-        response = requests.get(url=url0, headers=headers)
+        response = requests.get(url0, headers=headers)
         if "会员登录" in response.text:
             print("cookie 失效")
             sys.exit()
@@ -41,21 +41,15 @@ class WPS:
         headers = {
             "Cookie": cookie,
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
+                          "AppleWebKit/537.36 (KHTML, like Gecko) "
+                          "Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
         }
         if self.is_sign:
             msg = "今日已签到"
         else:
             data0 = {"platform": "8"}  # 不带验证坐标的请求
-            data = {
-                "platform": "8",
-                "captcha_pos": "137.00431974731889, 36.00431593261568",
-                "img_witdh": "275.164",
-                "img_height": "69.184",
-            }  # 带验证坐标的请求
             url = "https://vip.wps.cn/sign/v2"
-            response = requests.post(url=url, headers=headers, data=data0)
+            response = requests.post(url, data0, headers=headers)
             if "msg" not in response.text:
                 msg = "cookie 失效"
             else:
@@ -66,9 +60,15 @@ class WPS:
                         "https://vip.wps.cn/checkcode/signin/captcha.png?"
                         "platform=8&encode=0&img_witdh=275.164&img_height=69.184"
                     )
+                    data = {
+                        "platform": "8",
+                        "captcha_pos": "137.00431974731889, 36.00431593261568",
+                        "img_witdh": "275.164",
+                        "img_height": "69.184",
+                    }  # 带验证坐标的请求
                     for n in range(10):
-                        requests.get(url=yz_url, headers=headers)
-                        response = requests.post(url=url, headers=headers, data=data)
+                        requests.get(yz_url, headers=headers)
+                        response = requests.post(url, data, headers=headers)
                         sus = json.loads(response.text)["result"]
                         msg += f"{str(n + 1)} 尝试验证签到 --> {sus}\n"
                         time.sleep(random.randint(0, 5) / 10)

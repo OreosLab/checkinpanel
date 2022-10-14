@@ -6,7 +6,6 @@ new Env('哔咔漫画');
 
 import hashlib
 import hmac
-import json
 import random
 import string
 import time
@@ -22,7 +21,7 @@ class Picacomic:
         self.check_items = check_items
 
     @staticmethod
-    def generate_headers(path: str, data: dict = None, token: str = None):
+    def generate_headers(path, data=None, token=None):
         api_key = "C69BAF41DA5ABD1FFEDC6D2FEA56B"
         api_secret = "~d}$Q7$eIni=V)9\\RK/P.RM4;9[7|@/CA}b~OW!3?EV`:<>M7pddUBL5n|0/*Cn"
         current_time = str(int(time.time()))
@@ -58,15 +57,16 @@ class Picacomic:
             data = {"email": email, "password": password}
             sign_headers = self.generate_headers(path="auth/sign-in", data=data)
             sign_res = requests.post(
-                url="https://picaapi.picacomic.com/auth/sign-in",
-                data=json.dumps({"email": email, "password": password}),
+                "https://picaapi.picacomic.com/auth/sign-in",
+                json={"email": email, "password": password},
                 headers=sign_headers,
                 timeout=60,
             ).json()
             token = sign_res.get("data", {}).get("token")
+
             punch_headers = self.generate_headers(path="users/punch-in", token=token)
             res = requests.post(
-                url="https://picaapi.picacomic.com/users/punch-in",
+                "https://picaapi.picacomic.com/users/punch-in",
                 headers=punch_headers,
                 timeout=60,
             ).json()
@@ -83,7 +83,7 @@ class Picacomic:
         for check_item in self.check_items:
             email = check_item.get("email")
             password = check_item.get("password")
-            sign_msg = self.sign(email=email, password=password)
+            sign_msg = self.sign(email, password)
             msg = f"帐号信息: {email}\n签到状态: {sign_msg}"
             msg_all += msg + "\n\n"
         return msg_all

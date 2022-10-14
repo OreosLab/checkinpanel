@@ -42,10 +42,10 @@ class OnePlusBBS:
         formhash = re.findall(r"bbs_formhash=(.*?);", cookie)[0]
         data = {"formhash": formhash, "qdxq": "kx", "qdmode": "1", "todaysay": "努力奋斗"}
         res = requests.post(
-            url="https://www.oneplusbbs.com/plugin.php",
-            headers=headers,
+            "https://www.oneplusbbs.com/plugin.php",
+            data,
             params=params,
-            data=data,
+            headers=headers,
         ).text
         msg = re.findall(r'<div class="c">(.*?)</div>', res, re.S)
         msg = msg[0].strip() if msg else "Cookie 可能过期"
@@ -72,21 +72,21 @@ class OnePlusBBS:
         success_count = 0
         for i in range(10):
             try:
-                data = requests.post(
-                    url="https://www.oneplusbbs.com/plugin.php",
-                    headers=headers,
+                res = requests.post(
+                    "https://www.oneplusbbs.com/plugin.php",
                     params=params,
+                    headers=headers,
                 ).json()
-                if data["ret"] != "":
+                if res["ret"] != "":
+                    ret = res["ret"]
                     ret_map = {
                         "2": 18,
                         "4": 188,
                         "5": 88,
                         "7": 8,
                     }
-                    ret = data["ret"]
                     sum_list.append(ret_map.get(ret, 0))
-                    one_msg = data["msg"]
+                    one_msg = res["msg"]
                     if str(ret) in {"-1", "-6", "-7"}:
                         break
                     success_count += 1
@@ -94,7 +94,7 @@ class OnePlusBBS:
                     one_msg = "抽奖失败"
             except Exception as e:
                 one_msg = f"抽奖失败: {e}"
-            print(f"第{i + 1}次抽奖结果：{str(one_msg)}")
+            print(f"第 {i + 1} 次抽奖结果：{str(one_msg)}")
             time.sleep(5)
         msg = f"成功抽奖 {success_count} 次"
         draw_msg = f"抽奖状态: {str(msg)}"
@@ -112,8 +112,8 @@ class OnePlusBBS:
                 bbs_uname = parse.unquote(bbs_uname)
             except Exception as e:
                 print(f"bbs_uname 转换失败: {e}")
-            sign_msg = self.sign(cookie=cookie)
-            draw_msg = self.draw(cookie=cookie)
+            sign_msg = self.sign(cookie)
+            draw_msg = self.draw(cookie)
             msg = f"帐号信息: {bbs_uname}\n签到信息: {sign_msg}\n{draw_msg}"
             msg_all += msg + "\n\n"
         return msg_all

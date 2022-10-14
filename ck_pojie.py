@@ -17,6 +17,7 @@ class Pojie:
 
     @staticmethod
     def sign(cookie):
+        session = requests.session()
         res = ""
         headers = {
             "Cookie": cookie,
@@ -24,19 +25,19 @@ class Pojie:
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) "
             "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36",
         }
-        requests.session().put(
+        session.put(
             "https://www.52pojie.cn/home.php?mod=task&do=apply&id=2", headers=headers
         )
-        fa = requests.session().put(
+        response = session.put(
             "https://www.52pojie.cn/home.php?mod=task&do=draw&id=2", headers=headers
         )
-        fb = BeautifulSoup(fa.text, "html.parser")
-        fc = fb.find("div", id="messagetext").find("p").text
-        if "您需要先登录才能继续本操作" in fc:
+        soup = BeautifulSoup(response.text, "html.parser")
+        msg = soup.find("div", id="messagetext").find("p").text
+        if "您需要先登录才能继续本操作" in msg:
             res += "Cookie 失效"
-        elif "恭喜" in fc:
+        elif "恭喜" in msg:
             res += "签到成功"
-        elif "不是进行中的任务" in fc:
+        elif "不是进行中的任务" in msg:
             res += "不是进行中的任务"
         else:
             res += "签到失败"
@@ -46,7 +47,7 @@ class Pojie:
         msg_all = ""
         for i, check_item in enumerate(self.check_items, start=1):
             cookie = check_item.get("cookie")
-            sign_msg = self.sign(cookie=cookie)
+            sign_msg = self.sign(cookie)
             msg = f"账号 {i} 签到状态: {sign_msg}"
             msg_all += msg + "\n\n"
         return msg_all

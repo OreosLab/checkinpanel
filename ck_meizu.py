@@ -35,10 +35,10 @@ class Meizu:
             ("mod", "signin"),
             ("action", "sign"),
         )
-        res = requests.get(url=self.url, headers=headers, params=params).json()
+        res = requests.get(self.url, headers=headers, params=params).json()
         return res.get("message")
 
-    def draw(self, cookie, count: int = 0):
+    def draw(self, cookie, count=0):
         headers = {
             "authority": "bbs-act.meizu.cn",
             "accept": "application/json, text/javascript, */*; q=0.01",
@@ -58,11 +58,7 @@ class Meizu:
             success_count = 0
             for i in range(count):
                 try:
-                    res = requests.post(
-                        url=self.url,
-                        headers=headers,
-                        data=data,
-                    ).json()
+                    res = requests.post(self.url, data, headers=headers).json()
                     if res["code"] == 200:
                         one_msg = res.get("data", {}).get("award_name")
                         award_list.append(one_msg)
@@ -72,7 +68,7 @@ class Meizu:
                         one_msg = "抽奖失败"
                 except Exception as e:
                     one_msg = f"抽奖失败: {e}"
-                print(f"第{i + 1}次抽奖结果：{str(one_msg)}")
+                print(f"第 {i + 1} 次抽奖结果: {str(one_msg)}")
                 time.sleep(5)
             msg = f"成功抽奖 {success_count} 次"
             draw_msg = f"抽奖状态: {str(msg)}"
@@ -80,7 +76,7 @@ class Meizu:
         else:
             draw_msg = "抽奖结果: 未开启抽奖"
         data = {"mod": "index", "action": "get_user_count", "id": "2"}
-        user_info = requests.post(self.url, headers=headers, data=data).json()
+        user_info = requests.post(self.url, data, headers=headers).json()
         uid = user_info.get("data", {}).get("uid")
         return draw_msg, uid
 
@@ -93,8 +89,8 @@ class Meizu:
             except Exception as e:
                 print("初始化抽奖次数失败: 重置为 0 ", e)
                 draw_count = 0
-            sign_msg = self.sign(cookie=cookie)
-            draw_msg, uid = self.draw(cookie=cookie, count=draw_count)
+            sign_msg = self.sign(cookie)
+            draw_msg, uid = self.draw(cookie, draw_count)
             msg = f"帐号信息: {uid}\n签到信息: {sign_msg}\n{draw_msg}"
             msg_all += msg + "\n\n"
         return msg_all

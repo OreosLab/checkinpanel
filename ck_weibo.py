@@ -4,7 +4,7 @@ cron: 48 7 * * *
 new Env('微博');
 """
 
-from urllib import parse
+from urllib.parse import parse_qsl, urlsplit
 
 import requests
 
@@ -24,7 +24,10 @@ class WeiBo:
             headers=headers,
         ).json()
         if res.get("status") == 10000:
-            return f'连续签到: {res.get("data").get("continuous")}天\n本次收益: {res.get("data").get("desc")}'
+            return (
+                f'连续签到: {res.get("data").get("continuous")}天\n'
+                f'本次收益: {res.get("data").get("desc")}'
+            )
 
         if res.get("errno") == 30000:
             return "每日签到: 已签到"
@@ -88,7 +91,7 @@ class WeiBo:
         msg_all = ""
         for check_item in self.check_items:
             url = check_item.get("url")
-            query_dict = dict(parse.parse_qsl(parse.urlsplit(url).query))
+            query_dict = dict(parse_qsl(urlsplit(url).query))
             token = "&".join(
                 [
                     f"{key}={value}"

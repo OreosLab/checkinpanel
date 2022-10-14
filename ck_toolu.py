@@ -18,14 +18,13 @@ class ToolLu:
 
     @staticmethod
     def sign(cookie):
-        session = requests.Session()
         url = "https://id.tool.lu/sign"
         headers = {
             "cookie": cookie,
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) "
             "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36",
         }
-        response = session.get(url=url, headers=headers)
+        response = requests.get(url, headers=headers)
         day = re.findall("你已经连续签到(.*)，再接再厉！", response.text)
         if len(day) == 0:
             return "cookie 失效"
