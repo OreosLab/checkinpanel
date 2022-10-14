@@ -1,6 +1,6 @@
 import datetime
 
-from peewee import *
+from peewee import CharField, DateField, Model, SmallIntegerField, SqliteDatabase
 
 from utils_env import get_file_path
 

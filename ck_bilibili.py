@@ -385,9 +385,7 @@ class BiliBili:
             )
 
             # GET 导航栏用户信息 1/2
-            uname, uid, is_login, coin, vip_type, current_exp = self.get_nav(
-                session=session
-            )
+            uname, uid, is_login, coin, _, _ = self.get_nav(session=session)
             if not is_login:
                 msg_all += "非登录状态，请检查\n\n"
                 continue
@@ -475,9 +473,7 @@ class BiliBili:
             live_stats = self.get_live_status(session=session)
 
             # GET 导航栏用户信息 2/2
-            uname, uid, is_login, new_coin, vip_type, new_current_exp = self.get_nav(
-                session=session
-            )
+            uname, uid, is_login, _, _, new_current_exp = self.get_nav(session=session)
 
             # 今日获得经验
             today_exp = sum(

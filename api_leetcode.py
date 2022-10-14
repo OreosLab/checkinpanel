@@ -5,8 +5,6 @@ cron: 10 10 * * *
 new Env('LeetCode 每日一题');
 """
 
-import json
-
 import requests
 
 from notify_mtr import send
@@ -19,7 +17,7 @@ class LeetCode:
         base_url = "https://leetcode-cn.com"
 
         # 获取今日每日一题的题名(英文)
-        response = requests.post(
+        res = requests.post(
             f"{base_url}/graphql",
             json={
                 "operationName": "questionOfToday",
@@ -29,22 +27,21 @@ class LeetCode:
                 "lastSubmission { id __typename } "
                 "date userStatus __typename } }",
             },
-        )
-        leetcode_title = (
-            json.loads(response.text)
-            .get("data")
+        ).json()
+        title_slug = (
+            res.get("data")
             .get("todayRecord")[0]
             .get("question")
             .get("questionTitleSlug")
         )
 
         # 获取今日每日一题的所有信息
-        url = f"{base_url}/problems/{leetcode_title}"
-        response = requests.post(
+        url = f"{base_url}/problems/{title_slug}"
+        res = requests.post(
             f"{base_url}/graphql",
             json={
                 "operationName": "questionData",
-                "variables": {"titleSlug": leetcode_title},
+                "variables": {"titleSlug": title_slug},
                 "query": "query questionData($titleSlug: String!) "
                 "{ question(titleSlug: $titleSlug) { questionId questionFrontendId "
                 "boundTopicId title titleSlug content translatedTitle translatedContent"
@@ -61,15 +58,15 @@ class LeetCode:
                 "isSubscribed isDailyQuestion dailyRecordStatus "
                 "editorType ugcQuestionId style __typename } }",
             },
-        )
+        ).json()
 
-        # 转化成 json 格式
-        json_text = json.loads(response.text).get("data").get("question")
-        # 题目题号
-        num = json_text.get("questionFrontendId")
-        # 题名（中文）
-        leetcode_title = json_text.get("translatedTitle")
-        return f'<a href="{url}">{num}. {leetcode_title}</a>'
+        # 题目
+        question = res.get("data").get("question")
+        # 题号
+        num = question.get("questionFrontendId")
+        # 题名(中文)
+        zh_title = question.get("translatedTitle")
+        return f'<a href="{url}">{num}. {zh_title}</a>'
 
 
 if __name__ == "__main__":
