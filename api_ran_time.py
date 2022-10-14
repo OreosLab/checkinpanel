@@ -7,7 +7,7 @@ new Env('随机定时');
 
 from abc import ABC
 from random import randrange
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 import requests
 
@@ -80,7 +80,7 @@ class QLClient(ClientApi):
             raise ValueError("无法获取 token！")
 
     def init_cron(self):
-        self.cron: List[Dict] = list(
+        self.cron = list(
             filter(
                 lambda x: not x.get("isDisabled", 1)
                 and x.get("command", "").find("Oreomeow_checkinpanel_master") != -1,
@@ -107,17 +107,24 @@ class QLClient(ClientApi):
             )
 
 
-def get_client():
+def get_client() -> Optional[QLClient]:
     env_type = get_env_int()
     if env_type in [5, 6]:
         check_data = get_data()
         return QLClient(check_data.get("RANDOM", [{}])[0])
+    return None
 
 
-try:
-    get_client().run()
-    send("随机定时", "处于启动状态的任务定时修改成功！")
-except ValueError as e:
-    send("随机定时", f"配置错误，{e},请检查你的配置文件！")
-except AttributeError:
-    send("随机定时", "你的系统不支持运行随机定时！")
+def main():
+    try:
+        if client := get_client():
+            client.run()
+            send("随机定时", "处于启动状态的任务定时修改成功！")
+        else:
+            send("随机定时", "你的系统不支持运行随机定时！")
+    except ValueError as e:
+        send("随机定时", f"配置错误，{e}，请检查你的配置文件！")
+
+
+if __name__ == "__main__":
+    main()
