@@ -415,16 +415,6 @@
             "running": true
         },
         {
-            "name": "无忧行",
-            "type": "cron",
-            "time": "21 21 * * *",
-            "job": {
-                "type": "runjs",
-                "target": "checkin.js -env PYNAME=ck_jegotrip.py"
-            },
-            "running": true
-        },
-        {
             "name": "掘金",
             "type": "cron",
             "time": "7 11 * * *",
@@ -475,16 +465,6 @@
             "running": true
         },
         {
-            "name": "网易云音乐",
-            "type": "cron",
-            "time": "27 0 * * *",
-            "job": {
-                "type": "runjs",
-                "target": "checkin.js -env PYNAME=ck_music163.py"
-            },
-            "running": true
-        },
-        {
             "name": "NGA",
             "type": "cron",
             "time": "26 13 * * *",
@@ -521,16 +501,6 @@
             "job": {
                 "type": "runjs",
                 "target": "checkin.js -env PYNAME=ck_pojie.py"
-            },
-            "running": true
-        },
-        {
-            "name": "SF 轻小说",
-            "type": "cron",
-            "time": "15 10 * * *",
-            "job": {
-                "type": "runjs",
-                "target": "checkin.js -env PYNAME=ck_sfacg.py"
             },
             "running": true
         },
