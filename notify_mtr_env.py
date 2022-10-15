@@ -169,11 +169,11 @@ def dingding_bot(title: str, content: str) -> None:
         f'access_token={push_config.get("DD_BOT_TOKEN")}&timestamp={timestamp}&sign={sign}'
     )
     headers = {"Content-Type": "application/json;charset=utf-8"}
-    data = {"msgtype": "text", "text": {"content": f"{title}\n\n{content}"}}
+    json = {"msgtype": "text", "text": {"content": f"{title}\n\n{content}"}}
 
     try:
         response = requests.post(
-            url=url, data=json.dumps(data), headers=headers, timeout=15
+            url=url, json=json, headers=headers, timeout=15
         )
         try:
             json_data = response.json()
