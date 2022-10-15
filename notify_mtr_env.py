@@ -172,9 +172,7 @@ def dingding_bot(title: str, content: str) -> None:
     json = {"msgtype": "text", "text": {"content": f"{title}\n\n{content}"}}
 
     try:
-        response = requests.post(
-            url=url, json=json, headers=headers, timeout=15
-        )
+        response = requests.post(url=url, json=json, headers=headers, timeout=15)
         try:
             json_data = response.json()
             if json_data.get("errcode") == 0:
