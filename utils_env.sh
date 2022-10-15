@@ -66,7 +66,7 @@ source_config() {
     elif [ "${panel}" = "qinglong" ]; then
         ENV_FILE="/ql/config/.env"
     else
-        ENV_FILE="./env"
+        ENV_FILE=".env"
     fi
 
     if [ -f "${ENV_FILE}" ]; then
