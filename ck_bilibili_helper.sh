@@ -9,7 +9,7 @@ COMMENT
 if [ -f "$(dirname "$0")/utils_env.sh" ]; then
     source "$(dirname "$0")/utils_env.sh"
 else
-    wget -q -O utils_env.sh https://git.yumenaka.net/https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/utils_env.sh
+    wget -q -O utils_env.sh https://ghproxy.com/https://raw.githubusercontent.com/OreosLab/checkinpanel/master/utils_env.sh
     source "$(dirname "$0")/utils_env.sh"
 fi
 get_some_path
@@ -31,12 +31,12 @@ else
 fi
 echo "当前版本:"$VERSION
 
-latest=$(curl -s https://api.github.com/repos/Oreomeow/bili/releases/latest)
+latest=$(curl -s https://api.github.com/repos/OreosLab/bili/releases/latest)
 latest_VERSION=$(echo "$latest" | jq '.tag_name' | sed 's/v\|"//g')
 echo "最新版本:""$latest_VERSION"
 download_url=$(echo "$latest" | jq '.assets[0].browser_download_url' | sed 's/"//g')
 download() {
-    curl -L -o "./BILIBILI-HELPER.zip" "https://git.yumenaka.net/$download_url"
+    curl -L -o "./BILIBILI-HELPER.zip" "https://ghproxy.com/$download_url"
     mkdir ./tmp
     echo "正在解压文件......."
     unzip -o -d ./tmp/ BILIBILI-HELPER.zip
