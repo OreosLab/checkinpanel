@@ -2,9 +2,10 @@
     "dependencies": {
         "@iarna/toml": "^2.2.5",
         "axios": "^0.23.0",
-        "cron-parser": "^4.3.0",
+        "cron-parser": "^4.6.0",
         "crypto-js": "^4.1.1",
-        "got": "<=11.8.6"
+        "got": "<=11.8.6",
+        "request": "^2.88.2"
     },
     "name": "checkinpanel",
     "description": "<div align=\"center\">\r <h1 align=\"center\">定时面板上的签到盒</h1>",
