@@ -188,12 +188,12 @@ def dingding_bot(title: str, content: str) -> None:
         f'access_token={push_config.get("DD_BOT_TOKEN")}&timestamp={timestamp}&sign={sign}'
     )
     headers = {"Content-Type": "application/json;charset=utf-8"}
-    data = {
+    json = {
         "msgtype": "markdown",
         "markdown": {"text": html2md(content), "title": title},
     }
 
-    response = requests.post(url, json=json.dumps(data), headers=headers, timeout=15)
+    response = requests.post(url, json=json, headers=headers, timeout=15)
     json_data = response.json()
     if json_data.get("errcode") == 0:
         print("钉钉机器人 推送成功！")
