@@ -17,7 +17,7 @@ const ACCOUNTS_LENOVO = getData().LENOVO;
 
 const url = {
     login: '',
-    session: 'https://api.club.lenovo.cn/users/getSessionID',
+    session: '',
     sign1: 'https://api.club.lenovo.cn/common/signin/add',
     sign2: 'https://api.club.lenovo.cn/signin/v2/add',
 };
@@ -97,7 +97,7 @@ function getsession(lpsutgt) {
             headers.Authorization = 'Lenovosso ' + lpsutgt;
             headers['token'] = headers.Authorization + '==';
             let s = aesEncrypto(`{"sessionid":"Lenovosso ${lpsutgt}","time":"${new Date().getTime()}"}`);
-            url['session'] += `?s=${s}`;
+            url['session'] = 'https://api.club.lenovo.cn/users/getSessionID' + `?s=${s}`;
             let res3 = await axios.get(url['session'], {
                 headers,
             });
