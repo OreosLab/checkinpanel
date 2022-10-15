@@ -1,14 +1,14 @@
 <div align="center">
 <h1 align="center">定时面板上的签到盒</h1>
 
-<a href="https://github.com/Oreomeow/checkinpanel/stargazers"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/Oreomeow/checkinpanel?color=yellow&logo=riseup&logoColor=yellow&style=flat-square"></a>
-<a href="https://github.com/Oreomeow/checkinpanel/network/members"><img alt="GitHub forks" src="https://img.shields.io/github/forks/Oreomeow/checkinpanel?color=orange&style=flat-square"></a>
-<a href="https://github.com/Oreomeow/checkinpanel/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/Oreomeow/checkinpanel?color=red&style=flat-square"></a>
+<a href="https://github.com/OreosLab/checkinpanel/stargazers"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/OreosLab/checkinpanel?color=yellow&logo=riseup&logoColor=yellow&style=flat-square"></a>
+<a href="https://github.com/OreosLab/checkinpanel/network/members"><img alt="GitHub forks" src="https://img.shields.io/github/forks/OreosLab/checkinpanel?color=orange&style=flat-square"></a>
+<a href="https://github.com/OreosLab/checkinpanel/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/OreosLab/checkinpanel?color=red&style=flat-square"></a>
 <a href="https://t.me/joinchat/muGNhnaZglQ0N2Q1"><img alt="Telegram" src="https://img.shields.io/badge/chat-telegram-blue.svg?logo=telegram&style=flat-square"/></a>
-<a href="https://github.com/Oreomeow/checkinpanel/search?l=python"><img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/Oreomeow/checkinpanel?color=blueviolet&logo=visual%20studio%20code&logoColor=informational&style=flat-square"></a>
+<a href="https://github.com/OreosLab/checkinpanel/search?l=python"><img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/OreosLab/checkinpanel?color=blueviolet&logo=visual%20studio%20code&logoColor=informational&style=flat-square"></a>
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg?logo=python&style=flat-square"/></a>
-<a href="https://scrutinizer-ci.com/g/Oreomeow/checkinpanel/?branch=master"><img alt="Scrutinizer code quality (GitHub/Bitbucket)" src="https://img.shields.io/scrutinizer/quality/g/Oreomeow/checkinpanel?logo=Scrutinizer&style=flat-square"></a>
-<a href="https://github.com/Oreomeow/checkinpanel/commits"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Oreomeow/checkinpanel?color=success&logo=github&style=flat-square"/></a>
+<a href="https://scrutinizer-ci.com/g/OreosLab/checkinpanel/?branch=master"><img alt="Scrutinizer code quality (GitHub/Bitbucket)" src="https://img.shields.io/scrutinizer/quality/g/OreosLab/checkinpanel?logo=Scrutinizer&style=flat-square"></a>
+<a href="https://github.com/OreosLab/checkinpanel/commits"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/OreosLab/checkinpanel?color=success&logo=github&style=flat-square"/></a>
 </div>
 
 ## 简介
@@ -54,12 +54,12 @@ TASK -> 添加订阅任务 -> 修改名称、更新方式、任务 -> 获取内�
 任务：
 
 ```text
-https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
+https://raw.githubusercontent.com/OreosLab/checkinpanel/master/dailycheckin.json
 ```
 
 ### 2. 抓包配置
 
-下载 [check.sample.toml](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/check.sample.toml)，根据注释说明进行抓包并配置
+下载 [check.sample.toml](https://raw.githubusercontent.com/OreosLab/checkinpanel/master/check.sample.toml)，根据注释说明进行抓包并配置
 
 ### 3. 上传配置
 
@@ -108,7 +108,7 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 #### 4.2 另一种通知配置方式（当和 4.1 中值重复时，以 4.1 值为准）
 
-下载项目中的[推送配置文件](https://github.com/Oreomeow/checkinpanel/blob/master/notify.sample.toml)到**配置文件夹**，按照上述说明修改配置文件中的值并改名为 `notify.toml` ，你可以**自由地删除**该文件中某些不需要的值（注意语法）。
+下载项目中的[推送配置文件](https://github.com/OreosLab/checkinpanel/blob/master/notify.sample.toml)到**配置文件夹**，按照上述说明修改配置文件中的值并改名为 `notify.toml` ，你可以**自由地删除**该文件中某些不需要的值（注意语法）。
 
 使用了配置文件后，你可以将配置文件放在持久化位置，不受脚本更新、重置容器的影响。
 
@@ -122,13 +122,13 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
 #### 4.3 通知说明
 
-本通知调用了项目中的 [𝒏𝒐𝒕𝒊𝒇𝒚_𝒎𝒕𝒓.𝒑𝒚](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/notify_mtr.py) 。如果你想在**你自己的项目中**使用这个通知脚本，将它拷贝并调用对应的通知函数即可。
+本通知调用了项目中的 [𝒏𝒐𝒕𝒊𝒇𝒚_𝒎𝒕𝒓.𝒑𝒚](https://raw.githubusercontent.com/OreosLab/checkinpanel/master/notify_mtr.py) 。如果你想在**你自己的项目中**使用这个通知脚本，将它拷贝并调用对应的通知函数即可。
 
 在非容器环境中，通知环境变量使用 系统的环境变量 或者 **你通过 `NOTIFY_CONFIG_PATH` 环境变量指定的配置文件** 进行配置。
 
-特别的，如果你想要创建一个基于 python 的 elecV2P 或者 qinglong 项目，并有意愿使用 `toml` 文件，那么强烈建议你拷贝[此文件](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/notify_mtr.py)，如此可以大幅度降低用户脚本的配置难度和升级难度。
+特别的，如果你想要创建一个基于 python 的 elecV2P 或者 qinglong 项目，并有意愿使用 `toml` 文件，那么强烈建议你拷贝[此文件](https://raw.githubusercontent.com/OreosLab/checkinpanel/master/notify_mtr.py)，如此可以大幅度降低用户脚本的配置难度和升级难度。
 
-如果只希望使用 `json` 模块和单纯获取环境变量方法，那么可以拷贝 [𝒏𝒐𝒕𝒊𝒇𝒚_𝒎𝒕𝒓_𝒆𝒏𝒗.𝒑𝒚](https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/notify_mtr_env.py)。
+如果只希望使用 `json` 模块和单纯获取环境变量方法，那么可以拷贝 [𝒏𝒐𝒕𝒊𝒇𝒚_𝒎𝒕𝒓_𝒆𝒏𝒗.𝒑𝒚](https://raw.githubusercontent.com/OreosLab/checkinpanel/master/notify_mtr_env.py)。
 
 ### 5. 检查依赖
 
@@ -136,7 +136,7 @@ https://raw.githubusercontent.com/Oreomeow/checkinpanel/master/dailycheckin.json
 
     [![oSs9xK.png](https://z3.ax1x.com/2021/11/23/oSs9xK.png)](https://imgtu.com/i/oSs9xK)
 
-* 如果任务列表安装不成功，参考 [#12](https://github.com/Oreomeow/checkinpanel/issues/12)
+* 如果任务列表安装不成功，参考 [#12](https://github.com/OreosLab/checkinpanel/issues/12)
 
 ## 𝐪𝐢𝐧𝐠𝐥𝐨𝐧𝐠 使用方法
 
@@ -160,14 +160,14 @@ RepoFileExtensions="js pl py sh ts"
 可添加定时任务，名称、时间自定
 
 ```sh
-ql repo https://github.com/Oreomeow/checkinpanel.git "api_|ck_|ins_" "^checkin" "^notify|^utils|cpm" "master"
+ql repo https://github.com/OreosLab/checkinpanel.git "api_|ck_|ins_" "^checkin" "^notify|^utils|cpm" "master"
 ```
 
 ### 3. 安装依赖
 
 * **运行 `签到依赖` 任务**
 
-  * [截图](https://github.com/Oreomeow/checkinpanel/issues/43)
+  * [截图](https://github.com/OreosLab/checkinpanel/issues/43)
 
 * 依赖持久化配置
 
@@ -176,13 +176,13 @@ ql repo https://github.com/Oreomeow/checkinpanel.git "api_|ck_|ins_" "^checkin" 
 ### 4. 拷贝文件
 
 ```sh
-cp /ql/repo/Oreomeow_checkinpanel_master/check.sample.toml /ql/config/check.toml
+cp /ql/repo/OreosLab_checkinpanel_master/check.sample.toml /ql/config/check.toml
 ```
 
 *通知配置文件（可选）*
 
 ```sh
-cp /ql/repo/Oreomeow_checkinpanel_master/notify.sample.toml /ql/config/notify.toml
+cp /ql/repo/OreosLab_checkinpanel_master/notify.sample.toml /ql/config/notify.toml
 ```
 
 ### 5. 配置通知
@@ -200,7 +200,7 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.sample.toml /ql/config/notify.to
 
 不出意外的话可以在青龙面板的配置文件下找到 `check.toml` 文件
 
-根据[注释说明](https://github.com/Oreomeow/checkinpanel/blob/master/check.sample.toml)进行抓包并配置
+根据[注释说明](https://github.com/OreosLab/checkinpanel/blob/master/check.sample.toml)进行抓包并配置
 
 ## 补充说明
 
@@ -249,11 +249,11 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.sample.toml /ql/config/notify.to
 
 2. elecV2P 运行 `手动更新` 任务可强制同步本仓库。
 
-3. 大部分脚本移植于 [Sitoi](https://github.com/Sitoi/dailycheckin)，Sitoi 于 2021 年 9 月 3 日 [dailycheckin-0.1.7](https://files.pythonhosted.org/packages/ee/8d/b49624a4d11c51f4e3dfb98f622d0c1ffe5d6315ad39452859ea8703206f/dailycheckin-0.1.7.tar.gz)  版本适配了青龙，[使用教程](https://sitoi.gitee.io/dailycheckin/qinglong/)与本仓库教程不相同，切勿使用本仓库 [checkinpanel](https://github.com/Oreomeow/checkinpanel) 的同时去问大佬。
+3. 大部分脚本移植于 [Sitoi](https://github.com/Sitoi/dailycheckin)，Sitoi 于 2021 年 9 月 3 日 [dailycheckin-0.1.7](https://files.pythonhosted.org/packages/ee/8d/b49624a4d11c51f4e3dfb98f622d0c1ffe5d6315ad39452859ea8703206f/dailycheckin-0.1.7.tar.gz)  版本适配了青龙，[使用教程](https://sitoi.gitee.io/dailycheckin/qinglong/)与本仓库教程不相同，切勿使用本仓库 [checkinpanel](https://github.com/OreosLab/checkinpanel) 的同时去问大佬。
 
 4. 2021 年 9 月 13 日起不再更新 `.json` 后缀的配置文件。
 
-5. 2021 年 9 月 23 日起重新初始化项目，原本文件移到[这里](https://github.com/Oreomeow/ck_bak)，上述仓库不再进行更新，期望稳定的用户可以切换到上述仓库。
+5. 2021 年 9 月 23 日起重新初始化项目，原本文件移到[这里](https://github.com/OreosCafe/ck_bak)，上述仓库不再进行更新，期望稳定的用户可以切换到上述仓库。
 
 6. 2021 年 11 月 17 日起由 `JSON5` 配置转为更为友好的 `TOML` 配置。
 
@@ -312,4 +312,4 @@ cp /ql/repo/Oreomeow_checkinpanel_master/notify.sample.toml /ql/config/notify.to
 
 ## 历史 Star 数
 
-[![Stargazers over time](https://starchart.cc/Oreomeow/checkinpanel.svg)](https://starchart.cc/Oreomeow/checkinpanel)
+[![Stargazers over time](https://starchart.cc/OreosLab/checkinpanel.svg)](https://starchart.cc/OreosLab/checkinpanel)
