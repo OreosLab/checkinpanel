@@ -12,7 +12,7 @@ get_some_path
 json52toml() {
     if [ -f "${CONF_PATH}/config.sh" ]; then
         sed -i '/^RepoFileExtensions/c RepoFileExtensions="js pl py sh ts"' "${CONF_PATH}/config.sh"
-        cp -f "${REPO_PATH}/Oreomeow_checkinpanel_master/check.sample.toml" "${CONF_PATH}/check.template.toml"
+        cp -f "${REPO_PATH}/OreosLab_checkinpanel_master/check.sample.toml" "${CONF_PATH}/check.template.toml"
     fi
     find . -type f -name '*utils_json52toml.pl' -exec perl {} \;
 }

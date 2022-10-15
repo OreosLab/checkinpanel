@@ -65,9 +65,9 @@ install_py_reqs() {
 }
 
 install_js_pkgs_initial() {
-    if [ -d "${SCR_PATH}/Oreomeow_checkinpanel_master" ]; then
-        cd "${SCR_PATH}/Oreomeow_checkinpanel_master" &&
-            cp "${REPO_PATH}/Oreomeow_checkinpanel_master/package.json" "${SCR_PATH}/Oreomeow_checkinpanel_master/package.json"
+    if [ -d "${SCR_PATH}/OreosLab_checkinpanel_master" ]; then
+        cd "${SCR_PATH}/OreosLab_checkinpanel_master" &&
+            cp "${REPO_PATH}/OreosLab_checkinpanel_master/package.json" "${SCR_PATH}/OreosLab_checkinpanel_master/package.json"
     elif [ -d "/ql/scripts" ] && [ ! -f "/ql/scripts/package.bak.json" ]; then
         cd /ql/scripts || exit
         rm -rf node_modules
@@ -80,7 +80,7 @@ install_js_pkgs_initial() {
             node -e \
                 "const merge = require('package-merge');
                  const fs = require('fs');
-                 const dst = fs.readFileSync('/ql/repo/Oreomeow_checkinpanel_master/package.json');
+                 const dst = fs.readFileSync('/ql/repo/OreosLab_checkinpanel_master/package.json');
                  const src = fs.readFileSync('/ql/scripts/package.bak.json');
                  fs.writeFile('/ql/scripts/package.json', merge(dst, src), function (err) {
                      if (err) {
@@ -125,7 +125,7 @@ install_pl_mods() {
             if [ -f ./cpm ]; then
                 chmod +x cpm && ./cpm --version
             else
-                cp -f /ql/repo/Oreomeow_checkinpanel_master/cpm ./ && chmod +x cpm && ./cpm --version
+                cp -f /ql/repo/OreosLab_checkinpanel_master/cpm ./ && chmod +x cpm && ./cpm --version
                 if [ ! -f ./cpm ]; then
                     curl -fsSL https://cdn.jsdelivr.net/gh/Oreomeow/checkinpanel/cpm >cpm && chmod +x cpm && ./cpm --version
                 fi

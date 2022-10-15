@@ -83,7 +83,7 @@ class QLClient(ClientApi):
         self.cron = list(
             filter(
                 lambda x: not x.get("isDisabled", 1)
-                and x.get("command", "").find("Oreomeow_checkinpanel_master") != -1,
+                and x.get("command", "").find("OreosLab_checkinpanel_master") != -1,
                 requests.get(
                     url=f"{self.url}open/crons",
                     headers={"Authorization": f"Bearer {self.token}"},
