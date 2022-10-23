@@ -62,9 +62,9 @@ class QLClient(ClientApi):
     def __init__(self, client_info: Dict):
         super().__init__()
         if (
-            not client_info
-            or not (cid := client_info.get("client_id"))
-            or not (sct := client_info.get("client_secret"))
+                not client_info
+                or not (cid := client_info.get("client_id"))
+                or not (sct := client_info.get("client_secret"))
         ):
             raise ValueError("无法获取 client 相关参数！")
         self.cid = cid
@@ -80,14 +80,17 @@ class QLClient(ClientApi):
             raise ValueError("无法获取 token！")
 
     def init_cron(self):
+        cron_data = requests.get(
+            url=f"{self.url}open/crons",
+            headers={"Authorization": f"Bearer {self.token}"},
+        ).json()["data"]
+        if "data" in cron_data.keys():
+            cron_data = cron_data["data"]
         self.cron = list(
             filter(
                 lambda x: not x.get("isDisabled", 1)
-                and x.get("command", "").find("OreosLab_checkinpanel_master") != -1,
-                requests.get(
-                    url=f"{self.url}open/crons",
-                    headers={"Authorization": f"Bearer {self.token}"},
-                ).json()["data"],
+                          and x.get("command", "").find("OreosLab_checkinpanel_master") != -1,
+                cron_data,
             )
         )
 
