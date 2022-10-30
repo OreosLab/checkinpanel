@@ -84,7 +84,7 @@ class QLClient(ClientApi):
             url=f"{self.url}open/crons",
             headers={"Authorization": f"Bearer {self.token}"},
         ).json()["data"]
-        if "data" in cron_data.keys():
+        if type(cron_data) == dict and "data" in cron_data.keys():
             cron_data = cron_data["data"]
         self.cron = list(
             filter(
