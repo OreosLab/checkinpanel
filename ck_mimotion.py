@@ -72,7 +72,7 @@ class MiMotion:
             "third_name": "email",
         }
         r2 = requests.post(url2, data2, headers=headers).json()
-        login_token = r2["token_info"]["app_token"]
+        login_token = r2["token_info"]["login_token"]
         user_id = r2["token_info"]["user_id"]
         return login_token, user_id
 
