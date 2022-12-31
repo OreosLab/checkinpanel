@@ -60,6 +60,10 @@ class MiMotion:
             print(e)
             return 0, 0
         url2 = "https://account.huami.com/v2/client/login"
+        if phone.find('@') < 0:
+            third_name = "phone"
+        else:
+            third_name = "email"
         data2 = {
             "app_name": "com.xiaomi.hm.health",
             "app_version": "6.3.5",
@@ -69,7 +73,7 @@ class MiMotion:
             "device_model": "phone",
             "grant_type": "access_token",
             "source": "com.xiaomi.hm.health",
-            "third_name": "email",
+            "third_name": f"{third_name}",
         }
         r2 = requests.post(url2, data2, headers=headers).json()
         login_token = r2["token_info"]["login_token"]
@@ -80,6 +84,8 @@ class MiMotion:
         msg_all = ""
         for check_item in self.check_items:
             phone = str(check_item.get("phone"))
+            if phone.find('@') < 0:
+                phone = '+86' + phone
             password = str(check_item.get("password"))
 
             try:
