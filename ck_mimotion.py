@@ -60,7 +60,7 @@ class MiMotion:
             print(e)
             return 0, 0
         url2 = "https://account.huami.com/v2/client/login"
-        third_name = "phone" if phone.find('@') < 0 else "email"
+        third_name = "phone" if phone.find("@") < 0 else "email"
         data2 = {
             "app_name": "com.xiaomi.hm.health",
             "app_version": "6.3.5",
@@ -81,8 +81,8 @@ class MiMotion:
         msg_all = ""
         for check_item in self.check_items:
             phone = str(check_item.get("phone"))
-            if phone.find('@') < 0:
-                phone = f'+86{phone}'
+            if phone.find("@") < 0:
+                phone = f"+86{phone}"
             password = str(check_item.get("password"))
 
             try:
