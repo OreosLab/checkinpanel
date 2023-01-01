@@ -38,15 +38,17 @@ class MiMotion:
 
     @staticmethod
     def login(phone, password):
-        url1 = f"https://api-user.huami.com/registrations/+86{phone}/tokens"
+        url1 = f"https://api-user.huami.com/registrations/{phone}/tokens"
         headers = {
             "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
             "User-Agent": "MiFit/4.6.0 (iPhone; iOS 14.0.1; Scale/2.00)",
         }
         data1 = {
             "client_id": "HuaMi",
+            "country_code": "CN",
             "password": f"{password}",
             "redirect_uri": "https://s3-us-west-2.amazonaws.com/hm-registration/successsignin.html",
+            "state": "REDIRECTION",
             "token": "access",
         }
         r1 = requests.post(url1, data1, headers=headers, allow_redirects=False)
@@ -58,15 +60,17 @@ class MiMotion:
             print(e)
             return 0, 0
         url2 = "https://account.huami.com/v2/client/login"
+        third_name = "phone" if phone.find("@") < 0 else "email"
         data2 = {
             "app_name": "com.xiaomi.hm.health",
-            "app_version": "5.0.2",
+            "app_version": "6.3.5",
             "code": f"{code}",
             "country_code": "CN",
             "device_id": "10E2A98F-D36F-4DF1-A7B9-3FBD8FBEB800",
             "device_model": "phone",
             "grant_type": "access_token",
-            "third_name": "huami_phone",
+            "source": "com.xiaomi.hm.health",
+            "third_name": f"{third_name}",
         }
         r2 = requests.post(url2, data2, headers=headers).json()
         login_token = r2["token_info"]["login_token"]
@@ -77,6 +81,8 @@ class MiMotion:
         msg_all = ""
         for check_item in self.check_items:
             phone = str(check_item.get("phone"))
+            if phone.find("@") < 0:
+                phone = f"+86{phone}"
             password = str(check_item.get("password"))
 
             try:
@@ -110,7 +116,7 @@ class MiMotion:
                 url = f"https://api-mifit-cn.huami.com/v1/data/band_data.json?&t={t}"
                 data = (
                     f"userid={user_id}&last_sync_data_time=1628256960&"
-                    f"device_type=0&last_deviceid=C4BDB6FFFE2BCA4C&data_json={data_json}"
+                    f"device_type=0&last_deviceid=DA932FFFFE8816E7&data_json={data_json}"
                 )
                 headers = {
                     "apptoken": app_token,
