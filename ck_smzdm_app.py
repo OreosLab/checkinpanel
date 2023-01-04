@@ -4,9 +4,10 @@ cron: 51 9 * * *
 new Env('什么值得买APP');
 """
 
-from urllib.parse import quote, unquote
 
-import requests, json, time, hashlib
+import requests
+import json
+import time
 
 from notify_mtr import send
 from utils import get_data
@@ -35,8 +36,8 @@ class Smzdm:
                 "sign": hashlib.md5(bytes(f'f=android&time={ts}&v=10.4.1&weixin=1&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC', encoding='utf-8')).hexdigest().upper()
             }
             html = requests.post(url=url, headers=headers, data=data)
-            result = html.json()
-            token = result['data']['token']
+            res = html.json()
+            token = res['data']['token']
 
             Timestamp = int(round(time.time() * 1000))
             data = {
@@ -58,12 +59,12 @@ class Smzdm:
             }
             html = requests.post(url=url, headers=headers, data=data)
             html2 = requests.post(url=url2, headers=headers, data=data)
-            result = json.loads(html.text)
-            result2 = json.loads(html2.text)
-            if result2['error_code'] == '0':
-                msg = result2["title"] + result2["sub_title"]
+            res = json.loads(html.text)
+            res2 = json.loads(html2.text)
+            if res2['error_code'] == '0':
+                msg = res2["title"] + res2["sub_title"]
             else:
-                msg = result['error_msg']
+                msg = res['error_msg']
         except Exception as e:
             msg = f"签到状态: 签到失败\n错误信息: {e}，请重新获取 cookie"
         return msg
