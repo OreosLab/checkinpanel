@@ -8,6 +8,7 @@ new Env('什么值得买APP');
 import requests
 import json
 import time
+import hashlib
 
 from notify_mtr import send
 from utils import get_data
