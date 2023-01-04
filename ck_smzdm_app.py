@@ -72,12 +72,7 @@ class Smzdm:
         msg_all = ""
 
         for check_item in self.check_items:
-            cookie = {
-                item.split("=")[0]: quote(unquote(item.split("=")[1]))
-                for item in check_item.get("cookie").split("; ")
-                if item.split("=")[0] == "sess"
-            }
-            msg = self.sign(cookie)
+            msg = self.sign(check_item.get("cookie"))
             msg_all += msg + "\n\n"
         return msg_all
 
