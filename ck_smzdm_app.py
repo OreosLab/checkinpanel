@@ -63,7 +63,7 @@ class Smzdm:
             res = json.loads(html.text)
             res2 = json.loads(html2.text)
             if res2['error_code'] == '0':
-                msg = res2["title"] + res2["sub_title"]
+                msg = res2
             else:
                 msg = res['error_msg']
         except Exception as e:
