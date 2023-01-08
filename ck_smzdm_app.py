@@ -62,10 +62,7 @@ class Smzdm:
             html2 = requests.post(url=url2, headers=headers, data=data)
             res = json.loads(html.text)
             res2 = json.loads(html2.text)
-            if res2['error_code'] == '0':
-                msg = res2
-            else:
-                msg = res['error_msg']
+            msg = res2 if res2['error_code'] == '0' else res['error_msg']
         except Exception as e:
             msg = f"签到状态: 签到失败\n错误信息: {e}，请重新获取 cookie"
         return msg
